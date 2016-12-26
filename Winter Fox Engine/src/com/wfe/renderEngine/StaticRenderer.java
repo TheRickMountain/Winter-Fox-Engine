@@ -1,4 +1,7 @@
-package com.wfe.renderPrograms;
+package com.wfe.renderEngine;
+
+import java.util.List;
+import java.util.Map;
 
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL20;
@@ -45,40 +48,47 @@ public class StaticRenderer {
 		shader.unbind();
 	}
 	
-	public void render(Entity entity) {
-		Mesh mesh = entity.getMesh();
-		Material material = entity.getMaterial();
-		
+	public void render(Map<Mesh, List<Entity>> entities) {
 		shader.bind();
 		if(Display.isResized()) {
 			shader.setUniform("projectionMatrix", camera.getProjectionMatrix());
 		}
-
+		
 		shader.setUniform("viewMatrix", camera.getViewMatrix());
-		if(entity.building){
-			shader.setUniform("modelMatrix", MathUtils.getBuildingModelMatrix(modelMatrix, 
-					entity.getTransform()));
-		} else {
-			shader.setUniform("modelMatrix", MathUtils.getModelMatrix(modelMatrix, 
-					entity.getTransform()));
+		
+		for(Mesh mesh : entities.keySet()) {
+			GL30.glBindVertexArray(mesh.getVAO());
+			GL20.glEnableVertexAttribArray(0);
+			GL20.glEnableVertexAttribArray(1);
+			GL20.glEnableVertexAttribArray(2);
+			
+			List<Entity> batch = entities.get(mesh);
+			for(Entity entity : batch) {
+				Material material = entity.getMaterial();
+				shader.setUniform("viewMatrix", camera.getViewMatrix());
+				if(entity.building){
+					shader.setUniform("modelMatrix", MathUtils.getBuildingModelMatrix(modelMatrix, 
+							entity.getTransform()));
+				} else {
+					shader.setUniform("modelMatrix", MathUtils.getModelMatrix(modelMatrix, 
+							entity.getTransform()));
+				}
+				
+				if(material.isHasTexture()) {
+					material.getTexture().bind(0);
+				}
+				
+				shader.setUniform("hasTexture", material.isHasTexture());
+				shader.setUniform("color", material.getColor());
+
+				GL11.glDrawElements(GL11.GL_TRIANGLES, mesh.getIndicesLength(), GL11.GL_UNSIGNED_INT, 0);
+			}
+			
+			GL30.glBindVertexArray(0);
+			GL20.glDisableVertexAttribArray(0);
+			GL20.glDisableVertexAttribArray(1);
+			GL20.glDisableVertexAttribArray(2);
 		}
-		
-		if(material.isHasTexture()) {
-			material.getTexture().bind(0);
-		}
-		
-		shader.setUniform("hasTexture", material.isHasTexture());
-		shader.setUniform("color", material.getColor());
-		
-		GL30.glBindVertexArray(mesh.getVAO());
-		GL20.glEnableVertexAttribArray(0);
-		GL20.glEnableVertexAttribArray(1);
-		GL20.glEnableVertexAttribArray(2);
-		GL11.glDrawElements(GL11.GL_TRIANGLES, mesh.getIndicesLength(), GL11.GL_UNSIGNED_INT, 0);
-		GL20.glDisableVertexAttribArray(0);
-		GL20.glDisableVertexAttribArray(1);
-		GL20.glDisableVertexAttribArray(2);
-		GL30.glBindVertexArray(0);
 		
 		shader.unbind();
 	}
