@@ -2,6 +2,7 @@
 
 in vec3 in_position;
 in vec2 in_textureCoords;
+in vec3 in_normal;
 
 out vec2 TextureCoords;
 

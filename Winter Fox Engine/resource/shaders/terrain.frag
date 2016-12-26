@@ -2,11 +2,20 @@
 
 in vec2 TextureCoords;
 
-out vec4 color;
+out vec4 out_Color;
 
 uniform sampler2D diffuseMap;
+uniform vec3 lightDirection;
+uniform vec3 lightColor;
+
+const vec2 lightBias = vec2(0.7, 0.6);
+const vec3 Normal = vec3(0.0f, 1.0f, 0.0f);
 
 void main()
 {
-	color = texture(diffuseMap, TextureCoords);
+	vec4 diffuseColor = texture(diffuseMap, TextureCoords);
+	vec3 unitNormal = normalize(Normal);
+	float brightness = max(dot(-lightDirection, unitNormal), 0.0) * lightBias.x + lightBias.y;
+	vec3 diffuseLight = brightness * lightColor;
+	out_Color = diffuseColor * vec4(diffuseLight, 1.0f);
 }

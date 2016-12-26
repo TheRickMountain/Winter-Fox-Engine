@@ -18,15 +18,15 @@ public class AnimatedEntityCreator {
 	 * the collada model data, stores the extracted data in a VAO, sets up the
 	 * joint heirarchy, and loads up the entity's texture.
 	 * 
-	 * @param entityFile - the file containing the data for the entity.
+	 * @param modelFile - the file containing the data for the entity.
 	 * @return The animated entity (no animation applied though)
 	 */
-	public static AnimatedEntity loadEntity(MyFile entityFile) {
+	public static AnimatedEntity loadEntity(MyFile modelFile, MyFile textureFile) {
 
-		AnimatedModelData entityData = ColladaLoader.loadColladaModel(entityFile, GeneralSettings.MAX_WEIGHTS);
+		AnimatedModelData entityData = ColladaLoader.loadColladaModel(modelFile, GeneralSettings.MAX_WEIGHTS);
 
 		Vao model = createVao(entityData.getMeshData());
-		Texture texture = loadTexture(new MyFile("entity/diffuse.png"));
+		Texture texture = loadTexture(textureFile);
 
 		JointsData skeletonData = entityData.getJointsData();
 		Joint headJoint = createJoints(skeletonData.headJoint);

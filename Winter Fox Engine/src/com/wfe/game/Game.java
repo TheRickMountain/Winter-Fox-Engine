@@ -50,7 +50,8 @@ public class Game implements IGameLogic {
 		player.addComponent(new PlayerControllerComponent(camera, player.getTransform()));
 		World.getWorld().addEntity(player);*/
 		
-		animatedEntity = AnimatedEntityCreator.loadEntity(new MyFile("entity/model.dae"));
+		animatedEntity = AnimatedEntityCreator.loadEntity(new MyFile("entity/model.dae"),
+				new MyFile("entity/diffuse.png"));
 		Animation animation = AnimationCreator.loadAnimation(new MyFile("entity/model.dae"));
 		animatedEntity.doAnimation(animation);
 		animatedEntity.getTransform().setPosition(16.5f, 0, 16.5f);

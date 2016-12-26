@@ -29,7 +29,7 @@ void main(void){
 	}
 	
 	gl_Position = projectionViewMatrix * modelMatrix * totalLocalPos;
-	pass_normal = totalNormal.xyz;
+	pass_normal = (modelMatrix * vec4(totalNormal.xyz, 0.0f)).xyz;
 	pass_textureCoords = in_textureCoords;
 
 }

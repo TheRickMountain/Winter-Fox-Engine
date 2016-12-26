@@ -9,6 +9,7 @@ import org.lwjgl.opengl.GL30;
 
 import com.wfe.core.Camera;
 import com.wfe.core.Display;
+import com.wfe.core.GeneralSettings;
 import com.wfe.ecs.StaticEntity;
 import com.wfe.graph.Material;
 import com.wfe.graph.Mesh;
@@ -40,6 +41,8 @@ public class StaticEntityRenderer {
 		}
 		
 		shader.viewMatrix.loadMatrix(camera.getViewMatrix());
+		shader.lightDirection.loadVec3(GeneralSettings.LIGHT_DIR);
+		shader.lightColor.loadVec3(GeneralSettings.LIGHT_COLOR);
 		
 		for(Mesh mesh : entities.keySet()) {
 			GL30.glBindVertexArray(mesh.getVAO());

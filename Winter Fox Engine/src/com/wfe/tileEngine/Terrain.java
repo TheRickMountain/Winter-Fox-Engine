@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.wfe.core.Camera;
 import com.wfe.core.Display;
+import com.wfe.core.GeneralSettings;
 import com.wfe.ecs.StaticEntity;
 import com.wfe.textures.Texture;
 import com.wfe.textures.TextureBuilder;
@@ -52,6 +53,8 @@ public class Terrain {
 		}
 		
 		shader.viewMatrix.loadMatrix(camera.getViewMatrix());
+		shader.lightDirection.loadVec3(GeneralSettings.LIGHT_DIR);
+		shader.lightColor.loadVec3(GeneralSettings.LIGHT_COLOR);
 		
 		spriteSheet.bind(0);
 		

@@ -23,8 +23,8 @@ public class AnimatedEntityRenderer {
 		this.shader = new AnimatedEntityShader();
 	}
 	
-	public void render(AnimatedEntity entity, Vector3f lightDir) {
-		prepare(lightDir);
+	public void render(AnimatedEntity entity, Vector3f lightDir, Vector3f lightColor) {
+		prepare(lightDir, lightColor);
 		entity.getTexture().bind(0);
 		entity.getModel().bind(0, 1, 2, 3, 4);
 		shader.jointTransforms.loadMatrixArray(entity.getJointTransforms());
@@ -35,15 +35,14 @@ public class AnimatedEntityRenderer {
 		finish();
 	}
 	
-	private void prepare(Vector3f lightDir) {
+	private void prepare(Vector3f lightDir, Vector3f lightColor) {
 		shader.start();
 		shader.projectionViewMatrix.loadMatrix(camera.getProjectionViewMatrix());
 		shader.lightDirection.loadVec3(lightDir);
-		OpenglUtils.alphaBlending(false);
+		shader.lightColor.loadVec3(lightColor);
 	}
 	
 	private void finish() {
-		OpenglUtils.alphaBlending(true);
 		shader.stop();
 	}
 	

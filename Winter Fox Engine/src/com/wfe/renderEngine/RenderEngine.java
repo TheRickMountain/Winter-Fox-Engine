@@ -24,7 +24,6 @@ public class RenderEngine {
 		this.animatedRenderer = new AnimatedEntityRenderer(camera);
 		
 		OpenglUtils.cullBackFaces(true);
-		OpenglUtils.alphaBlending(true);
 		OpenglUtils.depthTest(true);
 	}
 	
@@ -37,7 +36,7 @@ public class RenderEngine {
 		clear();
 		
 		staticRenderer.render(entities);
-		animatedRenderer.render(entity, GeneralSettings.LIGHT_DIR);
+		animatedRenderer.render(entity, GeneralSettings.LIGHT_DIR, GeneralSettings.LIGHT_COLOR);
 	}
 
 	public static RenderEngine init(Camera camera) throws Exception {
