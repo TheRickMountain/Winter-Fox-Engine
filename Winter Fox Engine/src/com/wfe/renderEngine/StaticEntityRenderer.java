@@ -12,49 +12,34 @@ import com.wfe.core.Display;
 import com.wfe.ecs.Entity;
 import com.wfe.graph.Material;
 import com.wfe.graph.Mesh;
-import com.wfe.graph.ShaderProgram;
 import com.wfe.math.Matrix4f;
 import com.wfe.utils.MathUtils;
 
-public class StaticRenderer {
+public class StaticEntityRenderer {
 	
 	private Camera camera;
 	
-	private ShaderProgram shader;
+	private StaticEntityShader shader;
 	
 	private Matrix4f modelMatrix = new Matrix4f();
 	
-	public StaticRenderer(Camera camera) throws Exception {
+	protected StaticEntityRenderer(Camera camera) throws Exception {
 		this.camera = camera;
 		
-		shader = new ShaderProgram();
-		shader.createVertexShader("/shaders/static.vert");
-		shader.createFragmentShader("/shaders/static.frag");
-		shader.link();
+		shader = new StaticEntityShader();
 		
-		// Vertex Shader
-		shader.createUniform("projectionMatrix");
-		shader.createUniform("viewMatrix");
-		shader.createUniform("modelMatrix");
-		
-		// Fragment Shader
-		shader.createUniform("image");
-		shader.createUniform("hasTexture");
-		shader.createUniform("color");
-		
-		shader.bind();
-		shader.setUniform("projectionMatrix", camera.getProjectionMatrix());
-		shader.setUniform("image", 0);
-		shader.unbind();
+		shader.start();
+		shader.projectionMatrix.loadMatrix(camera.getProjectionMatrix());
+		shader.stop();
 	}
 	
 	public void render(Map<Mesh, List<Entity>> entities) {
-		shader.bind();
+		shader.start();
 		if(Display.isResized()) {
-			shader.setUniform("projectionMatrix", camera.getProjectionMatrix());
+			shader.projectionMatrix.loadMatrix(camera.getProjectionMatrix());
 		}
 		
-		shader.setUniform("viewMatrix", camera.getViewMatrix());
+		shader.viewMatrix.loadMatrix(camera.getViewMatrix());
 		
 		for(Mesh mesh : entities.keySet()) {
 			GL30.glBindVertexArray(mesh.getVAO());
@@ -65,21 +50,17 @@ public class StaticRenderer {
 			List<Entity> batch = entities.get(mesh);
 			for(Entity entity : batch) {
 				Material material = entity.getMaterial();
-				shader.setUniform("viewMatrix", camera.getViewMatrix());
 				if(entity.building){
-					shader.setUniform("modelMatrix", MathUtils.getBuildingModelMatrix(modelMatrix, 
+					shader.modelMatrix.loadMatrix(MathUtils.getBuildingModelMatrix(modelMatrix, 
 							entity.getTransform()));
 				} else {
-					shader.setUniform("modelMatrix", MathUtils.getModelMatrix(modelMatrix, 
+					shader.modelMatrix.loadMatrix(MathUtils.getModelMatrix(modelMatrix, 
 							entity.getTransform()));
 				}
 				
-				if(material.isHasTexture()) {
-					material.getTexture().bind(0);
-				}
-				
-				shader.setUniform("hasTexture", material.isHasTexture());
-				shader.setUniform("color", material.getColor());
+				material.getTexture().bind(0);
+
+				shader.color.loadVec4(material.getColor());
 
 				GL11.glDrawElements(GL11.GL_TRIANGLES, mesh.getIndicesLength(), GL11.GL_UNSIGNED_INT, 0);
 			}
@@ -90,11 +71,11 @@ public class StaticRenderer {
 			GL20.glDisableVertexAttribArray(2);
 		}
 		
-		shader.unbind();
+		shader.stop();
 	}
 	
 	public void cleanup() {
-		shader.cleanup();
+		shader.cleanUp();
 	}
 	
 }

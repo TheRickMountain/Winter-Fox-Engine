@@ -6,7 +6,6 @@ import java.util.List;
 import com.wfe.core.Camera;
 import com.wfe.core.Display;
 import com.wfe.ecs.Entity;
-import com.wfe.graph.ShaderProgram;
 import com.wfe.textures.Texture;
 import com.wfe.textures.TextureBuilder;
 import com.wfe.utils.MyFile;
@@ -18,7 +17,8 @@ public class Terrain {
 	private int sizeX, sizeZ;
 	private Camera camera;
 	private Texture spriteSheet;
-	private ShaderProgram shader;
+	
+	private TerrainShader shader;
 	
 	public Terrain(int sizeX, int sizeZ, Camera camera) throws Exception {
 		this.sizeX = sizeX;
@@ -38,36 +38,27 @@ public class Terrain {
 			}
 		}
 		
-		shader = new ShaderProgram();
-		shader.createVertexShader("/shaders/terrain.vert");
-		shader.createFragmentShader("/shaders/terrain.frag");
-		shader.link();
+		shader = new TerrainShader();
 		
-		// Vertex shader
-		shader.createUniform("projectionMatrix");
-		shader.createUniform("viewMatrix");
-		
-		// Fragment shader
-		shader.createUniform("image");
-		
-		shader.bind();
-		shader.setUniform("projectionMatrix", camera.getProjectionMatrix());
-		shader.setUniform("image", 0);
-		shader.unbind();
+		shader.start();
+		shader.projectionMatrix.loadMatrix(camera.getProjectionMatrix());
+		shader.stop();
 	}
 	
 	public void render() {
-		shader.bind();
+		shader.start();
 		if(Display.isResized()) {
-			shader.setUniform("projectionMatrix", camera.getProjectionMatrix());
+			shader.projectionMatrix.loadMatrix(camera.getProjectionMatrix());
 		}
 		
-		shader.setUniform("viewMatrix", camera.getViewMatrix());
+		shader.viewMatrix.loadMatrix(camera.getViewMatrix());
+		
 		spriteSheet.bind(0);
+		
 		for(Chunk chunk : chunks) {
 			chunk.render();
 		}
-		shader.unbind();
+		shader.start();
 	}
 	
 	public void setTile(int x, int y, int id) {
@@ -110,7 +101,7 @@ public class Terrain {
 		for(Chunk chunk : chunks) {
 			chunk.cleanup();
 		}
-		shader.cleanup();
+		shader.cleanUp();
 	}
 	
 }

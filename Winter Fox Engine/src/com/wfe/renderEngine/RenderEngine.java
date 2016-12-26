@@ -14,10 +14,10 @@ public class RenderEngine {
 	
 	private static RenderEngine renderer;
 	
-	private StaticRenderer staticRenderer;
+	private StaticEntityRenderer staticRenderer;
 	
 	private RenderEngine(Camera camera) throws Exception {
-		this.staticRenderer = new StaticRenderer(camera);
+		this.staticRenderer = new StaticEntityRenderer(camera);
 		
 		OpenglUtils.cullBackFaces(true);
 		OpenglUtils.alphaBlending(true);

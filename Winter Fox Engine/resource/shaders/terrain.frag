@@ -1,12 +1,12 @@
 #version 330 core
 
-in vec2 TexCoords;
+in vec2 TextureCoords;
 
 out vec4 color;
 
-uniform sampler2D image;
+uniform sampler2D diffuseMap;
 
 void main()
 {
-	color = texture(image, TexCoords);
+	color = texture(diffuseMap, TextureCoords);
 }
