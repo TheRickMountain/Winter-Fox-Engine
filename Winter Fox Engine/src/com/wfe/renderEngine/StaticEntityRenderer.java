@@ -35,15 +35,7 @@ public class StaticEntityRenderer {
 	}
 	
 	public void render(Map<Mesh, List<StaticEntity>> entities) {
-		shader.start();
-		if(Display.isResized()) {
-			shader.projectionMatrix.loadMatrix(camera.getProjectionMatrix());
-		}
-		
-		shader.viewMatrix.loadMatrix(camera.getViewMatrix());
-		shader.lightDirection.loadVec3(GeneralSettings.LIGHT_DIR);
-		shader.lightColor.loadVec3(GeneralSettings.LIGHT_COLOR);
-		
+		prepare();	
 		for(Mesh mesh : entities.keySet()) {
 			GL30.glBindVertexArray(mesh.getVAO());
 			GL20.glEnableVertexAttribArray(0);
@@ -73,7 +65,21 @@ public class StaticEntityRenderer {
 			GL20.glDisableVertexAttribArray(1);
 			GL20.glDisableVertexAttribArray(2);
 		}
+		finish();
+	}
+	
+	private void prepare() {
+		shader.start();
+		if(Display.isResized()) {
+			shader.projectionMatrix.loadMatrix(camera.getProjectionMatrix());
+		}
 		
+		shader.viewMatrix.loadMatrix(camera.getViewMatrix());
+		shader.lightDirection.loadVec3(GeneralSettings.LIGHT_DIR);
+		shader.lightColor.loadVec3(GeneralSettings.LIGHT_COLOR);
+	}
+	
+	private void finish() {
 		shader.stop();
 	}
 	

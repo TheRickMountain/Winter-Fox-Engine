@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.wfe.ecs.Component;
 import com.wfe.ecs.Transformation;
+import com.wfe.graph.Vao;
 import com.wfe.math.Matrix4f;
 import com.wfe.math.Vector3f;
 import com.wfe.textures.Texture;

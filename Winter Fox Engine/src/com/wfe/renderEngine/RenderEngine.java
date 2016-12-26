@@ -7,7 +7,6 @@ import org.lwjgl.opengl.GL11;
 
 import com.wfe.animation.AnimatedEntity;
 import com.wfe.core.Camera;
-import com.wfe.core.GeneralSettings;
 import com.wfe.ecs.StaticEntity;
 import com.wfe.graph.Mesh;
 import com.wfe.utils.OpenglUtils;
@@ -36,7 +35,7 @@ public class RenderEngine {
 		clear();
 		
 		staticRenderer.render(entities);
-		animatedRenderer.render(entity, GeneralSettings.LIGHT_DIR, GeneralSettings.LIGHT_COLOR);
+		animatedRenderer.render(entity);
 	}
 
 	public static RenderEngine init(Camera camera) throws Exception {

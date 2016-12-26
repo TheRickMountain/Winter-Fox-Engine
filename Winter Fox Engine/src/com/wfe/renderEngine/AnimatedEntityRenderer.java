@@ -4,10 +4,9 @@ import org.lwjgl.opengl.GL11;
 
 import com.wfe.animation.AnimatedEntity;
 import com.wfe.core.Camera;
+import com.wfe.core.GeneralSettings;
 import com.wfe.math.Matrix4f;
-import com.wfe.math.Vector3f;
 import com.wfe.utils.MathUtils;
-import com.wfe.utils.OpenglUtils;
 
 public class AnimatedEntityRenderer {
 
@@ -23,8 +22,8 @@ public class AnimatedEntityRenderer {
 		this.shader = new AnimatedEntityShader();
 	}
 	
-	public void render(AnimatedEntity entity, Vector3f lightDir, Vector3f lightColor) {
-		prepare(lightDir, lightColor);
+	public void render(AnimatedEntity entity) {
+		prepare();
 		entity.getTexture().bind(0);
 		entity.getModel().bind(0, 1, 2, 3, 4);
 		shader.jointTransforms.loadMatrixArray(entity.getJointTransforms());
@@ -35,11 +34,11 @@ public class AnimatedEntityRenderer {
 		finish();
 	}
 	
-	private void prepare(Vector3f lightDir, Vector3f lightColor) {
+	private void prepare() {
 		shader.start();
 		shader.projectionViewMatrix.loadMatrix(camera.getProjectionViewMatrix());
-		shader.lightDirection.loadVec3(lightDir);
-		shader.lightColor.loadVec3(lightColor);
+		shader.lightDirection.loadVec3(GeneralSettings.LIGHT_DIR);
+		shader.lightColor.loadVec3(GeneralSettings.LIGHT_COLOR);
 	}
 	
 	private void finish() {

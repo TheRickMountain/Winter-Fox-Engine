@@ -1,4 +1,4 @@
-package com.wfe.animation;
+package com.wfe.graph;
 
 import java.util.ArrayList;
 import java.util.List;

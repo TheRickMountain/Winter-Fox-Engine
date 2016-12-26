@@ -1,4 +1,4 @@
-package com.wfe.animation;
+package com.wfe.graph;
 
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
