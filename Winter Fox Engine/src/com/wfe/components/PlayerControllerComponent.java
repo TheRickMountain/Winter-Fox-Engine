@@ -5,7 +5,7 @@ import java.util.List;
 import com.wfe.core.Camera;
 import com.wfe.ecs.Component;
 import com.wfe.ecs.ComponentType;
-import com.wfe.ecs.Entity;
+import com.wfe.ecs.StaticEntity;
 import com.wfe.ecs.Transformation;
 import com.wfe.entities.CrossWall;
 import com.wfe.entities.DoorWall;
@@ -29,7 +29,7 @@ public class PlayerControllerComponent implements Component {
 
 	private AABB bb;
 	
-	private Entity buildEntity;
+	private StaticEntity buildEntity;
 	private int buildEntityType;
 	private int buildEntityRotation;
 	
@@ -90,7 +90,7 @@ public class PlayerControllerComponent implements Component {
 		}
 		
 		if(Mouse.isButtonDown(0)) {
-			Entity entity = null;
+			StaticEntity entity = null;
 			if(buildEntityType == 1) {
 				entity = new Wall(new Transformation(x, 0, z));
 				entity.addComponent(new ColliderComponent(1, 1, 1, entity.getTransform()));
@@ -123,15 +123,10 @@ public class PlayerControllerComponent implements Component {
 		}
 	}
 	
-	private void move(float dt) {		
-		float za = 0.0f;
+	private void move(float dt) {	
+		transform.isMoving = false;
 		float xa = 0.0f;
-		
-		if(Keyboard.isKey(Keys.KEY_W) || Keyboard.isKey(Keys.KEY_UP)) {
-			za = -1.0f;
-		} else if(Keyboard.isKey(Keys.KEY_S) || Keyboard.isKey(Keys.KEY_DOWN)) {
-			za = 1.0f;
-		}
+		float za = 0.0f;
 		
 		if(Keyboard.isKey(Keys.KEY_A) || Keyboard.isKey(Keys.KEY_LEFT)) {
 			xa = -1.0f;
@@ -139,8 +134,40 @@ public class PlayerControllerComponent implements Component {
 			xa = 1.0f;
 		}
 		
+		if(Keyboard.isKey(Keys.KEY_W) || Keyboard.isKey(Keys.KEY_UP)) {
+			za = -1.0f;
+		} else if(Keyboard.isKey(Keys.KEY_S) || Keyboard.isKey(Keys.KEY_DOWN)) {
+			za = 1.0f;
+		}
+		
 		yRot = camera.getYaw();
-		transform.rotY = -yRot;
+		
+		if(xa < 0) {
+			transform.rotY = (-yRot) - 90;
+		} else if(xa > 0) {
+			transform.rotY = (-yRot) + 90;
+		}
+		
+		if(za < 0) {
+			transform.rotY = (-yRot) + 180;
+		} else if(za > 0) {
+			transform.rotY = (-yRot);
+		}
+		
+		if(za > 0 && xa > 0) {
+			transform.rotY = (-yRot) + 45;
+		} else if(za < 0 && xa > 0) {
+			transform.rotY = (-yRot) + 135;
+		} else if(za > 0 && xa < 0) {
+			transform.rotY = (-yRot) - 45;
+		} else if(za < 0 && xa < 0) {
+			transform.rotY = (-yRot) - 135;
+		}
+		
+		if(xa != 0 || za != 0) {
+			transform.isMoving = true;
+		}
+		
 		moveRelative(xa, za, 1.8f, dt);
 		move(xd, zd);
 		

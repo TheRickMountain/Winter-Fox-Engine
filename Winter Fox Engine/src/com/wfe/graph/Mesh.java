@@ -45,7 +45,7 @@ public class Mesh {
 		return indices.length;
 	}
 	
-	public void cleanup() {
+	public void delete() {
 		GL15.glDeleteBuffers(VBO);
 		GL15.glDeleteBuffers(EBO);
 		GL30.glDeleteVertexArrays(VAO);

@@ -9,7 +9,7 @@ import org.lwjgl.opengl.GL30;
 
 import com.wfe.core.Camera;
 import com.wfe.core.Display;
-import com.wfe.ecs.Entity;
+import com.wfe.ecs.StaticEntity;
 import com.wfe.graph.Material;
 import com.wfe.graph.Mesh;
 import com.wfe.math.Matrix4f;
@@ -33,7 +33,7 @@ public class StaticEntityRenderer {
 		shader.stop();
 	}
 	
-	public void render(Map<Mesh, List<Entity>> entities) {
+	public void render(Map<Mesh, List<StaticEntity>> entities) {
 		shader.start();
 		if(Display.isResized()) {
 			shader.projectionMatrix.loadMatrix(camera.getProjectionMatrix());
@@ -47,8 +47,8 @@ public class StaticEntityRenderer {
 			GL20.glEnableVertexAttribArray(1);
 			GL20.glEnableVertexAttribArray(2);
 			
-			List<Entity> batch = entities.get(mesh);
-			for(Entity entity : batch) {
+			List<StaticEntity> batch = entities.get(mesh);
+			for(StaticEntity entity : batch) {
 				Material material = entity.getMaterial();
 				if(entity.building){
 					shader.modelMatrix.loadMatrix(MathUtils.getBuildingModelMatrix(modelMatrix, 

@@ -32,7 +32,7 @@ public class Camera {
 
     public Vector3f playerPosition;
     
-    private Matrix4f projectionMatrix, viewMatrix;
+    private Matrix4f projectionMatrix, viewMatrix, projectionViewMatrix;
     
     //private float horizontal, vertical;
     //private float speed = 4.6f;
@@ -187,6 +187,10 @@ public class Camera {
 
 	public Matrix4f getViewMatrix() {
 		return viewMatrix;
+	}
+	
+	public Matrix4f getProjectionViewMatrix() {
+		return Matrix4f.mul(projectionMatrix, viewMatrix, projectionViewMatrix);
 	}
     
 }

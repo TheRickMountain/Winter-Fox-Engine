@@ -2,7 +2,7 @@ package com.wfe.ecs;
 
 public class Transformation {
 
-	private Entity parent;
+	private StaticEntity parent;
 	
 	public float x = 0;
 	public float y = 0;
@@ -13,7 +13,8 @@ public class Transformation {
 	public float scaleX = 1;
 	public float scaleY = 1;
 	public float scaleZ = 1;
-
+	public boolean isMoving;
+	
 	public Transformation(float x, float y, float z, float rotX, float rotY, float rotZ, float scale) {
 		this.x = x;
 		this.y = y;
@@ -41,11 +42,11 @@ public class Transformation {
 		this.z = z;
 	}
 	
-	protected void setParent(Entity parent) {
+	protected void setParent(StaticEntity parent) {
 		this.parent = parent;
 	}
 
-	public Entity getParent() {
+	public StaticEntity getParent() {
 		return parent;
 	}
 

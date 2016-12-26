@@ -10,7 +10,7 @@ import org.lwjgl.opengl.GL15;
 import org.lwjgl.opengl.GL20;
 import org.lwjgl.opengl.GL30;
 
-import com.wfe.ecs.Entity;
+import com.wfe.ecs.StaticEntity;
 import com.wfe.math.Vector2f;
 
 public class Chunk {
@@ -168,7 +168,7 @@ public class Chunk {
 		rebuild = true;
 	}
 	
-	public boolean setEntity(int x, int y, Entity entity) {
+	public boolean setEntity(int x, int y, StaticEntity entity) {
 		if(!tiles[x][y].isHasEntity()){
 			tiles[x][y].setEntity(entity);
 			return true;

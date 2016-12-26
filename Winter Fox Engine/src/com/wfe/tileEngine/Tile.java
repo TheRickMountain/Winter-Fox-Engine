@@ -1,11 +1,11 @@
 package com.wfe.tileEngine;
 
-import com.wfe.ecs.Entity;
+import com.wfe.ecs.StaticEntity;
 
 public class Tile {
 	
 	public int id;
-	public Entity entity;
+	public StaticEntity entity;
 	private boolean hasEntity = false;
 	public static final Tile GRASS = new Tile(0);
 	public static final Tile DRY_GRASS = new Tile(1);
@@ -26,11 +26,11 @@ public class Tile {
 		this.id = id;
 	}
 
-	public Entity getEntity() {
+	public StaticEntity getEntity() {
 		return entity;
 	}
 
-	public void setEntity(Entity entity) {
+	public void setEntity(StaticEntity entity) {
 		this.entity = entity;
 		this.hasEntity = true;
 	}

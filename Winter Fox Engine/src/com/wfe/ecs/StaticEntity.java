@@ -7,7 +7,7 @@ import com.wfe.game.World;
 import com.wfe.graph.Material;
 import com.wfe.graph.Mesh;
 
-public class Entity {
+public class StaticEntity {
 	
 	private int id;
 	private Transformation transform;
@@ -19,7 +19,7 @@ public class Entity {
 	
 	public boolean building = false;
 	
-	public Entity(Mesh mesh, Material material, Transformation transform) {
+	public StaticEntity(Mesh mesh, Material material, Transformation transform) {
 		this.transform = transform;
 		transform.setParent(this);
 		this.mesh = mesh;

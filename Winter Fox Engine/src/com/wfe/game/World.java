@@ -5,10 +5,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.wfe.animation.AnimatedEntity;
 import com.wfe.components.ColliderComponent;
 import com.wfe.core.Camera;
 import com.wfe.ecs.ComponentType;
-import com.wfe.ecs.Entity;
+import com.wfe.ecs.StaticEntity;
 import com.wfe.graph.Mesh;
 import com.wfe.physics.AABB;
 import com.wfe.renderEngine.RenderEngine;
@@ -23,11 +24,11 @@ public class World {
 	private Terrain terrain;
 	private RenderEngine renderEngine;
 	
-	private List<Entity> entities = new ArrayList<Entity>();
-	private List<Entity> entitiesToRemove = new ArrayList<Entity>();
-	private List<Entity> entitiesToAdd = new ArrayList<Entity>();
+	private List<StaticEntity> entities = new ArrayList<StaticEntity>();
+	private List<StaticEntity> entitiesToRemove = new ArrayList<StaticEntity>();
+	private List<StaticEntity> entitiesToAdd = new ArrayList<StaticEntity>();
 	
-	private Map<Mesh, List<Entity>> entitiesToRender = new HashMap<Mesh, List<Entity>>();
+	private Map<Mesh, List<StaticEntity>> entitiesToRender = new HashMap<Mesh, List<StaticEntity>>();
 	
 	private List<AABB> colliders = new ArrayList<AABB>();
 	
@@ -55,19 +56,19 @@ public class World {
 		camera.update(dt);
 		MousePicker.update();
 		
-		for(Entity entity : entities) {
+		for(StaticEntity entity : entities) {
 			entity.update(dt);
 		}
 		
 		if(!entitiesToAdd.isEmpty()) {
-			for(Entity entity : entitiesToAdd) {
+			for(StaticEntity entity : entitiesToAdd) {
 				entities.add(entity);
 			}
 			entitiesToAdd.clear();
 		}
 		
 		if(!entitiesToRemove.isEmpty()) {
-			for(Entity entity : entitiesToRemove) {
+			for(StaticEntity entity : entitiesToRemove) {
 				entities.remove(entity);
 			}
 			entitiesToRemove.clear();
@@ -75,34 +76,34 @@ public class World {
 		
 	}
 	
-	public void render() {
-		renderEngine.render(entitiesToRender);
+	public void render(AnimatedEntity entity) {
+		renderEngine.render(entitiesToRender, entity);
 		terrain.render();
 	}
 	
-	public void addEntity(Entity entity) {
+	public void addEntity(StaticEntity entity) {
 		if(entity.hasComponent(ComponentType.COLLIDER)) {
 			colliders.add(((ColliderComponent)entity.getComponent(ComponentType.COLLIDER)).getAABB());
 		}
 		this.entitiesToAdd.add(entity);
 		
-		List<Entity> batch = entitiesToRender.get(entity.getMesh());
+		List<StaticEntity> batch = entitiesToRender.get(entity.getMesh());
 		if(batch != null) {
 			batch.add(entity);
 		} else {
-			List<Entity> newBatch = new ArrayList<Entity>();
+			List<StaticEntity> newBatch = new ArrayList<StaticEntity>();
             newBatch.add(entity);
             entitiesToRender.put(entity.getMesh(), newBatch);
 		}
 	}
 	
-	public void removeEntity(Entity entity) {
+	public void removeEntity(StaticEntity entity) {
 		if(entity.hasComponent(ComponentType.COLLIDER)) {
 			colliders.remove(((ColliderComponent)entity.getComponent(ComponentType.COLLIDER)).getAABB());
 		}
 		this.entitiesToRemove.add(entity);
 		
-		List<Entity> batch = entitiesToRender.get(entity.getMesh());
+		List<StaticEntity> batch = entitiesToRender.get(entity.getMesh());
 		batch.remove(entity);
 		
 		if(batch.isEmpty()) {
@@ -119,7 +120,7 @@ public class World {
 		terrain.setTile(x, y, id);
 	}
 	
-	public boolean setTileEntity(int x, int y, Entity entity) {
+	public boolean setTileEntity(int x, int y, StaticEntity entity) {
 		return terrain.setTileEntity(x, y, entity);
 	}
 	

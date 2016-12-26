@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.wfe.core.Camera;
 import com.wfe.core.Display;
-import com.wfe.ecs.Entity;
+import com.wfe.ecs.StaticEntity;
 import com.wfe.textures.Texture;
 import com.wfe.textures.TextureBuilder;
 import com.wfe.utils.MyFile;
@@ -73,7 +73,7 @@ public class Terrain {
 		}
 	}
 	
-	public boolean setTileEntity(int x, int y, Entity entity) {
+	public boolean setTileEntity(int x, int y, StaticEntity entity) {
 		int tX = (x / 16) * 16;
 		int tY = (y / 16) * 16;
 		
