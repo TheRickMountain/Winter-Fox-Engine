@@ -2,14 +2,16 @@ package com.wfe.game;
 
 import com.wfe.animation.AnimatedEntity;
 import com.wfe.animation.Animation;
+import com.wfe.animation.loaders.AnimatedEntityCreator;
+import com.wfe.animation.loaders.AnimationCreator;
 import com.wfe.components.PlayerControllerComponent;
 import com.wfe.core.Camera;
 import com.wfe.core.Display;
 import com.wfe.core.IGameLogic;
 import com.wfe.core.ResourceManager;
+import com.wfe.font.FontType;
+import com.wfe.font.GUIText;
 import com.wfe.graph.OBJLoader;
-import com.wfe.loader.AnimatedEntityCreator;
-import com.wfe.loader.AnimationCreator;
 import com.wfe.math.Vector3f;
 import com.wfe.textures.Texture;
 import com.wfe.textures.TextureBuilder;
@@ -23,13 +25,13 @@ public class Game implements IGameLogic {
 	@Override
 	public void loadResources() throws Exception {
 		/*** Textures ***/
-		TextureBuilder texBuilder = Texture.newTexture(new MyFile("textures/player.png"));
-		texBuilder.normalMipMap();
-		ResourceManager.loadTexture("player", texBuilder.create());
-		
-		texBuilder = Texture.newTexture(new MyFile("textures/wall.png"));
-		texBuilder.normalMipMap();
+		TextureBuilder texBuilder = Texture.newTexture(new MyFile("textures/wall.png"));
+		texBuilder.normalMipMap(-0.4f);
 		ResourceManager.loadTexture("wall", texBuilder.create());
+		
+		texBuilder = Texture.newTexture(new MyFile("font/myFont.png"));
+		texBuilder.normalMipMap();
+		ResourceManager.loadTexture("myFont", texBuilder.create());
 		
 		/*** Meshes ***/
 		ResourceManager.loadMesh("wall", OBJLoader.loadMesh("/models/wall.obj"));
@@ -43,20 +45,20 @@ public class Game implements IGameLogic {
 		camera = new Camera(new Vector3f(16, 0, 16));	
 		
 		World.createWorld(camera);
-
-		/*StaticEntity player = new StaticEntity(OBJLoader.loadMesh("/models/box.obj"), 
-				new Material(ResourceManager.getTexture("player")), new Transformation(16.5f, 0, 16.5f));
-		player.getTransform().setScale(0.4f, 0.9f, 0.4f);
-		player.addComponent(new PlayerControllerComponent(camera, player.getTransform()));
-		World.getWorld().addEntity(player);*/
 		
 		animatedEntity = AnimatedEntityCreator.loadEntity(new MyFile("entity/model.dae"),
 				new MyFile("entity/diffuse.png"));
 		Animation animation = AnimationCreator.loadAnimation(new MyFile("entity/model.dae"));
 		animatedEntity.doAnimation(animation);
 		animatedEntity.getTransform().setPosition(16.5f, 0, 16.5f);
-		animatedEntity.getTransform().setScale(0.25f);
+		animatedEntity.getTransform().setScale(0.2f);
 		animatedEntity.addComponent(new PlayerControllerComponent(camera, animatedEntity.getTransform()));
+
+		FontType fontType = new FontType(ResourceManager.getTexture("myFont").getID(),
+				new MyFile("font/myFont.fnt"));
+		GUIText text = new GUIText("Winter Font Engine", 1.1f, fontType, 0.0f, 0.0f, 0.125f, true);
+		text.setColor(1, 1, 1);
+		World.getWorld().addText(text);
 	}
 
 	@Override

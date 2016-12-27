@@ -1,4 +1,4 @@
-package com.wfe.loader;
+package com.wfe.animation.loaders;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -7,9 +7,9 @@ import com.wfe.animation.Animation;
 import com.wfe.animation.JointTransform;
 import com.wfe.animation.KeyFrame;
 import com.wfe.animation.Quaternion;
-import com.wfe.colladaLoader.AnimationData;
-import com.wfe.colladaLoader.JointTransformData;
-import com.wfe.colladaLoader.KeyFrameData;
+import com.wfe.animation.colladaLoader.AnimationData;
+import com.wfe.animation.colladaLoader.JointTransformData;
+import com.wfe.animation.colladaLoader.KeyFrameData;
 import com.wfe.math.Matrix4f;
 import com.wfe.math.Vector3f;
 import com.wfe.utils.MyFile;

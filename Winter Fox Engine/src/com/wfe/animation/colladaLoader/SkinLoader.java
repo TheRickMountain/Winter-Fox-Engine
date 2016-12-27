@@ -1,9 +1,9 @@
-package com.wfe.colladaLoader;
+package com.wfe.animation.colladaLoader;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import com.wfe.xmlLoader.XmlNode;
+import com.wfe.animation.xmlLoader.XmlNode;
 
 
 public class SkinLoader {

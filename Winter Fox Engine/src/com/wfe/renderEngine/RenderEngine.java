@@ -8,6 +8,8 @@ import org.lwjgl.opengl.GL11;
 import com.wfe.animation.AnimatedEntity;
 import com.wfe.core.Camera;
 import com.wfe.ecs.StaticEntity;
+import com.wfe.font.FontType;
+import com.wfe.font.GUIText;
 import com.wfe.graph.Mesh;
 import com.wfe.utils.OpenglUtils;
 
@@ -15,27 +17,29 @@ public class RenderEngine {
 	
 	private static RenderEngine renderer;
 	
-	private StaticEntityRenderer staticRenderer;
-	private AnimatedEntityRenderer animatedRenderer;
+	private StaticEntityRenderer staticEntityRenderer;
+	private AnimatedEntityRenderer animatedEntityRenderer;
+	private FontRenderer fontRenderer;
 	
 	private RenderEngine(Camera camera) throws Exception {
-		this.staticRenderer = new StaticEntityRenderer(camera);
-		this.animatedRenderer = new AnimatedEntityRenderer(camera);
+		this.staticEntityRenderer = new StaticEntityRenderer(camera);
+		this.animatedEntityRenderer = new AnimatedEntityRenderer(camera);
+		this.fontRenderer = new FontRenderer();
 		
 		OpenglUtils.cullBackFaces(true);
 		OpenglUtils.depthTest(true);
 	}
 	
-	private void clear() {
+	public void clear() {
 		GL11.glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 		GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
 	}
 	
-	public void render(Map<Mesh, List<StaticEntity>> entities, AnimatedEntity entity) {
-		clear();
-		
-		staticRenderer.render(entities);
-		animatedRenderer.render(entity);
+	public void render(Map<Mesh, List<StaticEntity>> entities, AnimatedEntity entity, 
+			Map<FontType, List<GUIText>> texts) {
+		staticEntityRenderer.render(entities);
+		animatedEntityRenderer.render(entity);
+		fontRenderer.render(texts);
 	}
 
 	public static RenderEngine init(Camera camera) throws Exception {
@@ -46,8 +50,9 @@ public class RenderEngine {
 	}
 	
 	public void cleanup() {
-		staticRenderer.cleanup();
-		animatedRenderer.cleanup();
+		staticEntityRenderer.cleanup();
+		animatedEntityRenderer.cleanup();
+		fontRenderer.cleanup();
 	}
 	
 }

@@ -1,8 +1,8 @@
-package com.wfe.colladaLoader;
+package com.wfe.animation.colladaLoader;
 
+import com.wfe.animation.xmlLoader.XmlNode;
+import com.wfe.animation.xmlLoader.XmlParser;
 import com.wfe.utils.MyFile;
-import com.wfe.xmlLoader.XmlNode;
-import com.wfe.xmlLoader.XmlParser;
 
 public class ColladaLoader {
 

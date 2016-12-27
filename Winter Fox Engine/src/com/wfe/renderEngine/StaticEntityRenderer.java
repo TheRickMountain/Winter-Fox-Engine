@@ -44,20 +44,7 @@ public class StaticEntityRenderer {
 			
 			List<StaticEntity> batch = entities.get(mesh);
 			for(StaticEntity entity : batch) {
-				Material material = entity.getMaterial();
-				if(entity.building){
-					shader.modelMatrix.loadMatrix(MathUtils.getBuildingModelMatrix(modelMatrix, 
-							entity.getTransform()));
-				} else {
-					shader.modelMatrix.loadMatrix(MathUtils.getModelMatrix(modelMatrix, 
-							entity.getTransform()));
-				}
-				
-				material.getTexture().bind(0);
-
-				shader.color.loadVec4(material.getColor());
-
-				GL11.glDrawElements(GL11.GL_TRIANGLES, mesh.getIndicesLength(), GL11.GL_UNSIGNED_INT, 0);
+				render(entity);
 			}
 			
 			GL30.glBindVertexArray(0);
@@ -77,6 +64,23 @@ public class StaticEntityRenderer {
 		shader.viewMatrix.loadMatrix(camera.getViewMatrix());
 		shader.lightDirection.loadVec3(GeneralSettings.LIGHT_DIR);
 		shader.lightColor.loadVec3(GeneralSettings.LIGHT_COLOR);
+	}
+	
+	private void render(StaticEntity entity) {
+		Material material = entity.getMaterial();
+		if(entity.building){
+			shader.modelMatrix.loadMatrix(MathUtils.getBuildingModelMatrix(modelMatrix, 
+					entity.getTransform()));
+		} else {
+			shader.modelMatrix.loadMatrix(MathUtils.getModelMatrix(modelMatrix, 
+					entity.getTransform()));
+		}
+		
+		material.getTexture().bind(0);
+
+		shader.color.loadVec4(material.getColor());
+
+		GL11.glDrawElements(GL11.GL_TRIANGLES, entity.getMesh().getIndicesLength(), GL11.GL_UNSIGNED_INT, 0);
 	}
 	
 	private void finish() {

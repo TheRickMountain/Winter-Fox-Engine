@@ -8,6 +8,7 @@ public class TextureBuilder {
 	private boolean mipmap = false;
 	private boolean anisotropic = true;
 	private boolean nearest = false;
+	private float lodBias = 0.0f;
 	
 	private MyFile file;
 	
@@ -23,6 +24,13 @@ public class TextureBuilder {
 	
 	public TextureBuilder clampEdges(){
 		this.clampEdges = true;
+		return this;
+	}
+	
+	public TextureBuilder normalMipMap(float lodBias){
+		this.lodBias = lodBias;
+		this.mipmap = true;
+		this.anisotropic = false;
 		return this;
 	}
 	
@@ -58,6 +66,10 @@ public class TextureBuilder {
 
 	protected boolean isNearest() {
 		return nearest;
+	}
+	
+	protected float getLodBias() {
+		return lodBias;
 	}
 	
 }

@@ -1,4 +1,4 @@
-package com.wfe.xmlLoader;
+package com.wfe.animation.xmlLoader;
 
 import java.io.BufferedReader;
 import java.util.regex.Matcher;

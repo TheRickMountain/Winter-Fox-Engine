@@ -37,6 +37,23 @@ public class Mesh {
 		GL30.glBindVertexArray(0);
 	}
 	
+	public Mesh(float[] vertices, float[] texCoords) {
+		int vertexByteCount = 4 * (2 + 2);
+		
+		VAO = GL30.glGenVertexArrays();
+		GL30.glBindVertexArray(VAO);
+		
+		VBO = GL15.glGenBuffers();
+		GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, VBO);
+		GL15.glBufferData(GL15.GL_ARRAY_BUFFER, OpenglUtils.toFloatBuffer(vertices, texCoords), GL15.GL_STATIC_DRAW);
+		
+		GL20.glVertexAttribPointer(0, 2, GL11.GL_FLOAT, false, vertexByteCount, 0);
+		GL20.glVertexAttribPointer(1, 2, GL11.GL_FLOAT, false, vertexByteCount, 4 * 2);
+		
+		GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, 0);
+		GL30.glBindVertexArray(0);
+	}
+	
 	public int getVAO() {
 		return VAO;
 	}

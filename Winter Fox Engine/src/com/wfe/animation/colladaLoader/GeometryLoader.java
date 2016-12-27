@@ -1,13 +1,13 @@
-package com.wfe.colladaLoader;
+package com.wfe.animation.colladaLoader;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import com.wfe.animation.xmlLoader.XmlNode;
 import com.wfe.math.Matrix4f;
 import com.wfe.math.Vector2f;
 import com.wfe.math.Vector3f;
 import com.wfe.math.Vector4f;
-import com.wfe.xmlLoader.XmlNode;
 
 
 public class GeometryLoader {

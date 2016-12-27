@@ -30,6 +30,7 @@ public class Terrain {
 	
 	public void init() throws Exception {
 		TextureBuilder texBuilder = Texture.newTexture(new MyFile("textures/terrain.png"));
+		texBuilder.normalMipMap(-0.4f);
 		texBuilder.clampEdges().anisotropic().nearestFiltering();
 		spriteSheet = texBuilder.create();
 		

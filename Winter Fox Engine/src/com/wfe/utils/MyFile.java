@@ -30,7 +30,7 @@ public class MyFile {
 		return Class.class.getResourceAsStream(path);
 	}
 	
-	public BufferedReader getReader() throws Exception {
+	public BufferedReader getReader() {
 		try {
 			InputStreamReader isr = new InputStreamReader(getInputStream());
 			BufferedReader reader = new BufferedReader(isr);

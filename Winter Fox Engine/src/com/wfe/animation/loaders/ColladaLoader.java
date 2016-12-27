@@ -1,17 +1,17 @@
-package com.wfe.loader;
+package com.wfe.animation.loaders;
 
-import com.wfe.colladaLoader.AnimatedModelData;
-import com.wfe.colladaLoader.AnimationData;
-import com.wfe.colladaLoader.AnimationLoader;
-import com.wfe.colladaLoader.GeometryLoader;
-import com.wfe.colladaLoader.JointsData;
-import com.wfe.colladaLoader.JointsLoader;
-import com.wfe.colladaLoader.MeshData;
-import com.wfe.colladaLoader.SkinLoader;
-import com.wfe.colladaLoader.SkinningData;
+import com.wfe.animation.colladaLoader.AnimatedModelData;
+import com.wfe.animation.colladaLoader.AnimationData;
+import com.wfe.animation.colladaLoader.AnimationLoader;
+import com.wfe.animation.colladaLoader.GeometryLoader;
+import com.wfe.animation.colladaLoader.JointsData;
+import com.wfe.animation.colladaLoader.JointsLoader;
+import com.wfe.animation.colladaLoader.MeshData;
+import com.wfe.animation.colladaLoader.SkinLoader;
+import com.wfe.animation.colladaLoader.SkinningData;
+import com.wfe.animation.xmlLoader.XmlNode;
+import com.wfe.animation.xmlLoader.XmlParser;
 import com.wfe.utils.MyFile;
-import com.wfe.xmlLoader.XmlNode;
-import com.wfe.xmlLoader.XmlParser;
 
 public class ColladaLoader {
 

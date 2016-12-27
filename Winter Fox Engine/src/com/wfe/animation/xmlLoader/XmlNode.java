@@ -1,4 +1,4 @@
-package com.wfe.xmlLoader;
+package com.wfe.animation.xmlLoader;
 
 import java.util.ArrayList;
 import java.util.HashMap;

@@ -1,4 +1,4 @@
-package com.wfe.colladaLoader;
+package com.wfe.animation.colladaLoader;
 
 public class AnimationData {
 	

@@ -1,11 +1,11 @@
-package com.wfe.loader;
+package com.wfe.animation.loaders;
 
 import com.wfe.animation.AnimatedEntity;
 import com.wfe.animation.Joint;
-import com.wfe.colladaLoader.AnimatedModelData;
-import com.wfe.colladaLoader.JointData;
-import com.wfe.colladaLoader.JointsData;
-import com.wfe.colladaLoader.MeshData;
+import com.wfe.animation.colladaLoader.AnimatedModelData;
+import com.wfe.animation.colladaLoader.JointData;
+import com.wfe.animation.colladaLoader.JointsData;
+import com.wfe.animation.colladaLoader.MeshData;
 import com.wfe.core.GeneralSettings;
 import com.wfe.graph.Vao;
 import com.wfe.textures.Texture;

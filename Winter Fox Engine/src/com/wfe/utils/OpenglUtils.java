@@ -59,9 +59,9 @@ public class OpenglUtils {
                 + texCoords.length);
         int veticesPointer = 0;
         int texturePointer = 0;
-        for (int i = 0; i < vertices.length / 3; i++) {
+        for (int i = 0; i < vertices.length / 2; i++) {
             interleavedBuffer.put(new float[] { vertices[veticesPointer++],
-                    vertices[veticesPointer++], vertices[veticesPointer++] });
+                    vertices[veticesPointer++] });
             interleavedBuffer.put(new float[] { texCoords[texturePointer++],
                     texCoords[texturePointer++] });
         }

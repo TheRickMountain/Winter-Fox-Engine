@@ -10,6 +10,9 @@ import com.wfe.components.ColliderComponent;
 import com.wfe.core.Camera;
 import com.wfe.ecs.ComponentType;
 import com.wfe.ecs.StaticEntity;
+import com.wfe.font.FontType;
+import com.wfe.font.GUIText;
+import com.wfe.font.TextMeshData;
 import com.wfe.graph.Mesh;
 import com.wfe.physics.AABB;
 import com.wfe.renderEngine.RenderEngine;
@@ -31,6 +34,8 @@ public class World {
 	private Map<Mesh, List<StaticEntity>> entitiesToRender = new HashMap<Mesh, List<StaticEntity>>();
 	
 	private List<AABB> colliders = new ArrayList<AABB>();
+	
+	private Map<FontType, List<GUIText>> texts = new HashMap<FontType, List<GUIText>>();
 	
 	private World(Camera camera) throws Exception {
 		this.camera = camera;
@@ -77,8 +82,9 @@ public class World {
 	}
 	
 	public void render(AnimatedEntity entity) {
-		renderEngine.render(entitiesToRender, entity);
+		renderEngine.clear();
 		terrain.render();
+		renderEngine.render(entitiesToRender, entity, texts);
 	}
 	
 	public void addEntity(StaticEntity entity) {
@@ -88,13 +94,11 @@ public class World {
 		this.entitiesToAdd.add(entity);
 		
 		List<StaticEntity> batch = entitiesToRender.get(entity.getMesh());
-		if(batch != null) {
-			batch.add(entity);
-		} else {
-			List<StaticEntity> newBatch = new ArrayList<StaticEntity>();
-            newBatch.add(entity);
-            entitiesToRender.put(entity.getMesh(), newBatch);
-		}
+		if(batch == null) {
+			batch = new ArrayList<StaticEntity>();
+            entitiesToRender.put(entity.getMesh(), batch);
+		} 
+		batch.add(entity);
 	}
 	
 	public void removeEntity(StaticEntity entity) {
@@ -107,8 +111,29 @@ public class World {
 		batch.remove(entity);
 		
 		if(batch.isEmpty()) {
-			batch.clear();
-			batch = null;
+			entitiesToRender.remove(entity.getMesh());
+		}
+	}
+	
+	public void addText(GUIText text) {
+		FontType font = text.getFont();
+		TextMeshData data = font.loadText(text);
+		int vao = new Mesh(data.getVertexPositions(), data.getTextureCoords()).getVAO();
+		text.setMeshInfo(vao, data.getVertexCount());
+		List<GUIText> textBatch = texts.get(font);
+		if(textBatch == null) {
+			textBatch = new ArrayList<GUIText>();
+			texts.put(font, textBatch);
+		}
+		textBatch.add(text);
+	}
+	
+	public void removeText(GUIText text) {
+		List<GUIText> textBatch = texts.get(text.getFont());
+		textBatch.remove(text);
+		if(textBatch.isEmpty()) {
+			texts.remove(text.getFont());
+			// Remove VAO and VBO of this text mesh
 		}
 	}
 	
