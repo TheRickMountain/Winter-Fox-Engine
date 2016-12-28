@@ -8,6 +8,7 @@ public class Material {
 	private Texture texture;
 	private Vector4f color;
 	private int numberOfRows = 1;
+	private boolean hasTransparency = false;
 	
 	public Material(Texture texture) {
 		this(texture, new Vector4f(1, 1, 1, 1));
@@ -31,14 +32,23 @@ public class Material {
 	}
 
 	public void setNumberOfRows(int numberOfRows) {
-		if(numberOfRows <= 0)
+		if(numberOfRows <= 0) {
             numberOfRows = 1;
-		
-		this.numberOfRows = numberOfRows;
+		} else {
+			this.numberOfRows = numberOfRows;
+		}
 	}
 	
 	public void delete() {
 		texture.delete();
+	}
+
+	public boolean isHasTransparency() {
+		return hasTransparency;
+	}
+
+	public void setHasTransparency(boolean hasTransparency) {
+		this.hasTransparency = hasTransparency;
 	}
 
 }

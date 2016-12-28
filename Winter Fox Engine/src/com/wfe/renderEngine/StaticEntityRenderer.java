@@ -14,6 +14,7 @@ import com.wfe.graph.Material;
 import com.wfe.graph.Mesh;
 import com.wfe.math.Matrix4f;
 import com.wfe.utils.MathUtils;
+import com.wfe.utils.OpenglUtils;
 import com.wfe.weather.DirectionalLight;
 
 public class StaticEntityRenderer {
@@ -81,8 +82,14 @@ public class StaticEntityRenderer {
 		shader.numberOfRows.loadInt(material.getNumberOfRows());
 		shader.offset.loadVec2(entity.getTextureXOffset(), entity.getTextureYOffset());
 		shader.color.loadVec4(material.getColor());
+		
+		if(material.isHasTransparency()) {
+			OpenglUtils.cullBackFaces(false);
+		}
 
 		GL11.glDrawElements(GL11.GL_TRIANGLES, entity.getMesh().getIndicesLength(), GL11.GL_UNSIGNED_INT, 0);
+		
+		OpenglUtils.cullBackFaces(true);
 	}
 	
 	private void finish() {

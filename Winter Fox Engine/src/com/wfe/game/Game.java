@@ -70,10 +70,11 @@ public class Game implements IGameLogic {
 		
 		Material fernMaterial = new Material(ResourceManager.getTexture("fern"));
 		fernMaterial.setNumberOfRows(2);
+		fernMaterial.setHasTransparency(true);
 		StaticEntity fern = new StaticEntity(ResourceManager.getMesh("fern"), 
 				fernMaterial, new Transformation(14, 0, 14));
-		fern.textureIndex = 3;
-		fern.getTransform().setScale(0.1f);
+		fern.setTextureIndex(0);
+		fern.getTransform().setScale(0.6f);
 		World.getWorld().addEntity(fern);
 	}
 

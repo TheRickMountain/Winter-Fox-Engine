@@ -19,7 +19,7 @@ public class StaticEntity {
 	
 	public boolean building = false;
 	
-	public int textureIndex = 0;
+	private int textureIndex = 0;
 	
 	public StaticEntity(Mesh mesh, Material material, Transformation transform) {
 		this.transform = transform;
@@ -95,6 +95,21 @@ public class StaticEntity {
 		this.remove = true;
 	}
 	
+	public int getTextureIndex() {
+		return textureIndex;
+	}
+
+	public void setTextureIndex(int textureIndex) {
+		int rowSquare = material.getNumberOfRows() * material.getNumberOfRows() - 1;
+		if(textureIndex < 0) {
+			textureIndex = 0;
+		} else if(textureIndex > rowSquare) {
+			textureIndex = rowSquare;
+		} else {
+			this.textureIndex = textureIndex;
+		}
+	}
+
 	public void delete() {
 		mesh.delete();
 		material.delete();

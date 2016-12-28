@@ -15,6 +15,10 @@ const vec2 lightBias = vec2(0.7, 0.6);
 void main()
 {
 	vec4 diffuseColor = color * texture(diffuseMap, TextureCoords);
+	if(diffuseColor.a <= 0.5f){
+		discard;
+	}
+	
 	vec3 unitNormal = normalize(Normal);
 	float brightness = max(dot(-lightDirection, unitNormal), 0.0) * lightBias.x + lightBias.y;
 	vec3 diffuseLight = brightness * lightColor;
