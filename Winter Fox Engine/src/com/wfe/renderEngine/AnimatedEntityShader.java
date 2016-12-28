@@ -22,12 +22,13 @@ public class AnimatedEntityShader extends ShaderProgram {
 	private UniformSampler diffuseMap = new UniformSampler("diffuseMap");
 	protected UniformVec3 lightDirection = new UniformVec3("lightDirection");
 	protected UniformVec3 lightColor = new UniformVec3("lightColor");
+	protected UniformVec3 ambientLight = new UniformVec3("ambientLight");
 
 	public AnimatedEntityShader() {
 		super(VERTEX_SHADER, FRAGMENT_SHADER, "in_position", "in_textureCoords", "in_normal",
 				"in_jointIndices", "in_weights");
 		super.storeAllUniformLocations(projectionViewMatrix, modelMatrix, diffuseMap, lightDirection,
-				jointTransforms, lightColor);
+				jointTransforms, lightColor, ambientLight);
 		connectTextureUnits();
 	}
 

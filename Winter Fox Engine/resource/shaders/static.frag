@@ -10,6 +10,7 @@ uniform vec4 color;
 uniform vec3 lightDirection;
 uniform vec3 lightColor;
 uniform float hasFakeLighting;
+uniform vec3 ambientLight;
 
 const vec2 lightBias = vec2(0.7, 0.6);
 const vec3 constNormal = vec3(0, 1, 0);
@@ -28,6 +29,6 @@ void main()
 		unitNormal = normalize(Normal);
 	}
 	float brightness = max(dot(-lightDirection, unitNormal), 0.0) * lightBias.x + lightBias.y;
-	vec3 diffuseLight = brightness * lightColor;
+	vec3 diffuseLight = brightness * lightColor + ambientLight;
 	out_Color = diffuseColor * vec4(diffuseLight, 1.0f);
 }

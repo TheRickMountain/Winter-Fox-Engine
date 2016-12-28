@@ -11,15 +11,17 @@ public class TerrainShader extends ShaderProgram {
 	private static final MyFile VERTEX_SHADER = new MyFile("shaders/terrain.vert");
 	private static final MyFile FRAGMENT_SHADER = new MyFile("shaders/terrain.frag");
 	
-	public UniformMatrix projectionMatrix = new UniformMatrix("projectionMatrix");
-	public UniformMatrix viewMatrix = new UniformMatrix("viewMatrix");
-	public UniformSampler diffuseMap = new UniformSampler("diffuseMap");
-	public UniformVec3 lightDirection = new UniformVec3("lightDirection");
-	public UniformVec3 lightColor = new UniformVec3("lightColor");
+	protected UniformMatrix projectionMatrix = new UniformMatrix("projectionMatrix");
+	protected UniformMatrix viewMatrix = new UniformMatrix("viewMatrix");
+	private UniformSampler diffuseMap = new UniformSampler("diffuseMap");
+	protected UniformVec3 lightDirection = new UniformVec3("lightDirection");
+	protected UniformVec3 lightColor = new UniformVec3("lightColor");
+	protected UniformVec3 ambientLight = new UniformVec3("ambientLight");
 	
 	public TerrainShader() {
 		super(VERTEX_SHADER, FRAGMENT_SHADER, "in_position", "in_textureCoords");
-		super.storeAllUniformLocations(projectionMatrix, viewMatrix, diffuseMap, lightDirection, lightColor);
+		super.storeAllUniformLocations(projectionMatrix, viewMatrix, diffuseMap, lightDirection, lightColor,
+				ambientLight);
 		connectTextureUnits();
 	}
 

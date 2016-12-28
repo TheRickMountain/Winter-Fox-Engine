@@ -39,6 +39,7 @@ public class AnimatedEntityRenderer {
 		shader.projectionViewMatrix.loadMatrix(camera.getProjectionViewMatrix());
 		shader.lightDirection.loadVec3(DirectionalLight.LIGHT_DIR);
 		shader.lightColor.loadVec3(DirectionalLight.LIGHT_COLOR);
+		shader.ambientLight.loadVec3(DirectionalLight.AMBIENT_COLOR);
 	}
 	
 	private void finish() {
