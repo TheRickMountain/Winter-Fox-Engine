@@ -57,7 +57,7 @@ public class Game implements IGameLogic {
 		FontType fontType = new FontType(ResourceManager.getTexture("myFont").getID(),
 				new MyFile("font/myFont.fnt"));
 		GUIText text = new GUIText("Winter Font Engine", 1.1f, fontType, 0.0f, 0.0f, 0.125f, true);
-		text.setColor(1, 1, 1);
+		text.setColor(1, 1, 0);
 		World.getWorld().addText(text);
 	}
 

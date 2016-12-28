@@ -12,9 +12,10 @@ public class Vao {
 	
 	private static final int BYTES_PER_FLOAT = 4;
 
-	public final int id;
+	private final int id;
 	private List<Vbo> dataVbos = new ArrayList<Vbo>();
 	private Vbo indexVbo;
+	private int vertexCount;
 	private int indexCount;
 
 	public static Vao create() {
@@ -24,6 +25,18 @@ public class Vao {
 
 	private Vao(int id) {
 		this.id = id;
+	}
+	
+	public int getID() {
+		return id;
+	}
+	
+	public int getVertexCount() {
+		return vertexCount;
+	}
+	
+	public void setVertexCount(int vertexCount) {
+		this.vertexCount = vertexCount;
 	}
 	
 	public int getIndexCount(){
@@ -51,7 +64,7 @@ public class Vao {
 		this.indexCount = indices.length;
 	}
 
-	public void createAttribute(int attribute, float[] data, int attrSize){
+	public void createFloatAttribute(int attribute, float[] data, int attrSize){
 		Vbo dataVbo = Vbo.create(GL15.GL_ARRAY_BUFFER);
 		dataVbo.bind();
 		dataVbo.storeData(data);

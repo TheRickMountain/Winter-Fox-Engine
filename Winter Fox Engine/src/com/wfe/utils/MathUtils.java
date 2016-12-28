@@ -55,6 +55,17 @@ public class MathUtils {
 		return matrix;
 	}
 	
+	public static Matrix4f getModelMatrix(Matrix4f matrix, float x, float y, float z, float rotX, float rotY,
+			float rotZ, float scaleX, float scaleY, float scaleZ) {
+		matrix.setIdentity();
+		Matrix4f.translate(new Vector3f(x, y, z), matrix, matrix);
+		Matrix4f.scale(new Vector3f(scaleX, scaleY, scaleZ), matrix, matrix);
+		Matrix4f.rotate(DEGREES_TO_RADIANS * rotX, AXIS_X, matrix, matrix);
+		Matrix4f.rotate(DEGREES_TO_RADIANS * rotY, AXIS_Y, matrix, matrix);
+		Matrix4f.rotate(DEGREES_TO_RADIANS * rotZ, AXIS_Z, matrix, matrix);
+		return matrix;
+	}
+	
 	public static Matrix4f getBuildingModelMatrix(Matrix4f matrix, Transformation transform){
 		matrix.setIdentity();
 		Matrix4f.translate(new Vector3f(transform.getX(), transform.getY(), transform.getZ()), matrix, matrix);

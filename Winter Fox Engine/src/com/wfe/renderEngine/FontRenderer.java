@@ -5,16 +5,19 @@ import java.util.Map;
 
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL13;
-import org.lwjgl.opengl.GL20;
-import org.lwjgl.opengl.GL30;
 
 import com.wfe.font.FontType;
 import com.wfe.font.GUIText;
+import com.wfe.graph.Vao;
+import com.wfe.math.Matrix4f;
+import com.wfe.utils.MathUtils;
 import com.wfe.utils.OpenglUtils;
 
 public class FontRenderer {
 	
 	private FontShader shader;
+	
+	private Matrix4f modelMatrix = new Matrix4f();
 	
 	protected FontRenderer() throws Exception {	
 		shader = new FontShader();
@@ -42,16 +45,16 @@ public class FontRenderer {
 	}
 	
 	private void render(GUIText text) {
-		shader.translation.loadVec2(text.getX(), text.getY());
+		float newX = (2 * text.getX()) + (-1 + text.getScaleX());
+		float newY = (-2 * text.getY()) + (1 - text.getScaleY());
+		shader.modelMatrix.loadMatrix(MathUtils.getModelMatrix(modelMatrix, newX, newY, 0, 0, 0, 0,
+				text.getScaleX(), text.getScaleY(), 1));
 		shader.color.loadVec3(text.getColor());
 		
-		GL30.glBindVertexArray(text.getMesh());
-		GL20.glEnableVertexAttribArray(0);
-		GL20.glEnableVertexAttribArray(1);
-		GL11.glDrawArrays(GL11.GL_TRIANGLES, 0, text.getVertexCount());
-		GL20.glDisableVertexAttribArray(0);
-		GL20.glDisableVertexAttribArray(1);
-		GL30.glBindVertexArray(0);
+		Vao vao = text.getVao();
+		vao.bind(0, 1);
+		GL11.glDrawArrays(GL11.GL_TRIANGLES, 0, vao.getVertexCount());
+		vao.unbind(0, 1);
 	}
 	
 	private void finish() {

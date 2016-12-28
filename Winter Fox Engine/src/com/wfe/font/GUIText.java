@@ -1,5 +1,6 @@
 package com.wfe.font;
 
+import com.wfe.graph.Vao;
 import com.wfe.math.Vector3f;
 
 public class GUIText {
@@ -7,11 +8,12 @@ public class GUIText {
 	private String textString;
 	private float fontSize;
 	
-	private int textMeshVao;
-	private int vertexCount;
+	private Vao vao;
+	
 	private Vector3f color = new Vector3f(0, 0, 0);
 	
 	private float x, y;
+	private float scaleX, scaleY;
 	private float lineMaxSize;
 	private int numberOfLines;
 	
@@ -26,8 +28,11 @@ public class GUIText {
 		this.font = font;
 		this.x = x;
 		this.y = y;
+		this.scaleX = 1;
+		this.scaleY = 1;
 		this.lineMaxSize = maxLineLength;
 		this.centerText = centered;
+		vao = Vao.create();
 	}
 	
 	public FontType getFont() {
@@ -54,22 +59,50 @@ public class GUIText {
 		return y;
 	}
 	
+	public void setX(float x) {
+		this.x = x;
+	}
+	
+	public void setY(float y) {
+		this.y = y;
+	}
+	
 	public void setPosition(float x, float y) {
 		this.x = x;
 		this.y = y;
 	}
 	
-	public int getMesh() {
-		return textMeshVao;
+	public float getScaleX() {
+		return scaleX;
+	}
+
+	public void setScaleX(float scaleX) {
+		this.scaleX = scaleX;
+	}
+
+	public float getScaleY() {
+		return scaleY;
+	}
+
+	public void setScaleY(float scaleY) {
+		this.scaleY = scaleY;
 	}
 	
-	public void setMeshInfo(int vao, int verticesCount) {
-		this.textMeshVao = vao;
-		this.vertexCount = verticesCount;
+	public void setScale(float scaleX, float scaleY) {
+		this.scaleX = scaleX;
+		this.scaleY = scaleY;
 	}
 	
-	public int getVertexCount() {
-		return this.vertexCount;
+	public void setVao(Vao vao) {
+		this.vao = vao;
+	}
+	
+	public Vao getVao() {
+		return vao;
+	}
+	
+	public void delete() {
+		vao.delete();
 	}
 
 	protected float getFontSize() {

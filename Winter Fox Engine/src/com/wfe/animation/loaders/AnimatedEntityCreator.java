@@ -56,11 +56,11 @@ public class AnimatedEntityCreator {
 		Vao vao = Vao.create();
 		vao.bind();
 		vao.createIndexBuffer(data.getIndices());
-		vao.createAttribute(0, data.getVertices(), 3);
-		vao.createAttribute(1, data.getTextureCoords(), 2);
-		vao.createAttribute(2, data.getNormals(), 3);
+		vao.createFloatAttribute(0, data.getVertices(), 3);
+		vao.createFloatAttribute(1, data.getTextureCoords(), 2);
+		vao.createFloatAttribute(2, data.getNormals(), 3);
 		vao.createIntAttribute(3, data.getJointIds(), 3);
-		vao.createAttribute(4, data.getVertexWeights(), 3);
+		vao.createFloatAttribute(4, data.getVertexWeights(), 3);
 		vao.unbind();
 		return vao;
 	}

@@ -14,6 +14,7 @@ import com.wfe.font.FontType;
 import com.wfe.font.GUIText;
 import com.wfe.font.TextMeshData;
 import com.wfe.graph.Mesh;
+import com.wfe.graph.Vao;
 import com.wfe.physics.AABB;
 import com.wfe.renderEngine.RenderEngine;
 import com.wfe.tileEngine.Terrain;
@@ -118,8 +119,13 @@ public class World {
 	public void addText(GUIText text) {
 		FontType font = text.getFont();
 		TextMeshData data = font.loadText(text);
-		int vao = new Mesh(data.getVertexPositions(), data.getTextureCoords()).getVAO();
-		text.setMeshInfo(vao, data.getVertexCount());
+		Vao vao = Vao.create();
+		vao.bind();
+		vao.createFloatAttribute(0, data.getVertexPositions(), 2);
+		vao.createFloatAttribute(1, data.getTextureCoords(), 2);
+		vao.setVertexCount(data.getVertexPositions().length / 2);
+		vao.unbind();
+		text.setVao(vao);
 		List<GUIText> textBatch = texts.get(font);
 		if(textBatch == null) {
 			textBatch = new ArrayList<GUIText>();
@@ -133,7 +139,7 @@ public class World {
 		textBatch.remove(text);
 		if(textBatch.isEmpty()) {
 			texts.remove(text.getFont());
-			// Remove VAO and VBO of this text mesh
+			text.delete();
 		}
 	}
 	
