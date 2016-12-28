@@ -1,6 +1,7 @@
 package com.wfe.renderEngine;
 
 import com.wfe.shaders.ShaderProgram;
+import com.wfe.shaders.UniformBoolean;
 import com.wfe.shaders.UniformInt;
 import com.wfe.shaders.UniformMatrix;
 import com.wfe.shaders.UniformSampler;
@@ -24,11 +25,12 @@ public class StaticEntityShader extends ShaderProgram {
 	protected UniformVec4 color = new UniformVec4("color");
 	protected UniformVec3 lightDirection = new UniformVec3("lightDirection");
 	protected UniformVec3 lightColor = new UniformVec3("lightColor");
+	protected UniformBoolean hasFakeLighting = new UniformBoolean("hasFakeLighting");
 	
 	public StaticEntityShader() {
 		super(VERTEX_SHADER, FRAGMENT_SHADER, "in_position", "in_textureCoords", "in_normal");
 		super.storeAllUniformLocations(projectionMatrix, viewMatrix, modelMatrix, numberOfRows,
-				offset, diffuseMap, color, lightDirection, lightColor);
+				offset, diffuseMap, color, lightDirection, lightColor, hasFakeLighting);
 		connectTextureUnits();
 	}
 

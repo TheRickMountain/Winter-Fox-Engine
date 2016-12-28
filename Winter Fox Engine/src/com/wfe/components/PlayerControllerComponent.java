@@ -13,7 +13,7 @@ import com.wfe.entities.Wall;
 import com.wfe.entities.WindowWall;
 import com.wfe.game.World;
 import com.wfe.input.Keyboard;
-import com.wfe.input.Keys;
+import com.wfe.input.Key;
 import com.wfe.input.Mouse;
 import com.wfe.math.Vector3f;
 import com.wfe.physics.AABB;
@@ -54,29 +54,29 @@ public class PlayerControllerComponent implements Component {
 			z = (int)tPos.z;
 		}
 		
-		if(Keyboard.isKeyDown(Keys.KEY_1)) {
+		if(Keyboard.isKeyDown(Key.KEY_1)) {
 			removeCurrentBuilding();
 			buildEntity = new Wall(new Transformation(x, 0, z));
 			World.getWorld().addEntity(buildEntity);
 			buildEntityType = 1;
-		} else if(Keyboard.isKeyDown(Keys.KEY_2)) {
+		} else if(Keyboard.isKeyDown(Key.KEY_2)) {
 			removeCurrentBuilding();
 			buildEntity = new CrossWall(new Transformation(x, 0, z));
 			buildEntityType = 2;
 			World.getWorld().addEntity(buildEntity);
-		} else if(Keyboard.isKeyDown(Keys.KEY_3)) {
+		} else if(Keyboard.isKeyDown(Key.KEY_3)) {
 			removeCurrentBuilding();
 			buildEntity = new WindowWall(new Transformation(x, 0, z));
 			buildEntityType = 3;
 			World.getWorld().addEntity(buildEntity);
-		} else if(Keyboard.isKeyDown(Keys.KEY_4)) {
+		} else if(Keyboard.isKeyDown(Key.KEY_4)) {
 			removeCurrentBuilding();
 			buildEntity = new DoorWall(new Transformation(x, 0, z));
 			World.getWorld().addEntity(buildEntity);
 			buildEntityType = 4;
 		}
 		
-		if(Keyboard.isKeyDown(Keys.KEY_R)) {
+		if(Keyboard.isKeyDown(Key.KEY_R)) {
 			buildEntityRotation += 90;
 			
 			if(buildEntityRotation == 360) {
@@ -128,15 +128,15 @@ public class PlayerControllerComponent implements Component {
 		float xa = 0.0f;
 		float za = 0.0f;
 		
-		if(Keyboard.isKey(Keys.KEY_A) || Keyboard.isKey(Keys.KEY_LEFT)) {
+		if(Keyboard.isKey(Key.KEY_A) || Keyboard.isKey(Key.KEY_LEFT)) {
 			xa = -1.0f;
-		} else if(Keyboard.isKey(Keys.KEY_D) || Keyboard.isKey(Keys.KEY_RIGHT)) {
+		} else if(Keyboard.isKey(Key.KEY_D) || Keyboard.isKey(Key.KEY_RIGHT)) {
 			xa = 1.0f;
 		}
 		
-		if(Keyboard.isKey(Keys.KEY_W) || Keyboard.isKey(Keys.KEY_UP)) {
+		if(Keyboard.isKey(Key.KEY_W) || Keyboard.isKey(Key.KEY_UP)) {
 			za = -1.0f;
-		} else if(Keyboard.isKey(Keys.KEY_S) || Keyboard.isKey(Keys.KEY_DOWN)) {
+		} else if(Keyboard.isKey(Key.KEY_S) || Keyboard.isKey(Key.KEY_DOWN)) {
 			za = 1.0f;
 		}
 		

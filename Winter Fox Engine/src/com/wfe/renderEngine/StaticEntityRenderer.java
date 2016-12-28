@@ -82,6 +82,7 @@ public class StaticEntityRenderer {
 		shader.numberOfRows.loadInt(material.getNumberOfRows());
 		shader.offset.loadVec2(entity.getTextureXOffset(), entity.getTextureYOffset());
 		shader.color.loadVec4(material.getColor());
+		shader.hasFakeLighting.loadBoolean(material.isHasFakeLighting());
 		
 		if(material.isHasTransparency()) {
 			OpenglUtils.cullBackFaces(false);

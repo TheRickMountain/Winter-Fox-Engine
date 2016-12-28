@@ -9,11 +9,10 @@ import com.wfe.core.Camera;
 import com.wfe.core.Display;
 import com.wfe.core.IGameLogic;
 import com.wfe.core.ResourceManager;
-import com.wfe.ecs.StaticEntity;
 import com.wfe.ecs.Transformation;
+import com.wfe.entities.Fern;
 import com.wfe.font.FontType;
 import com.wfe.font.GUIText;
-import com.wfe.graph.Material;
 import com.wfe.graph.OBJLoader;
 import com.wfe.math.Vector3f;
 import com.wfe.textures.Texture;
@@ -68,18 +67,22 @@ public class Game implements IGameLogic {
 		text.setColor(1, 1, 1);
 		World.getWorld().addText(text);
 		
-		Material fernMaterial = new Material(ResourceManager.getTexture("fern"));
-		fernMaterial.setNumberOfRows(2);
-		fernMaterial.setHasTransparency(true);
-		StaticEntity fern = new StaticEntity(ResourceManager.getMesh("fern"), 
-				fernMaterial, new Transformation(14, 0, 14));
-		fern.setTextureIndex(0);
-		fern.getTransform().setScale(0.6f);
-		World.getWorld().addEntity(fern);
+		Fern fern1 = new Fern(new Transformation(14, 0, 14));
+		fern1.setTextureIndex(0);
+		World.getWorld().addEntity(fern1);
+		
+		Fern fern2 = new Fern(new Transformation(13, 0, 14));
+		fern2.setTextureIndex(1);
+		World.getWorld().addEntity(fern2);
+		
+		Fern fern3 = new Fern(new Transformation(12, 0, 14));
+		fern3.setTextureIndex(2);
+		World.getWorld().addEntity(fern3);
+		
+		Fern fern4 = new Fern(new Transformation(11, 0, 14));
+		fern4.setTextureIndex(3);
+		World.getWorld().addEntity(fern4);
 	}
-
-	float scale = 0;
-	boolean state = false;
 	
 	@Override
 	public void update(float dt) {		

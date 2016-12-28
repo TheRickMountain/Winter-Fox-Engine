@@ -145,7 +145,7 @@ public class Mouse extends GLFWMouseButtonCallback {
     public void invoke(long window, int button, int action, int mods) {
         Mouse.setButton(button, action != GLFW_RELEASE);
 
-        for (int mod : Keys.MODIFIERS)
+        for (int mod : Key.MODIFIERS)
             if ((mods & mod) == mod)
                 Keyboard.setKey(mod, true);
     }

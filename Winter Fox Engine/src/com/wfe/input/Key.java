@@ -5,7 +5,7 @@ import static org.lwjgl.glfw.GLFW.*;
 /**
  * Created by Rick on 06.10.2016.
  */
-public class Keys {
+public class Key {
 
 	public static final int
     KEY_UNKNOWN = -1,
@@ -133,247 +133,247 @@ public class Keys {
 
 	public static String toString(int keycode) {
 	switch (keycode) {
-	    case Keys.KEY_UNKNOWN:
+	    case Key.KEY_UNKNOWN:
 	        return "Unknown";
-	    case Keys.KEY_SPACE:
+	    case Key.KEY_SPACE:
 	        return "space";
-	    case Keys.KEY_APOSTROPHE:
+	    case Key.KEY_APOSTROPHE:
 	        return "'";
-	    case Keys.KEY_COMMA:
+	    case Key.KEY_COMMA:
 	        return ",";
-	    case Keys.KEY_MINUS:
+	    case Key.KEY_MINUS:
 	        return "-";
-	    case Keys.KEY_PERIOD:
+	    case Key.KEY_PERIOD:
 	        return ".";
-	    case Keys.KEY_SLASH:
+	    case Key.KEY_SLASH:
 	        return "/";
-	    case Keys.KEY_0:
+	    case Key.KEY_0:
 	        return "0";
-	    case Keys.KEY_1:
+	    case Key.KEY_1:
 	        return "1";
-	    case Keys.KEY_2:
+	    case Key.KEY_2:
 	        return "2";
-	    case Keys.KEY_3:
+	    case Key.KEY_3:
 	        return "3";
-	    case Keys.KEY_4:
+	    case Key.KEY_4:
 	        return "4";
-	    case Keys.KEY_5:
+	    case Key.KEY_5:
 	        return "5";
-	    case Keys.KEY_6:
+	    case Key.KEY_6:
 	        return "6";
-	    case Keys.KEY_7:
+	    case Key.KEY_7:
 	        return "7";
-	    case Keys.KEY_8:
+	    case Key.KEY_8:
 	        return "8";
-	    case Keys.KEY_9:
+	    case Key.KEY_9:
 	        return "9";
-	    case Keys.KEY_SEMICOLON:
+	    case Key.KEY_SEMICOLON:
 	        return ";";
-	    case Keys.KEY_EQUAL:
+	    case Key.KEY_EQUAL:
 	        return "=";
-	    case Keys.KEY_A:
+	    case Key.KEY_A:
 	        return "a";
-	    case Keys.KEY_B:
+	    case Key.KEY_B:
 	        return "b";
-	    case Keys.KEY_C:
+	    case Key.KEY_C:
 	        return "c";
-	    case Keys.KEY_D:
+	    case Key.KEY_D:
 	        return "d";
-	    case Keys.KEY_E:
+	    case Key.KEY_E:
 	        return "e";
-	    case Keys.KEY_F:
+	    case Key.KEY_F:
 	        return "f";
-	    case Keys.KEY_G:
+	    case Key.KEY_G:
 	        return "g";
-	    case Keys.KEY_H:
+	    case Key.KEY_H:
 	        return "h";
-	    case Keys.KEY_I:
+	    case Key.KEY_I:
 	        return "i";
-	    case Keys.KEY_J:
+	    case Key.KEY_J:
 	        return "j";
-	    case Keys.KEY_K:
+	    case Key.KEY_K:
 	        return "k";
-	    case Keys.KEY_L:
+	    case Key.KEY_L:
 	        return "l";
-	    case Keys.KEY_M:
+	    case Key.KEY_M:
 	        return "m";
-	    case Keys.KEY_N:
+	    case Key.KEY_N:
 	        return "n";
-	    case Keys.KEY_O:
+	    case Key.KEY_O:
 	        return "o";
-	    case Keys.KEY_P:
+	    case Key.KEY_P:
 	        return "p";
-	    case Keys.KEY_Q:
+	    case Key.KEY_Q:
 	        return "q";
-	    case Keys.KEY_R:
+	    case Key.KEY_R:
 	        return "r";
-	    case Keys.KEY_S:
+	    case Key.KEY_S:
 	        return "s";
-	    case Keys.KEY_T:
+	    case Key.KEY_T:
 	        return "t";
-	    case Keys.KEY_U:
+	    case Key.KEY_U:
 	        return "u";
-	    case Keys.KEY_V:
+	    case Key.KEY_V:
 	        return "v";
-	    case Keys.KEY_W:
+	    case Key.KEY_W:
 	        return "w";
-	    case Keys.KEY_X:
+	    case Key.KEY_X:
 	        return "x";
-	    case Keys.KEY_Y:
+	    case Key.KEY_Y:
 	        return "y";
-	    case Keys.KEY_Z:
+	    case Key.KEY_Z:
 	        return "z";
-	    case Keys.KEY_LEFT_BRACKET:
+	    case Key.KEY_LEFT_BRACKET:
 	        return "[";
-	    case Keys.KEY_BACKSLASH:
+	    case Key.KEY_BACKSLASH:
 	        return "\\";
-	    case Keys.KEY_RIGHT_BRACKET:
+	    case Key.KEY_RIGHT_BRACKET:
 	        return "]";
-	    case Keys.KEY_GRAVE_ACCENT:
+	    case Key.KEY_GRAVE_ACCENT:
 	        return "`";
-	    case Keys.KEY_WORLD_1:
+	    case Key.KEY_WORLD_1:
 	        return "world 1";
-	    case Keys.KEY_WORLD_2:
+	    case Key.KEY_WORLD_2:
 	        return "world 2";
-	    case Keys.KEY_ESCAPE:
+	    case Key.KEY_ESCAPE:
 	        return "escape";
-	    case Keys.KEY_ENTER:
+	    case Key.KEY_ENTER:
 	        return "enter";
-	    case Keys.KEY_TAB:
+	    case Key.KEY_TAB:
 	        return "tab";
-	    case Keys.KEY_BACKSPACE:
+	    case Key.KEY_BACKSPACE:
 	        return "backspace";
-	    case Keys.KEY_INSERT:
+	    case Key.KEY_INSERT:
 	        return "insert";
-	    case Keys.KEY_DELETE:
+	    case Key.KEY_DELETE:
 	        return "delete";
-	    case Keys.KEY_RIGHT:
+	    case Key.KEY_RIGHT:
 	        return "right";
-	    case Keys.KEY_LEFT:
+	    case Key.KEY_LEFT:
 	        return "left";
-	    case Keys.KEY_DOWN:
+	    case Key.KEY_DOWN:
 	        return "down";
-	    case Keys.KEY_UP:
+	    case Key.KEY_UP:
 	        return "up";
-	    case Keys.KEY_PAGE_UP:
+	    case Key.KEY_PAGE_UP:
 	        return "page up";
-	    case Keys.KEY_PAGE_DOWN:
+	    case Key.KEY_PAGE_DOWN:
 	        return "page down";
-	    case Keys.KEY_HOME:
+	    case Key.KEY_HOME:
 	        return "home";
-	    case Keys.KEY_END:
+	    case Key.KEY_END:
 	        return "end";
-	    case Keys.KEY_CAPS_LOCK:
+	    case Key.KEY_CAPS_LOCK:
 	        return "caps lock";
-	    case Keys.KEY_SCROLL_LOCK:
+	    case Key.KEY_SCROLL_LOCK:
 	        return "scroll lock";
-	    case Keys.KEY_NUM_LOCK:
+	    case Key.KEY_NUM_LOCK:
 	        return "num lock";
-	    case Keys.KEY_PRINT_SCREEN:
+	    case Key.KEY_PRINT_SCREEN:
 	        return "print screen";
-	    case Keys.KEY_PAUSE:
+	    case Key.KEY_PAUSE:
 	        return "pause";
-	    case Keys.KEY_F1:
+	    case Key.KEY_F1:
 	        return "f1";
-	    case Keys.KEY_F2:
+	    case Key.KEY_F2:
 	        return "f2";
-	    case Keys.KEY_F3:
+	    case Key.KEY_F3:
 	        return "f3";
-	    case Keys.KEY_F4:
+	    case Key.KEY_F4:
 	        return "f4";
-	    case Keys.KEY_F5:
+	    case Key.KEY_F5:
 	        return "f5";
-	    case Keys.KEY_F6:
+	    case Key.KEY_F6:
 	        return "f6";
-	    case Keys.KEY_F7:
+	    case Key.KEY_F7:
 	        return "f7";
-	    case Keys.KEY_F8:
+	    case Key.KEY_F8:
 	        return "f8";
-	    case Keys.KEY_F9:
+	    case Key.KEY_F9:
 	        return "f9";
-	    case Keys.KEY_F10:
+	    case Key.KEY_F10:
 	        return "f10";
-	    case Keys.KEY_F11:
+	    case Key.KEY_F11:
 	        return "f11";
-	    case Keys.KEY_F12:
+	    case Key.KEY_F12:
 	        return "f12";
-	    case Keys.KEY_F13:
+	    case Key.KEY_F13:
 	        return "f13";
-	    case Keys.KEY_F14:
+	    case Key.KEY_F14:
 	        return "f14";
-	    case Keys.KEY_F15:
+	    case Key.KEY_F15:
 	        return "f15";
-	    case Keys.KEY_F16:
+	    case Key.KEY_F16:
 	        return "f16";
-	    case Keys.KEY_F17:
+	    case Key.KEY_F17:
 	        return "f17";
-	    case Keys.KEY_F18:
+	    case Key.KEY_F18:
 	        return "f18";
-	    case Keys.KEY_F19:
+	    case Key.KEY_F19:
 	        return "f19";
-	    case Keys.KEY_F20:
+	    case Key.KEY_F20:
 	        return "f20";
-	    case Keys.KEY_F21:
+	    case Key.KEY_F21:
 	        return "f21";
-	    case Keys.KEY_F22:
+	    case Key.KEY_F22:
 	        return "f22";
-	    case Keys.KEY_F23:
+	    case Key.KEY_F23:
 	        return "f23";
-	    case Keys.KEY_F24:
+	    case Key.KEY_F24:
 	        return "f24";
-	    case Keys.KEY_F25:
+	    case Key.KEY_F25:
 	        return "f25";
-	    case Keys.KEY_KP_0:
+	    case Key.KEY_KP_0:
 	        return "num 0";
-	    case Keys.KEY_KP_1:
+	    case Key.KEY_KP_1:
 	        return "num 1";
-	    case Keys.KEY_KP_2:
+	    case Key.KEY_KP_2:
 	        return "num 2";
-	    case Keys.KEY_KP_3:
+	    case Key.KEY_KP_3:
 	        return "num 3";
-	    case Keys.KEY_KP_4:
+	    case Key.KEY_KP_4:
 	        return "num 4";
-	    case Keys.KEY_KP_5:
+	    case Key.KEY_KP_5:
 	        return "num 5";
-	    case Keys.KEY_KP_6:
+	    case Key.KEY_KP_6:
 	        return "num 6";
-	    case Keys.KEY_KP_7:
+	    case Key.KEY_KP_7:
 	        return "num 7";
-	    case Keys.KEY_KP_8:
+	    case Key.KEY_KP_8:
 	        return "num 8";
-	    case Keys.KEY_KP_9:
+	    case Key.KEY_KP_9:
 	        return "num 9";
-	    case Keys.KEY_KP_DECIMAL:
+	    case Key.KEY_KP_DECIMAL:
 	        return "num decimal";
-	    case Keys.KEY_KP_DIVIDE:
+	    case Key.KEY_KP_DIVIDE:
 	        return "num divide";
-	    case Keys.KEY_KP_MULTIPLY:
+	    case Key.KEY_KP_MULTIPLY:
 	        return "num multiply";
-	    case Keys.KEY_KP_SUBTRACT:
+	    case Key.KEY_KP_SUBTRACT:
 	        return "num subtract";
-	    case Keys.KEY_KP_ADD:
+	    case Key.KEY_KP_ADD:
 	        return "num add";
-	    case Keys.KEY_KP_ENTER:
+	    case Key.KEY_KP_ENTER:
 	        return "num enter";
-	    case Keys.KEY_KP_EQUAL:
+	    case Key.KEY_KP_EQUAL:
 	        return "num equal";
-	    case Keys.KEY_LEFT_SHIFT:
+	    case Key.KEY_LEFT_SHIFT:
 	        return "left shift";
-	    case Keys.KEY_LEFT_CONTROL:
+	    case Key.KEY_LEFT_CONTROL:
 	        return "left control";
-	    case Keys.KEY_LEFT_ALT:
+	    case Key.KEY_LEFT_ALT:
 	        return "left alt";
-	    case Keys.KEY_LEFT_SUPER:
+	    case Key.KEY_LEFT_SUPER:
 	        return "left super";
-	    case Keys.KEY_RIGHT_SHIFT:
+	    case Key.KEY_RIGHT_SHIFT:
 	        return "right shift";
-	    case Keys.KEY_RIGHT_CONTROL:
+	    case Key.KEY_RIGHT_CONTROL:
 	        return "right control";
-	    case Keys.KEY_RIGHT_ALT:
+	    case Key.KEY_RIGHT_ALT:
 	        return "right alt";
-	    case Keys.KEY_RIGHT_SUPER:
+	    case Key.KEY_RIGHT_SUPER:
 	        return "right super";
-	    case Keys.KEY_MENU:
+	    case Key.KEY_MENU:
 	        return "menu";
 	    default:
 	        return null;
