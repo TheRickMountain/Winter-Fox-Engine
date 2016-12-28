@@ -44,7 +44,7 @@ public class World {
 	
 	private World(Camera camera) throws Exception {
 		this.camera = camera;
-		this.terrain = new Terrain(50, 50, camera);
+		this.terrain = new Terrain(10, 10, camera);
 		this.renderEngine = RenderEngine.init(camera);
 		this.weather = new Weather();
 		MousePicker.setUpMousePicker(camera);

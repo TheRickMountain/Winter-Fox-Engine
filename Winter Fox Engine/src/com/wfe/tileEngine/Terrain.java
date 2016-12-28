@@ -23,6 +23,7 @@ public class Terrain {
 	private TerrainShader shader;
 	
 	private HeightGenerator heightGenerator;
+	private HeightGenerator dryGrassGenerator;
 	
 	public Terrain(int sizeX, int sizeZ, Camera camera) throws Exception {
 		this.sizeX = sizeX;
@@ -30,6 +31,7 @@ public class Terrain {
 		this.camera = camera;
 		shader = new TerrainShader();
 		heightGenerator = new HeightGenerator();
+		dryGrassGenerator = new HeightGenerator();
 		init();
 	}
 	

@@ -41,10 +41,10 @@ public class Chunk {
 		for(int x = 0; x < 16; x++) {
 			for(int y = 0; y < 16; y++) {
 				float height = heightGenerator.generateHeight(x + iterX, y + iterY);
-				if(height > 0)
+				if(height > -0.1f)
 					tiles[x][y] = new Tile(0);
 				else
-					tiles[x][y] = new Tile(7);
+					tiles[x][y] = new Tile(12);
 			}
 		}
 		

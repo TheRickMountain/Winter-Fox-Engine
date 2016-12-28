@@ -58,8 +58,9 @@ public class Material {
 		return hasFakeLighting;
 	}
 
-	public void setHasFakeLighting(boolean hasFakeLighting) {
+	public Material setHasFakeLighting(boolean hasFakeLighting) {
 		this.hasFakeLighting = hasFakeLighting;
+		return this;
 	}
 
 }

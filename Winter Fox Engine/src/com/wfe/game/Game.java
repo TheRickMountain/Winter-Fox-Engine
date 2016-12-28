@@ -11,6 +11,7 @@ import com.wfe.core.IGameLogic;
 import com.wfe.core.ResourceManager;
 import com.wfe.ecs.Transformation;
 import com.wfe.entities.Fern;
+import com.wfe.entities.Grass;
 import com.wfe.font.FontType;
 import com.wfe.font.GUIText;
 import com.wfe.graph.OBJLoader;
@@ -39,12 +40,17 @@ public class Game implements IGameLogic {
 		texBuilder.normalMipMap(-0.4f);
 		ResourceManager.loadTexture("fern", texBuilder.create());
 		
+		texBuilder = Texture.newTexture(new MyFile("entity/grass/grass.png"));
+		texBuilder.normalMipMap(-0.4f);
+		ResourceManager.loadTexture("grass", texBuilder.create());
+		
 		/*** Meshes ***/
 		ResourceManager.loadMesh("wall", OBJLoader.loadMesh("/models/wall.obj"));
 		ResourceManager.loadMesh("cross_wall", OBJLoader.loadMesh("/models/cross_wall.obj"));
 		ResourceManager.loadMesh("door_wall", OBJLoader.loadMesh("/models/door_wall.obj"));
 		ResourceManager.loadMesh("window_wall", OBJLoader.loadMesh("/models/window_wall.obj"));
 		ResourceManager.loadMesh("fern", OBJLoader.loadMesh("/entity/fern/fern.obj"));
+		ResourceManager.loadMesh("grass", OBJLoader.loadMesh("/entity/grass/grass.obj"));
 	}
 	
 	@Override
@@ -57,7 +63,7 @@ public class Game implements IGameLogic {
 				new MyFile("entity/diffuse.png"));
 		Animation animation = AnimationCreator.loadAnimation(new MyFile("entity/model.dae"));
 		player.doAnimation(animation);
-		player.getTransform().setPosition(400f, 0, 400f);
+		player.getTransform().setPosition(80, 0, 80);
 		player.getTransform().setScale(0.2f);
 		player.addComponent(new PlayerControllerComponent(camera, player.getTransform()));
 
@@ -67,21 +73,34 @@ public class Game implements IGameLogic {
 		text.setColor(1, 1, 1);
 		World.getWorld().addText(text);
 		
-		Fern fern1 = new Fern(new Transformation(414, 0, 414));
+		Fern fern1 = new Fern(new Transformation(84, 0, 84));
 		fern1.setTextureIndex(0);
 		World.getWorld().addEntity(fern1);
 		
-		Fern fern2 = new Fern(new Transformation(413, 0, 414));
+		Fern fern2 = new Fern(new Transformation(83, 0, 84));
 		fern2.setTextureIndex(1);
 		World.getWorld().addEntity(fern2);
 		
-		Fern fern3 = new Fern(new Transformation(412, 0, 414));
+		Fern fern3 = new Fern(new Transformation(82, 0, 84));
 		fern3.setTextureIndex(2);
 		World.getWorld().addEntity(fern3);
 		
-		Fern fern4 = new Fern(new Transformation(411, 0, 414));
+		Fern fern4 = new Fern(new Transformation(81, 0, 84));
 		fern4.setTextureIndex(3);
 		World.getWorld().addEntity(fern4);
+		
+		Grass grass = new Grass(new Transformation(85, 0, 85));
+		grass.setTextureIndex(0);
+		World.getWorld().addEntity(grass);
+		
+		Grass grass1 = new Grass(new Transformation(85, 0, 86));
+		grass1.setTextureIndex(1);
+		World.getWorld().addEntity(grass1);
+		
+		Grass grass2 = new Grass(new Transformation(85, 0, 87));
+		grass2.setTextureIndex(2);
+		World.getWorld().addEntity(grass2);
+		
 	}
 	
 	@Override
