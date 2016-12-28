@@ -24,21 +24,27 @@ public class Chunk {
 	
 	private Tile[][] tiles;
 	
+	public boolean render = true;
+	
 	public static final float SPRITE_SHEET = 4;
 	private boolean rebuild = false;
 	
-	public Chunk(float x, float z) {
+	public Chunk(int x, int z, HeightGenerator heightGenerator) {
 		position = new Vector2f(x * 16, z * 16);
 		
-		init();
+		init(heightGenerator, (int)position.x, (int)position.y);
 		initGL();
 	}
 	
-	public void init() {
+	public void init(HeightGenerator heightGenerator, int iterX, int iterY) {
 		tiles = new Tile[16][16];
 		for(int x = 0; x < 16; x++) {
 			for(int y = 0; y < 16; y++) {
-				tiles[x][y] = new Tile(0);
+				float height = heightGenerator.generateHeight(x + iterX, y + iterY);
+				if(height > 0)
+					tiles[x][y] = new Tile(0);
+				else
+					tiles[x][y] = new Tile(7);
 			}
 		}
 		
@@ -72,7 +78,7 @@ public class Chunk {
 		
 		// Vertices
 		for(int x = (int)position.x; x < (int)position.x + SIZE; x++) {
-			for(int y = (int)position.y; y < (int)position.y + SIZE; y++) {			
+			for(int y = (int)position.y; y < (int)position.y + SIZE; y++) {	
 				float x0 = (float)x + 0.0f;
 		        float x1 = (float)x + 1.0f;
 		        float y0 = (float)y + 0.0f;
@@ -95,7 +101,7 @@ public class Chunk {
 		// Texture Coords
 		for(int x = 0; x < SIZE; x++) {
 			for(int y = 0; y < SIZE; y++) {
-		        float u0 = (tiles[x][y].getId() % (int)SPRITE_SHEET) / SPRITE_SHEET;
+				float u0 = (tiles[x][y].getId() % (int)SPRITE_SHEET) / SPRITE_SHEET;
 		        float u1 = u0 + (1.0f / SPRITE_SHEET);
 		        float v0 = (tiles[x][y].getId() / (int)SPRITE_SHEET) / SPRITE_SHEET;
 		        float v1 = v0 + (1.0f / SPRITE_SHEET);

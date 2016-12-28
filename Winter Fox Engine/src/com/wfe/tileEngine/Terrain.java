@@ -8,6 +8,7 @@ import com.wfe.core.Display;
 import com.wfe.ecs.StaticEntity;
 import com.wfe.textures.Texture;
 import com.wfe.textures.TextureBuilder;
+import com.wfe.utils.MathUtils;
 import com.wfe.utils.MyFile;
 import com.wfe.weather.DirectionalLight;
 
@@ -21,10 +22,14 @@ public class Terrain {
 	
 	private TerrainShader shader;
 	
+	private HeightGenerator heightGenerator;
+	
 	public Terrain(int sizeX, int sizeZ, Camera camera) throws Exception {
 		this.sizeX = sizeX;
 		this.sizeZ = sizeZ;
 		this.camera = camera;
+		shader = new TerrainShader();
+		heightGenerator = new HeightGenerator();
 		init();
 	}
 	
@@ -36,15 +41,24 @@ public class Terrain {
 		
 		for(int x = 0; x < sizeX; x++) {
 			for(int y = 0; y < sizeZ; y++) {
-				chunks.add(new Chunk(x, y));
+				chunks.add(new Chunk(x, y, heightGenerator));
 			}
 		}
-		
-		shader = new TerrainShader();
 		
 		shader.start();
 		shader.projectionMatrix.loadMatrix(camera.getProjectionMatrix());
 		shader.stop();
+	}
+	
+	public void update(float x, float z) {
+		for(Chunk chunk : chunks) {
+			float distance = MathUtils.getDistance(x, z, chunk.getPosX(), chunk.getPosY());
+			if(distance >= 48) {
+				chunk.render = false;
+			} else {
+				chunk.render = true;
+			}
+		}
 	}
 	
 	public void render() {
@@ -61,7 +75,8 @@ public class Terrain {
 		spriteSheet.bind(0);
 		
 		for(Chunk chunk : chunks) {
-			chunk.render();
+			if(chunk.render)
+				chunk.render();
 		}
 		shader.start();
 	}

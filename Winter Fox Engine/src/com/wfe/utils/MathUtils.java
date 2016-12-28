@@ -79,6 +79,12 @@ public class MathUtils {
 		return matrix;
 	}
 	
+	public static float getDistance(float x1, float y1, float x2, float y2) {
+		float dX = x1 - x2;
+		float dY = y1 - y2;
+		return (float) Math.sqrt((dX * dX) + (dY * dY));
+	}
+	
 	public static float getAverageOfList(List<Float> numbers) {
         float total = 0;
         for (Float number : numbers) {

@@ -44,7 +44,7 @@ public class World {
 	
 	private World(Camera camera) throws Exception {
 		this.camera = camera;
-		this.terrain = new Terrain(2, 2, camera);
+		this.terrain = new Terrain(50, 50, camera);
 		this.renderEngine = RenderEngine.init(camera);
 		this.weather = new Weather();
 		MousePicker.setUpMousePicker(camera);
@@ -59,10 +59,11 @@ public class World {
 		return WORLD;
 	}
 	
-	public void update(float dt) {
+	public void update(float dt, AnimatedEntity player) {
 		camera.update(dt);
 		MousePicker.update();
 		updateWeather(dt);
+		terrain.update(player.getTransform().x, player.getTransform().z);
 		
 		for(StaticEntity entity : entities) {
 			entity.update(dt);

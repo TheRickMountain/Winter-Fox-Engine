@@ -22,7 +22,7 @@ import com.wfe.utils.MyFile;
 public class Game implements IGameLogic {
 	
 	Camera camera;
-	AnimatedEntity animatedEntity;
+	AnimatedEntity player;
 	
 	@Override
 	public void loadResources() throws Exception {
@@ -53,13 +53,13 @@ public class Game implements IGameLogic {
 		
 		World.createWorld(camera);
 		
-		animatedEntity = AnimatedEntityCreator.loadEntity(new MyFile("entity/model.dae"),
+		player = AnimatedEntityCreator.loadEntity(new MyFile("entity/model.dae"),
 				new MyFile("entity/diffuse.png"));
 		Animation animation = AnimationCreator.loadAnimation(new MyFile("entity/model.dae"));
-		animatedEntity.doAnimation(animation);
-		animatedEntity.getTransform().setPosition(16.5f, 0, 16.5f);
-		animatedEntity.getTransform().setScale(0.2f);
-		animatedEntity.addComponent(new PlayerControllerComponent(camera, animatedEntity.getTransform()));
+		player.doAnimation(animation);
+		player.getTransform().setPosition(400f, 0, 400f);
+		player.getTransform().setScale(0.2f);
+		player.addComponent(new PlayerControllerComponent(camera, player.getTransform()));
 
 		FontType fontType = new FontType(ResourceManager.getTexture("myFont").getID(),
 				new MyFile("font/myFont.fnt"));
@@ -67,32 +67,32 @@ public class Game implements IGameLogic {
 		text.setColor(1, 1, 1);
 		World.getWorld().addText(text);
 		
-		Fern fern1 = new Fern(new Transformation(14, 0, 14));
+		Fern fern1 = new Fern(new Transformation(414, 0, 414));
 		fern1.setTextureIndex(0);
 		World.getWorld().addEntity(fern1);
 		
-		Fern fern2 = new Fern(new Transformation(13, 0, 14));
+		Fern fern2 = new Fern(new Transformation(413, 0, 414));
 		fern2.setTextureIndex(1);
 		World.getWorld().addEntity(fern2);
 		
-		Fern fern3 = new Fern(new Transformation(12, 0, 14));
+		Fern fern3 = new Fern(new Transformation(412, 0, 414));
 		fern3.setTextureIndex(2);
 		World.getWorld().addEntity(fern3);
 		
-		Fern fern4 = new Fern(new Transformation(11, 0, 14));
+		Fern fern4 = new Fern(new Transformation(411, 0, 414));
 		fern4.setTextureIndex(3);
 		World.getWorld().addEntity(fern4);
 	}
 	
 	@Override
 	public void update(float dt) {		
-		World.getWorld().update(dt);
-		animatedEntity.update(dt);
+		World.getWorld().update(dt, player);
+		player.update(dt);
 	}
 
 	@Override
 	public void render() {
-		World.getWorld().render(animatedEntity);
+		World.getWorld().render(player);
 	}
 
 	@Override
