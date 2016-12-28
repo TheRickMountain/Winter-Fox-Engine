@@ -5,8 +5,8 @@ import com.wfe.animation.Joint;
 import com.wfe.animation.colladaLoader.AnimatedModelData;
 import com.wfe.animation.colladaLoader.JointData;
 import com.wfe.animation.colladaLoader.JointsData;
-import com.wfe.animation.colladaLoader.MeshData;
-import com.wfe.core.GeneralSettings;
+import com.wfe.core.DirectionalLight;
+import com.wfe.graph.MeshData;
 import com.wfe.graph.Vao;
 import com.wfe.textures.Texture;
 import com.wfe.utils.MyFile;
@@ -23,7 +23,7 @@ public class AnimatedEntityCreator {
 	 */
 	public static AnimatedEntity loadEntity(MyFile modelFile, MyFile textureFile) {
 
-		AnimatedModelData entityData = ColladaLoader.loadColladaModel(modelFile, GeneralSettings.MAX_WEIGHTS);
+		AnimatedModelData entityData = ColladaLoader.loadColladaModel(modelFile, DirectionalLight.MAX_WEIGHTS);
 
 		Vao model = createVao(entityData.getMeshData());
 		Texture texture = loadTexture(textureFile);

@@ -1,5 +1,7 @@
 package com.wfe.animation.colladaLoader;
 
+import com.wfe.graph.MeshData;
+
 public class AnimatedModelData {
 
 	private final JointsData joints;

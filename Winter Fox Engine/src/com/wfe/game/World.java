@@ -19,6 +19,7 @@ import com.wfe.physics.AABB;
 import com.wfe.renderEngine.RenderEngine;
 import com.wfe.tileEngine.Terrain;
 import com.wfe.utils.MousePicker;
+import com.wfe.weather.Weather;
 
 public class World {
 	
@@ -38,10 +39,14 @@ public class World {
 	
 	private Map<FontType, List<GUIText>> texts = new HashMap<FontType, List<GUIText>>();
 	
+	private float time = 12000;
+	private Weather weather;
+	
 	private World(Camera camera) throws Exception {
 		this.camera = camera;
 		this.terrain = new Terrain(2, 2, camera);
 		this.renderEngine = RenderEngine.init(camera);
+		this.weather = new Weather();
 		MousePicker.setUpMousePicker(camera);
 	}
 	
@@ -54,13 +59,10 @@ public class World {
 		return WORLD;
 	}
 	
-	public void clearWorld() {
-		terrain.cleanup();
-	}
-	
 	public void update(float dt) {
 		camera.update(dt);
 		MousePicker.update();
+		updateWeather(dt);
 		
 		for(StaticEntity entity : entities) {
 			entity.update(dt);
@@ -139,7 +141,7 @@ public class World {
 		textBatch.remove(text);
 		if(textBatch.isEmpty()) {
 			texts.remove(text.getFont());
-			text.delete();
+			text.cleanup();
 		}
 	}
 	
@@ -157,6 +159,17 @@ public class World {
 	
 	public void removeTileEntity(int x, int y) {
 		terrain.removeTileEntity(x, y);
+	}
+	
+	public void updateWeather(float dt) {
+		time += 10 * dt;
+		if(time >= 24000) {
+			time = 0;
+		}
+		
+		System.out.println(time);
+		
+		weather.updateWeather(time, dt);
 	}
 	
 	public void cleanup() {

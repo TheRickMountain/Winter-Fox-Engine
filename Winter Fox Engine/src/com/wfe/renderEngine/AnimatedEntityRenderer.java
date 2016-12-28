@@ -4,7 +4,7 @@ import org.lwjgl.opengl.GL11;
 
 import com.wfe.animation.AnimatedEntity;
 import com.wfe.core.Camera;
-import com.wfe.core.GeneralSettings;
+import com.wfe.core.DirectionalLight;
 import com.wfe.math.Matrix4f;
 import com.wfe.utils.MathUtils;
 
@@ -37,8 +37,8 @@ public class AnimatedEntityRenderer {
 	private void prepare() {
 		shader.start();
 		shader.projectionViewMatrix.loadMatrix(camera.getProjectionViewMatrix());
-		shader.lightDirection.loadVec3(GeneralSettings.LIGHT_DIR);
-		shader.lightColor.loadVec3(GeneralSettings.LIGHT_COLOR);
+		shader.lightDirection.loadVec3(DirectionalLight.LIGHT_DIR);
+		shader.lightColor.loadVec3(DirectionalLight.LIGHT_COLOR);
 	}
 	
 	private void finish() {

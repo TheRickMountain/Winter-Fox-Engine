@@ -57,10 +57,13 @@ public class Game implements IGameLogic {
 		FontType fontType = new FontType(ResourceManager.getTexture("myFont").getID(),
 				new MyFile("font/myFont.fnt"));
 		GUIText text = new GUIText("Winter Font Engine", 1.1f, fontType, 0.0f, 0.0f, 0.125f, true);
-		text.setColor(1, 1, 0);
+		text.setColor(1, 1, 1);
 		World.getWorld().addText(text);
 	}
 
+	float scale = 0;
+	boolean state = false;
+	
 	@Override
 	public void update(float dt) {		
 		World.getWorld().update(dt);
@@ -74,7 +77,7 @@ public class Game implements IGameLogic {
 
 	@Override
 	public void onExit() {
-		World.getWorld().clearWorld();
+		World.getWorld().cleanup();
 	}
 
 }

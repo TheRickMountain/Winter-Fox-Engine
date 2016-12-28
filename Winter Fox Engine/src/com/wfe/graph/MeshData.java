@@ -11,6 +11,7 @@ public class MeshData {
 	private int[] jointIds;
 	private float[] vertexWeights;
 	private float furthestPoint;
+	private int vertexCount;
 
 	public MeshData(float[] vertices, float[] textureCoords, float[] normals, int[] indices,
 			int[] jointIds, float[] vertexWeights, float furthestPoint) {
@@ -21,6 +22,18 @@ public class MeshData {
 		this.jointIds = jointIds;
 		this.vertexWeights = vertexWeights;
 		this.furthestPoint = furthestPoint;
+		
+		this.vertexCount = vertices.length / DIMENSIONS;
+	}
+	
+	public MeshData(float[] vertices, float[] textureCoords, float[] normals, int[] indices, float furthestPoint) {
+		this.vertices = vertices;
+		this.textureCoords = textureCoords;
+		this.normals = normals;
+		this.indices = indices;
+		this.furthestPoint = furthestPoint;
+		
+		this.vertexCount = indices.length;
 	}
 
 	public int[] getJointIds() {
@@ -32,7 +45,7 @@ public class MeshData {
 	}
 
 	public int getVertexCount() {
-		return vertices.length / DIMENSIONS;
+		return vertexCount;
 	}
 
 	public float[] getVertices() {

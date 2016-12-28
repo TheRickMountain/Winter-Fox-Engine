@@ -2,6 +2,7 @@ package com.wfe.animation.colladaLoader;
 
 import com.wfe.animation.xmlLoader.XmlNode;
 import com.wfe.animation.xmlLoader.XmlParser;
+import com.wfe.graph.MeshData;
 import com.wfe.utils.MyFile;
 
 public class ColladaLoader {

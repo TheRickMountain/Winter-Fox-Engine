@@ -24,5 +24,9 @@ public class Material {
 	public Vector4f getColor() {
 		return color;
 	}
+	
+	public void delete() {
+		texture.delete();
+	}
 
 }

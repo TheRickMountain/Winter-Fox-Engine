@@ -101,7 +101,7 @@ public class GUIText {
 		return vao;
 	}
 	
-	public void delete() {
+	public void cleanup() {
 		vao.delete();
 	}
 

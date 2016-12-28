@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.wfe.animation.xmlLoader.XmlNode;
+import com.wfe.graph.MeshData;
 import com.wfe.math.Matrix4f;
 import com.wfe.math.Vector2f;
 import com.wfe.math.Vector3f;

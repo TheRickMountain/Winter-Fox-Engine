@@ -82,5 +82,10 @@ public class StaticEntity {
 	public void remove() {
 		this.remove = true;
 	}
+	
+	public void delete() {
+		mesh.delete();
+		material.delete();
+	}
 
 }

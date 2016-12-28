@@ -6,11 +6,11 @@ import com.wfe.animation.colladaLoader.AnimationLoader;
 import com.wfe.animation.colladaLoader.GeometryLoader;
 import com.wfe.animation.colladaLoader.JointsData;
 import com.wfe.animation.colladaLoader.JointsLoader;
-import com.wfe.animation.colladaLoader.MeshData;
 import com.wfe.animation.colladaLoader.SkinLoader;
 import com.wfe.animation.colladaLoader.SkinningData;
 import com.wfe.animation.xmlLoader.XmlNode;
 import com.wfe.animation.xmlLoader.XmlParser;
+import com.wfe.graph.MeshData;
 import com.wfe.utils.MyFile;
 
 public class ColladaLoader {
