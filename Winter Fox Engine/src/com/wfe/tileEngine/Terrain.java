@@ -5,11 +5,11 @@ import java.util.List;
 
 import com.wfe.core.Camera;
 import com.wfe.core.Display;
-import com.wfe.core.DirectionalLight;
 import com.wfe.ecs.StaticEntity;
 import com.wfe.textures.Texture;
 import com.wfe.textures.TextureBuilder;
 import com.wfe.utils.MyFile;
+import com.wfe.weather.DirectionalLight;
 
 public class Terrain {
 

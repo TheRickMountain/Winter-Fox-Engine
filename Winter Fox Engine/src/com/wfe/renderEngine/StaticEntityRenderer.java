@@ -9,12 +9,12 @@ import org.lwjgl.opengl.GL30;
 
 import com.wfe.core.Camera;
 import com.wfe.core.Display;
-import com.wfe.core.DirectionalLight;
 import com.wfe.ecs.StaticEntity;
 import com.wfe.graph.Material;
 import com.wfe.graph.Mesh;
 import com.wfe.math.Matrix4f;
 import com.wfe.utils.MathUtils;
+import com.wfe.weather.DirectionalLight;
 
 public class StaticEntityRenderer {
 	
@@ -78,6 +78,8 @@ public class StaticEntityRenderer {
 		
 		material.getTexture().bind(0);
 
+		shader.numberOfRows.loadInt(material.getNumberOfRows());
+		shader.offset.loadVec2(entity.getTextureXOffset(), entity.getTextureYOffset());
 		shader.color.loadVec4(material.getColor());
 
 		GL11.glDrawElements(GL11.GL_TRIANGLES, entity.getMesh().getIndicesLength(), GL11.GL_UNSIGNED_INT, 0);

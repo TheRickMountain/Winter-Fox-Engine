@@ -19,6 +19,8 @@ public class StaticEntity {
 	
 	public boolean building = false;
 	
+	public int textureIndex = 0;
+	
 	public StaticEntity(Mesh mesh, Material material, Transformation transform) {
 		this.transform = transform;
 		transform.setParent(this);
@@ -36,6 +38,16 @@ public class StaticEntity {
 			component.update(dt);
 		}
 	}
+	
+	public float getTextureXOffset(){
+        int column = textureIndex % material.getNumberOfRows();
+        return (float) column / (float) material.getNumberOfRows();
+    }
+
+    public float getTextureYOffset(){
+        int row = textureIndex / material.getNumberOfRows();
+        return (float) row / (float)material.getNumberOfRows();
+    }
 	
 	public void addComponent(Component component) {
 		this.components.add(component);

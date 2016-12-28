@@ -7,6 +7,7 @@ public class Material {
 	
 	private Texture texture;
 	private Vector4f color;
+	private int numberOfRows = 1;
 	
 	public Material(Texture texture) {
 		this(texture, new Vector4f(1, 1, 1, 1));
@@ -23,6 +24,17 @@ public class Material {
 	
 	public Vector4f getColor() {
 		return color;
+	}
+	
+	public int getNumberOfRows() {
+		return numberOfRows;
+	}
+
+	public void setNumberOfRows(int numberOfRows) {
+		if(numberOfRows <= 0)
+            numberOfRows = 1;
+		
+		this.numberOfRows = numberOfRows;
 	}
 	
 	public void delete() {

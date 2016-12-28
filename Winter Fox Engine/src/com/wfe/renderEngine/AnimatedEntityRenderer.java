@@ -4,9 +4,9 @@ import org.lwjgl.opengl.GL11;
 
 import com.wfe.animation.AnimatedEntity;
 import com.wfe.core.Camera;
-import com.wfe.core.DirectionalLight;
 import com.wfe.math.Matrix4f;
 import com.wfe.utils.MathUtils;
+import com.wfe.weather.DirectionalLight;
 
 public class AnimatedEntityRenderer {
 

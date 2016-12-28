@@ -9,8 +9,11 @@ import com.wfe.core.Camera;
 import com.wfe.core.Display;
 import com.wfe.core.IGameLogic;
 import com.wfe.core.ResourceManager;
+import com.wfe.ecs.StaticEntity;
+import com.wfe.ecs.Transformation;
 import com.wfe.font.FontType;
 import com.wfe.font.GUIText;
+import com.wfe.graph.Material;
 import com.wfe.graph.OBJLoader;
 import com.wfe.math.Vector3f;
 import com.wfe.textures.Texture;
@@ -33,11 +36,16 @@ public class Game implements IGameLogic {
 		texBuilder.normalMipMap();
 		ResourceManager.loadTexture("myFont", texBuilder.create());
 		
+		texBuilder = Texture.newTexture(new MyFile("entity/fern/fern.png"));
+		texBuilder.normalMipMap(-0.4f);
+		ResourceManager.loadTexture("fern", texBuilder.create());
+		
 		/*** Meshes ***/
 		ResourceManager.loadMesh("wall", OBJLoader.loadMesh("/models/wall.obj"));
 		ResourceManager.loadMesh("cross_wall", OBJLoader.loadMesh("/models/cross_wall.obj"));
 		ResourceManager.loadMesh("door_wall", OBJLoader.loadMesh("/models/door_wall.obj"));
 		ResourceManager.loadMesh("window_wall", OBJLoader.loadMesh("/models/window_wall.obj"));
+		ResourceManager.loadMesh("fern", OBJLoader.loadMesh("/entity/fern/fern.obj"));
 	}
 	
 	@Override
@@ -59,6 +67,14 @@ public class Game implements IGameLogic {
 		GUIText text = new GUIText("Winter Font Engine", 1.1f, fontType, 0.0f, 0.0f, 0.125f, true);
 		text.setColor(1, 1, 1);
 		World.getWorld().addText(text);
+		
+		Material fernMaterial = new Material(ResourceManager.getTexture("fern"));
+		fernMaterial.setNumberOfRows(2);
+		StaticEntity fern = new StaticEntity(ResourceManager.getMesh("fern"), 
+				fernMaterial, new Transformation(14, 0, 14));
+		fern.textureIndex = 3;
+		fern.getTransform().setScale(0.1f);
+		World.getWorld().addEntity(fern);
 	}
 
 	float scale = 0;

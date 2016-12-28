@@ -5,11 +5,11 @@ import com.wfe.animation.Joint;
 import com.wfe.animation.colladaLoader.AnimatedModelData;
 import com.wfe.animation.colladaLoader.JointData;
 import com.wfe.animation.colladaLoader.JointsData;
-import com.wfe.core.DirectionalLight;
 import com.wfe.graph.MeshData;
 import com.wfe.graph.Vao;
 import com.wfe.textures.Texture;
 import com.wfe.utils.MyFile;
+import com.wfe.weather.DirectionalLight;
 
 public class AnimatedEntityCreator {
 

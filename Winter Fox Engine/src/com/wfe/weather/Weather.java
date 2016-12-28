@@ -1,6 +1,5 @@
 package com.wfe.weather;
 
-import com.wfe.core.DirectionalLight;
 import com.wfe.math.Vector3f;
 
 public class Weather {

@@ -167,8 +167,6 @@ public class World {
 			time = 0;
 		}
 		
-		System.out.println(time);
-		
 		weather.updateWeather(time, dt);
 	}
 	

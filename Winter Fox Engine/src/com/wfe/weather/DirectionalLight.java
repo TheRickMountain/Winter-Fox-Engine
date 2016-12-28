@@ -1,4 +1,4 @@
-package com.wfe.core;
+package com.wfe.weather;
 
 import com.wfe.math.Vector3f;
 

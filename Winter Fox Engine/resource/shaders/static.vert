@@ -11,10 +11,17 @@ uniform mat4 projectionMatrix;
 uniform mat4 viewMatrix;
 uniform mat4 modelMatrix;
 
+uniform int numberOfRows;
+uniform vec2 offset;
+
 void main()
 {
 	vec4 worldPosition = modelMatrix * vec4(in_position, 1.0f);
 	gl_Position = projectionMatrix * viewMatrix * worldPosition;
-	TextureCoords = in_textureCoords;
+	if(numberOfRows == 1) {
+        TextureCoords = in_textureCoords;
+    } else {
+        TextureCoords = (in_textureCoords / numberOfRows) + offset;
+    }
 	Normal = (modelMatrix * vec4(in_normal, 0.0f)).xyz;
 }
