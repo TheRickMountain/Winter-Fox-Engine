@@ -55,6 +55,7 @@ public class GUIRenderer {
 	private void prepare() {
 		OpenglUtils.cullBackFaces(false);
 		OpenglUtils.alphaBlending(true);
+		OpenglUtils.depthTest(false);
 		
 		shader.start();
 		
@@ -74,6 +75,7 @@ public class GUIRenderer {
 		
 		OpenglUtils.cullBackFaces(true);
 		OpenglUtils.alphaBlending(false);
+		OpenglUtils.depthTest(true);
 	}
 	
 	private void initRenderData() {

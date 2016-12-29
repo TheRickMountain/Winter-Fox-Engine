@@ -118,15 +118,15 @@ public class Game implements IGameLogic {
 		grass2.setTextureIndex(2);
 		World.getWorld().addEntity(grass2);
 		
-		GUITexture bananaUI = new GUITexture(ResourceManager.getTexture("banana_ui"),
-				Display.getWidth() / 2 - 250 + 5, Display.getHeight() - 50 + 5, 0, 40, 40, false);
-		World.getWorld().addGUITexture(bananaUI);
-		
 		GUIFrame frame = new GUIFrame(Display.getWidth() / 2 - 250, Display.getHeight() - 50, 
 				500, 50);
 		for(int i = 0; i < frame.getFrameTextures().size(); i++) {
 			World.getWorld().addGUITexture(frame.getFrameTextures().get(i));
 		}
+		
+		GUITexture bananaUI = new GUITexture(ResourceManager.getTexture("banana_ui"),
+				Display.getWidth() / 2 - 250, Display.getHeight() - 50, 0, 50, 50, false);
+		World.getWorld().addGUITexture(bananaUI);
 	}
 	
 	@Override
