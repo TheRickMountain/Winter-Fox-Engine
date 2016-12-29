@@ -10,7 +10,6 @@ public class CrossWall extends StaticEntity {
 	public CrossWall(Transformation transform) {
 		super(ResourceManager.getMesh("cross_wall"),
 				new Material(ResourceManager.getTexture("wall")), transform);
-		building = true;
 		
 		getTransform().setScale(0.5f);
 	}

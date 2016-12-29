@@ -9,9 +9,7 @@ public class WindowWall extends StaticEntity {
 
 	public WindowWall(Transformation transform) {
 		super(ResourceManager.getMesh("window_wall"),
-				new Material(ResourceManager.getTexture("wall")), transform);
-		building = true;
-		
+				new Material(ResourceManager.getTexture("wall")), transform);	
 		getTransform().setScale(0.5f);
 	}
 

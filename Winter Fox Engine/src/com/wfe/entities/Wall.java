@@ -9,9 +9,7 @@ public class Wall extends StaticEntity {
 
 	public Wall(Transformation transform) {
 		super(ResourceManager.getMesh("wall"),
-				new Material(ResourceManager.getTexture("wall")), transform);
-		building = true;
-		
+				new Material(ResourceManager.getTexture("wall")), transform);	
 		getTransform().setScale(0.5f);
 	}
 

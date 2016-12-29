@@ -10,8 +10,8 @@ public class ColliderComponent implements Component {
 	private AABB aabb;
 	
 	public ColliderComponent(float sizeX, float sizeY, float sizeZ, Transformation transform) {
-		this.aabb = new AABB(transform.x, transform.y, transform.z, 
-				transform.x + sizeX, transform.y + sizeY, transform.z + sizeZ);
+		this.aabb = new AABB(transform.x - sizeX / 2, transform.y, transform.z - sizeZ / 2, 
+				transform.x + sizeX / 2, transform.y + sizeY, transform.z + sizeZ / 2);
 	}
 
 

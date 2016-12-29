@@ -9,15 +9,12 @@ import com.wfe.graph.Mesh;
 
 public class StaticEntity {
 	
-	private int id;
 	private Transformation transform;
 	private Mesh mesh;
 	private Material material;
 	private List<Component> components;
 	
 	private boolean remove = false;
-	
-	public boolean building = false;
 	
 	private int textureIndex = 0;
 	
@@ -81,14 +78,6 @@ public class StaticEntity {
 	
 	public Material getMaterial() {
 		return material;
-	}
-	
-	public void setID(int id) {
-		this.id = id;
-	}
-
-	public int getID() {
-		return id;
 	}
 	
 	public void remove() {

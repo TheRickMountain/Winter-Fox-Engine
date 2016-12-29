@@ -44,6 +44,10 @@ public class Game implements IGameLogic {
 		texBuilder.normalMipMap(-0.4f);
 		ResourceManager.loadTexture("grass", texBuilder.create());
 		
+		texBuilder = Texture.newTexture(new MyFile("entity/birch/birch.png"));
+		texBuilder.normalMipMap(-0.4f);
+		ResourceManager.loadTexture("birch", texBuilder.create());
+		
 		/*** Meshes ***/
 		ResourceManager.loadMesh("wall", OBJLoader.loadMesh("/models/wall.obj"));
 		ResourceManager.loadMesh("cross_wall", OBJLoader.loadMesh("/models/cross_wall.obj"));
@@ -51,6 +55,8 @@ public class Game implements IGameLogic {
 		ResourceManager.loadMesh("window_wall", OBJLoader.loadMesh("/models/window_wall.obj"));
 		ResourceManager.loadMesh("fern", OBJLoader.loadMesh("/entity/fern/fern.obj"));
 		ResourceManager.loadMesh("grass", OBJLoader.loadMesh("/entity/grass/grass.obj"));
+		ResourceManager.loadMesh("birch_trunk", OBJLoader.loadMesh("/entity/birch/trunk.obj"));
+		ResourceManager.loadMesh("birch_leaves", OBJLoader.loadMesh("/entity/birch/leaves.obj"));
 	}
 	
 	@Override
@@ -73,34 +79,33 @@ public class Game implements IGameLogic {
 		text.setColor(1, 1, 1);
 		World.getWorld().addText(text);
 		
-		Fern fern1 = new Fern(new Transformation(84, 0, 84));
+		Fern fern1 = new Fern(new Transformation(84.5f, 0, 84.5f));
 		fern1.setTextureIndex(0);
 		World.getWorld().addEntity(fern1);
 		
-		Fern fern2 = new Fern(new Transformation(83, 0, 84));
+		Fern fern2 = new Fern(new Transformation(83.5f, 0, 84.5f));
 		fern2.setTextureIndex(1);
 		World.getWorld().addEntity(fern2);
 		
-		Fern fern3 = new Fern(new Transformation(82, 0, 84));
+		Fern fern3 = new Fern(new Transformation(81.5f, 0, 84.5f));
 		fern3.setTextureIndex(2);
 		World.getWorld().addEntity(fern3);
 		
-		Fern fern4 = new Fern(new Transformation(81, 0, 84));
+		Fern fern4 = new Fern(new Transformation(80.5f, 0, 84.5f));
 		fern4.setTextureIndex(3);
 		World.getWorld().addEntity(fern4);
 		
-		Grass grass = new Grass(new Transformation(85, 0, 85));
+		Grass grass = new Grass(new Transformation(85.5f, 0, 85.5f));
 		grass.setTextureIndex(0);
 		World.getWorld().addEntity(grass);
 		
-		Grass grass1 = new Grass(new Transformation(85, 0, 86));
+		Grass grass1 = new Grass(new Transformation(85.5f, 0, 86.5f));
 		grass1.setTextureIndex(1);
 		World.getWorld().addEntity(grass1);
 		
-		Grass grass2 = new Grass(new Transformation(85, 0, 87));
+		Grass grass2 = new Grass(new Transformation(85.5f, 0, 87.5f));
 		grass2.setTextureIndex(2);
 		World.getWorld().addEntity(grass2);
-		
 	}
 	
 	@Override

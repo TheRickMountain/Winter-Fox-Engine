@@ -10,8 +10,6 @@ public class DoorWall extends StaticEntity {
 	public DoorWall(Transformation transform) {
 		super(ResourceManager.getMesh("door_wall"),
 				new Material(ResourceManager.getTexture("wall")), transform);
-		building = true;
-		
 		getTransform().setScale(0.5f);
 	}
 

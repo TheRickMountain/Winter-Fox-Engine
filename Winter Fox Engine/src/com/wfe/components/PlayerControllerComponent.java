@@ -85,23 +85,23 @@ public class PlayerControllerComponent implements Component {
 		}
 		
 		if(buildEntity != null) {
-			buildEntity.getTransform().setPosition(x, 0, z);
+			buildEntity.getTransform().setPosition(x + 0.5f, 0, z + 0.5f);
 			buildEntity.getTransform().setRotY(buildEntityRotation);
 		}
 		
 		if(Mouse.isButtonDown(0)) {
 			StaticEntity entity = null;
 			if(buildEntityType == 1) {
-				entity = new Wall(new Transformation(x, 0, z));
+				entity = new Wall(new Transformation(x + 0.5f, 0, z + 0.5f));
 				entity.addComponent(new ColliderComponent(1, 1, 1, entity.getTransform()));
 			} else if(buildEntityType == 2) {
-				entity = new CrossWall(new Transformation(x, 0, z));
+				entity = new CrossWall(new Transformation(x + 0.5f, 0, z + 0.5f));
 				entity.addComponent(new ColliderComponent(1, 1, 1, entity.getTransform()));
 			} else if(buildEntityType == 3) {
-				entity = new WindowWall(new Transformation(x, 0, z));
+				entity = new WindowWall(new Transformation(x + 0.5f, 0, z + 0.5f));
 				entity.addComponent(new ColliderComponent(1, 1, 1, entity.getTransform()));
 			} else if(buildEntityType == 4) {
-				entity = new DoorWall(new Transformation(x, 0, z));
+				entity = new DoorWall(new Transformation(x + 0.5f, 0, z + 0.5f));
 			}
 			
 			entity.getTransform().setRotY(buildEntityRotation);

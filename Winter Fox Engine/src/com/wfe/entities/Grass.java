@@ -13,7 +13,6 @@ public class Grass extends StaticEntity {
 				.setHasTransparency(true)
 				.setHasFakeLighting(true)
 				.setNumberOfRows(2), transform);
-		getTransform().setRotY(45);
 		getTransform().setScale(0.6f);
 	}
 
