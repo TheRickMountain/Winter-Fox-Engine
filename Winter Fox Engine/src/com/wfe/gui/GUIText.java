@@ -1,5 +1,6 @@
-package com.wfe.font;
+package com.wfe.gui;
 
+import com.wfe.font.FontType;
 import com.wfe.graph.Vao;
 import com.wfe.math.Vector3f;
 
@@ -105,23 +106,23 @@ public class GUIText {
 		vao.delete();
 	}
 
-	protected float getFontSize() {
+	public float getFontSize() {
 		return fontSize;
 	}
 
-	protected void setNumberOfLines(int number) {
+	public void setNumberOfLines(int number) {
 		this.numberOfLines = number;
 	}
 
-	protected boolean isCentered() {
+	public boolean isCentered() {
 		return centerText;
 	}
 
-	protected float getMaxLineSize() {
+	public float getMaxLineSize() {
 		return lineMaxSize;
 	}
 
-	protected String getTextString() {
+	public String getTextString() {
 		return textString;
 	}
 	

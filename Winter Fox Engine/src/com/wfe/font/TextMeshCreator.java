@@ -3,6 +3,7 @@ package com.wfe.font;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.wfe.gui.GUIText;
 import com.wfe.utils.MyFile;
 
 public class TextMeshCreator {

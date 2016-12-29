@@ -1,5 +1,6 @@
 package com.wfe.font;
 
+import com.wfe.gui.GUIText;
 import com.wfe.utils.MyFile;
 
 public class FontType {

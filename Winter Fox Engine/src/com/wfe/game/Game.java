@@ -13,8 +13,8 @@ import com.wfe.ecs.Transformation;
 import com.wfe.entities.Fern;
 import com.wfe.entities.Grass;
 import com.wfe.font.FontType;
-import com.wfe.font.GUIText;
 import com.wfe.graph.OBJLoader;
+import com.wfe.gui.GUIText;
 import com.wfe.math.Vector3f;
 import com.wfe.textures.Texture;
 import com.wfe.textures.TextureBuilder;
@@ -43,10 +43,9 @@ public class Game implements IGameLogic {
 		texBuilder = Texture.newTexture(new MyFile("entity/grass/grass.png"));
 		texBuilder.normalMipMap(-0.4f);
 		ResourceManager.loadTexture("grass", texBuilder.create());
-		
-		texBuilder = Texture.newTexture(new MyFile("entity/birch/birch.png"));
-		texBuilder.normalMipMap(-0.4f);
-		ResourceManager.loadTexture("birch", texBuilder.create());
+			
+		texBuilder = Texture.newTexture(new MyFile("textures/banana.png"));
+		ResourceManager.loadTexture("banana_ui", texBuilder.create());
 		
 		/*** Meshes ***/
 		ResourceManager.loadMesh("wall", OBJLoader.loadMesh("/models/wall.obj"));
@@ -55,8 +54,6 @@ public class Game implements IGameLogic {
 		ResourceManager.loadMesh("window_wall", OBJLoader.loadMesh("/models/window_wall.obj"));
 		ResourceManager.loadMesh("fern", OBJLoader.loadMesh("/entity/fern/fern.obj"));
 		ResourceManager.loadMesh("grass", OBJLoader.loadMesh("/entity/grass/grass.obj"));
-		ResourceManager.loadMesh("birch_trunk", OBJLoader.loadMesh("/entity/birch/trunk.obj"));
-		ResourceManager.loadMesh("birch_leaves", OBJLoader.loadMesh("/entity/birch/leaves.obj"));
 	}
 	
 	@Override

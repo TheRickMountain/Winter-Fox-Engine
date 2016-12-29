@@ -7,8 +7,8 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL13;
 
 import com.wfe.font.FontType;
-import com.wfe.font.GUIText;
 import com.wfe.graph.Vao;
+import com.wfe.gui.GUIText;
 import com.wfe.math.Matrix4f;
 import com.wfe.utils.MathUtils;
 import com.wfe.utils.OpenglUtils;

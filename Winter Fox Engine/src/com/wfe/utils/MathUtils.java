@@ -5,6 +5,7 @@ import java.util.List;
 import com.wfe.core.Camera;
 import com.wfe.ecs.Transformation;
 import com.wfe.math.Matrix4f;
+import com.wfe.math.Vector2f;
 import com.wfe.math.Vector3f;
 
 public class MathUtils {
@@ -35,6 +36,15 @@ public class MathUtils {
 		return matrix; 
 	}
 	
+	public static Matrix4f getOrthoProjectionMatrix(Matrix4f matrix, float left, float right, float bottom, float top) {
+        matrix.m00 = 2.0f / (right - left);
+        matrix.m11 = 2.0f / (top - bottom);
+        matrix.m22 = -1.0f;
+        matrix.m30 = -(right + left) / (right - left);
+        matrix.m31 = -(top + bottom) / (top - bottom);
+        return matrix;
+	}
+	
 	public static Matrix4f getViewMatrix(Matrix4f matrix, Camera camera) {
 		matrix.setIdentity();
 		Matrix4f.rotate((float) Math.toRadians(camera.getPitch()), AXIS_X, matrix, matrix);
@@ -59,22 +69,20 @@ public class MathUtils {
 			float rotZ, float scaleX, float scaleY, float scaleZ) {
 		matrix.setIdentity();
 		Matrix4f.translate(new Vector3f(x, y, z), matrix, matrix);
-		Matrix4f.scale(new Vector3f(scaleX, scaleY, scaleZ), matrix, matrix);
 		Matrix4f.rotate(DEGREES_TO_RADIANS * rotX, AXIS_X, matrix, matrix);
 		Matrix4f.rotate(DEGREES_TO_RADIANS * rotY, AXIS_Y, matrix, matrix);
 		Matrix4f.rotate(DEGREES_TO_RADIANS * rotZ, AXIS_Z, matrix, matrix);
+		Matrix4f.scale(new Vector3f(scaleX, scaleY, scaleZ), matrix, matrix);
 		return matrix;
 	}
 	
-	public static Matrix4f getBuildingModelMatrix(Matrix4f matrix, Transformation transform){
+	public static Matrix4f getModelMatrix(Matrix4f matrix, float xPos, float yPos, float rotation, float xScale, float yScale){
 		matrix.setIdentity();
-		Matrix4f.translate(new Vector3f(transform.getX(), transform.getY(), transform.getZ()), matrix, matrix);
-        Matrix4f.translate(new Vector3f(transform.getScaleX(), transform.getScaleY(), transform.getScaleZ()), matrix, matrix);
-		Matrix4f.rotate(transform.getRotX() * DEGREES_TO_RADIANS, AXIS_X, matrix, matrix);
-		Matrix4f.rotate(transform.getRotY() * DEGREES_TO_RADIANS, AXIS_Y, matrix, matrix);
-		Matrix4f.rotate(transform.getRotZ() * DEGREES_TO_RADIANS, AXIS_Z, matrix, matrix);
-		Matrix4f.translate(new Vector3f(-transform.getScaleX(), -transform.getScaleY(), -transform.getScaleZ()), matrix, matrix);
-		Matrix4f.scale(new Vector3f(transform.getScaleX(), transform.getScaleY(), transform.getScaleZ()), matrix, matrix);
+		Matrix4f.translate(new Vector2f(xPos, yPos), matrix, matrix);
+        Matrix4f.translate(new Vector2f(0.5f * xScale, 0.5f * yScale), matrix, matrix);
+		Matrix4f.rotate(rotation* DEGREES_TO_RADIANS, AXIS_Z, matrix, matrix);
+		Matrix4f.translate(new Vector2f(-0.5f * xScale, -0.5f * yScale), matrix, matrix);
+		Matrix4f.scale(new Vector3f(xScale, yScale, 0.0f), matrix, matrix);
         
 		return matrix;
 	}

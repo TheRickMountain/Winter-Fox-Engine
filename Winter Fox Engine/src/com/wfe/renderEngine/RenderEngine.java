@@ -9,8 +9,8 @@ import com.wfe.animation.AnimatedEntity;
 import com.wfe.core.Camera;
 import com.wfe.ecs.StaticEntity;
 import com.wfe.font.FontType;
-import com.wfe.font.GUIText;
 import com.wfe.graph.Mesh;
+import com.wfe.gui.GUIText;
 import com.wfe.utils.OpenglUtils;
 
 public class RenderEngine {
@@ -19,11 +19,13 @@ public class RenderEngine {
 	
 	private StaticEntityRenderer staticEntityRenderer;
 	private AnimatedEntityRenderer animatedEntityRenderer;
+	private GUIRenderer guiRenderer;
 	private FontRenderer fontRenderer;
 	
 	private RenderEngine(Camera camera) throws Exception {
 		this.staticEntityRenderer = new StaticEntityRenderer(camera);
 		this.animatedEntityRenderer = new AnimatedEntityRenderer(camera);
+		this.guiRenderer = new GUIRenderer();
 		this.fontRenderer = new FontRenderer();
 		
 		OpenglUtils.cullBackFaces(true);
@@ -39,6 +41,7 @@ public class RenderEngine {
 			Map<FontType, List<GUIText>> texts) {
 		staticEntityRenderer.render(entities);
 		animatedEntityRenderer.render(entity);
+		guiRenderer.render();
 		fontRenderer.render(texts);
 	}
 
@@ -52,6 +55,7 @@ public class RenderEngine {
 	public void cleanup() {
 		staticEntityRenderer.cleanup();
 		animatedEntityRenderer.cleanup();
+		guiRenderer.cleanup();
 		fontRenderer.cleanup();
 	}
 	
