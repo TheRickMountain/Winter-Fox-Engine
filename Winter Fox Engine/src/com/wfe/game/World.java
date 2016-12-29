@@ -14,6 +14,7 @@ import com.wfe.font.FontType;
 import com.wfe.font.TextMeshData;
 import com.wfe.graph.Mesh;
 import com.wfe.graph.Vao;
+import com.wfe.gui.GUIManager;
 import com.wfe.gui.GUIText;
 import com.wfe.gui.GUITexture;
 import com.wfe.physics.AABB;
@@ -38,23 +39,30 @@ public class World {
 	
 	private List<AABB> colliders = new ArrayList<AABB>();
 	
-	private Map<FontType, List<GUIText>> texts = new HashMap<FontType, List<GUIText>>();
-	private List<GUITexture> textures = new ArrayList<GUITexture>();
+	private Map<FontType, List<GUIText>> guiTexts = new HashMap<FontType, List<GUIText>>();
+	private List<GUITexture> guiTextures = new ArrayList<GUITexture>();
 	
 	private float time = 12000;
 	private Weather weather;
+	private GUIManager guiManager;
 	
-	private World(Camera camera) throws Exception {
+	private World(Camera camera) {
 		this.camera = camera;
-		this.terrain = new Terrain(10, 10, camera);
-		this.renderEngine = RenderEngine.init(camera);
-		this.weather = new Weather();
-		MousePicker.setUpMousePicker(camera);
 	}
 	
-	public static void createWorld(Camera camera) throws Exception {
+	public void init() throws Exception {
+		this.terrain = new Terrain(10, 10, camera);
+		this.renderEngine = RenderEngine.create(camera);
+		this.weather = new Weather();
+		MousePicker.setUpMousePicker(camera);
+		guiManager = GUIManager.create();
+	}
+	
+	public static World createWorld(Camera camera) throws Exception {
 		if(WORLD == null)
 			WORLD = new World(camera);
+		
+		return WORLD;
 	}
 	
 	public static World getWorld() {
@@ -84,17 +92,15 @@ public class World {
 			}
 			entitiesToRemove.clear();
 		}
-		
-		for(GUITexture texture : textures) {
-			texture.update();
-		}
+
+		guiManager.update();
 		
 	}
 	
 	public void render(AnimatedEntity entity) {
 		renderEngine.clear();
 		terrain.render();
-		renderEngine.render(entitiesToRender, entity, texts, textures);
+		renderEngine.render(entitiesToRender, entity, guiTexts, guiTextures, guiManager);
 	}
 	
 	public void addEntity(StaticEntity entity) {
@@ -135,29 +141,35 @@ public class World {
 		vao.setVertexCount(data.getVertexPositions().length / 2);
 		vao.unbind();
 		text.setVao(vao);
-		List<GUIText> textBatch = texts.get(font);
+		List<GUIText> textBatch = guiTexts.get(font);
 		if(textBatch == null) {
 			textBatch = new ArrayList<GUIText>();
-			texts.put(font, textBatch);
+			guiTexts.put(font, textBatch);
 		}
 		textBatch.add(text);
 	}
 	
 	public void removeGUIText(GUIText text) {
-		List<GUIText> textBatch = texts.get(text.getFont());
+		List<GUIText> textBatch = guiTexts.get(text.getFont());
 		textBatch.remove(text);
 		if(textBatch.isEmpty()) {
-			texts.remove(text.getFont());
+			guiTexts.remove(text.getFont());
 			text.cleanup();
 		}
 	}
 	
 	public void addGUITexture(GUITexture texture) {
-		textures.add(texture);
+		guiTextures.add(texture);
+	}
+	
+	public void addGUITextures(List<GUITexture> textures) {
+		for(int i = 0; i < textures.size(); i++) {
+			guiTextures.add(textures.get(i));
+		}
 	}
 	
 	public void removeGUITexture(GUITexture texture) {
-		textures.remove(texture);
+		guiTextures.remove(texture);
 	}
 	
 	public List<AABB> getColliders() {

@@ -14,10 +14,7 @@ import com.wfe.entities.Fern;
 import com.wfe.entities.Grass;
 import com.wfe.font.FontType;
 import com.wfe.graph.OBJLoader;
-import com.wfe.gui.GUIButton;
-import com.wfe.gui.GUIFrame;
 import com.wfe.gui.GUIText;
-import com.wfe.gui.GUITexture;
 import com.wfe.math.Vector3f;
 import com.wfe.textures.Texture;
 import com.wfe.textures.TextureBuilder;
@@ -76,6 +73,7 @@ public class Game implements IGameLogic {
 		camera = new Camera(new Vector3f(16, 0, 16));	
 		
 		World.createWorld(camera);
+		World.getWorld().init();
 		
 		player = AnimatedEntityCreator.loadEntity(new MyFile("entity/model.dae"),
 				new MyFile("entity/diffuse.png"));
@@ -118,17 +116,6 @@ public class Game implements IGameLogic {
 		Grass grass2 = new Grass(new Transformation(85.5f, 0, 87.5f));
 		grass2.setTextureIndex(2);
 		World.getWorld().addEntity(grass2);
-		
-		GUIFrame frame = new GUIFrame(Display.getWidth() / 2 - 250, Display.getHeight() - 50, 
-				500, 50);
-		for(int i = 0; i < frame.getFrameTextures().size(); i++) {
-			World.getWorld().addGUITexture(frame.getFrameTextures().get(i));
-		}
-		
-		GUITexture bananaUI = new GUITexture(ResourceManager.getTexture("banana_ui"),
-				Display.getWidth() / 2 - 250 + 25, Display.getHeight() - 50 + 25, 0, 50, 50, true);
-		bananaUI.addComponent(new GUIButton(bananaUI));
-		World.getWorld().addGUITexture(bananaUI);
 	}
 	
 	@Override

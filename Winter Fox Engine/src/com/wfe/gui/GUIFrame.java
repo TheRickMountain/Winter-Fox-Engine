@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.wfe.core.ResourceManager;
+import com.wfe.input.Mouse;
 import com.wfe.textures.Texture;
 
 public class GUIFrame {
@@ -11,7 +12,7 @@ public class GUIFrame {
 	private static final int LEFT_TOP_CORNER = 0, RIGHT_TOP_CORNER = 1, LEFT_BOTTOM_CORNER = 2, RIGHT_BOTTOM_CORNER = 3;
 	private static final int LEFT_EDGE = 4, RIGHT_EDGE = 5, TOP_EDGE = 6, BOTTOM_EDGE = 7;
 	private static final int BACKGROUND = 8;
-	private static final int RIM_SIZE = 10;
+	private static final int RIM_SIZE = 5;
 	private static Texture cornerTexture = ResourceManager.getTexture("corner_frame_ui");
 	private static Texture hEdgeTexture = ResourceManager.getTexture("h_edge_frame_ui");
 	private static Texture vEdgeTexture = ResourceManager.getTexture("v_edge_frame_ui");
@@ -149,6 +150,11 @@ public class GUIFrame {
 	
 	public List<GUITexture> getFrameTextures() {
 		return frameTextures;
+	}
+	
+	public boolean isMouseOvered() {
+		return Mouse.getX() > x && Mouse.getX() < x + scaleX &&
+				Mouse.getY() > y && Mouse.getY() < y + scaleY;
 	}
 
 }

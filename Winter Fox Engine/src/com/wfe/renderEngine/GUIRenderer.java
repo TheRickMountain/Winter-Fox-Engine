@@ -10,17 +10,18 @@ import com.wfe.core.Display;
 import com.wfe.graph.Mesh;
 import com.wfe.gui.GUITexture;
 import com.wfe.math.Matrix4f;
+import com.wfe.textures.Texture;
 import com.wfe.utils.MathUtils;
 import com.wfe.utils.OpenglUtils;
 
 public class GUIRenderer {
 	
-	private GUIShader shader;
+	private static GUIShader shader;
 	
 	private Mesh quadMesh;
 	
 	private Matrix4f projectionMatrix = new Matrix4f();
-	private Matrix4f modelMatrix = new Matrix4f();
+	private static Matrix4f modelMatrix = new Matrix4f();
 	
 	public GUIRenderer() {
 		shader = new GUIShader();
@@ -32,8 +33,6 @@ public class GUIRenderer {
 	}
 	
 	public void render(List<GUITexture> textures) {
-		prepare();
-		
 		for(GUITexture texture : textures) {
 			if(!texture.isCentered()) {
 				shader.modelMatrix.loadMatrix(MathUtils.getModelMatrix(modelMatrix, 
@@ -48,11 +47,39 @@ public class GUIRenderer {
 			
 			GL11.glDrawArrays(GL11.GL_TRIANGLE_STRIP, 0, 4);
 		}
-		
-		finish();
 	}
 	
-	private void prepare() {
+	public static void render(GUITexture texture) {
+		if(!texture.isCentered()) {
+			shader.modelMatrix.loadMatrix(MathUtils.getModelMatrix(modelMatrix, 
+					texture.getX(), texture.getY(), texture.getRot(), texture.getScaleX(), texture.getScaleY()));
+		} else {
+			shader.modelMatrix.loadMatrix(MathUtils.getModelMatrix(modelMatrix, 
+					texture.getX() - texture.getScaleX() / 2, texture.getY() - texture.getScaleY() / 2, 
+					texture.getRot(), texture.getScaleX(), texture.getScaleY()));
+		}
+		
+		texture.getTexture().bind(0);
+		
+		GL11.glDrawArrays(GL11.GL_TRIANGLE_STRIP, 0, 4);
+	}
+	
+	public static void render(Texture texture, float x, float y, float rot, float scaleX, float scaleY, boolean centered) {
+		if(!centered) {
+			shader.modelMatrix.loadMatrix(MathUtils.getModelMatrix(modelMatrix, 
+					x, y, rot, scaleX, scaleY));
+		} else {
+			shader.modelMatrix.loadMatrix(MathUtils.getModelMatrix(modelMatrix, 
+					x - scaleX / 2, y - scaleY / 2, 
+					rot, scaleX, scaleY));
+		}
+		
+		texture.bind(0);
+		
+		GL11.glDrawArrays(GL11.GL_TRIANGLE_STRIP, 0, 4);
+	}
+	
+	public void prepare() {
 		OpenglUtils.cullBackFaces(false);
 		OpenglUtils.alphaBlending(true);
 		OpenglUtils.depthTest(false);
@@ -67,7 +94,7 @@ public class GUIRenderer {
 		GL20.glEnableVertexAttribArray(0);
 	}
 	
-	private void finish() {
+	public void finish() {
 		GL20.glDisableVertexAttribArray(0);
 		GL30.glBindVertexArray(0);
 		
