@@ -33,6 +33,7 @@ import com.wfe.core.Display;
 public class Mouse extends GLFWMouseButtonCallback {
 
     private static boolean grabbed = false;
+    private static boolean activeInGUI = false;
     
     private static Display display;
     
@@ -201,5 +202,13 @@ public class Mouse extends GLFWMouseButtonCallback {
         glfwSetInputMode(display.getWindow(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
         grabbed = true;
     }
+
+	public static boolean isActiveInGUI() {
+		return activeInGUI;
+	}
+
+	public static void setActiveInGUI(boolean activeInGUI) {
+		Mouse.activeInGUI = activeInGUI;
+	}
 
 }

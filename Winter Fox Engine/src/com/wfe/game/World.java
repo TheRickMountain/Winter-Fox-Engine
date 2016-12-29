@@ -85,6 +85,10 @@ public class World {
 			entitiesToRemove.clear();
 		}
 		
+		for(GUITexture texture : textures) {
+			texture.update();
+		}
+		
 	}
 	
 	public void render(AnimatedEntity entity) {
