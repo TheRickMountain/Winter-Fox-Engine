@@ -3,6 +3,7 @@ package com.wfe.gui;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.wfe.input.Mouse;
 import com.wfe.textures.Texture;
 
 public class GUITexture {
@@ -95,6 +96,11 @@ public class GUITexture {
 	
 	public void addComponent(GUIComponent component) {
 		components.add(component);
+	}
+	
+	public boolean isMouseOvered() {
+		return Mouse.getX() > x - scaleX / 2 && Mouse.getX() < x + scaleX / 2 &&
+				Mouse.getY() > y - scaleX / 2 && Mouse.getY() < y + scaleY / 2;
 	}
 
 }

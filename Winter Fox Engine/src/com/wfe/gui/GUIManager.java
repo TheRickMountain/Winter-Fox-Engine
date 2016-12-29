@@ -17,7 +17,7 @@ public class GUIManager {
 		
 		quickInventory.update();
 		
-		//System.out.println(Mouse.isActiveInGUI());
+		System.out.println(Mouse.isActiveInGUI());
 	}
 	
 	public void render() {
