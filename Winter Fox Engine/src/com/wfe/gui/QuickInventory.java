@@ -10,10 +10,12 @@ public class QuickInventory {
 	private static float slotSize = 50;
 	private static float offsetBetweenSlots = 10;
 	
+	private float totalLength;
+	
 	private GUIFrame frame;
 	
 	protected QuickInventory() {
-		float totalLength = (slotsAmount * slotSize) + (offsetBetweenSlots * (slotsAmount - 1));
+		totalLength = (slotsAmount * slotSize) + (offsetBetweenSlots * (slotsAmount - 1));
 		frame = new GUIFrame(Display.getWidth() / 2 - totalLength / 2, 
 				Display.getHeight() - slotSize - offsetBetweenSlots, totalLength, 50);
 		World.getWorld().addGUITextures(frame.getFrameTextures());
@@ -22,6 +24,11 @@ public class QuickInventory {
 	protected void update() {
 		if(frame.isMouseOvered()) {
 			Mouse.setActiveInGUI(true);
+		}
+		
+		if(Display.isResized()) {
+			frame.setPosition(Display.getWidth() / 2 - totalLength / 2, 
+					Display.getHeight() - slotSize - offsetBetweenSlots);
 		}
 	}
 	

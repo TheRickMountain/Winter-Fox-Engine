@@ -87,6 +87,7 @@ public class GUIRenderer {
 		shader.start();
 		
 		if(Display.isResized()) {
+			MathUtils.getOrthoProjectionMatrix(projectionMatrix, 0, Display.getWidth(), Display.getHeight(), 0);
 			shader.projectionMatrix.loadMatrix(projectionMatrix);
 		}
 		

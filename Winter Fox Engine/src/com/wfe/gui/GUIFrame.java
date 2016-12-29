@@ -29,7 +29,6 @@ public class GUIFrame {
 		this.y = y;
 		this.scaleX = scaleX;
 		this.scaleY = scaleY;
-		
 		createFrame();
 		setTexturePositions();
 		setTextureRotations();
@@ -112,6 +111,7 @@ public class GUIFrame {
 
 	public void setX(float x) {
 		this.x = x;
+		setTexturePositions();
 	}
 
 	public float getY() {
@@ -120,11 +120,13 @@ public class GUIFrame {
 
 	public void setY(float y) {
 		this.y = y;
+		setTexturePositions();
 	}
 
 	public void setPosition(float x, float y) {
 		this.x = x;
 		this.y = y;
+		setTexturePositions();
 	}
 	
 	public float getScaleX() {
@@ -133,6 +135,7 @@ public class GUIFrame {
 
 	public void setScaleX(float scaleX) {
 		this.scaleX = scaleX;
+		setTextureSizes();
 	}
 
 	public float getScaleY() {
@@ -141,11 +144,13 @@ public class GUIFrame {
 
 	public void setScaleY(float scaleY) {
 		this.scaleY = scaleY;
+		setTextureSizes();
 	}
 	
 	public void setScale(float scaleX, float scaleY) {
 		this.scaleX = scaleX;
 		this.scaleY = scaleY;
+		setTextureSizes();
 	}
 	
 	public List<GUITexture> getFrameTextures() {
