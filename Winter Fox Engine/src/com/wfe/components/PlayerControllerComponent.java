@@ -42,7 +42,7 @@ public class PlayerControllerComponent implements Component {
 	@Override
 	public void update(float dt) {	
 		move(dt);
-		build();
+		//build();
 	}
 	
 	private void build() {

@@ -47,6 +47,13 @@ public class Game implements IGameLogic {
 		texBuilder = Texture.newTexture(new MyFile("gui/banana.png"));
 		ResourceManager.loadTexture("banana_ui", texBuilder.create());
 		
+		texBuilder = Texture.newTexture(new MyFile("gui/cookie.png"));
+		ResourceManager.loadTexture("cookie_ui", texBuilder.create());
+		
+		texBuilder = Texture.newTexture(new MyFile("gui/slot.png"));
+		texBuilder.nearestFiltering();
+		ResourceManager.loadTexture("slot_ui", texBuilder.create());
+		
 		texBuilder = Texture.newTexture(new MyFile("gui/background_frame.png"));
 		ResourceManager.loadTexture("background_frame_ui", texBuilder.create());
 		

@@ -6,10 +6,12 @@ public class GUIManager {
 
 	private static GUIManager guiManager;
 	
-	private QuickInventory quickInventory;
+	private Inventory quickInventory;
 	
 	private GUIManager() {
-		quickInventory = new QuickInventory();
+		ItemDatabase.create();
+		
+		quickInventory = new Inventory();
 	}
 	
 	public void update() {
@@ -17,7 +19,7 @@ public class GUIManager {
 		
 		quickInventory.update();
 		
-		System.out.println(Mouse.isActiveInGUI());
+		//System.out.println(Mouse.isActiveInGUI());
 	}
 	
 	public void render() {

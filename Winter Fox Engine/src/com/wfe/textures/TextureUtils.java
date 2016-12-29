@@ -61,7 +61,6 @@ public class TextureUtils {
 						4.0f);
 			}
 		} else if (builder.isNearest()) {
-			System.out.println(GL11.GL_NEAREST);
 			GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_NEAREST);
 			GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_NEAREST);
 		} else {
