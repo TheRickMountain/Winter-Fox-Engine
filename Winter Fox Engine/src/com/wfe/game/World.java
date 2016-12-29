@@ -15,6 +15,7 @@ import com.wfe.font.TextMeshData;
 import com.wfe.graph.Mesh;
 import com.wfe.graph.Vao;
 import com.wfe.gui.GUIText;
+import com.wfe.gui.GUITexture;
 import com.wfe.physics.AABB;
 import com.wfe.renderEngine.RenderEngine;
 import com.wfe.tileEngine.Terrain;
@@ -38,6 +39,7 @@ public class World {
 	private List<AABB> colliders = new ArrayList<AABB>();
 	
 	private Map<FontType, List<GUIText>> texts = new HashMap<FontType, List<GUIText>>();
+	private List<GUITexture> textures = new ArrayList<GUITexture>();
 	
 	private float time = 12000;
 	private Weather weather;
@@ -88,7 +90,7 @@ public class World {
 	public void render(AnimatedEntity entity) {
 		renderEngine.clear();
 		terrain.render();
-		renderEngine.render(entitiesToRender, entity, texts);
+		renderEngine.render(entitiesToRender, entity, texts, textures);
 	}
 	
 	public void addEntity(StaticEntity entity) {
@@ -119,7 +121,7 @@ public class World {
 		}
 	}
 	
-	public void addText(GUIText text) {
+	public void addGUIText(GUIText text) {
 		FontType font = text.getFont();
 		TextMeshData data = font.loadText(text);
 		Vao vao = Vao.create();
@@ -137,13 +139,21 @@ public class World {
 		textBatch.add(text);
 	}
 	
-	public void removeText(GUIText text) {
+	public void removeGUIText(GUIText text) {
 		List<GUIText> textBatch = texts.get(text.getFont());
 		textBatch.remove(text);
 		if(textBatch.isEmpty()) {
 			texts.remove(text.getFont());
 			text.cleanup();
 		}
+	}
+	
+	public void addGUITexture(GUITexture texture) {
+		textures.add(texture);
+	}
+	
+	public void removeGUITexture(GUITexture texture) {
+		textures.remove(texture);
 	}
 	
 	public List<AABB> getColliders() {

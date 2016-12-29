@@ -1,12 +1,14 @@
 package com.wfe.renderEngine;
 
+import java.util.List;
+
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL20;
 import org.lwjgl.opengl.GL30;
 
 import com.wfe.core.Display;
-import com.wfe.core.ResourceManager;
 import com.wfe.graph.Mesh;
+import com.wfe.gui.GUITexture;
 import com.wfe.math.Matrix4f;
 import com.wfe.utils.MathUtils;
 import com.wfe.utils.OpenglUtils;
@@ -29,18 +31,23 @@ public class GUIRenderer {
 		shader.stop();
 	}
 	
-	public void render() {
+	public void render(List<GUITexture> textures) {
 		prepare();
 		
-		shader.modelMatrix.loadMatrix(MathUtils.getModelMatrix(modelMatrix, 0, 0, 0, 50, 50));
-		
-		ResourceManager.getTexture("banana_ui").bind(0);
-		
-		GL30.glBindVertexArray(quadMesh.getVAO());
-		GL20.glEnableVertexAttribArray(0);
-		GL11.glDrawArrays(GL11.GL_TRIANGLE_STRIP, 0, 4);
-		GL20.glDisableVertexAttribArray(0);
-		GL30.glBindVertexArray(0);
+		for(GUITexture texture : textures) {
+			if(!texture.isCentered()) {
+				shader.modelMatrix.loadMatrix(MathUtils.getModelMatrix(modelMatrix, 
+						texture.getX(), texture.getY(), texture.getRot(), texture.getScaleX(), texture.getScaleY()));
+			} else {
+				shader.modelMatrix.loadMatrix(MathUtils.getModelMatrix(modelMatrix, 
+						texture.getX() - texture.getScaleX() / 2, texture.getY() - texture.getScaleY() / 2, 
+						texture.getRot(), texture.getScaleX(), texture.getScaleY()));
+			}
+			
+			texture.getTexture().bind(0);
+			
+			GL11.glDrawArrays(GL11.GL_TRIANGLE_STRIP, 0, 4);
+		}
 		
 		finish();
 	}
@@ -54,9 +61,15 @@ public class GUIRenderer {
 		if(Display.isResized()) {
 			shader.projectionMatrix.loadMatrix(projectionMatrix);
 		}
+		
+		GL30.glBindVertexArray(quadMesh.getVAO());
+		GL20.glEnableVertexAttribArray(0);
 	}
 	
 	private void finish() {
+		GL20.glDisableVertexAttribArray(0);
+		GL30.glBindVertexArray(0);
+		
 		shader.stop();
 		
 		OpenglUtils.cullBackFaces(true);

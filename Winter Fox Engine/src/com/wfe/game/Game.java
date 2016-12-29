@@ -14,7 +14,9 @@ import com.wfe.entities.Fern;
 import com.wfe.entities.Grass;
 import com.wfe.font.FontType;
 import com.wfe.graph.OBJLoader;
+import com.wfe.gui.GUIFrame;
 import com.wfe.gui.GUIText;
+import com.wfe.gui.GUITexture;
 import com.wfe.math.Vector3f;
 import com.wfe.textures.Texture;
 import com.wfe.textures.TextureBuilder;
@@ -44,8 +46,20 @@ public class Game implements IGameLogic {
 		texBuilder.normalMipMap(-0.4f);
 		ResourceManager.loadTexture("grass", texBuilder.create());
 			
-		texBuilder = Texture.newTexture(new MyFile("textures/banana.png"));
+		texBuilder = Texture.newTexture(new MyFile("gui/banana.png"));
 		ResourceManager.loadTexture("banana_ui", texBuilder.create());
+		
+		texBuilder = Texture.newTexture(new MyFile("gui/background_frame.png"));
+		ResourceManager.loadTexture("background_frame_ui", texBuilder.create());
+		
+		texBuilder = Texture.newTexture(new MyFile("gui/corner_frame.png"));
+		ResourceManager.loadTexture("corner_frame_ui", texBuilder.create());
+		
+		texBuilder = Texture.newTexture(new MyFile("gui/h_edge_frame.png"));
+		ResourceManager.loadTexture("h_edge_frame_ui", texBuilder.create());
+		
+		texBuilder = Texture.newTexture(new MyFile("gui/v_edge_frame.png"));
+		ResourceManager.loadTexture("v_edge_frame_ui", texBuilder.create());
 		
 		/*** Meshes ***/
 		ResourceManager.loadMesh("wall", OBJLoader.loadMesh("/models/wall.obj"));
@@ -72,9 +86,9 @@ public class Game implements IGameLogic {
 
 		FontType fontType = new FontType(ResourceManager.getTexture("myFont").getID(),
 				new MyFile("font/myFont.fnt"));
-		GUIText text = new GUIText("Winter Font Engine", 1.1f, fontType, 0.0f, 0.0f, 0.125f, true);
+		GUIText text = new GUIText("Winter Font Engine", 1.1f, fontType, 0.875f, 0.0f, 0.125f, true);
 		text.setColor(1, 1, 1);
-		World.getWorld().addText(text);
+		World.getWorld().addGUIText(text);
 		
 		Fern fern1 = new Fern(new Transformation(84.5f, 0, 84.5f));
 		fern1.setTextureIndex(0);
@@ -103,6 +117,16 @@ public class Game implements IGameLogic {
 		Grass grass2 = new Grass(new Transformation(85.5f, 0, 87.5f));
 		grass2.setTextureIndex(2);
 		World.getWorld().addEntity(grass2);
+		
+		GUITexture bananaUI = new GUITexture(ResourceManager.getTexture("banana_ui"),
+				Display.getWidth() / 2 - 250 + 5, Display.getHeight() - 50 + 5, 0, 40, 40, false);
+		World.getWorld().addGUITexture(bananaUI);
+		
+		GUIFrame frame = new GUIFrame(Display.getWidth() / 2 - 250, Display.getHeight() - 50, 
+				500, 50);
+		for(int i = 0; i < frame.getFrameTextures().size(); i++) {
+			World.getWorld().addGUITexture(frame.getFrameTextures().get(i));
+		}
 	}
 	
 	@Override
