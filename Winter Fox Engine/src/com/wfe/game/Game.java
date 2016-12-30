@@ -44,14 +44,28 @@ public class Game implements IGameLogic {
 		texBuilder.normalMipMap(-0.4f);
 		ResourceManager.loadTexture("grass", texBuilder.create());
 			
-		texBuilder = Texture.newTexture(new MyFile("gui/banana.png"));
+		texBuilder = Texture.newTexture(new MyFile("gui/items/banana.png"));
 		ResourceManager.loadTexture("banana_ui", texBuilder.create());
 		
-		texBuilder = Texture.newTexture(new MyFile("gui/cookie.png"));
+		texBuilder = Texture.newTexture(new MyFile("gui/items/cookie.png"));
 		ResourceManager.loadTexture("cookie_ui", texBuilder.create());
 		
+		texBuilder = Texture.newTexture(new MyFile("gui/items/apple.png"));
+		ResourceManager.loadTexture("apple_ui", texBuilder.create());
+		
+		texBuilder = Texture.newTexture(new MyFile("gui/items/log wall.png"));
+		ResourceManager.loadTexture("log_wall_ui", texBuilder.create());
+		
+		texBuilder = Texture.newTexture(new MyFile("gui/items/axe.png"));
+		ResourceManager.loadTexture("axe_ui", texBuilder.create());
+		
+		texBuilder = Texture.newTexture(new MyFile("gui/items/shroom.png"));
+		ResourceManager.loadTexture("shroom_ui", texBuilder.create());
+		
+		texBuilder = Texture.newTexture(new MyFile("gui/items/bread.png"));
+		ResourceManager.loadTexture("bread_ui", texBuilder.create());
+		
 		texBuilder = Texture.newTexture(new MyFile("gui/slot.png"));
-		texBuilder.nearestFiltering();
 		ResourceManager.loadTexture("slot_ui", texBuilder.create());
 		
 		texBuilder = Texture.newTexture(new MyFile("gui/background_frame.png"));

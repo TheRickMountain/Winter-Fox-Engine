@@ -23,7 +23,7 @@ public class Slot {
 	public void render() {
 		GUIRenderer.render(texture, x, y, 0, scaleX, scaleY, false);
 		if(hasItem) {
-			GUIRenderer.render(item.icon, x, y, 0, scaleX, scaleY, false);
+			GUIRenderer.render(item.icon, x + 2.5f, y + 2.5f, 0, scaleX - 5, scaleY - 5, false);
 		}
 	}
 	
