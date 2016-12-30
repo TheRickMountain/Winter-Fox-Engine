@@ -1,16 +1,14 @@
 package com.wfe.animation;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.wfe.ecs.Component;
+import com.wfe.ecs.Entity;
 import com.wfe.ecs.Transformation;
 import com.wfe.graph.Vao;
 import com.wfe.math.Matrix4f;
 import com.wfe.math.Vector3f;
 import com.wfe.textures.Texture;
 
-public class AnimatedEntity {
+public class AnimatedEntity extends Entity {
 
 	private final Vao model;
 	private final Texture texture;
@@ -20,10 +18,6 @@ public class AnimatedEntity {
 
 	private final Animator animator;
 	
-	private List<Component> components = new ArrayList<Component>();
-	
-	private Transformation transform;
-
 	/**
 	 * Creates a new entity capable of animation. The inverse bind transform for
 	 * all joints is calculated in this constructor.
@@ -136,14 +130,6 @@ public class AnimatedEntity {
 		for (Joint childJoint : headJoint.children) {
 			addJointsToArray(childJoint, jointMatrices);
 		}
-	}
-	
-	public Transformation getTransform() {
-		return transform;
-	}
-	
-	public void addComponent(Component component) {
-		components.add(component);
 	}
 
 }

@@ -1,18 +1,15 @@
 package com.wfe.ecs;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import com.wfe.game.World;
 import com.wfe.graph.Material;
 import com.wfe.graph.Mesh;
 
-public class StaticEntity {
+public class StaticEntity extends Entity {
 	
-	private Transformation transform;
 	private Mesh mesh;
 	private Material material;
-	private List<Component> components;
 	
 	private boolean remove = false;
 	
@@ -26,6 +23,7 @@ public class StaticEntity {
 		this.components = new ArrayList<Component>();
 	}
 	
+	@Override
 	public void update(float dt) {
 		if(remove) {
 			World.getWorld().removeEntity(this);
@@ -45,32 +43,6 @@ public class StaticEntity {
         int row = textureIndex / material.getNumberOfRows();
         return (float) row / (float)material.getNumberOfRows();
     }
-	
-	public void addComponent(Component component) {
-		this.components.add(component);
-	}
-	
-	public boolean hasComponent(ComponentType type) {
-		for(Component component : components) {
-			if(component.getType().equals(type)) {
-				return true;
-			}
-		}
-		return false;
-	}
-	
-	public Component getComponent(ComponentType type) {
-		for(Component component : components) {
-			if(component.getType().equals(type)) {
-				return component;
-			}
-		}
-		return null;
-	}
-	
-	public Transformation getTransform() {
-		return transform;
-	}
 	
 	public Mesh getMesh() {
 		return mesh;

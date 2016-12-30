@@ -5,20 +5,11 @@ import java.util.List;
 import com.wfe.core.Camera;
 import com.wfe.ecs.Component;
 import com.wfe.ecs.ComponentType;
-import com.wfe.ecs.StaticEntity;
 import com.wfe.ecs.Transformation;
-import com.wfe.entities.CrossWall;
-import com.wfe.entities.DoorWall;
-import com.wfe.entities.Wall;
-import com.wfe.entities.WindowWall;
 import com.wfe.game.World;
-import com.wfe.input.Keyboard;
 import com.wfe.input.Key;
-import com.wfe.input.Mouse;
-import com.wfe.math.Vector3f;
+import com.wfe.input.Keyboard;
 import com.wfe.physics.AABB;
-import com.wfe.tileEngine.Tile;
-import com.wfe.utils.MousePicker;
 
 public class PlayerControllerComponent implements Component {
 
@@ -29,10 +20,6 @@ public class PlayerControllerComponent implements Component {
 
 	private AABB bb;
 	
-	private StaticEntity buildEntity;
-	private int buildEntityType;
-	private int buildEntityRotation;
-	
 	public PlayerControllerComponent(Camera camera, Transformation transform) {		
 		this.camera = camera;
 		this.transform = transform;
@@ -42,85 +29,6 @@ public class PlayerControllerComponent implements Component {
 	@Override
 	public void update(float dt) {	
 		move(dt);
-		//build();
-	}
-	
-	private void build() {
-		int x = 0;
-		int z = 0;
-		Vector3f tPos = MousePicker.getCurrentTerrainPoint();
-		if(tPos != null) {
-			x = (int)tPos.x;
-			z = (int)tPos.z;
-		}
-		
-		if(Keyboard.isKeyDown(Key.KEY_1)) {
-			removeCurrentBuilding();
-			buildEntity = new Wall(new Transformation(x, 0, z));
-			World.getWorld().addEntity(buildEntity);
-			buildEntityType = 1;
-		} else if(Keyboard.isKeyDown(Key.KEY_2)) {
-			removeCurrentBuilding();
-			buildEntity = new CrossWall(new Transformation(x, 0, z));
-			buildEntityType = 2;
-			World.getWorld().addEntity(buildEntity);
-		} else if(Keyboard.isKeyDown(Key.KEY_3)) {
-			removeCurrentBuilding();
-			buildEntity = new WindowWall(new Transformation(x, 0, z));
-			buildEntityType = 3;
-			World.getWorld().addEntity(buildEntity);
-		} else if(Keyboard.isKeyDown(Key.KEY_4)) {
-			removeCurrentBuilding();
-			buildEntity = new DoorWall(new Transformation(x, 0, z));
-			World.getWorld().addEntity(buildEntity);
-			buildEntityType = 4;
-		}
-		
-		if(Keyboard.isKeyDown(Key.KEY_R)) {
-			buildEntityRotation += 90;
-			
-			if(buildEntityRotation == 360) {
-				buildEntityRotation = 0;
-			}
-		}
-		
-		if(buildEntity != null) {
-			buildEntity.getTransform().setPosition(x + 0.5f, 0, z + 0.5f);
-			buildEntity.getTransform().setRotY(buildEntityRotation);
-		}
-		
-		if(Mouse.isButtonDown(0)) {
-			StaticEntity entity = null;
-			if(buildEntityType == 1) {
-				entity = new Wall(new Transformation(x + 0.5f, 0, z + 0.5f));
-				entity.addComponent(new ColliderComponent(1, 1, 1, entity.getTransform()));
-			} else if(buildEntityType == 2) {
-				entity = new CrossWall(new Transformation(x + 0.5f, 0, z + 0.5f));
-				entity.addComponent(new ColliderComponent(1, 1, 1, entity.getTransform()));
-			} else if(buildEntityType == 3) {
-				entity = new WindowWall(new Transformation(x + 0.5f, 0, z + 0.5f));
-				entity.addComponent(new ColliderComponent(1, 1, 1, entity.getTransform()));
-			} else if(buildEntityType == 4) {
-				entity = new DoorWall(new Transformation(x + 0.5f, 0, z + 0.5f));
-			}
-			
-			entity.getTransform().setRotY(buildEntityRotation);
-			if(World.getWorld().setTileEntity(x, z, entity)) {
-				World.getWorld().addEntity(entity);
-			}
-		}
-		
-		if(Mouse.isButtonDown(1)) {
-			World.getWorld().setTile(x - 1, z + 1, Tile.DESK.getId());
-			World.getWorld().setTile(x, z + 1, Tile.DESK.getId());
-			World.getWorld().setTile(x + 1, z + 1, Tile.DESK.getId());
-			World.getWorld().setTile(x - 1, z, Tile.DESK.getId());
-			World.getWorld().setTile(x + 1, z, Tile.DESK.getId());
-			World.getWorld().setTile(x - 1, z - 1, Tile.DESK.getId());
-			World.getWorld().setTile(x, z - 1, Tile.DESK.getId());
-			World.getWorld().setTile(x + 1, z - 1, Tile.DESK.getId());
-			World.getWorld().setTile(x, z, Tile.DESK.getId());		
-		}
 	}
 	
 	private void move(float dt) {	
@@ -221,13 +129,6 @@ public class PlayerControllerComponent implements Component {
 	     }
 	     this.transform.x = (this.bb.x0 + this.bb.x1) / 2.0f;
 	     this.transform.z = (this.bb.z0 + this.bb.z1) / 2.0f;
-	}
-	
-	public void removeCurrentBuilding() {
-		if(buildEntity != null) {
-			buildEntity.remove();
-			buildEntity = null;
-		}
 	}
 
 	@Override

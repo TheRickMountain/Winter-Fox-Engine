@@ -180,8 +180,14 @@ public class World {
 		terrain.setTile(x, y, id);
 	}
 	
-	public boolean setTileEntity(int x, int y, StaticEntity entity) {
-		return terrain.setTileEntity(x, y, entity);
+	public boolean addToTile(StaticEntity entity) {
+		if(terrain.setTileEntity(
+				(int)entity.getTransform().getX(),
+				(int)entity.getTransform().getZ(), entity)) {
+			addEntity(entity);
+			return true;
+		}
+		return false;
 	}
 	
 	public void removeTileEntity(int x, int y) {

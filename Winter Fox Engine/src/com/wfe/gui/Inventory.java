@@ -50,6 +50,10 @@ public class Inventory {
 		addItem(ItemDatabase.items.get(ItemDatabase.SHROOM));
 		addItem(ItemDatabase.items.get(ItemDatabase.AXE));
 		addItem(ItemDatabase.items.get(ItemDatabase.LOG_WALL));
+		addItem(ItemDatabase.items.get(ItemDatabase.APPLE));
+		addItem(ItemDatabase.items.get(ItemDatabase.APPLE));
+		addItem(ItemDatabase.items.get(ItemDatabase.APPLE));
+		addItem(ItemDatabase.items.get(ItemDatabase.APPLE));
 	}
 	
 	protected void update() {
@@ -116,9 +120,7 @@ public class Inventory {
 				entity.addComponent(new ColliderComponent(1, 1, 1, entity.getTransform()));
 				
 				entity.getTransform().setRotY(buildingEntityRotation);
-				if(World.getWorld().setTileEntity(x, z, entity)) {
-					World.getWorld().addEntity(entity);
-				}
+				World.getWorld().addToTile(entity);
 			}
 		}
 	}
@@ -142,6 +144,16 @@ public class Inventory {
 	}
 	
 	public void addItem(Item item) {
+		// Check quick slots
+		for(int i = 24; i < 32; i++) {
+			Slot slot = slots.get(i);
+			if(!slot.isHasItem()) {
+				slot.addItem(item);
+				return;
+			}
+		} 
+		
+		// Check all slots
 		for(Slot slot : slots) {
 			if(!slot.isHasItem()) {
 				slot.addItem(item);
@@ -159,24 +171,20 @@ public class Inventory {
 					if(!slot.isHasItem()) {
 						slot.addItem(draggedItem);
 						draggedItem = null;
-						
-						checkBuildingItem();
 					} else {
 						Item tempItem = slot.getItem();
 						slot.removeItem();
 						slot.addItem(draggedItem);
 						draggedItem = tempItem;
-						
-						checkBuildingItem();
 					}
 				} else {
 					if(slot.isHasItem()) {
 						draggedItem = slot.getItem();
 						slot.removeItem();
-						
-						checkBuildingItem();
 					}
 				}
+				
+				checkBuildingItem();
 			} else {
 				if(slot.getItem().type.equals(ItemType.FOOD)) {
 					slot.removeItem();
@@ -190,6 +198,11 @@ public class Inventory {
 			if(draggedItem.type.equals(ItemType.BUILDING)) {
 				currentBuildingEntity = new Wall(new Transformation(0, 0, 0));
 				World.getWorld().addEntity(currentBuildingEntity);
+			} else {
+				if(currentBuildingEntity != null) {
+					World.getWorld().removeEntity(currentBuildingEntity);
+					currentBuildingEntity = null;
+				}
 			}
 		} else {
 			if(currentBuildingEntity != null) {

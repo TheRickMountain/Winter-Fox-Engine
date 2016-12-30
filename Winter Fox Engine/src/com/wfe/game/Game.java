@@ -4,15 +4,18 @@ import com.wfe.animation.AnimatedEntity;
 import com.wfe.animation.Animation;
 import com.wfe.animation.loaders.AnimatedEntityCreator;
 import com.wfe.animation.loaders.AnimationCreator;
+import com.wfe.components.ColliderComponent;
 import com.wfe.components.PlayerControllerComponent;
 import com.wfe.core.Camera;
 import com.wfe.core.Display;
 import com.wfe.core.IGameLogic;
 import com.wfe.core.ResourceManager;
+import com.wfe.ecs.StaticEntity;
 import com.wfe.ecs.Transformation;
 import com.wfe.entities.Fern;
 import com.wfe.entities.Grass;
 import com.wfe.font.FontType;
+import com.wfe.graph.Material;
 import com.wfe.graph.OBJLoader;
 import com.wfe.gui.GUIText;
 import com.wfe.math.Vector3f;
@@ -87,6 +90,19 @@ public class Game implements IGameLogic {
 		ResourceManager.loadMesh("window_wall", OBJLoader.loadMesh("/models/window_wall.obj"));
 		ResourceManager.loadMesh("fern", OBJLoader.loadMesh("/entity/fern/fern.obj"));
 		ResourceManager.loadMesh("grass", OBJLoader.loadMesh("/entity/grass/grass.obj"));
+		
+		/*** Pine ***/
+		texBuilder = Texture.newTexture(new MyFile("entity/pine/bark.png"));
+		texBuilder.normalMipMap(-0.4f);
+		ResourceManager.loadTexture("pine_bark", texBuilder.create());
+		
+		texBuilder = Texture.newTexture(new MyFile("entity/pine/leaves.png"));
+		texBuilder.normalMipMap(-0.4f);
+		ResourceManager.loadTexture("pine_leaves", texBuilder.create());
+		
+		ResourceManager.loadMesh("pine_bark", OBJLoader.loadMesh("/entity/pine/bark.obj"));
+		ResourceManager.loadMesh("pine_leaves", OBJLoader.loadMesh("/entity/pine/leaves.obj"));
+		/*** *** ***/
 	}
 	
 	@Override
@@ -112,31 +128,42 @@ public class Game implements IGameLogic {
 		
 		Fern fern1 = new Fern(new Transformation(84.5f, 0, 84.5f));
 		fern1.setTextureIndex(0);
-		World.getWorld().addEntity(fern1);
+		World.getWorld().addToTile(fern1);
 		
 		Fern fern2 = new Fern(new Transformation(83.5f, 0, 84.5f));
 		fern2.setTextureIndex(1);
-		World.getWorld().addEntity(fern2);
+		World.getWorld().addToTile(fern2);
 		
 		Fern fern3 = new Fern(new Transformation(81.5f, 0, 84.5f));
 		fern3.setTextureIndex(2);
-		World.getWorld().addEntity(fern3);
+		World.getWorld().addToTile(fern3);
 		
 		Fern fern4 = new Fern(new Transformation(80.5f, 0, 84.5f));
 		fern4.setTextureIndex(3);
-		World.getWorld().addEntity(fern4);
+		World.getWorld().addToTile(fern4);
 		
 		Grass grass = new Grass(new Transformation(85.5f, 0, 85.5f));
 		grass.setTextureIndex(0);
-		World.getWorld().addEntity(grass);
+		World.getWorld().addToTile(grass);
 		
 		Grass grass1 = new Grass(new Transformation(85.5f, 0, 86.5f));
 		grass1.setTextureIndex(1);
-		World.getWorld().addEntity(grass1);
+		World.getWorld().addToTile(grass1);
 		
 		Grass grass2 = new Grass(new Transformation(85.5f, 0, 87.5f));
 		grass2.setTextureIndex(2);
-		World.getWorld().addEntity(grass2);
+		World.getWorld().addToTile(grass2);
+		
+		Transformation pineTransform = new Transformation(90.5f, 0, 88.5f);
+		pineTransform.setScale(0.4f);
+		StaticEntity pineBark = new StaticEntity(ResourceManager.getMesh("pine_bark"),
+				new Material(ResourceManager.getTexture("pine_bark")), pineTransform);
+		pineBark.addComponent(new ColliderComponent(0.5f, 1, 0.5f, pineTransform));
+		World.getWorld().addToTile(pineBark);
+		
+		StaticEntity pineLeaves = new StaticEntity(ResourceManager.getMesh("pine_leaves"),
+				new Material(ResourceManager.getTexture("pine_leaves")).setHasTransparency(true), pineTransform);
+		World.getWorld().addEntity(pineLeaves);
 	}
 	
 	@Override
