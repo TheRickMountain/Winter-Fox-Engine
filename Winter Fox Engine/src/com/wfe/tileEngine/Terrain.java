@@ -7,7 +7,6 @@ import com.wfe.core.Camera;
 import com.wfe.core.Display;
 import com.wfe.ecs.StaticEntity;
 import com.wfe.textures.Texture;
-import com.wfe.textures.TextureBuilder;
 import com.wfe.utils.MathUtils;
 import com.wfe.utils.MyFile;
 import com.wfe.weather.DirectionalLight;
@@ -23,7 +22,6 @@ public class Terrain {
 	private TerrainShader shader;
 	
 	private HeightGenerator heightGenerator;
-	private HeightGenerator dryGrassGenerator;
 	
 	public Terrain(int sizeX, int sizeZ, Camera camera) throws Exception {
 		this.sizeX = sizeX;
@@ -31,15 +29,12 @@ public class Terrain {
 		this.camera = camera;
 		shader = new TerrainShader();
 		heightGenerator = new HeightGenerator();
-		dryGrassGenerator = new HeightGenerator();
 		init();
 	}
 	
 	public void init() throws Exception {
-		TextureBuilder texBuilder = Texture.newTexture(new MyFile("textures/terrain.png"));
-		texBuilder.normalMipMap(-0.4f);
-		texBuilder.clampEdges().anisotropic().nearestFiltering();
-		spriteSheet = texBuilder.create();
+		spriteSheet = Texture.newTexture(new MyFile("textures/terrain.png"))
+				.normalMipMap().clampEdges().anisotropic().nearestFiltering().create();
 		
 		for(int x = 0; x < sizeX; x++) {
 			for(int y = 0; y < sizeZ; y++) {

@@ -20,7 +20,6 @@ import com.wfe.graph.OBJLoader;
 import com.wfe.gui.GUIText;
 import com.wfe.math.Vector3f;
 import com.wfe.textures.Texture;
-import com.wfe.textures.TextureBuilder;
 import com.wfe.utils.MyFile;
 
 public class Game implements IGameLogic {
@@ -31,57 +30,34 @@ public class Game implements IGameLogic {
 	@Override
 	public void loadResources() throws Exception {
 		/*** Textures ***/
-		TextureBuilder texBuilder = Texture.newTexture(new MyFile("textures/wall.png"));
-		texBuilder.normalMipMap(-0.4f);
-		ResourceManager.loadTexture("wall", texBuilder.create());
+		ResourceManager.loadTexture("wall", Texture.newTexture(new MyFile("textures/wall.png"))
+				.normalMipMap(-0.4f)
+				.create());
 		
-		texBuilder = Texture.newTexture(new MyFile("font/myFont.png"));
-		texBuilder.normalMipMap();
-		ResourceManager.loadTexture("myFont", texBuilder.create());
+		ResourceManager.loadTexture("myFont", Texture.newTexture(new MyFile("font/myFont.png"))
+				.normalMipMap()
+				.create());
 		
-		texBuilder = Texture.newTexture(new MyFile("entity/fern/fern.png"));
-		texBuilder.normalMipMap(-0.4f);
-		ResourceManager.loadTexture("fern", texBuilder.create());
+		ResourceManager.loadTexture("fern", Texture.newTexture(new MyFile("entity/fern/fern.png"))
+				.normalMipMap(-0.4f)
+				.create());
 		
-		texBuilder = Texture.newTexture(new MyFile("entity/grass/grass.png"));
-		texBuilder.normalMipMap(-0.4f);
-		ResourceManager.loadTexture("grass", texBuilder.create());
+		ResourceManager.loadTexture("grass", Texture.newTexture(new MyFile("entity/grass/grass.png"))
+				.normalMipMap(-0.4f)
+				.create());
 			
-		texBuilder = Texture.newTexture(new MyFile("gui/items/banana.png"));
-		ResourceManager.loadTexture("banana_ui", texBuilder.create());
-		
-		texBuilder = Texture.newTexture(new MyFile("gui/items/cookie.png"));
-		ResourceManager.loadTexture("cookie_ui", texBuilder.create());
-		
-		texBuilder = Texture.newTexture(new MyFile("gui/items/apple.png"));
-		ResourceManager.loadTexture("apple_ui", texBuilder.create());
-		
-		texBuilder = Texture.newTexture(new MyFile("gui/items/log wall.png"));
-		ResourceManager.loadTexture("log_wall_ui", texBuilder.create());
-		
-		texBuilder = Texture.newTexture(new MyFile("gui/items/axe.png"));
-		ResourceManager.loadTexture("axe_ui", texBuilder.create());
-		
-		texBuilder = Texture.newTexture(new MyFile("gui/items/shroom.png"));
-		ResourceManager.loadTexture("shroom_ui", texBuilder.create());
-		
-		texBuilder = Texture.newTexture(new MyFile("gui/items/bread.png"));
-		ResourceManager.loadTexture("bread_ui", texBuilder.create());
-		
-		texBuilder = Texture.newTexture(new MyFile("gui/slot.png"));
-		ResourceManager.loadTexture("slot_ui", texBuilder.create());
-		
-		texBuilder = Texture.newTexture(new MyFile("gui/background_frame.png"));
-		ResourceManager.loadTexture("background_frame_ui", texBuilder.create());
-		
-		texBuilder = Texture.newTexture(new MyFile("gui/corner_frame.png"));
-		ResourceManager.loadTexture("corner_frame_ui", texBuilder.create());
-		
-		texBuilder = Texture.newTexture(new MyFile("gui/h_edge_frame.png"));
-		ResourceManager.loadTexture("h_edge_frame_ui", texBuilder.create());
-		
-		texBuilder = Texture.newTexture(new MyFile("gui/v_edge_frame.png"));
-		ResourceManager.loadTexture("v_edge_frame_ui", texBuilder.create());
+		ResourceManager.loadTexture("banana_ui", Texture.newTexture(new MyFile("gui/items/banana.png")).create());
+		ResourceManager.loadTexture("cookie_ui", Texture.newTexture(new MyFile("gui/items/cookie.png")).create());
+		ResourceManager.loadTexture("apple_ui", Texture.newTexture(new MyFile("gui/items/apple.png")).create());
+		ResourceManager.loadTexture("log_wall_ui", Texture.newTexture(new MyFile("gui/items/log wall.png")).create());
+		ResourceManager.loadTexture("axe_ui", Texture.newTexture(new MyFile("gui/items/axe.png")).create());
+		ResourceManager.loadTexture("shroom_ui", Texture.newTexture(new MyFile("gui/items/shroom.png")).create());
+		ResourceManager.loadTexture("bread_ui", Texture.newTexture(new MyFile("gui/items/bread.png")).create());
+		ResourceManager.loadTexture("slot_ui", Texture.newTexture(new MyFile("gui/slot.png")).create());
+		ResourceManager.loadTexture("background_frame_ui", Texture.newTexture(new MyFile("gui/background_frame.png")).create());
+		ResourceManager.loadTexture("corner_frame_ui", Texture.newTexture(new MyFile("gui/corner_frame.png")).create());
+		ResourceManager.loadTexture("h_edge_frame_ui", Texture.newTexture(new MyFile("gui/h_edge_frame.png")).create());
+		ResourceManager.loadTexture("v_edge_frame_ui", Texture.newTexture(new MyFile("gui/v_edge_frame.png")).create());
 		
 		/*** Meshes ***/
 		ResourceManager.loadMesh("wall", OBJLoader.loadMesh("/models/wall.obj"));
@@ -92,13 +68,13 @@ public class Game implements IGameLogic {
 		ResourceManager.loadMesh("grass", OBJLoader.loadMesh("/entity/grass/grass.obj"));
 		
 		/*** Pine ***/
-		texBuilder = Texture.newTexture(new MyFile("entity/pine/bark.png"));
-		texBuilder.normalMipMap(-0.4f);
-		ResourceManager.loadTexture("pine_bark", texBuilder.create());
+		ResourceManager.loadTexture("pine_bark", Texture.newTexture(new MyFile("entity/pine/bark.png"))
+				.normalMipMap(-0.4f)
+				.create());
 		
-		texBuilder = Texture.newTexture(new MyFile("entity/pine/leaves.png"));
-		texBuilder.normalMipMap(-0.4f);
-		ResourceManager.loadTexture("pine_leaves", texBuilder.create());
+		ResourceManager.loadTexture("pine_leaves", Texture.newTexture(new MyFile("entity/pine/leaves.png"))
+				.normalMipMap(-0.4f)
+				.create());
 		
 		ResourceManager.loadMesh("pine_bark", OBJLoader.loadMesh("/entity/pine/bark.obj"));
 		ResourceManager.loadMesh("pine_leaves", OBJLoader.loadMesh("/entity/pine/leaves.obj"));
