@@ -4,6 +4,7 @@ import com.wfe.core.ResourceManager;
 import com.wfe.ecs.StaticEntity;
 import com.wfe.ecs.Transformation;
 import com.wfe.graph.Material;
+import com.wfe.utils.MyRandom;
 
 public class Grass extends StaticEntity {
 
@@ -14,6 +15,10 @@ public class Grass extends StaticEntity {
 				.setHasFakeLighting(true)
 				.setNumberOfRows(2), transform);
 		getTransform().setScale(0.6f);
+		getTransform().setPosition(
+				getTransform().getX() + MyRandom.nextFloat(0.2f, 0.8f), 
+				getTransform().getY(), 
+				getTransform().getZ() + MyRandom.nextFloat(0.2f, 0.8f));
 	}
 
 }

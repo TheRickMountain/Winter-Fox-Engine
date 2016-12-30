@@ -9,86 +9,107 @@ import com.wfe.utils.OpenglUtils;
 
 public class Mesh {
 	
-	private int VAO, EBO;
-	private int VBO;
-	private int[] indices;
+	private static final int BYTES_PER_FLOAT = 4;
+	
+	private int VAO, VBO, EBO;
+	private int indexCount;
 	private int vertexCount;
 	
-	public Mesh(float[] vertices, float[] texCoords, float[] normals, int[] indices) {
-		this.indices = indices;
-		
-		int vertexByteCount = 4 * (3 + 2 + 3);
+	public Mesh(float[] vertices, float[] textureCoords, float[] normals, int[] indices) {
+		this.indexCount = indices.length;
+		int vertexByteCount = BYTES_PER_FLOAT * (3 + 2 + 3);
 		
 		VAO = GL30.glGenVertexArrays();
-		GL30.glBindVertexArray(VAO);
+		bind();
 		
 		VBO = GL15.glGenBuffers();
 		GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, VBO);
-		GL15.glBufferData(GL15.GL_ARRAY_BUFFER, OpenglUtils.toFloatBuffer(vertices, texCoords, normals), GL15.GL_STATIC_DRAW);
+		GL15.glBufferData(GL15.GL_ARRAY_BUFFER, OpenglUtils.toFloatBuffer(vertices, textureCoords, normals), GL15.GL_STATIC_DRAW);
 		
 		GL20.glVertexAttribPointer(0, 3, GL11.GL_FLOAT, false, vertexByteCount, 0);
-		GL20.glVertexAttribPointer(1, 2, GL11.GL_FLOAT, false, vertexByteCount, 4 * 3);
-		GL20.glVertexAttribPointer(2, 3, GL11.GL_FLOAT, false, vertexByteCount, 4 * (3 + 2));
+		GL20.glVertexAttribPointer(1, 2, GL11.GL_FLOAT, false, vertexByteCount, BYTES_PER_FLOAT * 3);
+		GL20.glVertexAttribPointer(2, 3, GL11.GL_FLOAT, false, vertexByteCount, BYTES_PER_FLOAT * (3 + 2));
 		
 		EBO = GL15.glGenBuffers();
 		GL15.glBindBuffer(GL15.GL_ELEMENT_ARRAY_BUFFER, EBO);
 		GL15.glBufferData(GL15.GL_ELEMENT_ARRAY_BUFFER, OpenglUtils.toIntBuffer(indices), GL15.GL_STATIC_DRAW);
 		
 		GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, 0);
-		GL30.glBindVertexArray(0);
+		unbind();
 	}
 	
-	public Mesh(float[] vertices, float[] texCoords) {
-		int vertexByteCount = 4 * (2 + 2);
+	public Mesh(float[] vertices, float[] textureCoords) {
+		int vertexByteCount = BYTES_PER_FLOAT * (2 + 2);
 		
 		VAO = GL30.glGenVertexArrays();
-		GL30.glBindVertexArray(VAO);
+		bind();
 		
 		VBO = GL15.glGenBuffers();
 		GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, VBO);
-		GL15.glBufferData(GL15.GL_ARRAY_BUFFER, OpenglUtils.toFloatBuffer(vertices, texCoords), GL15.GL_STATIC_DRAW);
+		GL15.glBufferData(GL15.GL_ARRAY_BUFFER, OpenglUtils.toFloatBuffer(vertices, textureCoords), GL15.GL_STATIC_DRAW);
 		
 		GL20.glVertexAttribPointer(0, 2, GL11.GL_FLOAT, false, vertexByteCount, 0);
-		GL20.glVertexAttribPointer(1, 2, GL11.GL_FLOAT, false, vertexByteCount, 4 * 2);
+		GL20.glVertexAttribPointer(1, 2, GL11.GL_FLOAT, false, vertexByteCount, BYTES_PER_FLOAT * 2);
 		
 		GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, 0);
-		GL30.glBindVertexArray(0);
+		unbind();
 	}
 	
 	public Mesh(float[] data, int dimension) {
+		this.vertexCount = data.length / dimension;
+		int vertexByteCount = BYTES_PER_FLOAT * dimension;
+		
 		VAO = GL30.glGenVertexArrays();
-		GL30.glBindVertexArray(VAO);
-
-        vertexCount = data.length / dimension;
+		bind();
 
         VBO = GL15.glGenBuffers();
         GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, VBO);
         GL15.glBufferData(GL15.GL_ARRAY_BUFFER, OpenglUtils.toFloatBuffer(data), GL15.GL_STATIC_DRAW);
 
-        int vertexByteCount = 4 * dimension;
-
         GL20.glVertexAttribPointer(0, dimension, GL11.GL_FLOAT, false, vertexByteCount, 0);
 
         GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, 0);
-        GL30.glBindVertexArray(0);
+        unbind();
 	}
 	
 	public int getVAO() {
 		return VAO;
 	}
 	
-	public int getIndicesLength() {
-		return indices.length;
+	public int getIndexCount() {
+		return indexCount;
 	}
 
 	public int getVertexCount() {
 		return vertexCount;
 	}
 	
+	public void bind(int... attributes){
+		bind();
+		for (int i : attributes) {
+			GL20.glEnableVertexAttribArray(i);
+		}
+	}
+
+	public void unbind(int... attributes){
+		for (int i : attributes) {
+			GL20.glDisableVertexAttribArray(i);
+		}
+		unbind();
+	}
+	
+	private void bind() {
+		GL30.glBindVertexArray(VAO);
+	}
+
+	private void unbind() {
+		GL30.glBindVertexArray(0);
+	}
+	
 	public void delete() {
+		GL30.glDeleteVertexArrays(VAO);
 		GL15.glDeleteBuffers(VBO);
 		GL15.glDeleteBuffers(EBO);
-		GL30.glDeleteVertexArrays(VAO);
 	}
 
 }

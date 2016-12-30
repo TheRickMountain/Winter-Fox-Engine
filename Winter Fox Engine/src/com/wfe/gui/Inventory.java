@@ -120,7 +120,7 @@ public class Inventory {
 				entity.addComponent(new ColliderComponent(1, 1, 1, entity.getTransform()));
 				
 				entity.getTransform().setRotY(buildingEntityRotation);
-				World.getWorld().addToTile(entity);
+				World.getWorld().addEntityToTile(entity);
 			}
 		}
 	}
@@ -143,13 +143,13 @@ public class Inventory {
 		}
 	}
 	
-	public void addItem(Item item) {
+	public boolean addItem(Item item) {
 		// Check quick slots
 		for(int i = 24; i < 32; i++) {
 			Slot slot = slots.get(i);
 			if(!slot.isHasItem()) {
 				slot.addItem(item);
-				return;
+				return true;
 			}
 		} 
 		
@@ -157,9 +157,11 @@ public class Inventory {
 		for(Slot slot : slots) {
 			if(!slot.isHasItem()) {
 				slot.addItem(item);
-				return;
+				return true;
 			}
 		}
+		
+		return false;
 	}
 	
 	private void updateSlot(int index, boolean consume) {

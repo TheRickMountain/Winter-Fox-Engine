@@ -14,6 +14,7 @@ import com.wfe.ecs.StaticEntity;
 import com.wfe.ecs.Transformation;
 import com.wfe.entities.Fern;
 import com.wfe.entities.Grass;
+import com.wfe.entities.Shroom;
 import com.wfe.font.FontType;
 import com.wfe.graph.Material;
 import com.wfe.graph.OBJLoader;
@@ -79,6 +80,14 @@ public class Game implements IGameLogic {
 		ResourceManager.loadMesh("pine_bark", OBJLoader.loadMesh("/entity/pine/bark.obj"));
 		ResourceManager.loadMesh("pine_leaves", OBJLoader.loadMesh("/entity/pine/leaves.obj"));
 		/*** *** ***/
+		
+		/*** Shroom ***/
+		ResourceManager.loadTexture("shroom", Texture.newTexture(new MyFile("entity/shroom/shroom.png"))
+				.normalMipMap(-0.4f)
+				.create());
+		
+		ResourceManager.loadMesh("shroom", OBJLoader.loadMesh("/entity/shroom/shroom_1.obj"));
+		/*** *** ***/
 	}
 	
 	@Override
@@ -104,42 +113,54 @@ public class Game implements IGameLogic {
 		
 		Fern fern1 = new Fern(new Transformation(84.5f, 0, 84.5f));
 		fern1.setTextureIndex(0);
-		World.getWorld().addToTile(fern1);
+		World.getWorld().addEntityToTile(fern1);
 		
 		Fern fern2 = new Fern(new Transformation(83.5f, 0, 84.5f));
 		fern2.setTextureIndex(1);
-		World.getWorld().addToTile(fern2);
+		World.getWorld().addEntityToTile(fern2);
 		
 		Fern fern3 = new Fern(new Transformation(81.5f, 0, 84.5f));
 		fern3.setTextureIndex(2);
-		World.getWorld().addToTile(fern3);
+		World.getWorld().addEntityToTile(fern3);
 		
 		Fern fern4 = new Fern(new Transformation(80.5f, 0, 84.5f));
 		fern4.setTextureIndex(3);
-		World.getWorld().addToTile(fern4);
+		World.getWorld().addEntityToTile(fern4);
 		
-		Grass grass = new Grass(new Transformation(85.5f, 0, 85.5f));
+		Grass grass = new Grass(new Transformation(85, 0, 85));
 		grass.setTextureIndex(0);
-		World.getWorld().addToTile(grass);
+		World.getWorld().addEntityToTile(grass);
 		
-		Grass grass1 = new Grass(new Transformation(85.5f, 0, 86.5f));
+		Grass grass1 = new Grass(new Transformation(85, 0, 86));
 		grass1.setTextureIndex(1);
-		World.getWorld().addToTile(grass1);
+		World.getWorld().addEntityToTile(grass1);
 		
-		Grass grass2 = new Grass(new Transformation(85.5f, 0, 87.5f));
+		Grass grass2 = new Grass(new Transformation(85, 0, 87));
 		grass2.setTextureIndex(2);
-		World.getWorld().addToTile(grass2);
+		World.getWorld().addEntityToTile(grass2);
 		
 		Transformation pineTransform = new Transformation(90.5f, 0, 88.5f);
 		pineTransform.setScale(0.4f);
 		StaticEntity pineBark = new StaticEntity(ResourceManager.getMesh("pine_bark"),
 				new Material(ResourceManager.getTexture("pine_bark")), pineTransform);
 		pineBark.addComponent(new ColliderComponent(0.5f, 1, 0.5f, pineTransform));
-		World.getWorld().addToTile(pineBark);
+		World.getWorld().addEntityToTile(pineBark);
 		
 		StaticEntity pineLeaves = new StaticEntity(ResourceManager.getMesh("pine_leaves"),
 				new Material(ResourceManager.getTexture("pine_leaves")).setHasTransparency(true), pineTransform);
 		World.getWorld().addEntity(pineLeaves);
+		
+		Shroom shroom = new Shroom(player, new Transformation(87, 0, 89));
+		World.getWorld().addEntityToTile(shroom);
+		
+		Shroom shroom2 = new Shroom(player, new Transformation(86, 0, 89));
+		World.getWorld().addEntityToTile(shroom2);
+		
+		Shroom shroom3 = new Shroom(player, new Transformation(87, 0, 88));
+		World.getWorld().addEntityToTile(shroom3);
+		
+		Shroom shroom4 = new Shroom(player, new Transformation(86, 0, 88));
+		World.getWorld().addEntityToTile(shroom4);
 	}
 	
 	@Override

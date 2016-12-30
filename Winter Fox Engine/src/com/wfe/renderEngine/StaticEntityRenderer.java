@@ -84,7 +84,7 @@ public class StaticEntityRenderer {
 			OpenglUtils.cullBackFaces(false);
 		}
 
-		GL11.glDrawElements(GL11.GL_TRIANGLES, entity.getMesh().getIndicesLength(), GL11.GL_UNSIGNED_INT, 0);
+		GL11.glDrawElements(GL11.GL_TRIANGLES, entity.getMesh().getIndexCount(), GL11.GL_UNSIGNED_INT, 0);
 		
 		OpenglUtils.cullBackFaces(true);
 	}

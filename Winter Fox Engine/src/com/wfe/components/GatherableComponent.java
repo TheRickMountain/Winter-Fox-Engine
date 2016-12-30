@@ -1,23 +1,38 @@
 package com.wfe.components;
 
+import com.wfe.animation.AnimatedEntity;
 import com.wfe.ecs.Component;
 import com.wfe.ecs.ComponentType;
 import com.wfe.ecs.Transformation;
-import com.wfe.input.Keyboard;
+import com.wfe.game.World;
+import com.wfe.gui.GUIManager;
+import com.wfe.gui.ItemDatabase;
 import com.wfe.input.Key;
+import com.wfe.input.Keyboard;
+import com.wfe.utils.MathUtils;
 
 public class GatherableComponent implements Component {
 	
 	private Transformation transform;
+	private AnimatedEntity player;
+	private int itemID;
 	
-	public GatherableComponent(Transformation transform) {
+	public GatherableComponent(int itemID, AnimatedEntity player, Transformation transform) {
+		this.itemID = itemID;
+		this.player = player;
 		this.transform = transform;
 	}
 	
 	@Override
 	public void update(float dt) {
-		if(Keyboard.isKeyDown(Key.KEY_G)) {
-			transform.getParent().remove();
+		if(Keyboard.isKeyDown(Key.KEY_F)) {
+			if(MathUtils.getDistance(player.getTransform().x, player.getTransform().z, 
+					transform.getX(), transform.getZ()) <= 2) {
+				if(GUIManager.create().inventory.addItem(ItemDatabase.items.get(itemID))) {
+					World.getWorld().removeEntityFromTile((int)transform.getX(), (int)transform.getZ());
+					transform.getParent().remove();
+				}
+			}
 		}
 	}
 
