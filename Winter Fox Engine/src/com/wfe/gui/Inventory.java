@@ -198,7 +198,7 @@ public class Inventory {
 				Item item = slot.getItem();
 				if(item != null) {
 					if(item.type.equals(ItemType.FOOD)) {
-						GUIManager.create().hungerBar.increase(item.starvation);
+						GUIManager.getGUI().status.hungerBar.increase(item.starvation);
 						slot.removeItem();
 					}
 				}

@@ -15,11 +15,11 @@ import com.wfe.ecs.Transformation;
 import com.wfe.entities.Fern;
 import com.wfe.entities.Grass;
 import com.wfe.entities.Shroom;
-import com.wfe.font.FontType;
 import com.wfe.graph.Material;
 import com.wfe.graph.OBJLoader;
 import com.wfe.gui.GUIText;
 import com.wfe.math.Vector3f;
+import com.wfe.renderEngine.FontRenderer;
 import com.wfe.textures.Texture;
 import com.wfe.utils.MyFile;
 
@@ -109,10 +109,9 @@ public class Game implements IGameLogic {
 		player.getTransform().setPosition(80, 0, 80);
 		player.getTransform().setScale(0.2f);
 		player.addComponent(new PlayerControllerComponent(camera, player.getTransform()));
-
-		FontType fontType = new FontType(ResourceManager.getTexture("myFont").getID(),
-				new MyFile("font/myFont.fnt"));
-		GUIText text = new GUIText("Winter Fox Engine", 1.1f, fontType, 0.875f, 0.0f, 0.125f, true);
+		
+		GUIText text = new GUIText("Winter Fox Engine", 1.1f, 
+				FontRenderer.font, 0.875f, 0.0f, 0.125f, true);
 		text.setColor(1, 1, 1);
 		World.getWorld().addGUIText(text);
 		

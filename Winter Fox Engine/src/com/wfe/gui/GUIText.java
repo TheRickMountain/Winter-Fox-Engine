@@ -1,6 +1,7 @@
 package com.wfe.gui;
 
 import com.wfe.font.FontType;
+import com.wfe.font.TextMeshData;
 import com.wfe.graph.Vao;
 import com.wfe.math.Vector3f;
 
@@ -33,7 +34,8 @@ public class GUIText {
 		this.scaleY = 1;
 		this.lineMaxSize = maxLineLength;
 		this.centerText = centered;
-		vao = Vao.create();
+		
+		rebuild();
 	}
 	
 	public FontType getFont() {
@@ -102,6 +104,12 @@ public class GUIText {
 		return vao;
 	}
 	
+	public void setText(String text) {
+		this.textString = text;
+		
+		rebuild();
+	}
+	
 	public void cleanup() {
 		vao.delete();
 	}
@@ -124,6 +132,17 @@ public class GUIText {
 
 	public String getTextString() {
 		return textString;
+	}
+	
+	private void rebuild() {
+		TextMeshData data = font.loadText(this);
+		Vao vao = Vao.create();
+		vao.bind();
+		vao.createFloatAttribute(0, data.getVertexPositions(), 2);
+		vao.createFloatAttribute(1, data.getTextureCoords(), 2);
+		vao.setVertexCount(data.getVertexPositions().length / 2);
+		vao.unbind();
+		setVao(vao);
 	}
 	
 }

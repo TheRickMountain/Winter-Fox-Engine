@@ -6,11 +6,13 @@ import java.util.Map;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL13;
 
+import com.wfe.core.ResourceManager;
 import com.wfe.font.FontType;
 import com.wfe.graph.Vao;
 import com.wfe.gui.GUIText;
 import com.wfe.math.Matrix4f;
 import com.wfe.utils.MathUtils;
+import com.wfe.utils.MyFile;
 import com.wfe.utils.OpenglUtils;
 
 public class FontRenderer {
@@ -19,8 +21,12 @@ public class FontRenderer {
 	
 	private static Matrix4f modelMatrix = new Matrix4f();
 	
+	public static FontType font;
+	
 	protected FontRenderer() throws Exception {	
 		shader = new FontShader();
+		font = new FontType(ResourceManager.getTexture("myFont").getID(),
+				new MyFile("font/myFont.fnt"));
 	}
 	
 	public void render(Map<FontType, List<GUIText>> texts) {

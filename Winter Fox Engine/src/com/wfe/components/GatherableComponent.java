@@ -28,7 +28,7 @@ public class GatherableComponent implements Component {
 		if(Keyboard.isKeyDown(Key.KEY_F)) {
 			if(MathUtils.getDistance(player.getTransform().x, player.getTransform().z, 
 					transform.getX(), transform.getZ()) <= 2) {
-				if(GUIManager.create().inventory.addItem(ItemDatabase.items.get(itemID))) {
+				if(GUIManager.getGUI().inventory.addItem(ItemDatabase.items.get(itemID))) {
 					World.getWorld().removeEntityFromTile((int)transform.getX(), (int)transform.getZ());
 					transform.getParent().remove();
 				}

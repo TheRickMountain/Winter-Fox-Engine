@@ -55,7 +55,7 @@ public class World {
 		this.renderEngine = RenderEngine.create(camera);
 		this.weather = new Weather();
 		MousePicker.setUpMousePicker(camera);
-		guiManager = GUIManager.create();
+		guiManager = GUIManager.getGUI();
 	}
 	
 	public static World createWorld(Camera camera) throws Exception {
@@ -93,7 +93,7 @@ public class World {
 			entitiesToRemove.clear();
 		}
 
-		guiManager.update();
+		guiManager.update(dt);
 		
 	}
 	
@@ -132,19 +132,10 @@ public class World {
 	}
 	
 	public void addGUIText(GUIText text) {
-		FontType font = text.getFont();
-		TextMeshData data = font.loadText(text);
-		Vao vao = Vao.create();
-		vao.bind();
-		vao.createFloatAttribute(0, data.getVertexPositions(), 2);
-		vao.createFloatAttribute(1, data.getTextureCoords(), 2);
-		vao.setVertexCount(data.getVertexPositions().length / 2);
-		vao.unbind();
-		text.setVao(vao);
-		List<GUIText> textBatch = guiTexts.get(font);
+		List<GUIText> textBatch = guiTexts.get(text.getFont());
 		if(textBatch == null) {
 			textBatch = new ArrayList<GUIText>();
-			guiTexts.put(font, textBatch);
+			guiTexts.put(text.getFont(), textBatch);
 		}
 		textBatch.add(text);
 	}
