@@ -9,6 +9,6 @@ uniform mat4 modelMatrix;
 
 void main()
 {
-	gl_Position = projectionMatrix * modelMatrix * vec4(in_data.x, in_data.y, 0.0f, 1.0f);
-	TextureCoords = in_data.zw;
+	gl_Position = projectionMatrix * modelMatrix * vec4(in_data.xy, 0.0f, 1.0f);
+	TextureCoords = in_data.xy;
 }

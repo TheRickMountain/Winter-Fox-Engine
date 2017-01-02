@@ -1,5 +1,6 @@
 package com.wfe.font;
 
+import com.wfe.graph.Mesh;
 import com.wfe.gui.GUIText;
 import com.wfe.utils.MyFile;
 
@@ -17,7 +18,7 @@ public class FontType {
 		return textureAtlas;
 	}
 	
-	public TextMeshData loadText(GUIText text) {
+	public Mesh loadText(GUIText text) {
 		return loader.createTextMesh(text);
 	}
 

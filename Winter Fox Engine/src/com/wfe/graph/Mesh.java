@@ -55,8 +55,8 @@ public class Mesh {
 		unbind();
 	}
 	
-	public Mesh(float[] data, int dimension) {
-		this.vertexCount = data.length / dimension;
+	public Mesh(float[] vertices, int dimension) {
+		this.vertexCount = vertices.length / dimension;
 		int vertexByteCount = BYTES_PER_FLOAT * dimension;
 		
 		VAO = GL30.glGenVertexArrays();
@@ -64,7 +64,7 @@ public class Mesh {
 
         VBO = GL15.glGenBuffers();
         GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, VBO);
-        GL15.glBufferData(GL15.GL_ARRAY_BUFFER, OpenglUtils.toFloatBuffer(data), GL15.GL_STATIC_DRAW);
+        GL15.glBufferData(GL15.GL_ARRAY_BUFFER, OpenglUtils.toFloatBuffer(vertices), GL15.GL_STATIC_DRAW);
 
         GL20.glVertexAttribPointer(0, dimension, GL11.GL_FLOAT, false, vertexByteCount, 0);
 
@@ -85,7 +85,7 @@ public class Mesh {
 	}
 	
 	public void bind(int... attributes){
-		bind();
+		GL30.glBindVertexArray(VAO);
 		for (int i : attributes) {
 			GL20.glEnableVertexAttribArray(i);
 		}
@@ -95,14 +95,6 @@ public class Mesh {
 		for (int i : attributes) {
 			GL20.glDisableVertexAttribArray(i);
 		}
-		unbind();
-	}
-	
-	private void bind() {
-		GL30.glBindVertexArray(VAO);
-	}
-
-	private void unbind() {
 		GL30.glBindVertexArray(0);
 	}
 	

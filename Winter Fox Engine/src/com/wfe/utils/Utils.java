@@ -17,4 +17,26 @@ public class Utils {
         return res;
     }
 	
+	 public static float[] joinArrays(float[] vertices, float[] uvs) {
+	        float[] data = new float[vertices.length + uvs.length];
+	        int count = 0;
+	        int vertexCount = 0;
+	        int uvsCount = 0;
+	        for(int i = 0; i < data.length / 4; i++) {
+	            data[count] = vertices[vertexCount];
+	            vertexCount++;
+	            count++;
+	            data[count] = vertices[vertexCount];
+	            vertexCount++;
+	            count++;
+	            data[count] = uvs[uvsCount];
+	            uvsCount++;
+	            count++;
+	            data[count] = uvs[uvsCount];
+	            uvsCount++;
+	            count++;
+	        }
+	        return data;
+	    }
+	
 }

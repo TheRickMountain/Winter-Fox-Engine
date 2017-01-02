@@ -3,8 +3,10 @@ package com.wfe.font;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.wfe.graph.Mesh;
 import com.wfe.gui.GUIText;
 import com.wfe.utils.MyFile;
+import com.wfe.utils.Utils;
 
 public class TextMeshCreator {
 
@@ -17,9 +19,9 @@ public class TextMeshCreator {
 		this.metaData = new MetaFile(metaFile);
 	}
 	
-	protected TextMeshData createTextMesh(GUIText text) {
+	protected Mesh createTextMesh(GUIText text) {
 		List<Line> lines = createStructure(text);
-		TextMeshData data = createQuadVertices(text, lines);
+		Mesh data = createQuadVertices(text, lines);
 		return data;
 	}
 	
@@ -57,7 +59,7 @@ public class TextMeshCreator {
 		lines.add(currentLine);
 	}
 	
-	private TextMeshData createQuadVertices(GUIText text, List<Line> lines) {
+	private Mesh createQuadVertices(GUIText text, List<Line> lines) {
 		text.setNumberOfLines(lines.size());
 		double curserX = 0f;
 		double curserY = 0f;
@@ -79,7 +81,7 @@ public class TextMeshCreator {
 			curserX = 0;
 			curserY += LINE_HEIGHT * text.getFontSize();
 		}		
-		return new TextMeshData(listToArray(vertices), listToArray(textureCoords));
+		return new Mesh(Utils.joinArrays(listToArray(vertices), listToArray(textureCoords)), 4);
 	}
 
 	private void addVerticesForCharacter(double curserX, double curserY, Character character, double fontSize,

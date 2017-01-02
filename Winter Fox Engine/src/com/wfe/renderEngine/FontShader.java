@@ -17,7 +17,7 @@ public class FontShader extends ShaderProgram{
 	private UniformSampler fontAtlas = new UniformSampler("fontAtlas");
 	
 	public FontShader() {
-		super(VERTEX_SHADER, FRAGMENT_SHADER, "in_position", "in_textureCoords");
+		super(VERTEX_SHADER, FRAGMENT_SHADER, "in_data");
 		storeAllUniformLocations(modelMatrix, fontAtlas, color);
 		connectTextureUnits();
 	}

@@ -25,7 +25,6 @@ public class PlayerStatus {
 		if((int)time1.getTime() >= 10) {
 			hungerBar.decrease(1);
 			time1.reset();
-			System.out.println("Hunger");
 		}
 		
 		if(!healthBar.isFull()) {

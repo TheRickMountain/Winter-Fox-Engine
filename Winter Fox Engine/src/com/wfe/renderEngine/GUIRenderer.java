@@ -3,8 +3,6 @@ package com.wfe.renderEngine;
 import java.util.List;
 
 import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL20;
-import org.lwjgl.opengl.GL30;
 
 import com.wfe.core.Display;
 import com.wfe.graph.Mesh;
@@ -121,13 +119,11 @@ public class GUIRenderer {
 			shader.projectionMatrix.loadMatrix(projectionMatrix);
 		}
 		
-		GL30.glBindVertexArray(quadMesh.getVAO());
-		GL20.glEnableVertexAttribArray(0);
+		quadMesh.bind(0);
 	}
 	
 	public void finish() {
-		GL20.glDisableVertexAttribArray(0);
-		GL30.glBindVertexArray(0);
+		quadMesh.unbind(0);
 		
 		shader.stop();
 		
@@ -138,13 +134,13 @@ public class GUIRenderer {
 	
 	private void initRenderData() {
         float[] data = new float[] {
-                0.0f, 0.0f, 0.0f, 0.0f,
-                0.0f, 1.0f, 0.0f, 1.0f,
-                1.0f, 0.0f, 1.0f, 0.0f,
-                1.0f, 1.0f, 1.0f, 1.0f
+                0.0f, 0.0f,
+                0.0f, 1.0f,
+                1.0f, 0.0f,
+                1.0f, 1.0f,
         };
 
-        quadMesh = new Mesh(data, 4);
+        quadMesh = new Mesh(data, 2);
     }
 	
 	public void cleanup() {
