@@ -10,6 +10,7 @@ import com.wfe.core.Display;
 import com.wfe.graph.Mesh;
 import com.wfe.gui.GUITexture;
 import com.wfe.math.Matrix4f;
+import com.wfe.math.Vector3f;
 import com.wfe.textures.Texture;
 import com.wfe.utils.MathUtils;
 import com.wfe.utils.OpenglUtils;
@@ -43,7 +44,13 @@ public class GUIRenderer {
 						texture.getRot(), texture.getScaleX(), texture.getScaleY()));
 			}
 			
-			texture.getTexture().bind(0);
+			if(texture.isSolidColor()) {
+				shader.color.loadVec3(texture.getColor());
+				shader.solidColor.loadBoolean(true);
+			} else {
+				shader.solidColor.loadBoolean(false);
+				texture.getTexture().bind(0);
+			}
 			
 			GL11.glDrawArrays(GL11.GL_TRIANGLE_STRIP, 0, 4);
 		}
@@ -59,7 +66,13 @@ public class GUIRenderer {
 					texture.getRot(), texture.getScaleX(), texture.getScaleY()));
 		}
 		
-		texture.getTexture().bind(0);
+		if(texture.isSolidColor()) {
+			shader.color.loadVec3(texture.getColor());
+			shader.solidColor.loadBoolean(true);
+		} else {
+			shader.solidColor.loadBoolean(false);
+			texture.getTexture().bind(0);
+		}
 		
 		GL11.glDrawArrays(GL11.GL_TRIANGLE_STRIP, 0, 4);
 	}
@@ -74,7 +87,24 @@ public class GUIRenderer {
 					rot, scaleX, scaleY));
 		}
 		
+		shader.solidColor.loadBoolean(false);
 		texture.bind(0);
+		
+		GL11.glDrawArrays(GL11.GL_TRIANGLE_STRIP, 0, 4);
+	}
+	
+	public static void render(Vector3f color, float x, float y, float rot, float scaleX, float scaleY, boolean centered) {
+		if(!centered) {
+			shader.modelMatrix.loadMatrix(MathUtils.getModelMatrix(modelMatrix, 
+					x, y, rot, scaleX, scaleY));
+		} else {
+			shader.modelMatrix.loadMatrix(MathUtils.getModelMatrix(modelMatrix, 
+					x - scaleX / 2, y - scaleY / 2, 
+					rot, scaleX, scaleY));
+		}
+		
+		shader.color.loadVec3(color);
+		shader.solidColor.loadBoolean(true);
 		
 		GL11.glDrawArrays(GL11.GL_TRIANGLE_STRIP, 0, 4);
 	}

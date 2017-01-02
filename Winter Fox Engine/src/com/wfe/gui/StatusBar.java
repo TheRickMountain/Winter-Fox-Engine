@@ -1,19 +1,22 @@
 package com.wfe.gui;
 
-import com.wfe.core.ResourceManager;
+import com.wfe.math.Vector3f;
 import com.wfe.renderEngine.GUIRenderer;
+import com.wfe.textures.Texture;
 
-public class PlayerStats {
+public class StatusBar {
 	
 	private GUITexture health;
+	private GUITexture icon;
 	
 	private float maxValue = 100;
 	private float currentValue;
 	
 	private float spriteSizeOnePercent;
 	
-	protected PlayerStats() {
-		health = new GUITexture(ResourceManager.getTexture("health_ui"), 10, 10, 0, 110, 15, false);
+	protected StatusBar(Texture iconTexture, Vector3f color, float posX, float posY) {
+		health = new GUITexture(color, posX, posY, 0, 110, 15, false);
+		icon = new GUITexture(iconTexture, posX - 10, posY - 5, 0, 25, 25, false);
 		
 		currentValue = maxValue;
 		spriteSizeOnePercent = health.getScaleX() / maxValue;
@@ -25,6 +28,7 @@ public class PlayerStats {
 	
 	protected void render() {
 		GUIRenderer.render(health);
+		GUIRenderer.render(icon);
 	}
 	
 	public void increase(int value) {

@@ -195,8 +195,12 @@ public class Inventory {
 				
 				checkBuildingItem();
 			} else {
-				if(slot.getItem().type.equals(ItemType.FOOD)) {
-					slot.removeItem();
+				Item item = slot.getItem();
+				if(item != null) {
+					if(item.type.equals(ItemType.FOOD)) {
+						GUIManager.create().hungerBar.increase(item.starvation);
+						slot.removeItem();
+					}
 				}
 			}
 		}

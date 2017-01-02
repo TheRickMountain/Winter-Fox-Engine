@@ -28,19 +28,19 @@ public class ItemDatabase {
 	public static final int DOOR_WALL = 9;
 	
 	private ItemDatabase() {
-		items.add(new Item(BANANA, ResourceManager.getTexture("banana_ui"), "Banana", ItemType.FOOD));
-		items.add(new Item(COOKIE, ResourceManager.getTexture("cookie_ui"), "Cookie", ItemType.FOOD));
-		items.add(new Item(APPLE, ResourceManager.getTexture("apple_ui"), "Apple", ItemType.FOOD));
-		items.add(new Item(WALL, ResourceManager.getTexture("wall_ui"), "Wall", ItemType.BUILDING,
+		items.add(new Item(BANANA, ResourceManager.getTexture("banana_ui"), "Banana", ItemType.FOOD, 15));
+		items.add(new Item(COOKIE, ResourceManager.getTexture("cookie_ui"), "Cookie", ItemType.FOOD, 4));
+		items.add(new Item(APPLE, ResourceManager.getTexture("apple_ui"), "Apple", ItemType.FOOD, 6));
+		items.add(new Item(WALL, ResourceManager.getTexture("wall_ui"), "Wall", ItemType.BUILDING, 0,
 				new WallBlueprint(new Transformation(0, 0, 0))));
-		items.add(new Item(AXE, ResourceManager.getTexture("axe_ui"), "Axe", ItemType.WEAPON));
-		items.add(new Item(SHROOM, ResourceManager.getTexture("shroom_ui"), "Shroom", ItemType.FOOD));
-		items.add(new Item(BREAD, ResourceManager.getTexture("bread_ui"), "Bread", ItemType.FOOD));
-		items.add(new Item(CROSS_WALL, ResourceManager.getTexture("cross_wall_ui"), "Cross Wall", ItemType.BUILDING,
+		items.add(new Item(AXE, ResourceManager.getTexture("axe_ui"), "Axe", ItemType.WEAPON, 0));
+		items.add(new Item(SHROOM, ResourceManager.getTexture("shroom_ui"), "Shroom", ItemType.FOOD, 5));
+		items.add(new Item(BREAD, ResourceManager.getTexture("bread_ui"), "Bread", ItemType.FOOD, 10));
+		items.add(new Item(CROSS_WALL, ResourceManager.getTexture("cross_wall_ui"), "Cross Wall", ItemType.BUILDING, 0,
 				new CrossWallBlueprint(new Transformation(0, 0, 0))));
-		items.add(new Item(WINDOW_WALL, ResourceManager.getTexture("window_wall_ui"), "Window Wall", ItemType.BUILDING,
+		items.add(new Item(WINDOW_WALL, ResourceManager.getTexture("window_wall_ui"), "Window Wall", ItemType.BUILDING, 0,
 				new WindowWallBlueprint(new Transformation(0, 0, 0))));
-		items.add(new Item(DOOR_WALL, ResourceManager.getTexture("door_wall_ui"), "Door Wall", ItemType.BUILDING,
+		items.add(new Item(DOOR_WALL, ResourceManager.getTexture("door_wall_ui"), "Door Wall", ItemType.BUILDING, 0,
 				new DoorWallBlueprint(new Transformation(0, 0, 0))));
 	}
 	

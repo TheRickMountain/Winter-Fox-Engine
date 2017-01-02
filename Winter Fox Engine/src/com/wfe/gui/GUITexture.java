@@ -4,15 +4,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.wfe.input.Mouse;
+import com.wfe.math.Vector3f;
 import com.wfe.textures.Texture;
 
 public class GUITexture {
 	
 	private Texture texture;
+	private Vector3f color;
 	private float x, y;
 	private float rot;
 	private float scaleX, scaleY;
 	private boolean centered = false;
+	private boolean isSolidColor = false;
 	
 	private List<GUIComponent> components = new ArrayList<GUIComponent>();
 	
@@ -24,6 +27,17 @@ public class GUITexture {
 		this.scaleX = scaleX;
 		this.scaleY = scaleY;
 		this.centered = centered;
+	}
+	
+	public GUITexture(Vector3f color, float x, float y, float rot, float scaleX, float scaleY, boolean centered) {
+		this.color = color;
+		this.x = x;
+		this.y = y;
+		this.rot = rot;
+		this.scaleX = scaleX;
+		this.scaleY = scaleY;
+		this.centered = centered;
+		this.isSolidColor = true;
 	}
 	
 	public GUITexture(Texture texture) {
@@ -89,6 +103,10 @@ public class GUITexture {
 		this.scaleX = scaleX;
 		this.scaleY = scaleY;
 	}
+	
+	public Vector3f getColor() {
+		return color;
+	}
 
 	public boolean isCentered() {
 		return centered;
@@ -103,4 +121,8 @@ public class GUITexture {
 				Mouse.getY() > y - scaleX / 2 && Mouse.getY() < y + scaleY / 2;
 	}
 
+	public boolean isSolidColor() {
+		return isSolidColor;
+	}
+	
 }
