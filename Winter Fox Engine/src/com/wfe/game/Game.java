@@ -86,6 +86,14 @@ public class Game implements IGameLogic {
 		ResourceManager.loadMesh("pine_leaves", OBJLoader.loadMesh("/entity/pine/leaves.obj"));
 		/*** *** ***/
 		
+		/*** Willow ***/		
+		ResourceManager.loadTexture("willow", Texture.newTexture(new MyFile("entity/willow/diffuse.png"))
+				.normalMipMap(-0.4f)
+				.create());
+		
+		ResourceManager.loadMesh("willow", OBJLoader.loadMesh("/entity/willow/model.obj"));
+		/*** *** ***/
+		
 		/*** Shroom ***/
 		ResourceManager.loadTexture("shroom", Texture.newTexture(new MyFile("entity/shroom/shroom.png"))
 				.normalMipMap(-0.4f)
@@ -135,19 +143,19 @@ public class Game implements IGameLogic {
 		grass.setTextureIndex(0);
 		World.getWorld().addEntityToTile(grass);
 		
-		Grass grass1 = new Grass(new Transformation(85, 0, 91));
+		Grass grass1 = new Grass(new Transformation(87, 0, 90));
 		grass1.setTextureIndex(1);
 		World.getWorld().addEntityToTile(grass1);
 		
-		Grass grass2 = new Grass(new Transformation(86, 0, 90));
+		Grass grass2 = new Grass(new Transformation(86, 0, 91));
 		grass2.setTextureIndex(2);
 		World.getWorld().addEntityToTile(grass2);
 		
-		Grass grass3 = new Grass(new Transformation(86, 0, 91));
+		Grass grass3 = new Grass(new Transformation(86, 0, 89));
 		grass3.setTextureIndex(2);
 		World.getWorld().addEntityToTile(grass3);
 		
-		Transformation pineTransform = new Transformation(90.5f, 0, 88.5f);
+		/*Transformation pineTransform = new Transformation(90.5f, 0, 88.5f);
 		pineTransform.setScale(0.4f);
 		StaticEntity pineBark = new StaticEntity(ResourceManager.getMesh("pine_bark"),
 				new Material(ResourceManager.getTexture("pine_bark")), pineTransform);
@@ -156,7 +164,7 @@ public class Game implements IGameLogic {
 		
 		StaticEntity pineLeaves = new StaticEntity(ResourceManager.getMesh("pine_leaves"),
 				new Material(ResourceManager.getTexture("pine_leaves")).setHasTransparency(true), pineTransform);
-		World.getWorld().addEntity(pineLeaves);
+		World.getWorld().addEntity(pineLeaves);*/
 		
 		Shroom shroom = new Shroom(player, new Transformation(77, 0, 89));
 		World.getWorld().addEntityToTile(shroom);
@@ -169,6 +177,12 @@ public class Game implements IGameLogic {
 		
 		Shroom shroom4 = new Shroom(player, new Transformation(86, 0, 78));
 		World.getWorld().addEntityToTile(shroom4);
+		
+		StaticEntity willow = new StaticEntity(ResourceManager.getMesh("willow"),
+				new Material(ResourceManager.getTexture("willow")).setHasTransparency(true), 
+				new Transformation(86.5f, 0, 90.5f));
+		willow.addComponent(new ColliderComponent(0.5f, 1, 0.5f, willow.getTransform()));
+		World.getWorld().addEntityToTile(willow);
 	}
 	
 	@Override
