@@ -19,6 +19,7 @@ public class Grass extends StaticEntity {
 				getTransform().getX() + MyRandom.nextFloat(0.2f, 0.8f), 
 				getTransform().getY(), 
 				getTransform().getZ() + MyRandom.nextFloat(0.2f, 0.8f));
+		getTransform().setRotY(MyRandom.nextFloat(0, 360));
 	}
 
 }

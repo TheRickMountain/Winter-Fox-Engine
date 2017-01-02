@@ -62,6 +62,7 @@ public class Game implements IGameLogic {
 		ResourceManager.loadTexture("corner_frame_ui", Texture.newTexture(new MyFile("gui/corner_frame.png")).create());
 		ResourceManager.loadTexture("h_edge_frame_ui", Texture.newTexture(new MyFile("gui/h_edge_frame.png")).create());
 		ResourceManager.loadTexture("v_edge_frame_ui", Texture.newTexture(new MyFile("gui/v_edge_frame.png")).create());
+		ResourceManager.loadTexture("health_ui", Texture.newTexture(new MyFile("gui/health.png")).create());
 		
 		/*** Meshes ***/
 		ResourceManager.loadMesh("wall", OBJLoader.loadMesh("/models/wall.obj"));
@@ -130,17 +131,21 @@ public class Game implements IGameLogic {
 		fern4.setTextureIndex(3);
 		World.getWorld().addEntityToTile(fern4);
 		
-		Grass grass = new Grass(new Transformation(90, 0, 85));
+		Grass grass = new Grass(new Transformation(85, 0, 90));
 		grass.setTextureIndex(0);
 		World.getWorld().addEntityToTile(grass);
 		
-		Grass grass1 = new Grass(new Transformation(85, 0, 90));
+		Grass grass1 = new Grass(new Transformation(85, 0, 91));
 		grass1.setTextureIndex(1);
 		World.getWorld().addEntityToTile(grass1);
 		
-		Grass grass2 = new Grass(new Transformation(90, 0, 80));
+		Grass grass2 = new Grass(new Transformation(86, 0, 90));
 		grass2.setTextureIndex(2);
 		World.getWorld().addEntityToTile(grass2);
+		
+		Grass grass3 = new Grass(new Transformation(86, 0, 91));
+		grass3.setTextureIndex(2);
+		World.getWorld().addEntityToTile(grass3);
 		
 		Transformation pineTransform = new Transformation(90.5f, 0, 88.5f);
 		pineTransform.setScale(0.4f);
