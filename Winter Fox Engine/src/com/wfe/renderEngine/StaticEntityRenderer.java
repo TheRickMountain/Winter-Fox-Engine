@@ -45,7 +45,8 @@ public class StaticEntityRenderer {
 			
 			List<StaticEntity> batch = entities.get(mesh);
 			for(StaticEntity entity : batch) {
-				render(entity);
+				if(entity.isVisible())
+					render(entity);
 			}
 			
 			GL30.glBindVertexArray(0);

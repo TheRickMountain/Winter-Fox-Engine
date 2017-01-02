@@ -24,7 +24,7 @@ public class Chunk {
 	
 	private Tile[][] tiles;
 	
-	public boolean render = true;
+	private boolean isVisible = true;
 	
 	public static final float SPRITE_SHEET = 4;
 	private boolean rebuild = false;
@@ -200,6 +200,21 @@ public class Chunk {
 	
 	public int getPosY() {
 		return (int) position.y;
+	}
+
+	public boolean isVisible() {
+		return isVisible;
+	}
+
+	public void setVisible(boolean isVisible) {
+		for(int i = 0; i < SIZE; i++) {
+			for(int j = 0; j < SIZE; j++) {
+				if(tiles[i][j].isHasEntity()) {
+					tiles[i][j].entity.setVisible(isVisible);
+				}
+			}
+		}
+		this.isVisible = isVisible;
 	}
 	
 }

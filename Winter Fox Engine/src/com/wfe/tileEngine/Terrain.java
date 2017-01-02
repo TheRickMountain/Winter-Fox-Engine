@@ -51,9 +51,9 @@ public class Terrain {
 		for(Chunk chunk : chunks) {
 			float distance = MathUtils.getDistance(x, z, chunk.getPosX(), chunk.getPosY());
 			if(distance >= 48) {
-				chunk.render = false;
+				chunk.setVisible(false);
 			} else {
-				chunk.render = true;
+				chunk.setVisible(true);
 			}
 		}
 	}
@@ -72,7 +72,7 @@ public class Terrain {
 		spriteSheet.bind(0);
 		
 		for(Chunk chunk : chunks) {
-			if(chunk.render)
+			if(chunk.isVisible())
 				chunk.render();
 		}
 		shader.start();

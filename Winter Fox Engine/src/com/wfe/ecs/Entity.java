@@ -11,7 +11,7 @@ public abstract class Entity {
 
 	public abstract void update(float dt);
 	
-	private boolean isVisible;
+	private boolean isVisible = true;
 	
 	public void addComponent(Component component) {
 		this.components.add(component);
@@ -41,6 +41,10 @@ public abstract class Entity {
 	
 	public boolean isVisible() {
 		return isVisible;
+	}
+	
+	public void setVisible(boolean isVisible) {
+		this.isVisible = isVisible;
 	}
 	
 }
