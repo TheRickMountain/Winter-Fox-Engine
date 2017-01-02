@@ -116,8 +116,8 @@ public class Inventory {
 			currentBuildingEntity.getTransform().setRotY(buildingEntityRotation);
 			
 			if(Mouse.isButtonDown(0) && !Mouse.isActiveInGUI()) {
-				StaticEntity entity = draggedItem.entityBlueprint.createInstance();
-				entity.getTransform().set(currentBuildingEntity.getTransform());
+				StaticEntity entity = draggedItem.entityBlueprint
+						.createInstanceWithComponents(currentBuildingEntity.getTransform());
 				World.getWorld().addEntityToTile(entity);
 			}
 		}

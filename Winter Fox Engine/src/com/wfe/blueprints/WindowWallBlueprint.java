@@ -1,5 +1,6 @@
 package com.wfe.blueprints;
 
+import com.wfe.components.ColliderComponent;
 import com.wfe.core.ResourceManager;
 import com.wfe.ecs.StaticEntity;
 import com.wfe.ecs.Transformation;
@@ -16,6 +17,13 @@ public class WindowWallBlueprint extends Blueprint {
 	@Override
 	public StaticEntity createInstance() {
 		return new StaticEntity(mesh, material, new Transformation(transform));
+	}
+
+	@Override
+	public StaticEntity createInstanceWithComponents(Transformation transform) {
+		StaticEntity entity = new StaticEntity(mesh, material, new Transformation(transform));
+		entity.addComponent(new ColliderComponent(1, 1, 1, entity.getTransform()));
+		return entity;
 	}
 
 }

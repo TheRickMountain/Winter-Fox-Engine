@@ -18,4 +18,10 @@ public class DoorWallBlueprint extends Blueprint {
 		return new StaticEntity(mesh, material, new Transformation(transform));
 	}
 
+	@Override
+	public StaticEntity createInstanceWithComponents(Transformation transform) {
+		StaticEntity entity = new StaticEntity(mesh, material, new Transformation(transform));
+		return entity;
+	}
+
 }

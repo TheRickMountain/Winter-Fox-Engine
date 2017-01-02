@@ -80,13 +80,8 @@ public class Game implements IGameLogic {
 				.normalMipMap(-0.4f)
 				.create());
 		
-		ResourceManager.loadTexture("pine_decoration", Texture.newTexture(new MyFile("entity/pine/decoration.png"))
-				.normalMipMap(-0.4f)
-				.create());
-		
 		ResourceManager.loadMesh("pine_bark", OBJLoader.loadMesh("/entity/pine/bark.obj"));
 		ResourceManager.loadMesh("pine_leaves", OBJLoader.loadMesh("/entity/pine/leaves.obj"));
-		ResourceManager.loadMesh("pine_decoration", OBJLoader.loadMesh("/entity/pine/decoration.obj"));
 		/*** *** ***/
 		
 		/*** Shroom ***/
@@ -116,7 +111,7 @@ public class Game implements IGameLogic {
 		FontType fontType = new FontType(ResourceManager.getTexture("myFont").getID(),
 				new MyFile("font/myFont.fnt"));
 		GUIText text = new GUIText("Winter Fox Engine", 1.1f, fontType, 0.875f, 0.0f, 0.125f, true);
-		text.setColor(1, 0.5f, 0);
+		text.setColor(1, 1, 1);
 		World.getWorld().addGUIText(text);
 		
 		Fern fern1 = new Fern(new Transformation(84.5f, 0, 75.5f));
@@ -157,10 +152,6 @@ public class Game implements IGameLogic {
 		StaticEntity pineLeaves = new StaticEntity(ResourceManager.getMesh("pine_leaves"),
 				new Material(ResourceManager.getTexture("pine_leaves")).setHasTransparency(true), pineTransform);
 		World.getWorld().addEntity(pineLeaves);
-		
-		StaticEntity pineDecoration = new StaticEntity(ResourceManager.getMesh("pine_decoration"),
-				new Material(ResourceManager.getTexture("pine_decoration")).setHasTransparency(true), pineTransform);
-		World.getWorld().addEntity(pineDecoration);
 		
 		Shroom shroom = new Shroom(player, new Transformation(77, 0, 89));
 		World.getWorld().addEntityToTile(shroom);
