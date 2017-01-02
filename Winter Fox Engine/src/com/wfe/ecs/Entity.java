@@ -11,6 +11,8 @@ public abstract class Entity {
 
 	public abstract void update(float dt);
 	
+	private boolean isVisible;
+	
 	public void addComponent(Component component) {
 		this.components.add(component);
 	}
@@ -35,6 +37,10 @@ public abstract class Entity {
 	
 	public Transformation getTransform() {
 		return transform;
+	}
+	
+	public boolean isVisible() {
+		return isVisible;
 	}
 	
 }

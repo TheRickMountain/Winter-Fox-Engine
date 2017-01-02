@@ -3,12 +3,9 @@ package com.wfe.gui;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.wfe.components.ColliderComponent;
 import com.wfe.core.Display;
 import com.wfe.core.ResourceManager;
 import com.wfe.ecs.StaticEntity;
-import com.wfe.ecs.Transformation;
-import com.wfe.entities.Wall;
 import com.wfe.game.World;
 import com.wfe.input.Key;
 import com.wfe.input.Keyboard;
@@ -49,7 +46,10 @@ public class Inventory {
 		addItem(ItemDatabase.items.get(ItemDatabase.COOKIE));
 		addItem(ItemDatabase.items.get(ItemDatabase.SHROOM));
 		addItem(ItemDatabase.items.get(ItemDatabase.AXE));
-		addItem(ItemDatabase.items.get(ItemDatabase.LOG_WALL));
+		addItem(ItemDatabase.items.get(ItemDatabase.WALL));
+		addItem(ItemDatabase.items.get(ItemDatabase.CROSS_WALL));
+		addItem(ItemDatabase.items.get(ItemDatabase.DOOR_WALL));
+		addItem(ItemDatabase.items.get(ItemDatabase.WINDOW_WALL));
 		addItem(ItemDatabase.items.get(ItemDatabase.APPLE));
 		addItem(ItemDatabase.items.get(ItemDatabase.APPLE));
 		addItem(ItemDatabase.items.get(ItemDatabase.APPLE));
@@ -95,15 +95,15 @@ public class Inventory {
 	}
 	
 	private void building() {
-		if(currentBuildingEntity != null) {
-			int x = 0;
-			int z = 0;
-			Vector3f tPos = MousePicker.getCurrentTerrainPoint();
-			if(tPos != null) {
-				x = (int)tPos.x;
-				z = (int)tPos.z;
-			}
-			
+		int x = 0;
+		int z = 0;
+		Vector3f tPos = MousePicker.getCurrentTerrainPoint();
+		if(tPos != null) {
+			x = (int)tPos.x;
+			z = (int)tPos.z;
+		}
+		
+		if(currentBuildingEntity != null) {			
 			if(Keyboard.isKeyDown(Key.KEY_R)) {
 				buildingEntityRotation += 90;
 				
@@ -116,12 +116,14 @@ public class Inventory {
 			currentBuildingEntity.getTransform().setRotY(buildingEntityRotation);
 			
 			if(Mouse.isButtonDown(0) && !Mouse.isActiveInGUI()) {
-				StaticEntity entity = new Wall(new Transformation(x + 0.5f, 0, z + 0.5f));
-				entity.addComponent(new ColliderComponent(1, 1, 1, entity.getTransform()));
-				
-				entity.getTransform().setRotY(buildingEntityRotation);
+				StaticEntity entity = draggedItem.entityBlueprint.createInstance();
+				entity.getTransform().set(currentBuildingEntity.getTransform());
 				World.getWorld().addEntityToTile(entity);
 			}
+		}
+		
+		if(Mouse.isButtonDown(1)) {
+			World.getWorld().setTile(x, z, 6);
 		}
 	}
 	
@@ -174,6 +176,11 @@ public class Inventory {
 						slot.addItem(draggedItem);
 						draggedItem = null;
 					} else {
+						if(currentBuildingEntity != null) {
+							World.getWorld().removeEntity(currentBuildingEntity);
+							currentBuildingEntity = null;
+						}
+						
 						Item tempItem = slot.getItem();
 						slot.removeItem();
 						slot.addItem(draggedItem);
@@ -196,22 +203,17 @@ public class Inventory {
 	}
 	
 	private void checkBuildingItem() {
-		if(draggedItem != null) {
-			if(draggedItem.type.equals(ItemType.BUILDING)) {
-				currentBuildingEntity = new Wall(new Transformation(0, 0, 0));
-				World.getWorld().addEntity(currentBuildingEntity);
-			} else {
-				if(currentBuildingEntity != null) {
-					World.getWorld().removeEntity(currentBuildingEntity);
-					currentBuildingEntity = null;
-				}
-			}
-		} else {
-			if(currentBuildingEntity != null) {
-				World.getWorld().removeEntity(currentBuildingEntity);
-				currentBuildingEntity = null;
-			}
+		if(draggedItem != null && draggedItem.type.equals(ItemType.BUILDING)) {
+			currentBuildingEntity = draggedItem.entityBlueprint.createInstance();
+			World.getWorld().addEntity(currentBuildingEntity);
+			return;
 		}
+		
+		if(currentBuildingEntity != null) {
+			World.getWorld().removeEntity(currentBuildingEntity);
+			currentBuildingEntity = null;
+		}
+			
 	}
 
 	private void setSlotPositions() {

@@ -75,5 +75,4 @@ public class StaticEntity extends Entity {
 		mesh.delete();
 		material.delete();
 	}
-
 }

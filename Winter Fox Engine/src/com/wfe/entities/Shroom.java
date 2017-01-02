@@ -15,11 +15,11 @@ public class Shroom extends StaticEntity {
 		super(ResourceManager.getMesh("shroom"), 
 				new Material(ResourceManager.getTexture("shroom")), transform);
 		addComponent(new GatherableComponent(ItemDatabase.SHROOM, player, getTransform()));
-		getTransform().setScale(0.125f);
-		getTransform().setPosition(
-				getTransform().getX() + MyRandom.nextFloat(0.2f, 0.8f), 
-				getTransform().getY(), 
-				getTransform().getZ() + MyRandom.nextFloat(0.2f, 0.8f));
+		transform.setScale(0.125f);
+		transform.setPosition(
+				transform.getX() + MyRandom.nextFloat(0.2f, 0.8f), 
+				transform.getY(), 
+				transform.getZ() + MyRandom.nextFloat(0.2f, 0.8f));
 	}
 
 }

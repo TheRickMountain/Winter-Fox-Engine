@@ -42,6 +42,22 @@ public class Transformation {
 		this.z = z;
 	}
 	
+	public Transformation(Transformation transform) {
+		this.set(transform);
+	}
+
+	public void set(Transformation transform) {
+		this.x = transform.x;
+		this.y = transform.y;
+		this.z = transform.z;
+		this.rotX = transform.rotX;
+		this.rotY = transform.rotY;
+		this.rotZ = transform.rotZ;
+		this.scaleX = transform.scaleX;
+		this.scaleY = transform.scaleY;
+		this.scaleZ = transform.scaleZ;
+	}
+	
 	protected void setParent(StaticEntity parent) {
 		this.parent = parent;
 	}

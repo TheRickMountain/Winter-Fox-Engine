@@ -50,7 +50,10 @@ public class Game implements IGameLogic {
 		ResourceManager.loadTexture("banana_ui", Texture.newTexture(new MyFile("gui/items/banana.png")).create());
 		ResourceManager.loadTexture("cookie_ui", Texture.newTexture(new MyFile("gui/items/cookie.png")).create());
 		ResourceManager.loadTexture("apple_ui", Texture.newTexture(new MyFile("gui/items/apple.png")).create());
-		ResourceManager.loadTexture("log_wall_ui", Texture.newTexture(new MyFile("gui/items/log wall.png")).create());
+		ResourceManager.loadTexture("wall_ui", Texture.newTexture(new MyFile("gui/items/wall.png")).create());
+		ResourceManager.loadTexture("cross_wall_ui", Texture.newTexture(new MyFile("gui/items/cross_wall.png")).create());
+		ResourceManager.loadTexture("window_wall_ui", Texture.newTexture(new MyFile("gui/items/window_wall.png")).create());
+		ResourceManager.loadTexture("door_wall_ui", Texture.newTexture(new MyFile("gui/items/door_wall.png")).create());
 		ResourceManager.loadTexture("axe_ui", Texture.newTexture(new MyFile("gui/items/axe.png")).create());
 		ResourceManager.loadTexture("shroom_ui", Texture.newTexture(new MyFile("gui/items/shroom.png")).create());
 		ResourceManager.loadTexture("bread_ui", Texture.newTexture(new MyFile("gui/items/bread.png")).create());
@@ -77,8 +80,13 @@ public class Game implements IGameLogic {
 				.normalMipMap(-0.4f)
 				.create());
 		
+		ResourceManager.loadTexture("pine_decoration", Texture.newTexture(new MyFile("entity/pine/decoration.png"))
+				.normalMipMap(-0.4f)
+				.create());
+		
 		ResourceManager.loadMesh("pine_bark", OBJLoader.loadMesh("/entity/pine/bark.obj"));
 		ResourceManager.loadMesh("pine_leaves", OBJLoader.loadMesh("/entity/pine/leaves.obj"));
+		ResourceManager.loadMesh("pine_decoration", OBJLoader.loadMesh("/entity/pine/decoration.obj"));
 		/*** *** ***/
 		
 		/*** Shroom ***/
@@ -107,35 +115,35 @@ public class Game implements IGameLogic {
 
 		FontType fontType = new FontType(ResourceManager.getTexture("myFont").getID(),
 				new MyFile("font/myFont.fnt"));
-		GUIText text = new GUIText("Winter Font Engine", 1.1f, fontType, 0.875f, 0.0f, 0.125f, true);
-		text.setColor(1, 1, 1);
+		GUIText text = new GUIText("Winter Fox Engine", 1.1f, fontType, 0.875f, 0.0f, 0.125f, true);
+		text.setColor(1, 0.5f, 0);
 		World.getWorld().addGUIText(text);
 		
-		Fern fern1 = new Fern(new Transformation(84.5f, 0, 84.5f));
+		Fern fern1 = new Fern(new Transformation(84.5f, 0, 75.5f));
 		fern1.setTextureIndex(0);
 		World.getWorld().addEntityToTile(fern1);
 		
-		Fern fern2 = new Fern(new Transformation(83.5f, 0, 84.5f));
+		Fern fern2 = new Fern(new Transformation(87.5f, 0, 83.5f));
 		fern2.setTextureIndex(1);
 		World.getWorld().addEntityToTile(fern2);
 		
-		Fern fern3 = new Fern(new Transformation(81.5f, 0, 84.5f));
+		Fern fern3 = new Fern(new Transformation(92.5f, 0, 95.5f));
 		fern3.setTextureIndex(2);
 		World.getWorld().addEntityToTile(fern3);
 		
-		Fern fern4 = new Fern(new Transformation(80.5f, 0, 84.5f));
+		Fern fern4 = new Fern(new Transformation(79.5f, 0, 82.5f));
 		fern4.setTextureIndex(3);
 		World.getWorld().addEntityToTile(fern4);
 		
-		Grass grass = new Grass(new Transformation(85, 0, 85));
+		Grass grass = new Grass(new Transformation(90, 0, 85));
 		grass.setTextureIndex(0);
 		World.getWorld().addEntityToTile(grass);
 		
-		Grass grass1 = new Grass(new Transformation(85, 0, 86));
+		Grass grass1 = new Grass(new Transformation(85, 0, 90));
 		grass1.setTextureIndex(1);
 		World.getWorld().addEntityToTile(grass1);
 		
-		Grass grass2 = new Grass(new Transformation(85, 0, 87));
+		Grass grass2 = new Grass(new Transformation(90, 0, 80));
 		grass2.setTextureIndex(2);
 		World.getWorld().addEntityToTile(grass2);
 		
@@ -150,16 +158,20 @@ public class Game implements IGameLogic {
 				new Material(ResourceManager.getTexture("pine_leaves")).setHasTransparency(true), pineTransform);
 		World.getWorld().addEntity(pineLeaves);
 		
-		Shroom shroom = new Shroom(player, new Transformation(87, 0, 89));
+		StaticEntity pineDecoration = new StaticEntity(ResourceManager.getMesh("pine_decoration"),
+				new Material(ResourceManager.getTexture("pine_decoration")).setHasTransparency(true), pineTransform);
+		World.getWorld().addEntity(pineDecoration);
+		
+		Shroom shroom = new Shroom(player, new Transformation(77, 0, 89));
 		World.getWorld().addEntityToTile(shroom);
 		
-		Shroom shroom2 = new Shroom(player, new Transformation(86, 0, 89));
+		Shroom shroom2 = new Shroom(player, new Transformation(86, 0, 99));
 		World.getWorld().addEntityToTile(shroom2);
 		
-		Shroom shroom3 = new Shroom(player, new Transformation(87, 0, 88));
+		Shroom shroom3 = new Shroom(player, new Transformation(97, 0, 88));
 		World.getWorld().addEntityToTile(shroom3);
 		
-		Shroom shroom4 = new Shroom(player, new Transformation(86, 0, 88));
+		Shroom shroom4 = new Shroom(player, new Transformation(86, 0, 78));
 		World.getWorld().addEntityToTile(shroom4);
 	}
 	
