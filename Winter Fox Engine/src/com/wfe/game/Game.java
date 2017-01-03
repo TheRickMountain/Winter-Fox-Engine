@@ -22,6 +22,7 @@ import com.wfe.math.Vector3f;
 import com.wfe.renderEngine.FontRenderer;
 import com.wfe.textures.Texture;
 import com.wfe.utils.MyFile;
+import com.wfe.utils.MyRandom;
 
 public class Game implements IGameLogic {
 	
@@ -122,38 +123,19 @@ public class Game implements IGameLogic {
 				FontRenderer.font, 0.875f, 0.0f, 0.125f, true);
 		text.setColor(1, 1, 1);
 		World.getWorld().addGUIText(text);
-		
-		Fern fern1 = new Fern(new Transformation(84.5f, 0, 75.5f));
-		fern1.setTextureIndex(0);
-		World.getWorld().addEntityToTile(fern1);
-		
-		Fern fern2 = new Fern(new Transformation(87.5f, 0, 83.5f));
-		fern2.setTextureIndex(1);
-		World.getWorld().addEntityToTile(fern2);
-		
-		Fern fern3 = new Fern(new Transformation(92.5f, 0, 95.5f));
-		fern3.setTextureIndex(2);
-		World.getWorld().addEntityToTile(fern3);
-		
-		Fern fern4 = new Fern(new Transformation(79.5f, 0, 82.5f));
-		fern4.setTextureIndex(3);
-		World.getWorld().addEntityToTile(fern4);
-		
-		Grass grass = new Grass(new Transformation(85, 0, 90));
-		grass.setTextureIndex(0);
-		World.getWorld().addEntityToTile(grass);
-		
-		Grass grass1 = new Grass(new Transformation(87, 0, 90));
-		grass1.setTextureIndex(1);
-		World.getWorld().addEntityToTile(grass1);
-		
-		Grass grass2 = new Grass(new Transformation(86, 0, 91));
-		grass2.setTextureIndex(2);
-		World.getWorld().addEntityToTile(grass2);
-		
-		Grass grass3 = new Grass(new Transformation(86, 0, 89));
-		grass3.setTextureIndex(2);
-		World.getWorld().addEntityToTile(grass3);
+			
+		for(int i = 0; i < 100; i++) {
+			Grass grass = new Grass(new Transformation(MyRandom.nextInt(160), 0, MyRandom.nextInt(160)));
+			grass.setTextureIndex(MyRandom.nextInt(4));
+			World.getWorld().addEntityToTile(grass);
+			
+			Shroom shroom = new Shroom(player, new Transformation(MyRandom.nextInt(160), 0, MyRandom.nextInt(160)));
+			World.getWorld().addEntityToTile(shroom);
+			
+			Fern fern = new Fern(new Transformation(MyRandom.nextInt(160) + 0.5f, 0, MyRandom.nextInt(160) + 0.5f));
+			fern.setTextureIndex(MyRandom.nextInt(4));
+			World.getWorld().addEntityToTile(fern);
+		}
 		
 		/*Transformation pineTransform = new Transformation(90.5f, 0, 88.5f);
 		pineTransform.setScale(0.4f);
@@ -165,18 +147,6 @@ public class Game implements IGameLogic {
 		StaticEntity pineLeaves = new StaticEntity(ResourceManager.getMesh("pine_leaves"),
 				new Material(ResourceManager.getTexture("pine_leaves")).setHasTransparency(true), pineTransform);
 		World.getWorld().addEntity(pineLeaves);*/
-		
-		Shroom shroom = new Shroom(player, new Transformation(77, 0, 89));
-		World.getWorld().addEntityToTile(shroom);
-		
-		Shroom shroom2 = new Shroom(player, new Transformation(86, 0, 99));
-		World.getWorld().addEntityToTile(shroom2);
-		
-		Shroom shroom3 = new Shroom(player, new Transformation(97, 0, 88));
-		World.getWorld().addEntityToTile(shroom3);
-		
-		Shroom shroom4 = new Shroom(player, new Transformation(86, 0, 78));
-		World.getWorld().addEntityToTile(shroom4);
 		
 		StaticEntity willow = new StaticEntity(ResourceManager.getMesh("willow"),
 				new Material(ResourceManager.getTexture("willow")).setHasTransparency(true), 

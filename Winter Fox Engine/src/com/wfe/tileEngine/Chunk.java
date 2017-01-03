@@ -12,6 +12,7 @@ import org.lwjgl.opengl.GL30;
 
 import com.wfe.ecs.StaticEntity;
 import com.wfe.math.Vector2f;
+import com.wfe.utils.MyRandom;
 
 public class Chunk {
 
@@ -42,9 +43,9 @@ public class Chunk {
 			for(int y = 0; y < 16; y++) {
 				float height = heightGenerator.generateHeight(x + iterX, y + iterY);
 				if(height > -0.1f)
-					tiles[x][y] = new Tile(0);
+					tiles[x][y] = new Tile(MyRandom.nextInt(8, 9, 12, 13));
 				else
-					tiles[x][y] = new Tile(1);
+					tiles[x][y] = new Tile(MyRandom.nextInt(10, 11, 14, 15));
 			}
 		}
 		

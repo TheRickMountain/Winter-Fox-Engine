@@ -105,7 +105,7 @@ public class Inventory {
 		
 		if(currentBuildingEntity != null) {			
 			if(Keyboard.isKeyDown(Key.KEY_R)) {
-				buildingEntityRotation += 90;
+				buildingEntityRotation += 45;
 				
 				if(buildingEntityRotation == 360) {
 					buildingEntityRotation = 0;
