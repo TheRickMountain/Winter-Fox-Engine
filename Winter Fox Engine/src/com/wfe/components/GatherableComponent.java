@@ -1,8 +1,8 @@
 package com.wfe.components;
 
-import com.wfe.animation.AnimatedEntity;
 import com.wfe.ecs.Component;
 import com.wfe.ecs.ComponentType;
+import com.wfe.ecs.StaticEntity;
 import com.wfe.ecs.Transformation;
 import com.wfe.game.World;
 import com.wfe.gui.GUIManager;
@@ -14,10 +14,10 @@ import com.wfe.utils.MathUtils;
 public class GatherableComponent implements Component {
 	
 	private Transformation transform;
-	private AnimatedEntity player;
+	private StaticEntity player;
 	private int itemID;
 	
-	public GatherableComponent(int itemID, AnimatedEntity player, Transformation transform) {
+	public GatherableComponent(int itemID, StaticEntity player, Transformation transform) {
 		this.itemID = itemID;
 		this.player = player;
 		this.transform = transform;

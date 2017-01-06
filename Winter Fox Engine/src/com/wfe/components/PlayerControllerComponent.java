@@ -76,7 +76,7 @@ public class PlayerControllerComponent implements Component {
 			transform.isMoving = true;
 		}
 		
-		moveRelative(xa, za, 1.8f, dt);
+		moveRelative(xa, za, 1.0f, dt);
 		move(xd, zd);
 		
 		this.xd *= 0.91f;

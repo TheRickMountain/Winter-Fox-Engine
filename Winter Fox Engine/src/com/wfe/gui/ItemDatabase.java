@@ -3,6 +3,7 @@ package com.wfe.gui;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.wfe.blueprints.BushBlueprint;
 import com.wfe.blueprints.CrossWallBlueprint;
 import com.wfe.blueprints.DoorWallBlueprint;
 import com.wfe.blueprints.WallBlueprint;
@@ -26,6 +27,8 @@ public class ItemDatabase {
 	public static final int CROSS_WALL = 7;
 	public static final int WINDOW_WALL = 8;
 	public static final int DOOR_WALL = 9;
+	public static final int BUSH = 10;
+	public static final int AMANITA = 11;
 	
 	private ItemDatabase() {
 		items.add(new Item(BANANA, ResourceManager.getTexture("banana_ui"), "Banana", ItemType.FOOD, 15));
@@ -42,6 +45,9 @@ public class ItemDatabase {
 				new WindowWallBlueprint(new Transformation(0, 0, 0))));
 		items.add(new Item(DOOR_WALL, ResourceManager.getTexture("door_wall_ui"), "Door Wall", ItemType.BUILDING, 0,
 				new DoorWallBlueprint(new Transformation(0, 0, 0))));
+		items.add(new Item(BUSH, ResourceManager.getTexture("bush_ui"), "Bush", ItemType.BUILDING, 0,
+				new BushBlueprint(new Transformation(0, 0, 0))));
+		items.add(new Item(AMANITA, ResourceManager.getTexture("amanita_ui"), "Amanita", ItemType.FOOD, -10));
 	}
 	
 	public static void create() {

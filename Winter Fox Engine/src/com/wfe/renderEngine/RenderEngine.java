@@ -5,7 +5,6 @@ import java.util.Map;
 
 import org.lwjgl.opengl.GL11;
 
-import com.wfe.animation.AnimatedEntity;
 import com.wfe.core.Camera;
 import com.wfe.ecs.StaticEntity;
 import com.wfe.font.FontType;
@@ -20,13 +19,11 @@ public class RenderEngine {
 	private static RenderEngine renderer;
 	
 	private StaticEntityRenderer staticEntityRenderer;
-	private AnimatedEntityRenderer animatedEntityRenderer;
 	private GUIRenderer guiRenderer;
 	private FontRenderer fontRenderer;
 	
 	private RenderEngine(Camera camera) throws Exception {
 		this.staticEntityRenderer = new StaticEntityRenderer(camera);
-		this.animatedEntityRenderer = new AnimatedEntityRenderer(camera);
 		this.guiRenderer = new GUIRenderer();
 		this.fontRenderer = new FontRenderer();
 		
@@ -39,10 +36,9 @@ public class RenderEngine {
 		GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
 	}
 	
-	public void render(Map<Mesh, List<StaticEntity>> entities, AnimatedEntity entity, 
+	public void render(Map<Mesh, List<StaticEntity>> entities, 
 			Map<FontType, List<GUIText>> texts, List<GUITexture> textures, GUIManager guiManager) {
 		staticEntityRenderer.render(entities);
-		animatedEntityRenderer.render(entity);
 		guiRenderer.prepare();
 		guiRenderer.render(textures);
 		guiManager.render();
@@ -59,7 +55,6 @@ public class RenderEngine {
 	
 	public void cleanup() {
 		staticEntityRenderer.cleanup();
-		animatedEntityRenderer.cleanup();
 		guiRenderer.cleanup();
 		fontRenderer.cleanup();
 	}

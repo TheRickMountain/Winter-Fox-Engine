@@ -90,6 +90,19 @@ public class Terrain {
 		}
 	}
 	
+	public int getTile(int x, int y) {
+		int tX = (x / 16) * 16;
+		int tY = (y / 16) * 16;
+		
+		for(Chunk chunk : chunks) {
+			if(chunk.getPosX() == tX && chunk.getPosY() == tY) {
+				return chunk.getTile(x - tX, y - tY);
+			}
+		}
+		
+		return -1;
+	}
+	
 	public boolean setTileEntity(int x, int y, StaticEntity entity) {
 		int tX = (x / 16) * 16;
 		int tY = (y / 16) * 16;

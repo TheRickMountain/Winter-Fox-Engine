@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.wfe.animation.AnimatedEntity;
 import com.wfe.components.ColliderComponent;
 import com.wfe.core.Camera;
 import com.wfe.ecs.ComponentType;
@@ -67,7 +66,7 @@ public class World {
 		return WORLD;
 	}
 	
-	public void update(float dt, AnimatedEntity player) {
+	public void update(float dt, StaticEntity player) {
 		camera.update(dt);
 		MousePicker.update();
 		updateWeather(dt);
@@ -95,10 +94,10 @@ public class World {
 		
 	}
 	
-	public void render(AnimatedEntity entity) {
+	public void render() {
 		renderEngine.clear();
 		terrain.render();
-		renderEngine.render(entitiesToRender, entity, guiTexts, guiTextures, guiManager);
+		renderEngine.render(entitiesToRender, guiTexts, guiTextures, guiManager);
 	}
 	
 	public void addEntity(StaticEntity entity) {
@@ -167,6 +166,10 @@ public class World {
 	
 	public void setTile(int x, int y, int id) {
 		terrain.setTile(x, y, id);
+	}
+	
+	public int getTile(int x, int y) {
+		return terrain.getTile(x, y);
 	}
 	
 	public boolean addEntityToTile(StaticEntity entity) {

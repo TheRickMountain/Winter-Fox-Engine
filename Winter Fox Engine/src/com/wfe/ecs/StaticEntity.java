@@ -60,7 +60,7 @@ public class StaticEntity extends Entity {
 		return textureIndex;
 	}
 
-	public void setTextureIndex(int textureIndex) {
+	public StaticEntity setTextureIndex(int textureIndex) {
 		int rowSquare = material.getNumberOfRows() * material.getNumberOfRows() - 1;
 		if(textureIndex < 0) {
 			textureIndex = 0;
@@ -69,6 +69,8 @@ public class StaticEntity extends Entity {
 		} else {
 			this.textureIndex = textureIndex;
 		}
+		
+		return this;
 	}
 
 	public void delete() {

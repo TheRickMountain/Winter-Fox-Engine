@@ -54,6 +54,7 @@ public class Inventory {
 		addItem(ItemDatabase.items.get(ItemDatabase.APPLE));
 		addItem(ItemDatabase.items.get(ItemDatabase.APPLE));
 		addItem(ItemDatabase.items.get(ItemDatabase.APPLE));
+		addItem(ItemDatabase.items.get(ItemDatabase.BUSH));
 	}
 	
 	protected void update() {
@@ -112,7 +113,7 @@ public class Inventory {
 				}
 			}
 			
-			currentBuildingEntity.getTransform().setPosition(x + 0.5f, 0, z + 0.5f);
+			currentBuildingEntity.getTransform().setPosition(x + 0.25f, 0, z + 0.5f);
 			currentBuildingEntity.getTransform().setRotY(buildingEntityRotation);
 			
 			if(Mouse.isButtonDown(0) && !Mouse.isActiveInGUI()) {
@@ -123,7 +124,9 @@ public class Inventory {
 		}
 		
 		if(Mouse.isButtonDown(1)) {
-			World.getWorld().setTile(x, z, 6);
+			if(!Mouse.isActiveInGUI()) {
+				World.getWorld().setTile(x, z, 3);
+			}
 		}
 	}
 	

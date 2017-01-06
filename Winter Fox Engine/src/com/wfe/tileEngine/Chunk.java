@@ -43,9 +43,9 @@ public class Chunk {
 			for(int y = 0; y < 16; y++) {
 				float height = heightGenerator.generateHeight(x + iterX, y + iterY);
 				if(height > -0.1f)
-					tiles[x][y] = new Tile(MyRandom.nextInt(8, 9, 12, 13));
+					tiles[x][y] = new Tile(MyRandom.nextInt(4, 5, 8, 9));
 				else
-					tiles[x][y] = new Tile(MyRandom.nextInt(10, 11, 14, 15));
+					tiles[x][y] = new Tile(MyRandom.nextInt(6, 7, 10, 11));
 			}
 		}
 		
@@ -173,6 +173,10 @@ public class Chunk {
 	public void setTile(int x, int y, int id){
 		tiles[x][y].setId(id);
 		rebuild = true;
+	}
+	
+	public int getTile(int x, int y) {
+		return tiles[x][y].getId();
 	}
 	
 	public boolean setEntity(int x, int y, StaticEntity entity) {

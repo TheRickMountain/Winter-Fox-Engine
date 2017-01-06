@@ -13,11 +13,12 @@ public class Grass extends StaticEntity {
 				new Material(ResourceManager.getTexture("grass"))
 				.setHasTransparency(true)
 				.setHasFakeLighting(true)
-				.setNumberOfRows(2), transform);
+				.setNumberOfRows(4), transform);
+		getTransform().setScale(0.5f);
 		getTransform().setPosition(
-				getTransform().getX() + 0.5f, 
+				getTransform().getX() + MyRandom.nextFloat(0.2f, 0.8f), 
 				getTransform().getY(), 
-				getTransform().getZ() + 0.5f);
+				getTransform().getZ() + MyRandom.nextFloat(0.2f, 0.8f));
 	}
 
 }
