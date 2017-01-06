@@ -1,4 +1,4 @@
-package com.wfe.gui;
+package com.wfe.gui.inventory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,15 +7,17 @@ import com.wfe.core.Display;
 import com.wfe.core.ResourceManager;
 import com.wfe.ecs.StaticEntity;
 import com.wfe.game.World;
+import com.wfe.gui.Item;
+import com.wfe.gui.ItemDatabase;
+import com.wfe.gui.ItemType;
+import com.wfe.gui.Slot;
 import com.wfe.input.Key;
 import com.wfe.input.Keyboard;
 import com.wfe.input.Mouse;
 import com.wfe.math.Vector3f;
-import com.wfe.renderEngine.GUIRenderer;
 import com.wfe.textures.Texture;
 import com.wfe.utils.MousePicker;
 
-//TODO: Rewrite building code
 
 public class Inventory {
 	
@@ -27,7 +29,6 @@ public class Inventory {
 	private Texture slotTexture = ResourceManager.getTexture("slot_ui");
 	private List<Slot> slots = new ArrayList<Slot>(8 * 4);
 	
-	private Item draggedItem;
 	
 	private boolean showInventory = false;
 	
@@ -35,12 +36,12 @@ public class Inventory {
 	private StaticEntity currentBuildingEntity;
 	private int buildingEntityRotation;
 	
-	protected Inventory() {
+	public Inventory() {
 		for(int i = 0; i < slotsX * slotsY; i++) {
 			slots.add(new Slot(0, 0, slotSize, slotSize, slotTexture));
 		}
 		
-		setSlotPositions();
+		updatePosition();
 		
 		addItem(ItemDatabase.items.get(ItemDatabase.BANANA));
 		addItem(ItemDatabase.items.get(ItemDatabase.COOKIE));
@@ -55,9 +56,10 @@ public class Inventory {
 		addItem(ItemDatabase.items.get(ItemDatabase.APPLE));
 		addItem(ItemDatabase.items.get(ItemDatabase.APPLE));
 		addItem(ItemDatabase.items.get(ItemDatabase.BUSH));
+		addItem(ItemDatabase.items.get(ItemDatabase.HOE));
 	}
 	
-	protected void update() {
+	public void update() {
 		if(Keyboard.isKeyDown(Key.KEY_TAB)) {
 			showInventory = !showInventory;
 		}
@@ -91,7 +93,7 @@ public class Inventory {
 		building();
 		
 		if(Display.isResized()) {
-			setSlotPositions();
+			updatePosition();
 		}
 	}
 	
@@ -113,11 +115,11 @@ public class Inventory {
 				}
 			}
 			
-			currentBuildingEntity.getTransform().setPosition(x + 0.25f, 0, z + 0.5f);
+			currentBuildingEntity.getTransform().setPosition(x + 0.5f, 0, z + 0.5f);
 			currentBuildingEntity.getTransform().setRotY(buildingEntityRotation);
 			
 			if(Mouse.isButtonDown(0) && !Mouse.isActiveInGUI()) {
-				StaticEntity entity = draggedItem.entityBlueprint
+				StaticEntity entity = GUIManager.draggedItem.entityBlueprint
 						.createInstanceWithComponents(currentBuildingEntity.getTransform());
 				World.getWorld().addEntityToTile(entity);
 			}
@@ -125,12 +127,14 @@ public class Inventory {
 		
 		if(Mouse.isButtonDown(1)) {
 			if(!Mouse.isActiveInGUI()) {
-				World.getWorld().setTile(x, z, 3);
+				if(GUIManager.getGUI().equipment.getHandSlotItemID() == ItemDatabase.HOE) {
+					World.getWorld().setTile(x, z, 3);
+				}
 			}
 		}
 	}
 	
-	protected void render() {
+	public void render() {
 		for(int i = 0; i < slotsX * slotsY; i++) {
 			if(!showInventory) {
 				if(i >= 24) {
@@ -141,10 +145,6 @@ public class Inventory {
 				Slot slot = slots.get(i);
 				slot.render();
 			}
-		}
-		
-		if(draggedItem != null) {
-			GUIRenderer.render(draggedItem.icon, Mouse.getX() - 25, Mouse.getY() - 25, 0, 50, 50, false);
 		}
 	}
 	
@@ -169,15 +169,15 @@ public class Inventory {
 		return false;
 	}
 	
-	private void updateSlot(int index, boolean consume) {
+	private void updateSlot(int index, boolean use) {
 		Slot slot = slots.get(index);
 		if(slot.isMouseOvered()) {
 			Mouse.setActiveInGUI(true);
-			if(!consume) {
-				if(draggedItem != null) {
+			if(!use) {
+				if(GUIManager.draggedItem != null) {
 					if(!slot.isHasItem()) {
-						slot.addItem(draggedItem);
-						draggedItem = null;
+						slot.addItem(GUIManager.draggedItem);
+						GUIManager.draggedItem = null;
 					} else {
 						if(currentBuildingEntity != null) {
 							World.getWorld().removeEntity(currentBuildingEntity);
@@ -186,12 +186,12 @@ public class Inventory {
 						
 						Item tempItem = slot.getItem();
 						slot.removeItem();
-						slot.addItem(draggedItem);
-						draggedItem = tempItem;
+						slot.addItem(GUIManager.draggedItem);
+						GUIManager.draggedItem = tempItem;
 					}
 				} else {
 					if(slot.isHasItem()) {
-						draggedItem = slot.getItem();
+						GUIManager.draggedItem = slot.getItem();
 						slot.removeItem();
 					}
 				}
@@ -210,8 +210,8 @@ public class Inventory {
 	}
 	
 	private void checkBuildingItem() {
-		if(draggedItem != null && draggedItem.type.equals(ItemType.BUILDING)) {
-			currentBuildingEntity = draggedItem.entityBlueprint.createInstance();
+		if(GUIManager.draggedItem != null && GUIManager.draggedItem.type.equals(ItemType.BUILDING)) {
+			currentBuildingEntity = GUIManager.draggedItem.entityBlueprint.createInstance();
 			World.getWorld().addEntity(currentBuildingEntity);
 			return;
 		}
@@ -223,7 +223,7 @@ public class Inventory {
 			
 	}
 
-	private void setSlotPositions() {
+	private void updatePosition() {
 		int totalSlotsXLength = slotsX * slotSize;
 		int countX = 0;
 		int countY = 0;

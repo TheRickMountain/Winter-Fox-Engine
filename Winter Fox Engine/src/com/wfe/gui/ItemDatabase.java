@@ -29,6 +29,7 @@ public class ItemDatabase {
 	public static final int DOOR_WALL = 9;
 	public static final int BUSH = 10;
 	public static final int AMANITA = 11;
+	public static final int HOE = 12;
 	
 	private ItemDatabase() {
 		items.add(new Item(BANANA, ResourceManager.getTexture("banana_ui"), "Banana", ItemType.FOOD, 15));
@@ -48,6 +49,7 @@ public class ItemDatabase {
 		items.add(new Item(BUSH, ResourceManager.getTexture("bush_ui"), "Bush", ItemType.BUILDING, 0,
 				new BushBlueprint(new Transformation(0, 0, 0))));
 		items.add(new Item(AMANITA, ResourceManager.getTexture("amanita_ui"), "Amanita", ItemType.FOOD, -10));
+		items.add(new Item(HOE, ResourceManager.getTexture("hoe_ui"), "Hoe", ItemType.TOOL, 0));
 	}
 	
 	public static void create() {

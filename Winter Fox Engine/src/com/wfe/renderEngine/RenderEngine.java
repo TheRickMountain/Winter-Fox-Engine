@@ -9,9 +9,9 @@ import com.wfe.core.Camera;
 import com.wfe.ecs.StaticEntity;
 import com.wfe.font.FontType;
 import com.wfe.graph.Mesh;
-import com.wfe.gui.GUIManager;
 import com.wfe.gui.GUIText;
 import com.wfe.gui.GUITexture;
+import com.wfe.gui.inventory.GUIManager;
 import com.wfe.utils.OpenglUtils;
 
 public class RenderEngine {
