@@ -48,6 +48,7 @@ public class Slot {
 	public void removeItem() {
 		this.item = null;
 		this.hasItem = false;	
+		setItemsAmount(0);
 	}
 	
 	public Item getItem() {
@@ -114,7 +115,7 @@ public class Slot {
 	
 	public void setItemsAmount(int itemsAmount) {
 		this.itemsAmount = itemsAmount;
-		if(itemsAmount == 0) {
+		if(itemsAmount <= 1) {
 			text.setText("");
 		} else {
 			text.setText(String.valueOf(itemsAmount));

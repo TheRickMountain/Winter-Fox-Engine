@@ -27,8 +27,7 @@ public class Inventory {
 	private int slotSize = 50;
 	
 	private Texture slotTexture = ResourceManager.getTexture("slot_ui");
-	private List<Slot> slots = new ArrayList<Slot>(8 * 3);
-	private List<Slot> quickSlots = new ArrayList<Slot>(8);
+	private List<Slot> slots = new ArrayList<Slot>();
 	
 	
 	private boolean showInventory = false;
@@ -107,7 +106,15 @@ public class Inventory {
 			if(Mouse.isButtonDown(0) && !Mouse.isActiveInGUI()) {
 				StaticEntity entity = GUIManager.draggedItem.entityBlueprint
 						.createInstanceWithComponents(currentBuildingEntity.getTransform());
-				World.getWorld().addEntityToTile(entity);
+				if(World.getWorld().addEntityToTile(entity)){
+					GUIManager.getGUI().setDraggedItemAmount(GUIManager.getGUI().getDraggedItemAmount() - 1);
+					
+					if(GUIManager.getGUI().getDraggedItemAmount() == 0) {
+						GUIManager.draggedItem = null;
+						World.getWorld().removeEntity(currentBuildingEntity);
+						currentBuildingEntity = null;
+					}
+				}
 			}
 		}
 		
@@ -148,16 +155,16 @@ public class Inventory {
 		}
 	}
 	
-	public boolean addItem(Item item) {
+	public boolean addItem(Item item, int amount) {
 		// Check quick slots
 		for(int i = 24; i < 32; i++) {
 			Slot slot = slots.get(i);
 			if(!slot.isHasItem()) {
 				slot.addItem(item);
-				slot.setItemsAmount(1);
+				slot.setItemsAmount(amount);
 				return true;
 			} else if(slot.getItem().equals(item)) {
-				slot.setItemsAmount(slot.getItemsAmount() + 1);
+				slot.setItemsAmount(slot.getItemsAmount() + amount);
 				return true;
 			}
 		} 
@@ -166,10 +173,10 @@ public class Inventory {
 		for(Slot slot : slots) {
 			if(!slot.isHasItem()) {
 				slot.addItem(item);
-				slot.setItemsAmount(1);
+				slot.setItemsAmount(amount);
 				return true;
 			} else if(slot.getItem().equals(item)) {
-				slot.setItemsAmount(slot.getItemsAmount() + 1);
+				slot.setItemsAmount(slot.getItemsAmount() + amount);
 				return true;
 			}
 		}
@@ -185,6 +192,7 @@ public class Inventory {
 				if(GUIManager.draggedItem != null) {
 					if(!slot.isHasItem()) {
 						slot.addItem(GUIManager.draggedItem);
+						slot.setItemsAmount(GUIManager.getGUI().getDraggedItemAmount());
 						GUIManager.draggedItem = null;
 					} else {
 						if(currentBuildingEntity != null) {
@@ -192,14 +200,20 @@ public class Inventory {
 							currentBuildingEntity = null;
 						}
 						
-						Item tempItem = slot.getItem();
+						Item tempItem = GUIManager.draggedItem;
+						int tempItemAmount = GUIManager.getGUI().getDraggedItemAmount();
+						
+						GUIManager.draggedItem = slot.getItem();
+						GUIManager.getGUI().setDraggedItemAmount(slot.getItemsAmount());
+						
 						slot.removeItem();
-						slot.addItem(GUIManager.draggedItem);
-						GUIManager.draggedItem = tempItem;
+						slot.addItem(tempItem);
+						slot.setItemsAmount(tempItemAmount);
 					}
 				} else {
 					if(slot.isHasItem()) {
 						GUIManager.draggedItem = slot.getItem();
+						GUIManager.getGUI().setDraggedItemAmount(slot.getItemsAmount());
 						slot.removeItem();
 					}
 				}
@@ -210,7 +224,11 @@ public class Inventory {
 				if(item != null) {
 					if(item.type.equals(ItemType.FOOD)) {
 						GUIManager.getGUI().status.hungerBar.increase(item.starvation);
-						slot.removeItem();
+						if(slot.getItemsAmount() > 1) {
+							slot.setItemsAmount(slot.getItemsAmount() - 1);
+						} else {
+							slot.removeItem();
+						}
 					}
 				}
 			}
