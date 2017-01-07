@@ -11,8 +11,6 @@ public class StaticEntity extends Entity {
 	private Mesh mesh;
 	private Material material;
 	
-	private boolean remove = false;
-	
 	private int textureIndex = 0;
 	
 	public StaticEntity(Mesh mesh, Material material, Transformation transform) {
@@ -24,13 +22,17 @@ public class StaticEntity extends Entity {
 	}
 	
 	@Override
-	public void update(float dt) {
+	public void update(float dt) {		
 		if(remove) {
 			World.getWorld().removeEntity(this);
 		}
 		
 		for(Component component : components) {
 			component.update(dt);
+		}
+		
+		if(hasParent) {
+			transform.update(dt);
 		}
 	}
 	
@@ -50,10 +52,6 @@ public class StaticEntity extends Entity {
 	
 	public Material getMaterial() {
 		return material;
-	}
-	
-	public void remove() {
-		this.remove = true;
 	}
 	
 	public int getTextureIndex() {

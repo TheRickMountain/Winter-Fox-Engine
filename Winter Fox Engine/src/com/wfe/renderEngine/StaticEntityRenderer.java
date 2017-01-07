@@ -71,8 +71,13 @@ public class StaticEntityRenderer {
 	
 	private void render(StaticEntity entity) {
 		Material material = entity.getMaterial();
-		shader.modelMatrix.loadMatrix(MathUtils.getModelMatrix(modelMatrix, 
-				entity.getTransform()));
+		if(entity.isHasParent()) {
+			shader.modelMatrix.loadMatrix(MathUtils.getEulerModelMatrix(modelMatrix, 
+					entity.getTransform()));
+		} else {
+			shader.modelMatrix.loadMatrix(MathUtils.getModelMatrix(modelMatrix, 
+					entity.getTransform()));
+		}
 		
 		material.getTexture().bind(0);
 

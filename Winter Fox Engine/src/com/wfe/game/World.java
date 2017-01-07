@@ -105,12 +105,14 @@ public class World {
 		}
 		this.entitiesToAdd.add(entity);
 		
-		List<StaticEntity> batch = entitiesToRender.get(entity.getMesh());
-		if(batch == null) {
-			batch = new ArrayList<StaticEntity>();
-            entitiesToRender.put(entity.getMesh(), batch);
-		} 
-		batch.add(entity);
+		if(entity.getMesh() != null) {
+			List<StaticEntity> batch = entitiesToRender.get(entity.getMesh());
+			if(batch == null) {
+				batch = new ArrayList<StaticEntity>();
+	            entitiesToRender.put(entity.getMesh(), batch);
+			} 
+			batch.add(entity);
+		}
 	}
 	
 	public void removeEntity(StaticEntity entity) {

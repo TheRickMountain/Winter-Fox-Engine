@@ -42,6 +42,10 @@ public class Equipment {
 				}
 			}
 		}
+		
+		if(Display.isResized()) {
+			updatePositions();
+		}
 	}
 	
 	public void render() {

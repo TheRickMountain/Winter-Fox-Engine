@@ -1,17 +1,15 @@
 package com.wfe.game;
 
-import com.wfe.components.PlayerControllerComponent;
 import com.wfe.core.Camera;
 import com.wfe.core.Display;
 import com.wfe.core.IGameLogic;
 import com.wfe.core.ResourceManager;
-import com.wfe.ecs.StaticEntity;
 import com.wfe.ecs.Transformation;
 import com.wfe.entities.Amanita;
 import com.wfe.entities.Fern;
 import com.wfe.entities.Grass;
+import com.wfe.entities.Player;
 import com.wfe.entities.Shroom;
-import com.wfe.graph.Material;
 import com.wfe.graph.OBJLoader;
 import com.wfe.gui.GUIText;
 import com.wfe.math.Vector3f;
@@ -23,7 +21,7 @@ import com.wfe.utils.MyRandom;
 public class Game implements IGameLogic {
 	
 	Camera camera;
-	StaticEntity player;
+	Player player;
 	
 	@Override
 	public void loadResources() throws Exception {
@@ -123,8 +121,19 @@ public class Game implements IGameLogic {
 		ResourceManager.loadTexture("player", Texture.newTexture(new MyFile("entity/player/diffuse.png"))
 				.normalMipMap(-0.4f)
 				.create());
+		ResourceManager.loadTexture("eyes", Texture.newTexture(new MyFile("entity/player/eyes.png"))
+				.normalMipMap(-0.4f)
+				.create());
 		
-		ResourceManager.loadMesh("player", OBJLoader.loadMesh("/entity/player/model.obj"));
+		ResourceManager.loadMesh("body", OBJLoader.loadMesh("/entity/player/body.obj"));
+		ResourceManager.loadMesh("head", OBJLoader.loadMesh("/entity/player/head.obj"));
+		ResourceManager.loadMesh("eyes", OBJLoader.loadMesh("/entity/player/eyes.obj"));
+		ResourceManager.loadMesh("hip", OBJLoader.loadMesh("/entity/player/hip.obj"));
+		ResourceManager.loadMesh("shin", OBJLoader.loadMesh("/entity/player/shin.obj"));
+		ResourceManager.loadMesh("leftArm", OBJLoader.loadMesh("/entity/player/leftArm.obj"));
+		ResourceManager.loadMesh("leftForearm", OBJLoader.loadMesh("/entity/player/leftForearm.obj"));
+		ResourceManager.loadMesh("rightArm", OBJLoader.loadMesh("/entity/player/rightArm.obj"));
+		ResourceManager.loadMesh("rightForearm", OBJLoader.loadMesh("/entity/player/rightForearm.obj"));
 		/*** *** ***/
 	}
 	
@@ -135,10 +144,7 @@ public class Game implements IGameLogic {
 		World.createWorld(camera);
 		World.getWorld().init();
 		
-		player = new StaticEntity(ResourceManager.getMesh("player"), 
-				new Material(ResourceManager.getTexture("player")), new Transformation(80, 0, 80));
-		player.getTransform().setScale(0.5f);
-		player.addComponent(new PlayerControllerComponent(camera, player.getTransform()));
+		player = new Player(camera, new Transformation(80, 0.65f, 80));
 		World.getWorld().addEntity(player);
 		
 		GUIText text = new GUIText("Winter Fox Engine", 1.1f, 

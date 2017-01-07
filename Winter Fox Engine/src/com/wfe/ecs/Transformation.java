@@ -1,8 +1,14 @@
 package com.wfe.ecs;
 
+import com.wfe.math.Matrix4f;
+import com.wfe.math.Vector4f;
+import com.wfe.utils.MathUtils;
+
 public class Transformation {
 
-	private StaticEntity parent;
+	private Entity parent;
+	private Vector4f temp;
+	private Matrix4f tempMatrix;
 	
 	public float x = 0;
 	public float y = 0;
@@ -13,7 +19,30 @@ public class Transformation {
 	public float scaleX = 1;
 	public float scaleY = 1;
 	public float scaleZ = 1;
+	
+	public float localX = 0;
+	public float localY = 0;
+	public float localZ = 0;
+	public float localRotX = 0;
+	public float localRotY = 0;
+	public float localRotZ = 0;
+	public float localScaleX = 1;
+	public float localScaleY = 1;
+	public float localScaleZ = 1;
+	
 	public boolean isMoving;
+	
+	public Transformation() {
+		this(0, 0, 0, 0, 0, 0, 1);
+	}
+	
+	public Transformation(float x, float y, float z, float rotX, float rotY, float rotZ) {
+		this(x, y, z, rotX, rotY, rotZ, 1);
+	}
+	
+	public Transformation(float x, float y, float z) {
+		this(x, y, z, 0, 0, 0, 1);
+	}
 	
 	public Transformation(float x, float y, float z, float rotX, float rotY, float rotZ, float scale) {
 		this.x = x;
@@ -25,28 +54,11 @@ public class Transformation {
 		this.scaleX = scale;
 		this.scaleY = scale;
 		this.scaleZ = scale;
-	}
-
-	public Transformation(float x, float y, float z, float rotX, float rotY, float rotZ) {
-		this.x = x;
-		this.y = y;
-		this.z = z;
-		this.rotX = rotX;
-		this.rotY = rotY;
-		this.rotZ = rotZ;
-	}
-
-	public Transformation(float x, float y, float z) {
-		this.x = x;
-		this.y = y;
-		this.z = z;
+		this.temp = new Vector4f();
+		this.tempMatrix = new Matrix4f();
 	}
 	
 	public Transformation(Transformation transform) {
-		this.set(transform);
-	}
-
-	public void set(Transformation transform) {
 		this.x = transform.x;
 		this.y = transform.y;
 		this.z = transform.z;
@@ -56,13 +68,33 @@ public class Transformation {
 		this.scaleX = transform.scaleX;
 		this.scaleY = transform.scaleY;
 		this.scaleZ = transform.scaleZ;
+		this.temp = new Vector4f();
+		this.tempMatrix = new Matrix4f();
 	}
 	
-	protected void setParent(StaticEntity parent) {
+	public void update(float dt) {
+		Entity pp = parent.getParent();
+		Matrix4f.transform(MathUtils.getEulerModelMatrix(tempMatrix, pp.transform), 
+				new Vector4f(localX, localY, localZ, 1.0f), temp);
+		x = temp.x;
+		y = temp.y;
+		z = temp.z;
+		
+		rotX = localRotX + pp.transform.rotX;
+		rotY = localRotY + pp.transform.rotY;
+		rotZ = localRotZ + pp.transform.rotZ;
+		
+		scaleX = localScaleX * pp.transform.scaleX;
+		scaleY = localScaleY * pp.transform.scaleY;
+		scaleZ = localScaleZ * pp.transform.scaleZ;
+		
+	}
+	
+	protected void setParent(Entity parent) {
 		this.parent = parent;
 	}
 
-	public StaticEntity getParent() {
+	public Entity getParent() {
 		return parent;
 	}
 

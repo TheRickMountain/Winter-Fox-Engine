@@ -8,10 +8,17 @@ public abstract class Entity {
 	protected Transformation transform;
 	
 	protected List<Component> components = new ArrayList<Component>();
-
-	public abstract void update(float dt);
+	protected List<Entity> childs = new ArrayList<Entity>();
+	protected boolean hasParent;
+	protected String name;
 	
+	private Entity parent;
+
 	private boolean isVisible = true;
+	
+	protected boolean remove = false;
+	
+	public abstract void update(float dt);
 	
 	public void addComponent(Component component) {
 		this.components.add(component);
@@ -35,6 +42,11 @@ public abstract class Entity {
 		return null;
 	}
 	
+	public void addChild(Entity entity) {
+		entity.setParent(this);
+		this.childs.add(entity);
+	}
+	
 	public Transformation getTransform() {
 		return transform;
 	}
@@ -45,6 +57,31 @@ public abstract class Entity {
 	
 	public void setVisible(boolean isVisible) {
 		this.isVisible = isVisible;
+	}
+	
+	public void remove() {
+		this.remove = true;
+	}
+
+	public Entity getParent() {
+		return parent;
+	}
+
+	private void setParent(Entity parent) {
+		this.parent = parent;
+		this.hasParent = true;
+	}
+	
+	public boolean isHasParent() {
+		return hasParent;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 	
 }

@@ -31,8 +31,7 @@ public class Inventory {
 	
 	private List<Slot> quickSlots = new ArrayList<Slot>();
 	private List<Slot> inventorySlots = new ArrayList<Slot>();
-	
-	
+
 	private boolean showInventory = false;
 	
 	// Building

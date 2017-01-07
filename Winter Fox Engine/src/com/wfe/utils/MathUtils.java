@@ -7,6 +7,9 @@ import com.wfe.ecs.Transformation;
 import com.wfe.math.Matrix4f;
 import com.wfe.math.Vector2f;
 import com.wfe.math.Vector3f;
+import com.wfe.math.altvecmath.Matrix4;
+import com.wfe.math.altvecmath.Transform;
+import com.wfe.math.altvecmath.Vector3;
 
 public class MathUtils {
 
@@ -54,6 +57,36 @@ public class MathUtils {
 		Matrix4f.translate(negativeCameraPos, matrix, matrix);
 		return matrix;
 	}
+	
+	static Transform transform = new Transform();
+	
+	public static Matrix4f getEulerModelMatrix(Matrix4f matrix, Transformation t) {
+		matrix.setIdentity();
+		transform.reset()
+        .rotateSelf(Vector3.AXIS_X, t.rotX * DEGREES_TO_RADIANS)
+        .rotateSelf(Vector3.AXIS_Z, t.rotZ * DEGREES_TO_RADIANS)
+        .rotateSelf(Vector3.AXIS_Y, t.rotY * DEGREES_TO_RADIANS)
+        .scaleSelf(new Vector3(t.scaleX, t.scaleY, t.scaleZ))
+        .translateSelf(new Vector3(t.x, t.y, t.z));
+		Matrix4 tempMatrix = transform.getMatrix();
+		matrix.m00 = tempMatrix.get(0, 0);
+		matrix.m01 = tempMatrix.get(0, 1);
+		matrix.m02 = tempMatrix.get(0, 2);
+		matrix.m03 = tempMatrix.get(0, 3);
+		matrix.m10 = tempMatrix.get(1, 0);
+		matrix.m11 = tempMatrix.get(1, 1);
+		matrix.m12 = tempMatrix.get(1, 2);
+		matrix.m13 = tempMatrix.get(1, 3);
+		matrix.m20 = tempMatrix.get(2, 0);
+		matrix.m21 = tempMatrix.get(2, 1);
+		matrix.m22 = tempMatrix.get(2, 2);
+		matrix.m23 = tempMatrix.get(2, 3);
+		matrix.m30 = tempMatrix.get(3, 0);
+		matrix.m31 = tempMatrix.get(3, 1);
+		matrix.m32 = tempMatrix.get(3, 2);
+		matrix.m33 = tempMatrix.get(3, 3);
+		return matrix;
+    }
 	
 	public static Matrix4f getModelMatrix(Matrix4f matrix, Transformation transform) {
 		matrix.setIdentity();

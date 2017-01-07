@@ -55,6 +55,7 @@ public class Terrain {
 			} else {
 				chunk.setVisible(true);
 			}
+
 		}
 	}
 	

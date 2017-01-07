@@ -30,7 +30,6 @@ public class GatherableComponent implements Component {
 					transform.getX(), transform.getZ()) <= 2) {
 				if(GUIManager.getGUI().inventory.addItem(ItemDatabase.items.get(itemID), 1)) {
 					World.getWorld().removeEntityFromTile((int)transform.getX(), (int)transform.getZ());
-					transform.getParent().remove();
 				}
 			}
 		}

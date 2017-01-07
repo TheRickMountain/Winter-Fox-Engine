@@ -16,9 +16,6 @@ public class Slot {
 	private boolean hasItem;
 	private int itemsAmount = 0;
 	
-	private float tempX = 1.0f / Display.getWidth();
-	private float tempY = 1.0f / Display.getHeight();
-	
 	public Slot(float x, float y, float scaleX, float scaleY, Texture texture) {
 		this.x = x;
 		this.y = y;
@@ -123,6 +120,8 @@ public class Slot {
 	}
 	
 	private void updateTextPosition() {
+		float tempX = 1.0f / Display.getWidth();
+		float tempY = 1.0f / Display.getHeight();
 		this.text.setPosition(tempX * (x + 5), tempY * y);
 	}
 	
