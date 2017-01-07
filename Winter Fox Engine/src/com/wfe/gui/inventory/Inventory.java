@@ -29,6 +29,9 @@ public class Inventory {
 	private Texture slotTexture = ResourceManager.getTexture("slot_ui");
 	private List<Slot> slots = new ArrayList<Slot>();
 	
+	private List<Slot> quickSlots = new ArrayList<Slot>();
+	private List<Slot> inventorySlots = new ArrayList<Slot>();
+	
 	
 	private boolean showInventory = false;
 	
@@ -39,6 +42,12 @@ public class Inventory {
 	public Inventory() {
 		for(int i = 0; i < slotsX * slotsY; i++) {
 			slots.add(new Slot(0, 0, slotSize, slotSize, slotTexture));
+			
+			if(i >= 24) {
+				quickSlots.add(slots.get(i));
+			} else {
+				inventorySlots.add(slots.get(i));
+			}
 		}
 		
 		updatePosition();
@@ -51,27 +60,23 @@ public class Inventory {
 		
 		// Drag items
 		if(Mouse.isButtonDown(0)) {
-			for(int i = 0; i < slotsX * slotsY; i++) {
-				if(!showInventory) {
-					if(i >= 24) {
-						updateSlot(i, false);
-					}
-				} else {
-					updateSlot(i, false);
-				}
+			for(Slot slot : quickSlots) {
+				updateSlot(slot, false);
+			}
+			
+			for(Slot slot : inventorySlots) {
+				updateSlot(slot, false);
 			}
 		}
 		
 		// Consume consumable items
 		if(Mouse.isButtonDown(1)) {
-			for(int i = 0; i < slotsX * slotsY; i++) {
-				if(!showInventory) {
-					if(i >= 24) {
-						updateSlot(i, true);
-					}
-				} else {
-					updateSlot(i, true);
-				}
+			for(Slot slot : quickSlots) {
+				updateSlot(slot, true);
+			}
+			
+			for(Slot slot : inventorySlots) {
+				updateSlot(slot, true);
 			}
 		}
 		
@@ -128,37 +133,31 @@ public class Inventory {
 	}
 	
 	public void render() {
-		for(int i = 0; i < slotsX * slotsY; i++) {
-			if(!showInventory) {
-				if(i >= 24) {
-					Slot slot = slots.get(i);
-					slot.render();
-				}
-			} else {
-				Slot slot = slots.get(i);
+		if(showInventory) {
+			for(Slot slot : inventorySlots) {
 				slot.render();
 			}
+		}
+		
+		for(Slot slot : quickSlots) {
+			slot.render();
 		}
 	}
 	
 	public void renderText() {
-		for(int i = 0; i < slotsX * slotsY; i++) {
-			if(!showInventory) {
-				if(i >= 24) {
-					Slot slot = slots.get(i);
-					slot.renderText();
-				}
-			} else {
-				Slot slot = slots.get(i);
+		if(showInventory) {
+			for(Slot slot : inventorySlots) {
 				slot.renderText();
 			}
+		}
+		
+		for(Slot slot : quickSlots) {
+			slot.renderText();
 		}
 	}
 	
 	public boolean addItem(Item item, int amount) {
-		// Check quick slots
-		for(int i = 24; i < 32; i++) {
-			Slot slot = slots.get(i);
+		for(Slot slot : quickSlots) {
 			if(!slot.isHasItem()) {
 				slot.addItem(item);
 				slot.setItemsAmount(amount);
@@ -167,10 +166,9 @@ public class Inventory {
 				slot.setItemsAmount(slot.getItemsAmount() + amount);
 				return true;
 			}
-		} 
+		}
 		
-		// Check all slots
-		for(Slot slot : slots) {
+		for(Slot slot : inventorySlots) {
 			if(!slot.isHasItem()) {
 				slot.addItem(item);
 				slot.setItemsAmount(amount);
@@ -184,8 +182,7 @@ public class Inventory {
 		return false;
 	}
 	
-	private void updateSlot(int index, boolean use) {
-		Slot slot = slots.get(index);
+	private void updateSlot(Slot slot, boolean use) {
 		if(slot.isMouseOvered()) {
 			Mouse.setActiveInGUI(true);
 			if(!use) {
@@ -200,15 +197,21 @@ public class Inventory {
 							currentBuildingEntity = null;
 						}
 						
-						Item tempItem = GUIManager.draggedItem;
-						int tempItemAmount = GUIManager.getGUI().getDraggedItemAmount();
-						
-						GUIManager.draggedItem = slot.getItem();
-						GUIManager.getGUI().setDraggedItemAmount(slot.getItemsAmount());
-						
-						slot.removeItem();
-						slot.addItem(tempItem);
-						slot.setItemsAmount(tempItemAmount);
+						if(GUIManager.draggedItem.equals(slot.getItem())) {
+							slot.setItemsAmount(slot.getItemsAmount() + GUIManager.getGUI().getDraggedItemAmount());
+							GUIManager.draggedItem = null;
+							GUIManager.getGUI().setDraggedItemAmount(0);
+						} else {
+							Item tempItem = GUIManager.draggedItem;
+							int tempItemAmount = GUIManager.getGUI().getDraggedItemAmount();
+							
+							GUIManager.draggedItem = slot.getItem();
+							GUIManager.getGUI().setDraggedItemAmount(slot.getItemsAmount());
+							
+							slot.removeItem();
+							slot.addItem(tempItem);
+							slot.setItemsAmount(tempItemAmount);
+						}
 					}
 				} else {
 					if(slot.isHasItem()) {
