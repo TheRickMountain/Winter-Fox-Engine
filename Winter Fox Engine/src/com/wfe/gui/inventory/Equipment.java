@@ -49,8 +49,9 @@ public class Equipment {
 	}
 
 	private void updatePositions() {
-		handSlot.setX(Display.getWidth() - slotSize - 10);
-		handSlot.setY(Display.getHeight() - slotSize);
+		handSlot.setPosition(
+				Display.getWidth() - slotSize - 10, 
+				Display.getHeight() - slotSize);
 	}
 	
 	public boolean addItem(Item item) {

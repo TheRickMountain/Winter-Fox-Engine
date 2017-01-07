@@ -9,7 +9,6 @@ import com.wfe.components.ColliderComponent;
 import com.wfe.core.Camera;
 import com.wfe.ecs.ComponentType;
 import com.wfe.ecs.StaticEntity;
-import com.wfe.font.FontType;
 import com.wfe.graph.Mesh;
 import com.wfe.gui.GUIText;
 import com.wfe.gui.GUITexture;
@@ -36,7 +35,7 @@ public class World {
 	
 	private List<AABB> colliders = new ArrayList<AABB>();
 	
-	private Map<FontType, List<GUIText>> guiTexts = new HashMap<FontType, List<GUIText>>();
+	private List<GUIText> guiTexts = new ArrayList<GUIText>();
 	private List<GUITexture> guiTextures = new ArrayList<GUITexture>();
 	
 	private float time = 12000;
@@ -129,21 +128,11 @@ public class World {
 	}
 	
 	public void addGUIText(GUIText text) {
-		List<GUIText> textBatch = guiTexts.get(text.getFont());
-		if(textBatch == null) {
-			textBatch = new ArrayList<GUIText>();
-			guiTexts.put(text.getFont(), textBatch);
-		}
-		textBatch.add(text);
+		guiTexts.add(text);
 	}
 	
 	public void removeGUIText(GUIText text) {
-		List<GUIText> textBatch = guiTexts.get(text.getFont());
-		textBatch.remove(text);
-		if(textBatch.isEmpty()) {
-			guiTexts.remove(text.getFont());
-			text.cleanup();
-		}
+		guiTexts.remove(text);
 	}
 	
 	public void addGUITexture(GUITexture texture) {

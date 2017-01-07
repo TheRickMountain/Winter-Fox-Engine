@@ -27,7 +27,8 @@ public class Inventory {
 	private int slotSize = 50;
 	
 	private Texture slotTexture = ResourceManager.getTexture("slot_ui");
-	private List<Slot> slots = new ArrayList<Slot>(8 * 4);
+	private List<Slot> slots = new ArrayList<Slot>(8 * 3);
+	private List<Slot> quickSlots = new ArrayList<Slot>(8);
 	
 	
 	private boolean showInventory = false;
@@ -42,21 +43,6 @@ public class Inventory {
 		}
 		
 		updatePosition();
-		
-		addItem(ItemDatabase.items.get(ItemDatabase.BANANA));
-		addItem(ItemDatabase.items.get(ItemDatabase.COOKIE));
-		addItem(ItemDatabase.items.get(ItemDatabase.SHROOM));
-		addItem(ItemDatabase.items.get(ItemDatabase.AXE));
-		addItem(ItemDatabase.items.get(ItemDatabase.WALL));
-		addItem(ItemDatabase.items.get(ItemDatabase.CROSS_WALL));
-		addItem(ItemDatabase.items.get(ItemDatabase.DOOR_WALL));
-		addItem(ItemDatabase.items.get(ItemDatabase.WINDOW_WALL));
-		addItem(ItemDatabase.items.get(ItemDatabase.APPLE));
-		addItem(ItemDatabase.items.get(ItemDatabase.APPLE));
-		addItem(ItemDatabase.items.get(ItemDatabase.APPLE));
-		addItem(ItemDatabase.items.get(ItemDatabase.APPLE));
-		addItem(ItemDatabase.items.get(ItemDatabase.BUSH));
-		addItem(ItemDatabase.items.get(ItemDatabase.HOE));
 	}
 	
 	public void update() {
@@ -148,12 +134,30 @@ public class Inventory {
 		}
 	}
 	
+	public void renderText() {
+		for(int i = 0; i < slotsX * slotsY; i++) {
+			if(!showInventory) {
+				if(i >= 24) {
+					Slot slot = slots.get(i);
+					slot.renderText();
+				}
+			} else {
+				Slot slot = slots.get(i);
+				slot.renderText();
+			}
+		}
+	}
+	
 	public boolean addItem(Item item) {
 		// Check quick slots
 		for(int i = 24; i < 32; i++) {
 			Slot slot = slots.get(i);
 			if(!slot.isHasItem()) {
 				slot.addItem(item);
+				slot.setItemsAmount(1);
+				return true;
+			} else if(slot.getItem().equals(item)) {
+				slot.setItemsAmount(slot.getItemsAmount() + 1);
 				return true;
 			}
 		} 
@@ -162,6 +166,10 @@ public class Inventory {
 		for(Slot slot : slots) {
 			if(!slot.isHasItem()) {
 				slot.addItem(item);
+				slot.setItemsAmount(1);
+				return true;
+			} else if(slot.getItem().equals(item)) {
+				slot.setItemsAmount(slot.getItemsAmount() + 1);
 				return true;
 			}
 		}
@@ -231,6 +239,9 @@ public class Inventory {
 		for(int i = 0; i < slotsX * slotsY; i++) {
 			int xPos = (Display.getWidth() / 2) - (totalSlotsXLength / 2);
 			int yPos = Display.getHeight() - ((slotsY * slotSize) + slotSize);
+			slots.get(i).setPosition(
+					xPos + (countX * slotSize), 
+					yPos + (countY * slotSize + offsetBetweenSlots));
 			slots.get(i).setX(xPos + (countX * slotSize));
 			slots.get(i).setY(yPos + (countY * slotSize + offsetBetweenSlots));
 			

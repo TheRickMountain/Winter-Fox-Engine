@@ -1,7 +1,6 @@
 package com.wfe.renderEngine;
 
 import java.util.List;
-import java.util.Map;
 
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL13;
@@ -29,30 +28,22 @@ public class FontRenderer {
 				new MyFile("font/myFont.fnt"));
 	}
 	
-	public void render(Map<FontType, List<GUIText>> texts) {
-		prepare();	
-		
-		for(FontType font : texts.keySet()) {
-			GL13.glActiveTexture(GL13.GL_TEXTURE0);
-			GL11.glBindTexture(GL11.GL_TEXTURE_2D, font.getTextureAtlas());
-			for(GUIText text : texts.get(font)) {
-				render(text);
-			}
+	public void render(List<GUIText> texts) {
+		GL13.glActiveTexture(GL13.GL_TEXTURE0);
+		GL11.glBindTexture(GL11.GL_TEXTURE_2D, font.getTextureAtlas());
+		for(GUIText text : texts) {
+			render(text);
 		}
-		
-		finish();
 	}
 	
-
-	
-	private void prepare() {
+	public void prepare() {
 		OpenglUtils.alphaBlending(true);
 		OpenglUtils.depthTest(false);
 		
 		shader.start();
 	}
 	
-	public void render(GUIText text) {
+	public static void render(GUIText text) {
 		float newX = (2 * text.getX()) + (-1 + text.getScaleX());
 		float newY = (-2 * text.getY()) + (1 - text.getScaleY());
 		shader.modelMatrix.loadMatrix(MathUtils.getModelMatrix(modelMatrix, newX, newY, 0, 0, 0, 0,
@@ -65,7 +56,7 @@ public class FontRenderer {
 		mesh.unbind(0);
 	}
 	
-	private void finish() {
+	public void finish() {
 		shader.stop();
 		
 		OpenglUtils.alphaBlending(false);

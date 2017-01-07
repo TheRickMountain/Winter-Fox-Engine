@@ -7,7 +7,6 @@ import org.lwjgl.opengl.GL11;
 
 import com.wfe.core.Camera;
 import com.wfe.ecs.StaticEntity;
-import com.wfe.font.FontType;
 import com.wfe.graph.Mesh;
 import com.wfe.gui.GUIText;
 import com.wfe.gui.GUITexture;
@@ -37,13 +36,18 @@ public class RenderEngine {
 	}
 	
 	public void render(Map<Mesh, List<StaticEntity>> entities, 
-			Map<FontType, List<GUIText>> texts, List<GUITexture> textures, GUIManager guiManager) {
+			List<GUIText> texts, List<GUITexture> textures, GUIManager guiManager) {
 		staticEntityRenderer.render(entities);
+		
 		guiRenderer.prepare();
 		guiRenderer.render(textures);
 		guiManager.render();
 		guiRenderer.finish();
+		
+		fontRenderer.prepare();
 		fontRenderer.render(texts);
+		guiManager.renderText();
+		fontRenderer.finish();
 	}
 
 	public static RenderEngine create(Camera camera) throws Exception {

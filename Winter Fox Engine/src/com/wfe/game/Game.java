@@ -1,6 +1,5 @@
 package com.wfe.game;
 
-import com.wfe.components.ColliderComponent;
 import com.wfe.components.PlayerControllerComponent;
 import com.wfe.core.Camera;
 import com.wfe.core.Display;
@@ -194,7 +193,7 @@ public class Game implements IGameLogic {
 			}
 		}
 		
-		Transformation pineTransform = new Transformation(90.5f, 0, 88.5f);
+		/*Transformation pineTransform = new Transformation(90.5f, 0, 88.5f);
 		pineTransform.setScale(0.4f);
 		StaticEntity pineBark = new StaticEntity(ResourceManager.getMesh("pine_bark"),
 				new Material(ResourceManager.getTexture("pine_bark")), pineTransform);
@@ -209,7 +208,7 @@ public class Game implements IGameLogic {
 				new Material(ResourceManager.getTexture("willow")).setHasTransparency(true), 
 				new Transformation(86.5f, 0, 90.5f));
 		willow.addComponent(new ColliderComponent(0.5f, 1, 0.5f, willow.getTransform()));
-		World.getWorld().addEntityToTile(willow);
+		World.getWorld().addEntityToTile(willow);*/
 	}
 	
 	@Override

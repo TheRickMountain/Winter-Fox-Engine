@@ -22,6 +22,22 @@ public class GUIManager {
 		inventory = new Inventory();
 		equipment = new Equipment();
 		status = new PlayerStatus();
+		
+		inventory.addItem(ItemDatabase.items.get(ItemDatabase.BANANA));
+		inventory.addItem(ItemDatabase.items.get(ItemDatabase.COOKIE));
+		inventory.addItem(ItemDatabase.items.get(ItemDatabase.COOKIE));
+		inventory.addItem(ItemDatabase.items.get(ItemDatabase.SHROOM));
+		inventory.addItem(ItemDatabase.items.get(ItemDatabase.AXE));
+		inventory.addItem(ItemDatabase.items.get(ItemDatabase.WALL));
+		inventory.addItem(ItemDatabase.items.get(ItemDatabase.CROSS_WALL));
+		inventory.addItem(ItemDatabase.items.get(ItemDatabase.DOOR_WALL));
+		inventory.addItem(ItemDatabase.items.get(ItemDatabase.WINDOW_WALL));
+		inventory.addItem(ItemDatabase.items.get(ItemDatabase.APPLE));
+		inventory.addItem(ItemDatabase.items.get(ItemDatabase.APPLE));
+		inventory.addItem(ItemDatabase.items.get(ItemDatabase.APPLE));
+		inventory.addItem(ItemDatabase.items.get(ItemDatabase.APPLE));
+		inventory.addItem(ItemDatabase.items.get(ItemDatabase.BUSH));
+		inventory.addItem(ItemDatabase.items.get(ItemDatabase.HOE));
 	}
 	
 	public void update(float dt) {
@@ -40,6 +56,10 @@ public class GUIManager {
 		if(draggedItem != null) {
 			GUIRenderer.render(draggedItem.icon, Mouse.getX() - 25, Mouse.getY() - 25, 0, 50, 50, false);
 		}
+	}
+	
+	public void renderText() {
+		inventory.renderText();
 	}
 	
 	public static GUIManager getGUI() {
