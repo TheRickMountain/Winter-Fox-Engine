@@ -74,6 +74,11 @@ public class TextureUtils {
 			GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_S, GL11.GL_REPEAT);
 			GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_T, GL11.GL_REPEAT);
 		}
+		
+		if(builder.getMaxLevel() >= 1) {
+			GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL12.GL_TEXTURE_MAX_LEVEL, builder.getMaxLevel());
+		}
+		
 		GL11.glBindTexture(GL11.GL_TEXTURE_2D, 0);
 		return texID;
 	}

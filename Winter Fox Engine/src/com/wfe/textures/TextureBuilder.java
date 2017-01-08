@@ -8,7 +8,8 @@ public class TextureBuilder {
 	private boolean mipmap = false;
 	private boolean anisotropic = true;
 	private boolean nearest = false;
-	private float lodBias = 0.0f;
+	private float lodBiasValue = 0.0f;
+	private int maxLevel = 0;
 	
 	private MyFile file;
 	
@@ -28,7 +29,7 @@ public class TextureBuilder {
 	}
 	
 	public TextureBuilder normalMipMap(float lodBias){
-		this.lodBias = lodBias;
+		this.lodBiasValue = lodBias;
 		this.mipmap = true;
 		this.anisotropic = false;
 		return this;
@@ -52,6 +53,15 @@ public class TextureBuilder {
 		return this;
 	}
 	
+	public TextureBuilder setMaxLevel(int maxLevel) {
+		this.maxLevel = maxLevel;
+		return this;
+	}
+	
+	public int getMaxLevel() {
+		return maxLevel;
+	}
+	
 	protected boolean isClampEdges() {
 		return clampEdges;
 	}
@@ -69,7 +79,7 @@ public class TextureBuilder {
 	}
 	
 	protected float getLodBias() {
-		return lodBias;
+		return lodBiasValue;
 	}
 	
 }
