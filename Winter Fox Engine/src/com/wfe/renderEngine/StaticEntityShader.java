@@ -23,15 +23,14 @@ public class StaticEntityShader extends ShaderProgram {
 	
 	private UniformSampler diffuseMap = new UniformSampler("diffuseMap");
 	protected UniformVec4 color = new UniformVec4("color");
-	protected UniformVec3 lightDirection = new UniformVec3("lightDirection");
+	protected UniformVec3 lightPosition = new UniformVec3("lightPosition");
 	protected UniformVec3 lightColor = new UniformVec3("lightColor");
 	protected UniformBoolean hasFakeLighting = new UniformBoolean("hasFakeLighting");
-	protected UniformVec3 ambientLight = new UniformVec3("ambientLight");
 	
 	public StaticEntityShader() {
 		super(VERTEX_SHADER, FRAGMENT_SHADER, "in_position", "in_textureCoords", "in_normal");
 		super.storeAllUniformLocations(projectionMatrix, viewMatrix, modelMatrix, numberOfRows,
-				offset, diffuseMap, color, lightDirection, lightColor, hasFakeLighting, ambientLight);
+				offset, diffuseMap, color, lightPosition, lightColor, hasFakeLighting);
 		connectTextureUnits();
 	}
 

@@ -66,9 +66,8 @@ public class Terrain {
 		}
 		
 		shader.viewMatrix.loadMatrix(camera.getViewMatrix());
-		shader.lightDirection.loadVec3(DirectionalLight.LIGHT_DIR);
+		shader.lightPosition.loadVec3(DirectionalLight.LIGHT_POSITION);
 		shader.lightColor.loadVec3(DirectionalLight.LIGHT_COLOR);
-		shader.ambientLight.loadVec3(DirectionalLight.AMBIENT_COLOR);
 		
 		spriteSheet.bind(0);
 		

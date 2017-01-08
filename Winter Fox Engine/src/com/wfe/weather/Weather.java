@@ -10,7 +10,7 @@ public class Weather {
 		new WeatherFrame(3000, new Vector3f(0, 0, 0.1f)),
 		new WeatherFrame(4000, new Vector3f(1.2f, 0.1f, 0.2f)),
 		new WeatherFrame(7500, new Vector3f(1, 1, 0.9f)),
-		new WeatherFrame(12000, new Vector3f(1.2f, 1.1f, 1.1f)),
+		new WeatherFrame(12000, new Vector3f(1.2f, 1.0f, 1.0f)),
 		new WeatherFrame(16500, new Vector3f(1, 1, 0.9f)),
 		new WeatherFrame(21000, new Vector3f(0.94f, 0.23f, 0)),
 		new WeatherFrame(23500, new Vector3f(0, 0, 0.1f)),

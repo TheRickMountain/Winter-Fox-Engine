@@ -6,10 +6,13 @@ in vec3 in_normal;
 
 out vec2 TextureCoords;
 out vec3 Normal;
+out vec3 ToLightVector;
 
 uniform mat4 projectionMatrix;
 uniform mat4 viewMatrix;
 uniform mat4 modelMatrix;
+
+uniform vec3 lightPosition;
 
 uniform int numberOfRows;
 uniform vec2 offset;
@@ -24,4 +27,5 @@ void main()
         TextureCoords = (in_textureCoords / numberOfRows) + offset;
     }
 	Normal = (modelMatrix * vec4(in_normal, 0.0f)).xyz;
+	ToLightVector = lightPosition - worldPosition.xyz;
 }
