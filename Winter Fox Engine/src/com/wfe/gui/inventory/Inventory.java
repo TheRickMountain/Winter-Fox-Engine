@@ -168,8 +168,12 @@ public class Inventory {
 				}
 				return true;
 			} else if(slot.getItem().equals(item)) {
-				slot.setItemsAmount(slot.getItemsAmount() + amount);
-				return true;
+				if(slot.getItemsAmount() == item.stack) {
+					continue;
+				} else {
+					slot.setItemsAmount(slot.getItemsAmount() + amount);
+					return true;
+				}
 			}
 		}
 		
@@ -185,8 +189,12 @@ public class Inventory {
 				}
 				return true;
 			} else if(slot.getItem().equals(item)) {
-				slot.setItemsAmount(slot.getItemsAmount() + amount);
-				return true;
+				if(slot.getItemsAmount() == item.stack) {
+					continue;
+				} else {
+					slot.setItemsAmount(slot.getItemsAmount() + amount);
+					return true;
+				}
 			}
 		}
 		

@@ -33,7 +33,7 @@ public class GUIManager {
 		
 		inventory.addItem(ItemDatabase.items.get(ItemDatabase.BANANA), 120);
 		inventory.addItem(ItemDatabase.items.get(ItemDatabase.COOKIE), 2);
-		inventory.addItem(ItemDatabase.items.get(ItemDatabase.SHROOM), 120);
+		inventory.addItem(ItemDatabase.items.get(ItemDatabase.SHROOM), 198);
 		inventory.addItem(ItemDatabase.items.get(ItemDatabase.AXE), 4);
 		inventory.addItem(ItemDatabase.items.get(ItemDatabase.WALL), 204);
 		/*inventory.addItem(ItemDatabase.items.get(ItemDatabase.CROSS_WALL), 10);
