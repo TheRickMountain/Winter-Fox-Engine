@@ -178,7 +178,7 @@ public class World {
 	}
 	
 	public void updateWeather(float dt) {
-		time += 5;
+		time += 5 * dt;
 		if(time >= 24000) {
 			time = 0;
 		}

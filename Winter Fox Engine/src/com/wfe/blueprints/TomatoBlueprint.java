@@ -5,10 +5,10 @@ import com.wfe.ecs.StaticEntity;
 import com.wfe.ecs.Transformation;
 import com.wfe.graph.Material;
 
-public class BushBlueprint extends Blueprint {
+public class TomatoBlueprint extends Blueprint {
 
-	public BushBlueprint(Transformation transform) {
-		super(ResourceManager.getMesh("bush"), new Material(ResourceManager.getTexture("bush"))
+	public TomatoBlueprint(Transformation transform) {
+		super(ResourceManager.getMesh("tomato_plant"), new Material(ResourceManager.getTexture("tomato_plant"))
 				.setHasTransparency(true).setHasFakeLighting(true), transform);
 		transform.setScale(0.5f);
 	}

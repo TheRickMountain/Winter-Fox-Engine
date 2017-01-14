@@ -159,7 +159,13 @@ public class Inventory {
 		for(Slot slot : quickSlots) {
 			if(!slot.isHasItem()) {
 				slot.addItem(item);
-				slot.setItemsAmount(amount);
+				if(amount > item.stack) {
+					slot.setItemsAmount(item.stack);
+					amount -= item.stack;
+					continue;
+				} else {
+					slot.setItemsAmount(amount);
+				}
 				return true;
 			} else if(slot.getItem().equals(item)) {
 				slot.setItemsAmount(slot.getItemsAmount() + amount);
@@ -170,7 +176,13 @@ public class Inventory {
 		for(Slot slot : inventorySlots) {
 			if(!slot.isHasItem()) {
 				slot.addItem(item);
-				slot.setItemsAmount(amount);
+				if(amount > item.stack) {
+					slot.setItemsAmount(item.stack);
+					amount -= item.stack;
+					continue;
+				} else {
+					slot.setItemsAmount(amount);
+				}
 				return true;
 			} else if(slot.getItem().equals(item)) {
 				slot.setItemsAmount(slot.getItemsAmount() + amount);

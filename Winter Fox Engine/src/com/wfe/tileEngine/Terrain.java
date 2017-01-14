@@ -34,7 +34,7 @@ public class Terrain {
 	
 	public void init() throws Exception {
 		spriteSheet = Texture.newTexture(new MyFile("textures/terrain.png"))
-				.normalMipMap().clampEdges().anisotropic().nearestFiltering().setMaxLevel(8).create();
+				.normalMipMap().clampEdges().anisotropic().nearestFiltering().create();
 		
 		for(int x = 0; x < sizeX; x++) {
 			for(int y = 0; y < sizeZ; y++) {
@@ -49,7 +49,12 @@ public class Terrain {
 	
 	public void update(float x, float z) {
 		for(Chunk chunk : chunks) {
-			chunk.setVisible(true);
+			float distance = MathUtils.getDistance(x, z, chunk.getPosX(), chunk.getPosY());
+			if(distance >= 48) {
+				chunk.setVisible(false);
+			} else {
+				chunk.setVisible(true);
+			}
 
 		}
 	}

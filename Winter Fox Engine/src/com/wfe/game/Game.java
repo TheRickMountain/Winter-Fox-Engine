@@ -43,6 +43,7 @@ public class Game implements IGameLogic {
 				.create());
 			
 		ResourceManager.loadTexture("banana_ui", Texture.newTexture(new MyFile("gui/items/banana.png")).create());
+		ResourceManager.loadTexture("fiber_ui", Texture.newTexture(new MyFile("gui/items/fiber.png")).create());
 		ResourceManager.loadTexture("cookie_ui", Texture.newTexture(new MyFile("gui/items/cookie.png")).create());
 		ResourceManager.loadTexture("apple_ui", Texture.newTexture(new MyFile("gui/items/apple.png")).create());
 		ResourceManager.loadTexture("wall_ui", Texture.newTexture(new MyFile("gui/items/wall.png")).create());
@@ -105,6 +106,20 @@ public class Game implements IGameLogic {
 				.create());
 		
 		ResourceManager.loadMesh("bush", OBJLoader.loadMesh("/entity/bush/model.obj"));
+		/*** *** ***/
+		
+		/*** Tomato ***/
+		ResourceManager.loadTexture("tomato_plant", Texture.newTexture(new MyFile("entity/tomatoe/diffuse.png"))
+				.normalMipMap(-0.4f)
+				.create());
+		
+		ResourceManager.loadMesh("tomato_plant", OBJLoader.loadMesh("/entity/tomatoe/model.obj"));
+		
+		ResourceManager.loadTexture("tomatoes", Texture.newTexture(new MyFile("entity/tomatoe/tomatoes.png"))
+				.normalMipMap(-0.4f)
+				.create());
+		
+		ResourceManager.loadMesh("tomatoes", OBJLoader.loadMesh("/entity/tomatoe/tomatoes.obj"));
 		/*** *** ***/
 		
 		/*** Amanita ***/
@@ -184,13 +199,13 @@ public class Game implements IGameLogic {
 						case 5:
 						case 8:
 						case 9:
-							grass.setTextureIndex(MyRandom.nextInt(0, 1, 2));
+							grass.setTextureIndex(MyRandom.nextInt(3, 4, 5, 6));
 							break;
 						case 6:
 						case 7:
 						case 10:
 						case 11:
-							grass.setTextureIndex(MyRandom.nextInt(3, 4, 5));
+							grass.setTextureIndex(MyRandom.nextInt(3, 4, 5, 6));
 							break;
 					}
 						

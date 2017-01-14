@@ -1,5 +1,6 @@
 package com.wfe.entities;
 
+import com.wfe.components.BoundingBox;
 import com.wfe.components.GatherableComponent;
 import com.wfe.core.ResourceManager;
 import com.wfe.ecs.StaticEntity;
@@ -12,7 +13,8 @@ public class Shroom extends StaticEntity {
 	public Shroom(StaticEntity player, Transformation transform) {
 		super(ResourceManager.getMesh("shroom"), 
 				new Material(ResourceManager.getTexture("shroom")), transform);
-		addComponent(new GatherableComponent(ItemDatabase.SHROOM, player, getTransform()));
+		addComponent(new GatherableComponent(ItemDatabase.SHROOM, player, getTransform(),
+				new BoundingBox(0.5f, 0.5f, 0.5f, getTransform())));
 		transform.setScale(0.5f);
 	}
 

@@ -5,6 +5,7 @@ public enum ItemType {
 	FOOD,
 	BUILDING,
 	TOOL,
-	WEAPON
+	WEAPON,
+	ITEM
 
 }
