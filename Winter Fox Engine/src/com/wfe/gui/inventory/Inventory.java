@@ -63,8 +63,10 @@ public class Inventory {
 				updateSlot(slot, false);
 			}
 			
-			for(Slot slot : inventorySlots) {
-				updateSlot(slot, false);
+			if(showInventory) {
+				for(Slot slot : inventorySlots) {
+					updateSlot(slot, false);
+				}
 			}
 		}
 		
@@ -74,8 +76,10 @@ public class Inventory {
 				updateSlot(slot, true);
 			}
 			
-			for(Slot slot : inventorySlots) {
-				updateSlot(slot, true);
+			if(showInventory) {
+				for(Slot slot : inventorySlots) {
+					updateSlot(slot, true);
+				}
 			}
 		}
 		
@@ -217,9 +221,28 @@ public class Inventory {
 						}
 						
 						if(GUIManager.draggedItem.equals(slot.getItem())) {
-							slot.setItemsAmount(slot.getItemsAmount() + GUIManager.getGUI().getDraggedItemAmount());
-							GUIManager.draggedItem = null;
-							GUIManager.getGUI().setDraggedItemAmount(0);
+							if(slot.getItemsAmount() == slot.getItem().stack) {
+								int draggedItemAmount = GUIManager.getGUI().getDraggedItemAmount();
+								GUIManager.getGUI().setDraggedItemAmount(slot.getItemsAmount());
+								slot.setItemsAmount(draggedItemAmount);
+							} else {
+								int sum = slot.getItemsAmount() + GUIManager.getGUI().getDraggedItemAmount();
+								if(sum == GUIManager.draggedItem.stack) {
+									slot.setItemsAmount(sum);
+									GUIManager.draggedItem = null;
+									GUIManager.getGUI().setDraggedItemAmount(0);
+								} else {
+									if(sum > GUIManager.draggedItem.stack) {
+										int surplus = sum % GUIManager.draggedItem.stack;
+										slot.setItemsAmount(GUIManager.draggedItem.stack);
+										GUIManager.getGUI().setDraggedItemAmount(surplus);
+									} else {
+										slot.setItemsAmount(sum);
+										GUIManager.draggedItem = null;
+										GUIManager.getGUI().setDraggedItemAmount(0);
+									}
+								}
+							}
 						} else {
 							Item tempItem = GUIManager.draggedItem;
 							int tempItemAmount = GUIManager.getGUI().getDraggedItemAmount();

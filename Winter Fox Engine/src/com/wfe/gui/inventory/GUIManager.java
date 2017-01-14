@@ -31,11 +31,11 @@ public class GUIManager {
 		draggedItemAmountText = new GUIText("", 1.3f, FontRenderer.font, 0, 0, 1f, false);
 		draggedItemAmountText.setColor(1.0f, 1.0f, 1.0f);
 		
-		inventory.addItem(ItemDatabase.items.get(ItemDatabase.BANANA), 120);
-		inventory.addItem(ItemDatabase.items.get(ItemDatabase.COOKIE), 2);
-		inventory.addItem(ItemDatabase.items.get(ItemDatabase.SHROOM), 198);
-		inventory.addItem(ItemDatabase.items.get(ItemDatabase.AXE), 4);
-		inventory.addItem(ItemDatabase.items.get(ItemDatabase.WALL), 204);
+		inventory.addItem(ItemDatabase.items.get(ItemDatabase.BANANA), 15);
+		inventory.addItem(ItemDatabase.items.get(ItemDatabase.COOKIE), 25);
+		inventory.addItem(ItemDatabase.items.get(ItemDatabase.SHROOM), 68);
+		inventory.addItem(ItemDatabase.items.get(ItemDatabase.AXE), 3);
+		inventory.addItem(ItemDatabase.items.get(ItemDatabase.WALL), 40);
 		/*inventory.addItem(ItemDatabase.items.get(ItemDatabase.CROSS_WALL), 10);
 		inventory.addItem(ItemDatabase.items.get(ItemDatabase.DOOR_WALL), 10);
 		inventory.addItem(ItemDatabase.items.get(ItemDatabase.WINDOW_WALL), 10);
