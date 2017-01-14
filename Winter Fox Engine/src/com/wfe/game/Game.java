@@ -7,9 +7,11 @@ import com.wfe.core.ResourceManager;
 import com.wfe.ecs.Transformation;
 import com.wfe.entities.Amanita;
 import com.wfe.entities.Fern;
+import com.wfe.entities.Flint;
 import com.wfe.entities.Grass;
 import com.wfe.entities.Player;
 import com.wfe.entities.Shroom;
+import com.wfe.entities.Stick;
 import com.wfe.graph.OBJLoader;
 import com.wfe.gui.GUIText;
 import com.wfe.math.Vector3f;
@@ -132,6 +134,26 @@ public class Game implements IGameLogic {
 		ResourceManager.loadMesh("amanita", OBJLoader.loadMesh("/entity/amanita/model.obj"));
 		/*** *** ***/
 		
+		/*** Flint ***/
+		ResourceManager.loadTexture("flint_ui", Texture.newTexture(new MyFile("entity/flint/icon.png"))
+				.create());
+		ResourceManager.loadTexture("flint", Texture.newTexture(new MyFile("entity/flint/diffuse.png"))
+				.normalMipMap(-0.4f)
+				.create());
+		
+		ResourceManager.loadMesh("flint", OBJLoader.loadMesh("/entity/flint/model.obj"));
+		/*** *** ***/
+		
+		/*** Stick ***/
+		ResourceManager.loadTexture("stick_ui", Texture.newTexture(new MyFile("entity/stick/icon.png"))
+				.create());
+		ResourceManager.loadTexture("stick", Texture.newTexture(new MyFile("entity/stick/diffuse.png"))
+				.normalMipMap(-0.4f)
+				.create());
+		
+		ResourceManager.loadMesh("stick", OBJLoader.loadMesh("/entity/stick/model.obj"));
+		/*** *** ***/
+		
 		/*** Player ***/
 		ResourceManager.loadTexture("player", Texture.newTexture(new MyFile("entity/player/diffuse.png"))
 				.normalMipMap(-0.4f)
@@ -178,6 +200,10 @@ public class Game implements IGameLogic {
 		World.getWorld().addEntityToTile(new Grass(new Transformation(80, 0, 82)).setTextureIndex(0));
 		World.getWorld().addEntityToTile(new Grass(new Transformation(81, 0, 82)).setTextureIndex(1));
 		World.getWorld().addEntityToTile(new Grass(new Transformation(82, 0, 82)).setTextureIndex(2));
+		
+		World.getWorld().addEntityToTile(new Flint(player, new Transformation(80 + 0.5f, 0, 83 + 0.5f)));
+		World.getWorld().addEntityToTile(new Stick(player, new Transformation(81 + 0.5f, 0, 83 + 0.5f)));
+		World.getWorld().addEntityToTile(new Stick(player, new Transformation(82 + 0.5f, 0, 83 + 0.5f)));
 		
 		for(int i = 0; i < 100; i++) {		
 			Shroom shroom = new Shroom(player, new Transformation(MyRandom.nextInt(160) + 0.5f, 0, MyRandom.nextInt(160) + 0.5f));

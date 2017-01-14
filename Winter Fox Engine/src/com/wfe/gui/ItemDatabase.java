@@ -31,6 +31,8 @@ public class ItemDatabase {
 	public static final int AMANITA = 11;
 	public static final int HOE = 12;
 	public static final int FIBER = 13;
+	public static final int FLINT = 14;
+	public static final int STICK = 15;
 	
 	private ItemDatabase() {
 		items.add(new Item(BANANA, ResourceManager.getTexture("banana_ui"), "Banana", ItemType.FOOD, 15, 20));
@@ -52,6 +54,8 @@ public class ItemDatabase {
 		items.add(new Item(AMANITA, ResourceManager.getTexture("amanita_ui"), "Amanita", ItemType.FOOD, -10, 20));
 		items.add(new Item(HOE, ResourceManager.getTexture("hoe_ui"), "Hoe", ItemType.TOOL, 0, 1));
 		items.add(new Item(FIBER, ResourceManager.getTexture("fiber_ui"), "Fiber", ItemType.ITEM, 0, 40));
+		items.add(new Item(FLINT, ResourceManager.getTexture("flint_ui"), "Flint", ItemType.ITEM, 0, 40));
+		items.add(new Item(STICK, ResourceManager.getTexture("stick_ui"), "Stick", ItemType.ITEM, 0, 20));
 	}
 	
 	public static void create() {
