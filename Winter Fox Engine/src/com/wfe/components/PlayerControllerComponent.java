@@ -94,7 +94,7 @@ public class PlayerControllerComponent implements Component {
     	
     	camera.playerPosition.x = transform.x;
     	camera.playerPosition.z = transform.z;
-    	camera.playerPosition.y = 2.2f;
+    	camera.playerPosition.y = 1.1f;
 	}
 	
 	private void moveRelative(float xa, float za, float speed, float dt) {

@@ -29,7 +29,7 @@ public class Slot {
 	public void render() {
 		GUIRenderer.render(texture, x, y, 0, scaleX, scaleY, false);
 		if(hasItem) {
-			GUIRenderer.render(item.icon, x + 2.5f, y + 2.5f, 0, scaleX - 5, scaleY - 5, false);
+			GUIRenderer.render(item.icon, x + scaleX / 2, y + scaleY / 2, 0, scaleX + 5, scaleY + 5, true);
 		}
 	}
 	
@@ -122,7 +122,7 @@ public class Slot {
 	private void updateTextPosition() {
 		float tempX = 1.0f / Display.getWidth();
 		float tempY = 1.0f / Display.getHeight();
-		this.text.setPosition(tempX * (x + 5), tempY * y);
+		this.text.setPosition(tempX * x, tempY * (y - 10));
 	}
 	
 }

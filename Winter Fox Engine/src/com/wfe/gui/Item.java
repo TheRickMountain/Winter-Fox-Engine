@@ -21,6 +21,7 @@ public class Item {
 	public static final int FIBER = 13;
 	public static final int FLINT = 14;
 	public static final int STICK = 15;
+	public static final int ROPE = 16;
 	
 	public final int ID;
 	public final Texture icon;
@@ -29,6 +30,29 @@ public class Item {
 	public int starvation;
 	public Blueprint entityBlueprint;
 	public int stack;
+	public int[] recipe;
+	
+	public Item(int ID, Texture icon, String name, ItemType type, int starvation, int stack, int[] recipe) {
+		this.ID = ID;
+		this.name = name;
+		this.icon = icon;
+		this.type = type;
+		this.starvation = starvation;
+		this.entityBlueprint = null;
+		this.stack = stack;
+		this.recipe = recipe;
+	}
+	
+	public Item(int ID, Texture icon, String name, ItemType type, int starvation, Blueprint entity, int stack, int[] recipe) {
+		this.ID = ID;
+		this.name = name;
+		this.icon = icon;
+		this.type = type;
+		this.starvation = starvation;
+		this.entityBlueprint = entity;
+		this.stack = stack;
+		this.recipe = recipe;
+	}
 	
 	public Item(int ID, Texture icon, String name, ItemType type, int starvation, int stack) {
 		this.ID = ID;

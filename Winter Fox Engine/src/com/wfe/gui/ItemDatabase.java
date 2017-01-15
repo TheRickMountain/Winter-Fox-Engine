@@ -23,7 +23,8 @@ public class ItemDatabase {
 		items.add(new Item(Item.APPLE, ResourceManager.getTexture("apple_ui"), "Apple", ItemType.FOOD, 6, 20));
 		items.add(new Item(Item.WALL, ResourceManager.getTexture("wall_ui"), "Wall", ItemType.BUILDING, 0,
 				new WallBlueprint(new Transformation(0, 0, 0)), 20));
-		items.add(new Item(Item.AXE, ResourceManager.getTexture("axe_ui"), "Axe", ItemType.WEAPON, 0, 1));
+		items.add(new Item(Item.AXE, ResourceManager.getTexture("axe_ui"), "Axe", ItemType.WEAPON, 0, 1, 
+				new int[] {Item.ROPE, Item.FLINT, Item.STICK}));
 		items.add(new Item(Item.SHROOM, ResourceManager.getTexture("shroom_ui"), "Shroom", ItemType.FOOD, 5, 20));
 		items.add(new Item(Item.BREAD, ResourceManager.getTexture("bread_ui"), "Bread", ItemType.FOOD, 10, 20));
 		items.add(new Item(Item.CROSS_WALL, ResourceManager.getTexture("cross_wall_ui"), "Cross Wall", ItemType.BUILDING, 0,
@@ -39,6 +40,8 @@ public class ItemDatabase {
 		items.add(new Item(Item.FIBER, ResourceManager.getTexture("fiber_ui"), "Fiber", ItemType.ITEM, 0, 40));
 		items.add(new Item(Item.FLINT, ResourceManager.getTexture("flint_ui"), "Flint", ItemType.ITEM, 0, 40));
 		items.add(new Item(Item.STICK, ResourceManager.getTexture("stick_ui"), "Stick", ItemType.ITEM, 0, 20));
+		items.add(new Item(Item.ROPE, ResourceManager.getTexture("rope_ui"), "Rope", ItemType.ITEM, 0, 10,
+				new int[] {Item.FIBER, Item.FIBER, Item.FIBER}));
 	}
 	
 	public static void create() {

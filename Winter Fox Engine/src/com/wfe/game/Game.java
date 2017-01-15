@@ -5,7 +5,6 @@ import com.wfe.core.Display;
 import com.wfe.core.IGameLogic;
 import com.wfe.core.ResourceManager;
 import com.wfe.ecs.Transformation;
-import com.wfe.entities.Amanita;
 import com.wfe.entities.Fern;
 import com.wfe.entities.Flint;
 import com.wfe.entities.Grass;
@@ -48,6 +47,7 @@ public class Game implements IGameLogic {
 				.create());
 			
 		ResourceManager.loadTexture("banana_ui", Texture.newTexture(new MyFile("gui/items/banana.png")).create());
+		ResourceManager.loadTexture("rope_ui", Texture.newTexture(new MyFile("gui/items/rope.png")).create());
 		ResourceManager.loadTexture("fiber_ui", Texture.newTexture(new MyFile("gui/items/fiber.png")).create());
 		ResourceManager.loadTexture("cookie_ui", Texture.newTexture(new MyFile("gui/items/cookie.png")).create());
 		ResourceManager.loadTexture("apple_ui", Texture.newTexture(new MyFile("gui/items/apple.png")).create());
@@ -60,6 +60,7 @@ public class Game implements IGameLogic {
 		ResourceManager.loadTexture("bread_ui", Texture.newTexture(new MyFile("gui/items/bread.png")).create());
 		ResourceManager.loadTexture("bush_ui", Texture.newTexture(new MyFile("gui/items/bush.png")).create());
 		ResourceManager.loadTexture("slot_ui", Texture.newTexture(new MyFile("gui/slot.png")).create());
+		ResourceManager.loadTexture("sack_ui", Texture.newTexture(new MyFile("gui/sack.png")).create());
 		ResourceManager.loadTexture("list_ui", Texture.newTexture(new MyFile("gui/list.png")).create());
 		ResourceManager.loadTexture("hoe_ui", Texture.newTexture(new MyFile("gui/items/hoe.png")).create());
 		ResourceManager.loadTexture("background_frame_ui", Texture.newTexture(new MyFile("gui/background_frame.png")).create());
@@ -195,27 +196,15 @@ public class Game implements IGameLogic {
 				FontRenderer.font, 0.875f, 0.0f, 0.125f, true);
 		text.setColor(1, 1, 1);
 		World.getWorld().addGUIText(text);
-			
-		World.getWorld().addEntityToTile(new Shroom(player, new Transformation(80 + 0.5f, 0, 80 + 0.5f)));
-		World.getWorld().addEntityToTile(new Shroom(player, new Transformation(81 + 0.5f, 0, 80 + 0.5f)));
-		World.getWorld().addEntityToTile(new Shroom(player, new Transformation(82 + 0.5f, 0, 80 + 0.5f)));
 		
-		World.getWorld().addEntityToTile(new Amanita(player, new Transformation(80 + 0.5f, 0, 81 + 0.5f)));
-		World.getWorld().addEntityToTile(new Amanita(player, new Transformation(81 + 0.5f, 0, 81 + 0.5f)));
-		World.getWorld().addEntityToTile(new Amanita(player, new Transformation(82 + 0.5f, 0, 81 + 0.5f)));
-		
-		World.getWorld().addEntityToTile(new Grass(new Transformation(80, 0, 82)).setTextureIndex(0));
-		World.getWorld().addEntityToTile(new Grass(new Transformation(81, 0, 82)).setTextureIndex(1));
-		World.getWorld().addEntityToTile(new Grass(new Transformation(82, 0, 82)).setTextureIndex(2));
-		
-		World.getWorld().addEntityToTile(new Flint(player, new Transformation(80 + 0.5f, 0, 83 + 0.5f)));
-		World.getWorld().addEntityToTile(new Stick(player, new Transformation(81 + 0.5f, 0, 83 + 0.5f)));
-		World.getWorld().addEntityToTile(new Stick(player, new Transformation(82 + 0.5f, 0, 83 + 0.5f)));
+		World.getWorld().addEntityToTile(new Flint(player, new Transformation(80 + 0.5f, 0, 82 + 0.5f)));
+		World.getWorld().addEntityToTile(new Stick(player, new Transformation(81 + 0.5f, 0, 82 + 0.5f)));
+		World.getWorld().addEntityToTile(new Stick(player, new Transformation(82 + 0.5f, 0, 82 + 0.5f)));
 		
 		World.getWorld().addEntityToTile(new Rock(player, new Transformation(80 + 0.5f, 0, 84 + 0.5f)));
-		World.getWorld().addEntityToTile(new Wheat(new Transformation(80 + 0.5f, 0, 84 + 0.5f)));
-		World.getWorld().addEntityToTile(new Wheat(new Transformation(81 + 0.5f, 0, 84 + 0.5f)));
-		World.getWorld().addEntityToTile(new Wheat(new Transformation(82 + 0.5f, 0, 84 + 0.5f)));
+		World.getWorld().addEntityToTile(new Wheat(new Transformation(80 + 0.5f, 0, 83 + 0.5f)));
+		World.getWorld().addEntityToTile(new Wheat(new Transformation(81 + 0.5f, 0, 83 + 0.5f)));
+		World.getWorld().addEntityToTile(new Wheat(new Transformation(82 + 0.5f, 0, 83 + 0.5f)));
 		
 		for(int i = 0; i < 100; i++) {		
 			Shroom shroom = new Shroom(player, new Transformation(MyRandom.nextInt(160) + 0.5f, 0, MyRandom.nextInt(160) + 0.5f));
@@ -230,7 +219,7 @@ public class Game implements IGameLogic {
 			for(int j = 60; j < 120; j++) {
 				int send = MyRandom.nextInt(5);
 				if(send == 1) {
-					Grass grass = new Grass(new Transformation(i, 0, j));
+					Grass grass = new Grass(player, new Transformation(i, 0, j));
 					int tileType = World.getWorld().getTile(i, j);
 					switch (tileType) {
 						case 4:

@@ -7,6 +7,7 @@ import com.wfe.core.Display;
 import com.wfe.core.ResourceManager;
 import com.wfe.ecs.StaticEntity;
 import com.wfe.game.World;
+import com.wfe.gui.GUITexture;
 import com.wfe.gui.Item;
 import com.wfe.gui.ItemType;
 import com.wfe.gui.Slot;
@@ -14,16 +15,21 @@ import com.wfe.input.Key;
 import com.wfe.input.Keyboard;
 import com.wfe.input.Mouse;
 import com.wfe.math.Vector3f;
+import com.wfe.renderEngine.GUIRenderer;
 import com.wfe.textures.Texture;
 import com.wfe.utils.MousePicker;
 
 
 public class Inventory {
 	
-	private int slotsX = 8;
-	private int slotsY = 4;
+	private int quickSlotsAmount = 8;
+	
+	private int inventorySlotsX = 4;
+	private int inventorySlotsY = 5;
 	
 	private int slotSize = 50;
+	
+	private int offsetBetweenSlots = 5;
 	
 	private Texture slotTexture = ResourceManager.getTexture("slot_ui");
 	private List<Slot> slots = new ArrayList<Slot>();
@@ -33,20 +39,25 @@ public class Inventory {
 
 	private boolean showInventory = false;
 	
+	private GUITexture button;
+	
 	// Building
 	private StaticEntity currentBuildingEntity;
 	private int buildingEntityRotation;
 	
 	public Inventory() {
-		for(int i = 0; i < slotsX * slotsY; i++) {
-			slots.add(new Slot(0, 0, slotSize, slotSize, slotTexture));
-			
-			if(i >= 24) {
-				quickSlots.add(slots.get(i));
-			} else {
-				inventorySlots.add(slots.get(i));
-			}
+		for(int i = 0; i < quickSlotsAmount; i++) {
+			quickSlots.add(new Slot(0, 0, slotSize, slotSize, slotTexture));
+			slots.add(quickSlots.get(i));
 		}
+		
+		for(int i = 0; i < inventorySlotsX * inventorySlotsY; i++) {
+			inventorySlots.add(new Slot(0, 0, slotSize, slotSize, slotTexture));
+			slots.add(inventorySlots.get(i));
+		}
+		
+		button = new GUITexture(ResourceManager.getTexture("sack_ui"));
+		button.setScale(55, 55);
 		
 		updatePosition();
 	}
@@ -66,6 +77,10 @@ public class Inventory {
 				for(Slot slot : inventorySlots) {
 					updateSlot(slot, false);
 				}
+			}
+			
+			if(button.isMouseOvered()) {
+				showInventory = !showInventory;
 			}
 		}
 		
@@ -135,7 +150,7 @@ public class Inventory {
 	}
 	
 	public void render() {
-		if(showInventory) {
+		if(showInventory) {			
 			for(Slot slot : inventorySlots) {
 				slot.render();
 			}
@@ -144,6 +159,8 @@ public class Inventory {
 		for(Slot slot : quickSlots) {
 			slot.render();
 		}
+		
+		GUIRenderer.render(button);
 	}
 	
 	public void renderText() {
@@ -159,28 +176,7 @@ public class Inventory {
 	}
 	
 	public boolean addItem(Item item, int amount) {
-		for(Slot slot : quickSlots) {
-			if(!slot.isHasItem()) {
-				slot.addItem(item);
-				if(amount > item.stack) {
-					slot.setItemsAmount(item.stack);
-					amount -= item.stack;
-					continue;
-				} else {
-					slot.setItemsAmount(amount);
-				}
-				return true;
-			} else if(slot.getItem().equals(item)) {
-				if(slot.getItemsAmount() == item.stack) {
-					continue;
-				} else {
-					slot.setItemsAmount(slot.getItemsAmount() + amount);
-					return true;
-				}
-			}
-		}
-		
-		for(Slot slot : inventorySlots) {
+		for(Slot slot : slots) {
 			if(!slot.isHasItem()) {
 				slot.addItem(item);
 				if(amount > item.stack) {
@@ -202,6 +198,24 @@ public class Inventory {
 		}
 		
 		return false;
+	}
+	
+	public void removeItem(Item item, int amount) {
+		for(Slot slot : slots) {
+			if(slot.isHasItem()) {
+				if(slot.getItem().equals(item)) {
+					if(slot.getItemsAmount() == amount) {
+						slot.removeItem();
+					} else if(slot.getItemsAmount() > amount) {
+						slot.setItemsAmount(slot.getItemsAmount() - amount);
+					} else {
+						amount -= slot.getItemsAmount();
+						slot.removeItem();
+						continue;
+					}
+				}
+			}
+		}
 	}
 	
 	private void updateSlot(Slot slot, boolean use) {
@@ -294,28 +308,29 @@ public class Inventory {
 	}
 
 	private void updatePosition() {
-		int totalSlotsXLength = slotsX * slotSize;
+		for(int i = 0; i < quickSlotsAmount; i++){
+			quickSlots.get(i).setPosition(
+					(Display.getWidth() / 2) - (4 * (slotSize + offsetBetweenSlots)) + (i * (slotSize + offsetBetweenSlots)), 
+					Display.getHeight() - slotSize);
+		}
+		
 		int countX = 0;
 		int countY = 0;
-		int offsetBetweenSlots = 0;
-		for(int i = 0; i < slotsX * slotsY; i++) {
-			int xPos = (Display.getWidth() / 2) - (totalSlotsXLength / 2);
-			int yPos = Display.getHeight() - ((slotsY * slotSize) + slotSize);
-			slots.get(i).setPosition(
-					xPos + (countX * slotSize), 
-					yPos + (countY * slotSize + offsetBetweenSlots));
-			slots.get(i).setX(xPos + (countX * slotSize));
-			slots.get(i).setY(yPos + (countY * slotSize + offsetBetweenSlots));
+		for(int i = 0; i < inventorySlotsX * inventorySlotsY; i++) {
+			float posX = (Display.getWidth() - (inventorySlotsX * (slotSize + 5)) - button.getScaleX()) + (countX * (slotSize + offsetBetweenSlots));
+			float posY = (Display.getHeight() / 3) + (countY * (slotSize + offsetBetweenSlots));
+			inventorySlots.get(i).setPosition(posX, posY);
 			
 			countX++;
-			if(countX >= 8) {
+			
+			if((countX != 0) && (countX % inventorySlotsX == 0)) {
 				countX = 0;
 				countY++;
-				if(countY == 3) {
-					offsetBetweenSlots = 50;
-				}
 			}
 		}
+		
+		button.setPosition(Display.getWidth() - button.getScaleX(), Display.getHeight() / 3);
+		
 	}
 	
 	public int getItemAmount(int id) {

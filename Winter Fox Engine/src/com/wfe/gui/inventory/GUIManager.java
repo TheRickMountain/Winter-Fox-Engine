@@ -33,17 +33,20 @@ public class GUIManager {
 		draggedItemAmountText.setColor(1.0f, 1.0f, 1.0f);
 		
 		inventory.addItem(ItemDatabase.items.get(Item.BANANA), 15);
-		inventory.addItem(ItemDatabase.items.get(Item.COOKIE), 25);
-		inventory.addItem(ItemDatabase.items.get(Item.SHROOM), 68);
+		//inventory.addItem(ItemDatabase.items.get(Item.COOKIE), 25);
+		//inventory.addItem(ItemDatabase.items.get(Item.SHROOM), 68);
 		inventory.addItem(ItemDatabase.items.get(Item.AXE), 3);
-		inventory.addItem(ItemDatabase.items.get(Item.WALL), 40);
-		/*inventory.addItem(ItemDatabase.items.get(Item.CROSS_WALL), 10);
-		inventory.addItem(ItemDatabase.items.get(Item.DOOR_WALL), 10);
-		inventory.addItem(ItemDatabase.items.get(Item.WINDOW_WALL), 10);
-		inventory.addItem(ItemDatabase.items.get(Item.APPLE), 4);
-		inventory.addItem(ItemDatabase.items.get(Item.BUSH), 15);*/
-		inventory.addItem(ItemDatabase.items.get(Item.HOE), 1);
-		inventory.addItem(ItemDatabase.items.get(Item.FIBER), 5);
+		inventory.addItem(ItemDatabase.items.get(Item.ROPE), 2);
+		//inventory.addItem(ItemDatabase.items.get(Item.WALL), 40);
+		//inventory.addItem(ItemDatabase.items.get(Item.CROSS_WALL), 10);
+		//inventory.addItem(ItemDatabase.items.get(Item.DOOR_WALL), 10);
+		//inventory.addItem(ItemDatabase.items.get(Item.WINDOW_WALL), 10);
+		//inventory.addItem(ItemDatabase.items.get(Item.APPLE), 4);
+		//inventory.addItem(ItemDatabase.items.get(Item.BUSH), 15);
+		//inventory.addItem(ItemDatabase.items.get(Item.HOE), 1);
+		/*inventory.addItem(ItemDatabase.items.get(Item.FIBER), 3);
+		inventory.addItem(ItemDatabase.items.get(Item.STICK), 1);
+		inventory.addItem(ItemDatabase.items.get(Item.FLINT), 1);*/
 	}
 	
 	public void update(float dt) {
@@ -62,7 +65,7 @@ public class GUIManager {
 		status.render();
 		
 		if(draggedItem != null) {
-			GUIRenderer.render(draggedItem.icon, Mouse.getX() - 25, Mouse.getY() - 25, 0, 50, 50, false);
+			GUIRenderer.render(draggedItem.icon, Mouse.getX() - 25, Mouse.getY() - 25, 0, 55, 55, false);
 		}
 	}
 	
@@ -74,7 +77,7 @@ public class GUIManager {
 			if(draggedItemAmount > 1){
 				draggedItemAmountText.setPosition(
 						1.0f / Display.getWidth() * (Mouse.getX() - 25), 
-						1.0f / Display.getHeight() * (Mouse.getY() - 25));
+						1.0f / Display.getHeight() * (Mouse.getY() - 35));
 				FontRenderer.render(draggedItemAmountText);
 			}
 		}

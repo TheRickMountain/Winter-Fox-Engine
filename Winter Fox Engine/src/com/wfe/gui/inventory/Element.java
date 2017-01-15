@@ -38,7 +38,7 @@ public class Element {
 	
 	public void render() {
 		GUIRenderer.render(texture, posX, posY, 0, scaleX, scaleY, false);
-		GUIRenderer.render(icon, posX + 5f, posY + 5f, 0, 40, 40, false);
+		GUIRenderer.render(icon, posX + 5f, posY + 5f, 0, 30, 30, false);
 	}
 	
 	public void renderText() {
@@ -52,6 +52,14 @@ public class Element {
 	public boolean isMouseOvered() {
 		return Mouse.getX() > posX && Mouse.getX() < posX + scaleX &&
 				Mouse.getY() > posY && Mouse.getY() < posY + scaleY;
+	}
+	
+	public void setPosition(float x, float y) {
+		this.posX = x;
+		this.posY = y;
+		this.text.setPosition(
+				(1.0f / Display.getWidth()) * (posX + 50), 
+				(1.0f / Display.getHeight()) * (posY + (scaleY / 3)));
 	}
 
 }

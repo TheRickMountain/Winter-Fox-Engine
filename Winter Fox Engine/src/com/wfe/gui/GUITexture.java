@@ -117,8 +117,13 @@ public class GUITexture {
 	}
 	
 	public boolean isMouseOvered() {
-		return Mouse.getX() > x - scaleX / 2 && Mouse.getX() < x + scaleX / 2 &&
-				Mouse.getY() > y - scaleX / 2 && Mouse.getY() < y + scaleY / 2;
+		if(centered) {
+			return Mouse.getX() > x - scaleX / 2 && Mouse.getX() < x + scaleX / 2 &&
+					Mouse.getY() > y - scaleX / 2 && Mouse.getY() < y + scaleY / 2;
+		} else {
+			return Mouse.getX() > x && Mouse.getX() < x + scaleX &&
+					Mouse.getY() > y && Mouse.getY() < y + scaleY;
+		}
 	}
 
 	public boolean isSolidColor() {
