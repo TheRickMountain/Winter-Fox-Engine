@@ -8,7 +8,6 @@ import com.wfe.core.ResourceManager;
 import com.wfe.ecs.StaticEntity;
 import com.wfe.game.World;
 import com.wfe.gui.Item;
-import com.wfe.gui.ItemDatabase;
 import com.wfe.gui.ItemType;
 import com.wfe.gui.Slot;
 import com.wfe.input.Key;
@@ -128,7 +127,7 @@ public class Inventory {
 		
 		if(Mouse.isButtonDown(1)) {
 			if(!Mouse.isActiveInGUI()) {
-				if(GUIManager.getGUI().equipment.getHandSlotItemID() == ItemDatabase.HOE) {
+				if(GUIManager.getGUI().equipment.getHandSlotItemID() == Item.HOE) {
 					World.getWorld().setTile(x, z, 3);
 				}
 			}
@@ -317,6 +316,18 @@ public class Inventory {
 				}
 			}
 		}
+	}
+	
+	public int getItemAmount(int id) {
+		int amount = 0;
+		for(Slot slot : slots) {
+			if(slot.isHasItem()) {
+				if(slot.getItem().ID == id) {
+					amount += slot.getItemsAmount();
+				}
+			}
+		}
+		return amount;
 	}
 		
 }

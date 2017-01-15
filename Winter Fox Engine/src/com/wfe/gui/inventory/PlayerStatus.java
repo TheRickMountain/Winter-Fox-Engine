@@ -1,8 +1,7 @@
-package com.wfe.gui;
+package com.wfe.gui.inventory;
 
 import com.wfe.core.ResourceManager;
-import com.wfe.input.Key;
-import com.wfe.input.Keyboard;
+import com.wfe.gui.StatusBar;
 import com.wfe.math.Vector3f;
 import com.wfe.utils.TimeUtil;
 
@@ -11,12 +10,15 @@ public class PlayerStatus {
 	private TimeUtil time1, time2;
 	public StatusBar healthBar;
 	public StatusBar hungerBar;
+	public StatusBar thirstBar;
 	
 	public PlayerStatus() {
 		healthBar = new StatusBar(
 				ResourceManager.getTexture("health_icon_ui"), new Vector3f(1.0f, 0.2f, 0.2f), 15, 10);
 		hungerBar = new StatusBar(
 				ResourceManager.getTexture("hunger_icon_ui"), new Vector3f(1.0f, 0.5f, 0.1f), 15, 35);
+		thirstBar = new StatusBar(
+				ResourceManager.getTexture("thirst_icon_ui"), new Vector3f(0.2f, 0.2f, 1.0f), 15, 60);
 		time1 = new TimeUtil();
 		time2 = new TimeUtil();
 	}
@@ -38,16 +40,13 @@ public class PlayerStatus {
 		
 		healthBar.update();
 		hungerBar.update();
-		
-		if(Keyboard.isKeyDown(Key.KEY_H)) {
-			healthBar.decrease(50);
-			hungerBar.decrease(25);
-		}
+		thirstBar.update();
 	}
 	
 	public void render() {
 		healthBar.render();
 		hungerBar.render();
+		thirstBar.render();
 	}
 
 }

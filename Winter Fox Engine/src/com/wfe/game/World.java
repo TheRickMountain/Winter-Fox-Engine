@@ -147,6 +147,12 @@ public class World {
 		}
 	}
 	
+	public void removeGUITextures(List<GUITexture> textures) {
+		for(int i = 0; i < textures.size(); i++) {
+			guiTextures.remove(textures.get(i));
+		}
+	}
+	
 	public void removeGUITexture(GUITexture texture) {
 		guiTextures.remove(texture);
 	}

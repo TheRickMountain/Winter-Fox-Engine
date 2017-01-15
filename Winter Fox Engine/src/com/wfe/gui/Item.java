@@ -5,6 +5,23 @@ import com.wfe.textures.Texture;
 
 public class Item {
 	
+	public static final int BANANA = 0;
+	public static final int COOKIE = 1;
+	public static final int APPLE = 2;
+	public static final int WALL = 3;
+	public static final int AXE = 4;
+	public static final int SHROOM = 5;
+	public static final int BREAD = 6;
+	public static final int CROSS_WALL = 7;
+	public static final int WINDOW_WALL = 8;
+	public static final int DOOR_WALL = 9;
+	public static final int BUSH = 10;
+	public static final int AMANITA = 11;
+	public static final int HOE = 12;
+	public static final int FIBER = 13;
+	public static final int FLINT = 14;
+	public static final int STICK = 15;
+	
 	public final int ID;
 	public final Texture icon;
 	public final String name;

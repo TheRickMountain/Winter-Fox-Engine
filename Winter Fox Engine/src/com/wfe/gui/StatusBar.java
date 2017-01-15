@@ -23,7 +23,7 @@ public class StatusBar {
 	private float screenSizeXPerPixel;
 	private float screenSizeYPerPixel;
 	
-	protected StatusBar(Texture iconTexture, Vector3f color, float posX, float posY) {
+	public StatusBar(Texture iconTexture, Vector3f color, float posX, float posY) {
 		this.x = posX;
 		this.y = posY;
 		line = new GUITexture(color, posX, posY, 0, 110, 15, false);
@@ -38,13 +38,13 @@ public class StatusBar {
 		spriteSizeOnePercent = line.getScaleX() / (float)maxValue;
 	}
 	
-	protected void update() {
+	public void update() {
 		if(Display.isResized()) {
 			setPosition();
 		}
 	}
 	
-	protected void render() {
+	public void render() {
 		GUIRenderer.render(line);
 		GUIRenderer.render(icon);
 	}

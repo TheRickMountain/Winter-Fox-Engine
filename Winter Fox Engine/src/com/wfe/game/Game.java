@@ -9,9 +9,12 @@ import com.wfe.entities.Amanita;
 import com.wfe.entities.Fern;
 import com.wfe.entities.Flint;
 import com.wfe.entities.Grass;
+import com.wfe.entities.Pine;
 import com.wfe.entities.Player;
+import com.wfe.entities.Rock;
 import com.wfe.entities.Shroom;
 import com.wfe.entities.Stick;
+import com.wfe.entities.Wheat;
 import com.wfe.graph.OBJLoader;
 import com.wfe.gui.GUIText;
 import com.wfe.math.Vector3f;
@@ -57,6 +60,7 @@ public class Game implements IGameLogic {
 		ResourceManager.loadTexture("bread_ui", Texture.newTexture(new MyFile("gui/items/bread.png")).create());
 		ResourceManager.loadTexture("bush_ui", Texture.newTexture(new MyFile("gui/items/bush.png")).create());
 		ResourceManager.loadTexture("slot_ui", Texture.newTexture(new MyFile("gui/slot.png")).create());
+		ResourceManager.loadTexture("list_ui", Texture.newTexture(new MyFile("gui/list.png")).create());
 		ResourceManager.loadTexture("hoe_ui", Texture.newTexture(new MyFile("gui/items/hoe.png")).create());
 		ResourceManager.loadTexture("background_frame_ui", Texture.newTexture(new MyFile("gui/background_frame.png")).create());
 		ResourceManager.loadTexture("corner_frame_ui", Texture.newTexture(new MyFile("gui/corner_frame.png")).create());
@@ -64,6 +68,7 @@ public class Game implements IGameLogic {
 		ResourceManager.loadTexture("v_edge_frame_ui", Texture.newTexture(new MyFile("gui/v_edge_frame.png")).create());
 		ResourceManager.loadTexture("health_icon_ui", Texture.newTexture(new MyFile("gui/health_icon.png")).create());
 		ResourceManager.loadTexture("hunger_icon_ui", Texture.newTexture(new MyFile("gui/hunger_icon.png")).create());
+		ResourceManager.loadTexture("thirst_icon_ui", Texture.newTexture(new MyFile("gui/thirst_icon.png")).create());
 		
 		/*** Meshes ***/
 		ResourceManager.loadMesh("wall", OBJLoader.loadMesh("/models/wall.obj"));
@@ -110,20 +115,6 @@ public class Game implements IGameLogic {
 		ResourceManager.loadMesh("bush", OBJLoader.loadMesh("/entity/bush/model.obj"));
 		/*** *** ***/
 		
-		/*** Tomato ***/
-		ResourceManager.loadTexture("tomato_plant", Texture.newTexture(new MyFile("entity/tomatoe/diffuse.png"))
-				.normalMipMap(-0.4f)
-				.create());
-		
-		ResourceManager.loadMesh("tomato_plant", OBJLoader.loadMesh("/entity/tomatoe/model.obj"));
-		
-		ResourceManager.loadTexture("tomatoes", Texture.newTexture(new MyFile("entity/tomatoe/tomatoes.png"))
-				.normalMipMap(-0.4f)
-				.create());
-		
-		ResourceManager.loadMesh("tomatoes", OBJLoader.loadMesh("/entity/tomatoe/tomatoes.obj"));
-		/*** *** ***/
-		
 		/*** Amanita ***/
 		ResourceManager.loadTexture("amanita_ui", Texture.newTexture(new MyFile("entity/amanita/icon.png"))
 				.create());
@@ -152,6 +143,22 @@ public class Game implements IGameLogic {
 				.create());
 		
 		ResourceManager.loadMesh("stick", OBJLoader.loadMesh("/entity/stick/model.obj"));
+		/*** *** ***/
+		
+		/*** Wheat ***/
+		ResourceManager.loadTexture("wheat", Texture.newTexture(new MyFile("entity/wheat/diffuse.png"))
+				.normalMipMap(-0.4f)
+				.create());
+		
+		ResourceManager.loadMesh("wheat", OBJLoader.loadMesh("/entity/wheat/model.obj"));
+		/*** *** ***/
+		
+		/*** Rock ***/
+		ResourceManager.loadTexture("rock", Texture.newTexture(new MyFile("entity/rock/diffuse.png"))
+				.normalMipMap(-0.4f)
+				.create());
+		
+		ResourceManager.loadMesh("rock", OBJLoader.loadMesh("/entity/rock/rock_1.obj"));
 		/*** *** ***/
 		
 		/*** Player ***/
@@ -205,6 +212,11 @@ public class Game implements IGameLogic {
 		World.getWorld().addEntityToTile(new Stick(player, new Transformation(81 + 0.5f, 0, 83 + 0.5f)));
 		World.getWorld().addEntityToTile(new Stick(player, new Transformation(82 + 0.5f, 0, 83 + 0.5f)));
 		
+		World.getWorld().addEntityToTile(new Rock(player, new Transformation(80 + 0.5f, 0, 84 + 0.5f)));
+		World.getWorld().addEntityToTile(new Wheat(new Transformation(80 + 0.5f, 0, 84 + 0.5f)));
+		World.getWorld().addEntityToTile(new Wheat(new Transformation(81 + 0.5f, 0, 84 + 0.5f)));
+		World.getWorld().addEntityToTile(new Wheat(new Transformation(82 + 0.5f, 0, 84 + 0.5f)));
+		
 		for(int i = 0; i < 100; i++) {		
 			Shroom shroom = new Shroom(player, new Transformation(MyRandom.nextInt(160) + 0.5f, 0, MyRandom.nextInt(160) + 0.5f));
 			World.getWorld().addEntityToTile(shroom);
@@ -240,22 +252,8 @@ public class Game implements IGameLogic {
 			}
 		}
 		
-		/*Transformation pineTransform = new Transformation(90.5f, 0, 88.5f);
-		pineTransform.setScale(0.4f);
-		StaticEntity pineBark = new StaticEntity(ResourceManager.getMesh("pine_bark"),
-				new Material(ResourceManager.getTexture("pine_bark")), pineTransform);
-		pineBark.addComponent(new ColliderComponent(0.5f, 1, 0.5f, pineTransform));
-		World.getWorld().addEntityToTile(pineBark);
-		
-		StaticEntity pineLeaves = new StaticEntity(ResourceManager.getMesh("pine_leaves"),
-				new Material(ResourceManager.getTexture("pine_leaves")).setHasTransparency(true), pineTransform);
-		World.getWorld().addEntity(pineLeaves);
-		
-		StaticEntity willow = new StaticEntity(ResourceManager.getMesh("willow"),
-				new Material(ResourceManager.getTexture("willow")).setHasTransparency(true), 
-				new Transformation(86.5f, 0, 90.5f));
-		willow.addComponent(new ColliderComponent(0.5f, 1, 0.5f, willow.getTransform()));
-		World.getWorld().addEntityToTile(willow);*/
+		Pine pine = new Pine(new Transformation(90.5f, 0, 88.5f));
+		World.getWorld().addEntity(pine);
 	}
 	
 	@Override

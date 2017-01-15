@@ -4,7 +4,6 @@ import com.wfe.core.Display;
 import com.wfe.gui.GUIText;
 import com.wfe.gui.Item;
 import com.wfe.gui.ItemDatabase;
-import com.wfe.gui.PlayerStatus;
 import com.wfe.input.Mouse;
 import com.wfe.renderEngine.FontRenderer;
 import com.wfe.renderEngine.GUIRenderer;
@@ -15,6 +14,7 @@ public class GUIManager {
 	
 	public Inventory inventory;
 	public Equipment equipment;
+	public Crafting crafting;
 	public PlayerStatus status;
 	
 	public static Item draggedItem;
@@ -26,23 +26,24 @@ public class GUIManager {
 		
 		inventory = new Inventory();
 		equipment = new Equipment();
+		crafting = new Crafting();
 		status = new PlayerStatus();
 		
 		draggedItemAmountText = new GUIText("", 1.3f, FontRenderer.font, 0, 0, 1f, false);
 		draggedItemAmountText.setColor(1.0f, 1.0f, 1.0f);
 		
-		inventory.addItem(ItemDatabase.items.get(ItemDatabase.BANANA), 15);
-		inventory.addItem(ItemDatabase.items.get(ItemDatabase.COOKIE), 25);
-		inventory.addItem(ItemDatabase.items.get(ItemDatabase.SHROOM), 68);
-		inventory.addItem(ItemDatabase.items.get(ItemDatabase.AXE), 3);
-		inventory.addItem(ItemDatabase.items.get(ItemDatabase.WALL), 40);
-		/*inventory.addItem(ItemDatabase.items.get(ItemDatabase.CROSS_WALL), 10);
-		inventory.addItem(ItemDatabase.items.get(ItemDatabase.DOOR_WALL), 10);
-		inventory.addItem(ItemDatabase.items.get(ItemDatabase.WINDOW_WALL), 10);
-		inventory.addItem(ItemDatabase.items.get(ItemDatabase.APPLE), 4);
-		inventory.addItem(ItemDatabase.items.get(ItemDatabase.BUSH), 15);
-		inventory.addItem(ItemDatabase.items.get(ItemDatabase.HOE), 1);
-		inventory.addItem(ItemDatabase.items.get(ItemDatabase.FIBER), 5);*/
+		inventory.addItem(ItemDatabase.items.get(Item.BANANA), 15);
+		inventory.addItem(ItemDatabase.items.get(Item.COOKIE), 25);
+		inventory.addItem(ItemDatabase.items.get(Item.SHROOM), 68);
+		inventory.addItem(ItemDatabase.items.get(Item.AXE), 3);
+		inventory.addItem(ItemDatabase.items.get(Item.WALL), 40);
+		/*inventory.addItem(ItemDatabase.items.get(Item.CROSS_WALL), 10);
+		inventory.addItem(ItemDatabase.items.get(Item.DOOR_WALL), 10);
+		inventory.addItem(ItemDatabase.items.get(Item.WINDOW_WALL), 10);
+		inventory.addItem(ItemDatabase.items.get(Item.APPLE), 4);
+		inventory.addItem(ItemDatabase.items.get(Item.BUSH), 15);*/
+		inventory.addItem(ItemDatabase.items.get(Item.HOE), 1);
+		inventory.addItem(ItemDatabase.items.get(Item.FIBER), 5);
 	}
 	
 	public void update(float dt) {
@@ -50,12 +51,14 @@ public class GUIManager {
 		
 		inventory.update();
 		equipment.update();
+		crafting.update();
 		status.update(dt);
 	}
 	
 	public void render() {
 		inventory.render();
 		equipment.render();
+		crafting.render();
 		status.render();
 		
 		if(draggedItem != null) {
@@ -65,6 +68,7 @@ public class GUIManager {
 	
 	public void renderText() {
 		inventory.renderText();
+		crafting.renderText();
 		
 		if(draggedItem != null) {
 			if(draggedItemAmount > 1){
