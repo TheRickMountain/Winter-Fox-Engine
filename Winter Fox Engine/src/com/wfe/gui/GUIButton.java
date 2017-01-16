@@ -36,7 +36,7 @@ public class GUIButton {
 	
 	public void render() {
 		if(renderTexture)
-			GUIRenderer.render(texture, posX, posY, 0, scaleX, scaleY, false);
+			GUIRenderer.render(texture, posX, posY, 0, scaleX, scaleY, false, true);
 	}
 	
 	public void renderText() {

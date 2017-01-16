@@ -47,25 +47,33 @@ public class Game implements IGameLogic {
 				.create());
 			
 		ResourceManager.loadTexture("banana_ui", Texture.newTexture(new MyFile("gui/items/banana.png")).create());
-		ResourceManager.loadTexture("rope_ui", Texture.newTexture(new MyFile("gui/items/rope.png")).create());
-		ResourceManager.loadTexture("fiber_ui", Texture.newTexture(new MyFile("gui/items/fiber.png")).create());
+		ResourceManager.loadTexture("rope_ui", Texture.newTexture(new MyFile("gui/items/rope.png"))
+				.normalMipMap().create());
+		ResourceManager.loadTexture("fiber_ui", Texture.newTexture(new MyFile("gui/items/fiber.png"))
+				.normalMipMap().create());
 		ResourceManager.loadTexture("cookie_ui", Texture.newTexture(new MyFile("gui/items/cookie.png")).create());
 		ResourceManager.loadTexture("apple_ui", Texture.newTexture(new MyFile("gui/items/apple.png")).create());
 		ResourceManager.loadTexture("wall_ui", Texture.newTexture(new MyFile("gui/items/wall.png")).create());
 		ResourceManager.loadTexture("cross_wall_ui", Texture.newTexture(new MyFile("gui/items/cross_wall.png")).create());
 		ResourceManager.loadTexture("window_wall_ui", Texture.newTexture(new MyFile("gui/items/window_wall.png")).create());
 		ResourceManager.loadTexture("door_wall_ui", Texture.newTexture(new MyFile("gui/items/door_wall.png")).create());
-		ResourceManager.loadTexture("axe_ui", Texture.newTexture(new MyFile("gui/items/axe.png")).create());
-		ResourceManager.loadTexture("shroom_ui", Texture.newTexture(new MyFile("gui/items/shroom.png")).create());
+		ResourceManager.loadTexture("axe_ui", Texture.newTexture(new MyFile("gui/items/axe.png"))
+				.normalMipMap().create());
+		ResourceManager.loadTexture("shroom_ui", Texture.newTexture(new MyFile("gui/items/shroom.png"))
+				.normalMipMap().create());
 		ResourceManager.loadTexture("bread_ui", Texture.newTexture(new MyFile("gui/items/bread.png")).create());
 		ResourceManager.loadTexture("bush_ui", Texture.newTexture(new MyFile("gui/items/bush.png")).create());
-		ResourceManager.loadTexture("slot_ui", Texture.newTexture(new MyFile("gui/slot.png")).create());
-		ResourceManager.loadTexture("slot_light_ui", Texture.newTexture(new MyFile("gui/slot_light.png")).create());
+		ResourceManager.loadTexture("slot_ui", Texture.newTexture(new MyFile("gui/slot.png"))
+				.normalMipMap().create());
+		ResourceManager.loadTexture("slot_light_ui", Texture.newTexture(new MyFile("gui/slot_light.png"))
+				.normalMipMap().create());
 		ResourceManager.loadTexture("sack_ui", Texture.newTexture(new MyFile("gui/sack.png")).create());
 		ResourceManager.loadTexture("craft_ui", Texture.newTexture(new MyFile("gui/craft.png")).create());
 		ResourceManager.loadTexture("list_ui", Texture.newTexture(new MyFile("gui/list.png")).create());
-		ResourceManager.loadTexture("hoe_ui", Texture.newTexture(new MyFile("gui/items/hoe.png")).create());
+		ResourceManager.loadTexture("hoe_ui", Texture.newTexture(new MyFile("gui/items/hoe.png"))
+				.normalMipMap().create());
 		ResourceManager.loadTexture("background_frame_ui", Texture.newTexture(new MyFile("gui/background_frame.png")).create());
+		ResourceManager.loadTexture("background_ui", Texture.newTexture(new MyFile("gui/background.png")).create());
 		ResourceManager.loadTexture("corner_frame_ui", Texture.newTexture(new MyFile("gui/corner_frame.png")).create());
 		ResourceManager.loadTexture("h_edge_frame_ui", Texture.newTexture(new MyFile("gui/h_edge_frame.png")).create());
 		ResourceManager.loadTexture("v_edge_frame_ui", Texture.newTexture(new MyFile("gui/v_edge_frame.png")).create());

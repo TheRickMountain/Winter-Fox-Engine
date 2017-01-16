@@ -18,10 +18,11 @@ public class GUIShader extends ShaderProgram {
 	private UniformSampler image = new UniformSampler("image");
 	protected UniformVec3 color = new UniformVec3("color");
 	protected UniformBoolean solidColor = new UniformBoolean("solidColor");
+	protected UniformBoolean active = new UniformBoolean("gray");
 	
 	public GUIShader() {
 		super(VERTEX_SHADER, FRAGMENT_SHADER, "in_data");
-		storeAllUniformLocations(projectionMatrix, modelMatrix, image, color, solidColor);
+		storeAllUniformLocations(projectionMatrix, modelMatrix, image, color, solidColor, active);
 		connectTextureUnits();
 	}
 

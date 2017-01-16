@@ -13,9 +13,9 @@ public class GUIFrame {
 	private static final int LEFT_EDGE = 4, RIGHT_EDGE = 5, TOP_EDGE = 6, BOTTOM_EDGE = 7;
 	private static final int BACKGROUND = 8;
 	private static final int RIM_SIZE = 5;
-	private static Texture cornerTexture = ResourceManager.getTexture("corner_frame_ui");
-	private static Texture hEdgeTexture = ResourceManager.getTexture("h_edge_frame_ui");
-	private static Texture vEdgeTexture = ResourceManager.getTexture("v_edge_frame_ui");
+	private static Texture cornerTexture = ResourceManager.getTexture("background_frame_ui");
+	private static Texture hEdgeTexture = ResourceManager.getTexture("background_frame_ui");
+	private static Texture vEdgeTexture = ResourceManager.getTexture("background_frame_ui");
 	private static Texture backgroundTexture = ResourceManager.getTexture("background_frame_ui");
 	private float posX;
 	private float posY;

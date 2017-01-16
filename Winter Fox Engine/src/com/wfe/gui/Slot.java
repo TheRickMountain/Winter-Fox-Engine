@@ -15,6 +15,8 @@ public class Slot {
 	private Item item;
 	private boolean hasItem;
 	private int itemsAmount = 0;
+	private boolean active = true;
+	public boolean showBackground = true;
 	
 	public Slot(float x, float y, float scaleX, float scaleY, Texture texture) {
 		this.x = x;
@@ -27,9 +29,11 @@ public class Slot {
 	}
 	
 	public void render() {
-		GUIRenderer.render(texture, x, y, 0, scaleX, scaleY, false);
+		if(showBackground)
+			GUIRenderer.render(texture, x, y, 0, scaleX, scaleY, false, true);
+		
 		if(hasItem) {
-			GUIRenderer.render(item.icon, x + scaleX / 2, y + scaleY / 2, 0, scaleX + 5, scaleY + 5, true);
+			GUIRenderer.render(item.icon, x + scaleX / 2, y + scaleY / 2, 0, scaleX + 5, scaleY + 5, true, active);
 		}
 	}
 	
@@ -123,6 +127,14 @@ public class Slot {
 		float tempX = 1.0f / Display.getWidth();
 		float tempY = 1.0f / Display.getHeight();
 		this.text.setPosition(tempX * x, tempY * (y - 10));
+	}
+
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
 	}
 	
 }

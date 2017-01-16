@@ -82,7 +82,7 @@ public class GUIManager {
 		status.render();
 		
 		if(draggedItem != null) {
-			GUIRenderer.render(draggedItem.icon, Mouse.getX() - 25, Mouse.getY() - 25, 0, 55, 55, false);
+			GUIRenderer.render(draggedItem.icon, Mouse.getX() - 25, Mouse.getY() - 25, 0, 55, 55, false, true);
 		}
 	}
 	

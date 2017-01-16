@@ -28,11 +28,12 @@ public class ItemDatabase {
 				new WallBlueprint(new Transformation(0, 0, 0)), 20));
 		
 		items.add(new Item(Item.AXE, ResourceManager.getTexture("axe_ui"), "Axe", ItemType.WEAPON, 0, 1,
-				new int[] {Item.FIBER, 1, Item.STICK, 1, Item.FLINT, 1}));
+				new int[] {Item.ROPE, 1, Item.STICK, 1, Item.FLINT, 1}));
 		
 		items.add(new Item(Item.SHROOM, ResourceManager.getTexture("shroom_ui"), "Shroom", ItemType.FOOD, 5, 20));
 		
-		items.add(new Item(Item.BREAD, ResourceManager.getTexture("bread_ui"), "Bread", ItemType.FOOD, 10, 20));
+		items.add(new Item(Item.BREAD, ResourceManager.getTexture("bread_ui"), "Bread", ItemType.FOOD, 10, 20,
+				new int[] {Item.FIBER, 3}));
 		
 		items.add(new Item(Item.CROSS_WALL, ResourceManager.getTexture("cross_wall_ui"), "Cross Wall", ItemType.BUILDING, 0,
 				new CrossWallBlueprint(new Transformation(0, 0, 0)), 20));

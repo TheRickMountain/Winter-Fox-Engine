@@ -13,6 +13,8 @@ import com.wfe.gui.GUITexture;
 import com.wfe.gui.Item;
 import com.wfe.gui.ItemDatabase;
 import com.wfe.gui.Slot;
+import com.wfe.input.Key;
+import com.wfe.input.Keyboard;
 import com.wfe.input.Mouse;
 import com.wfe.renderEngine.FontRenderer;
 import com.wfe.renderEngine.GUIRenderer;
@@ -38,20 +40,22 @@ public class Crafting {
 	private boolean showCrafting = false;
 	
 	public Crafting() {		
-		frame = new GUIFrame(0, 0, 217 + 10, 270 + 10);
+		frame = new GUIFrame(0, 0, 217 + 10 + 215, 270 + 10);
 		
 		for(int i = 0; i < slotsX * slotsY; i++) {
-			slots.add(new Slot(0, 0, slotSize, slotSize, ResourceManager.getTexture("slot_light_ui")));
+			slots.add(new Slot(0, 0, slotSize, slotSize, ResourceManager.getTexture("slot_ui")));
+			slots.get(i).showBackground = false;
 		}
 		
 		slots.get(0).addItem(ItemDatabase.getItem(Item.AXE));
 		slots.get(1).addItem(ItemDatabase.getItem(Item.HOE));
 		slots.get(2).addItem(ItemDatabase.getItem(Item.ROPE));
+		slots.get(3).addItem(ItemDatabase.getItem(Item.BREAD));
 		
-		resultIcon = new GUITexture(ResourceManager.getTexture("apple_ui"));
+		resultIcon = new GUITexture(ResourceManager.getTexture("axe_ui"));
 		resultIcon.setScale(70, 70);
 		
-		resultText = new GUIText("Hello, World", 1.4f, FontRenderer.font, 0, 0, 1.0f, false);
+		resultText = new GUIText("Axe", 1.4f, FontRenderer.font, 0, 0, 1.0f, false);
 		resultText.setColor(1.0f, 1.0f, 1.0f);
 		
 		craftButton = new GUIButton("Craft", 0, 0, 100, 30);
@@ -61,6 +65,9 @@ public class Crafting {
 	
 	public void update() {
 		if(showCrafting) {
+			if(Keyboard.isKeyDown(Key.KEY_E)) {
+				setShowCrafting(false);
+			}
 			
 			if(Mouse.isButtonDown(0)) {
 				for(Slot slot : slots) {
@@ -71,6 +78,8 @@ public class Crafting {
 							resultIcon.setTexture(activeItem.icon);
 							resultText.setText(activeItem.name);
 						}
+						
+						checkAllRecipes();
 					}
 				}
 				
@@ -86,6 +95,8 @@ public class Crafting {
 							.removeItem(ItemDatabase.getItem(ingredients[i]), ingredients[i + 1]);
 						}
 					}
+					
+					checkAllRecipes();
 				}
 			}
 		}
@@ -122,7 +133,7 @@ public class Crafting {
 	private void updatePositions() {
 		float posX = (Display.getWidth() / 2) - (435 / 2) - 10;
 		float posY = Display.getHeight() / 3 - 10;
-		frame.setPosition(Display.getWidth() / 2, posY);
+		frame.setPosition(posX, posY);
 	
 		int count = 0;
 		for(int y = 0; y < slotsY; y++) {
@@ -134,8 +145,7 @@ public class Crafting {
 			}
 		}
 		
-		resultIcon.setPosition(frame.getX() + 5, 
-				frame.getY() + 5);
+		resultIcon.setPosition(frame.getX() + (frame.getScaleX() / 2) + 5, frame.getY() + 5);
 		
 		resultText.setPosition(
 				(1.0f / Display.getWidth()) * (resultIcon.getX() + resultIcon.getScaleX()), 
@@ -158,8 +168,17 @@ public class Crafting {
 		
 		if(this.showCrafting) {
 			World.getWorld().addGUITextures(frame.getFrameTextures());
+			checkAllRecipes();
 		} else {
 			World.getWorld().removeGUITextures(frame.getFrameTextures());
+		}
+	}
+	
+	private void checkAllRecipes() {
+		for(Slot slot : slots) {
+			if(slot.isHasItem()) {
+				slot.setActive(checkRecipe(slot.getItem()));
+			}
 		}
 	}
 	

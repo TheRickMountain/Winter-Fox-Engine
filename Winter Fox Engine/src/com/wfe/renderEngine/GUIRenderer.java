@@ -47,6 +47,7 @@ public class GUIRenderer {
 				shader.solidColor.loadBoolean(true);
 			} else {
 				shader.solidColor.loadBoolean(false);
+				shader.active.loadBoolean(false);
 				texture.getTexture().bind(0);
 			}
 			
@@ -75,7 +76,7 @@ public class GUIRenderer {
 		GL11.glDrawArrays(GL11.GL_TRIANGLE_STRIP, 0, 4);
 	}
 	
-	public static void render(Texture texture, float x, float y, float rot, float scaleX, float scaleY, boolean centered) {
+	public static void render(Texture texture, float x, float y, float rot, float scaleX, float scaleY, boolean centered, boolean active) {
 		if(!centered) {
 			shader.modelMatrix.loadMatrix(MathUtils.getModelMatrix(modelMatrix, 
 					x, y, rot, scaleX, scaleY));
@@ -86,6 +87,7 @@ public class GUIRenderer {
 		}
 		
 		shader.solidColor.loadBoolean(false);
+		shader.active.loadBoolean(!active);
 		texture.bind(0);
 		
 		GL11.glDrawArrays(GL11.GL_TRIANGLE_STRIP, 0, 4);
