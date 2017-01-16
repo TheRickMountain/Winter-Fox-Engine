@@ -30,9 +30,9 @@ public class Item {
 	public int starvation;
 	public Blueprint entityBlueprint;
 	public int stack;
-	public int[] recipe;
+	public int[] ingredients;
 	
-	public Item(int ID, Texture icon, String name, ItemType type, int starvation, int stack, int[] recipe) {
+	public Item(int ID, Texture icon, String name, ItemType type, int starvation, int stack, int[] ingredients) {
 		this.ID = ID;
 		this.name = name;
 		this.icon = icon;
@@ -40,10 +40,10 @@ public class Item {
 		this.starvation = starvation;
 		this.entityBlueprint = null;
 		this.stack = stack;
-		this.recipe = recipe;
+		this.ingredients = ingredients;
 	}
 	
-	public Item(int ID, Texture icon, String name, ItemType type, int starvation, Blueprint entity, int stack, int[] recipe) {
+	public Item(int ID, Texture icon, String name, ItemType type, int starvation, Blueprint entity, int stack, int[] ingredients) {
 		this.ID = ID;
 		this.name = name;
 		this.icon = icon;
@@ -51,7 +51,7 @@ public class Item {
 		this.starvation = starvation;
 		this.entityBlueprint = entity;
 		this.stack = stack;
-		this.recipe = recipe;
+		this.ingredients = ingredients;
 	}
 	
 	public Item(int ID, Texture icon, String name, ItemType type, int starvation, int stack) {

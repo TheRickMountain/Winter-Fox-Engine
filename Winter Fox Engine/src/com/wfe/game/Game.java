@@ -34,7 +34,7 @@ public class Game implements IGameLogic {
 				.normalMipMap(-0.4f)
 				.create());
 		
-		ResourceManager.loadTexture("myFont", Texture.newTexture(new MyFile("font/myFont.png"))
+		ResourceManager.loadTexture("primitiveFont", Texture.newTexture(new MyFile("font/primitiveFont.png"))
 				.normalMipMap()
 				.create());
 		
@@ -60,7 +60,9 @@ public class Game implements IGameLogic {
 		ResourceManager.loadTexture("bread_ui", Texture.newTexture(new MyFile("gui/items/bread.png")).create());
 		ResourceManager.loadTexture("bush_ui", Texture.newTexture(new MyFile("gui/items/bush.png")).create());
 		ResourceManager.loadTexture("slot_ui", Texture.newTexture(new MyFile("gui/slot.png")).create());
+		ResourceManager.loadTexture("slot_light_ui", Texture.newTexture(new MyFile("gui/slot_light.png")).create());
 		ResourceManager.loadTexture("sack_ui", Texture.newTexture(new MyFile("gui/sack.png")).create());
+		ResourceManager.loadTexture("craft_ui", Texture.newTexture(new MyFile("gui/craft.png")).create());
 		ResourceManager.loadTexture("list_ui", Texture.newTexture(new MyFile("gui/list.png")).create());
 		ResourceManager.loadTexture("hoe_ui", Texture.newTexture(new MyFile("gui/items/hoe.png")).create());
 		ResourceManager.loadTexture("background_frame_ui", Texture.newTexture(new MyFile("gui/background_frame.png")).create());

@@ -17,16 +17,16 @@ public class GUIFrame {
 	private static Texture hEdgeTexture = ResourceManager.getTexture("h_edge_frame_ui");
 	private static Texture vEdgeTexture = ResourceManager.getTexture("v_edge_frame_ui");
 	private static Texture backgroundTexture = ResourceManager.getTexture("background_frame_ui");
-	private float x;
-	private float y;
+	private float posX;
+	private float posY;
 	private float scaleX;
 	private float scaleY;
 	
 	private List<GUITexture> frameTextures = new ArrayList<GUITexture>();
 	
 	public GUIFrame(float x, float y, float scaleX, float scaleY) {
-		this.x = x;
-		this.y = y;
+		this.posX = x;
+		this.posY = y;
 		this.scaleX = scaleX;
 		this.scaleY = scaleY;
 		createFrame();
@@ -50,21 +50,21 @@ public class GUIFrame {
 	}
 	
 	private void setTexturePositions() {
-		float xPlusXScaleXMinusRim = x + (scaleX - RIM_SIZE);
-		float yPlusYScaleYMinusRim = y + (scaleY - RIM_SIZE);
-		float xPlusRim = x + RIM_SIZE;
-		float yPlusRim = y + RIM_SIZE;
+		float xPlusXScaleXMinusRim = posX + (scaleX - RIM_SIZE);
+		float yPlusYScaleYMinusRim = posY + (scaleY - RIM_SIZE);
+		float xPlusRim = posX + RIM_SIZE;
+		float yPlusRim = posY + RIM_SIZE;
 		
 		// Corners
-		frameTextures.get(LEFT_TOP_CORNER).setPosition(x, y);	
-		frameTextures.get(RIGHT_TOP_CORNER).setPosition(xPlusXScaleXMinusRim, y);	
-		frameTextures.get(LEFT_BOTTOM_CORNER).setPosition(x, yPlusYScaleYMinusRim);
+		frameTextures.get(LEFT_TOP_CORNER).setPosition(posX, posY);	
+		frameTextures.get(RIGHT_TOP_CORNER).setPosition(xPlusXScaleXMinusRim, posY);	
+		frameTextures.get(LEFT_BOTTOM_CORNER).setPosition(posX, yPlusYScaleYMinusRim);
 		frameTextures.get(RIGHT_BOTTOM_CORNER).setPosition(xPlusXScaleXMinusRim, yPlusYScaleYMinusRim);
 		
 		// Edges	
-		frameTextures.get(LEFT_EDGE).setPosition(x, yPlusRim);
+		frameTextures.get(LEFT_EDGE).setPosition(posX, yPlusRim);
 		frameTextures.get(RIGHT_EDGE).setPosition(xPlusXScaleXMinusRim, yPlusRim);	
-		frameTextures.get(TOP_EDGE).setPosition(xPlusRim, y);
+		frameTextures.get(TOP_EDGE).setPosition(xPlusRim, posY);
 		frameTextures.get(BOTTOM_EDGE).setPosition(xPlusRim, yPlusYScaleYMinusRim);
 		
 		// Background
@@ -106,26 +106,26 @@ public class GUIFrame {
 	}
 
 	public float getX() {
-		return x;
+		return posX;
 	}
 
 	public void setX(float x) {
-		this.x = x;
+		this.posX = x;
 		setTexturePositions();
 	}
 
 	public float getY() {
-		return y;
+		return posY;
 	}
 
 	public void setY(float y) {
-		this.y = y;
+		this.posY = y;
 		setTexturePositions();
 	}
 
 	public void setPosition(float x, float y) {
-		this.x = x;
-		this.y = y;
+		this.posX = x;
+		this.posY = y;
 		setTexturePositions();
 	}
 	
@@ -158,8 +158,8 @@ public class GUIFrame {
 	}
 	
 	public boolean isMouseOvered() {
-		return Mouse.getX() > x && Mouse.getX() < x + scaleX &&
-				Mouse.getY() > y && Mouse.getY() < y + scaleY;
+		return Mouse.getX() > posX && Mouse.getX() < posX + scaleX &&
+				Mouse.getY() > posY && Mouse.getY() < posY + scaleY;
 	}
 
 }

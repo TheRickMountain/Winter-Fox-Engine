@@ -24,8 +24,8 @@ public class FontRenderer {
 	
 	protected FontRenderer() throws Exception {	
 		shader = new FontShader();
-		font = new FontType(ResourceManager.getTexture("myFont").getID(),
-				new MyFile("font/myFont.fnt"));
+		font = new FontType(ResourceManager.getTexture("primitiveFont").getID(),
+				new MyFile("font/primitiveFont.fnt"));
 	}
 	
 	public void render(List<GUIText> texts) {

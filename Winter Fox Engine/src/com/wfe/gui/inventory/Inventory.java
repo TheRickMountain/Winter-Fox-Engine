@@ -7,7 +7,6 @@ import com.wfe.core.Display;
 import com.wfe.core.ResourceManager;
 import com.wfe.ecs.StaticEntity;
 import com.wfe.game.World;
-import com.wfe.gui.GUITexture;
 import com.wfe.gui.Item;
 import com.wfe.gui.ItemType;
 import com.wfe.gui.Slot;
@@ -15,7 +14,6 @@ import com.wfe.input.Key;
 import com.wfe.input.Keyboard;
 import com.wfe.input.Mouse;
 import com.wfe.math.Vector3f;
-import com.wfe.renderEngine.GUIRenderer;
 import com.wfe.textures.Texture;
 import com.wfe.utils.MousePicker;
 
@@ -34,12 +32,10 @@ public class Inventory {
 	private Texture slotTexture = ResourceManager.getTexture("slot_ui");
 	private List<Slot> slots = new ArrayList<Slot>();
 	
-	private List<Slot> quickSlots = new ArrayList<Slot>();
+	public List<Slot> quickSlots = new ArrayList<Slot>();
 	private List<Slot> inventorySlots = new ArrayList<Slot>();
 
-	private boolean showInventory = false;
-	
-	private GUITexture button;
+	public boolean showInventory = false;
 	
 	// Building
 	private StaticEntity currentBuildingEntity;
@@ -55,9 +51,6 @@ public class Inventory {
 			inventorySlots.add(new Slot(0, 0, slotSize, slotSize, slotTexture));
 			slots.add(inventorySlots.get(i));
 		}
-		
-		button = new GUITexture(ResourceManager.getTexture("sack_ui"));
-		button.setScale(55, 55);
 		
 		updatePosition();
 	}
@@ -77,10 +70,6 @@ public class Inventory {
 				for(Slot slot : inventorySlots) {
 					updateSlot(slot, false);
 				}
-			}
-			
-			if(button.isMouseOvered()) {
-				showInventory = !showInventory;
 			}
 		}
 		
@@ -159,8 +148,6 @@ public class Inventory {
 		for(Slot slot : quickSlots) {
 			slot.render();
 		}
-		
-		GUIRenderer.render(button);
 	}
 	
 	public void renderText() {
@@ -317,7 +304,8 @@ public class Inventory {
 		int countX = 0;
 		int countY = 0;
 		for(int i = 0; i < inventorySlotsX * inventorySlotsY; i++) {
-			float posX = (Display.getWidth() - (inventorySlotsX * (slotSize + 5)) - button.getScaleX()) + (countX * (slotSize + offsetBetweenSlots));
+			float posX = (Display.getWidth() - (inventorySlotsX * (slotSize + 5)) - 55 + 
+					(countX * (slotSize + offsetBetweenSlots)));
 			float posY = (Display.getHeight() / 3) + (countY * (slotSize + offsetBetweenSlots));
 			inventorySlots.get(i).setPosition(posX, posY);
 			
@@ -328,8 +316,6 @@ public class Inventory {
 				countY++;
 			}
 		}
-		
-		button.setPosition(Display.getWidth() - button.getScaleX(), Display.getHeight() / 3);
 		
 	}
 	
