@@ -29,7 +29,7 @@ public class GUIButton {
 		this.scaleX = scaleX;
 		this.scaleY = scaleY;
 		
-		this.text = new GUIText(text, 1.1f, FontRenderer.font, 
+		this.text = new GUIText(text, 1.2f, FontRenderer.font, 
 				(1.0f / Display.getWidth()) * posX, (1.0f / Display.getHeight()) * posY, 1.0f, false);
 		this.text.setColor(1.0f, 1.0f, 1.0f);
 	}

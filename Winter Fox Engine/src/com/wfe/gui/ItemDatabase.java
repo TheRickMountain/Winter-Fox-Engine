@@ -33,7 +33,7 @@ public class ItemDatabase {
 		items.add(new Item(Item.SHROOM, ResourceManager.getTexture("shroom_ui"), "Shroom", ItemType.FOOD, 5, 20));
 		
 		items.add(new Item(Item.BREAD, ResourceManager.getTexture("bread_ui"), "Bread", ItemType.FOOD, 10, 20,
-				new int[] {Item.FIBER, 3, Item.SHROOM, 1, Item.COOKIE, 2, Item.AMANITA, 3, Item.APPLE, 2}));
+				new int[] {Item.FIBER, 3, Item.SHROOM, 5, Item.AXE, 1, Item.STICK, 1, Item.ROPE, 3}));
 		
 		items.add(new Item(Item.CROSS_WALL, ResourceManager.getTexture("cross_wall_ui"), "Cross Wall", ItemType.BUILDING, 0,
 				new CrossWallBlueprint(new Transformation(0, 0, 0)), 20));

@@ -45,6 +45,11 @@ public class GUIManager {
 		
 		draggedItemAmountText = new GUIText("", 1.3f, FontRenderer.font, 0, 0, 1f, false);
 		draggedItemAmountText.setColor(1.0f, 1.0f, 1.0f);
+		
+		inventory.addItem(ItemDatabase.getItem(Item.WALL), 50);
+		inventory.addItem(ItemDatabase.getItem(Item.CROSS_WALL), 10);
+		inventory.addItem(ItemDatabase.getItem(Item.WINDOW_WALL), 10);
+		inventory.addItem(ItemDatabase.getItem(Item.DOOR_WALL), 10);
 	}
 	
 	public void update(float dt) {
