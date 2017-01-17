@@ -25,10 +25,11 @@ public class Crafting {
 	
 	private List<Slot> slots = new ArrayList<Slot>();
 	
-	private int slotsX = 4;
-	private int slotsY = 5;
+	private int slotsX = 5;
+	private int slotsY = 7;
 	
 	private int slotSize = 50;
+	private int ingredientSize = 50;
 	
 	private GUITexture resultIcon;
 	private GUIText resultText;
@@ -39,8 +40,11 @@ public class Crafting {
 	
 	private boolean showCrafting = false;
 	
+	private List<Slot> ingredients = new ArrayList<Slot>();
+	private List<GUIText> ingredientsAmount = new ArrayList<GUIText>();
+	
 	public Crafting() {		
-		frame = new GUIFrame(0, 0, 217 + 10 + 215, 270 + 10);
+		frame = new GUIFrame(0, 0, 545 + 10, 380 + 10);
 		
 		for(int i = 0; i < slotsX * slotsY; i++) {
 			slots.add(new Slot(0, 0, slotSize, slotSize, ResourceManager.getTexture("slot_ui")));
@@ -51,14 +55,22 @@ public class Crafting {
 		slots.get(1).addItem(ItemDatabase.getItem(Item.HOE));
 		slots.get(2).addItem(ItemDatabase.getItem(Item.ROPE));
 		slots.get(3).addItem(ItemDatabase.getItem(Item.BREAD));
+		slots.get(4).addItem(ItemDatabase.getItem(Item.BREAD));
 		
-		resultIcon = new GUITexture(ResourceManager.getTexture("axe_ui"));
-		resultIcon.setScale(70, 70);
+		resultIcon = new GUITexture(ResourceManager.getTexture("slot_ui"));
+		resultIcon.setScale(80, 80);
 		
-		resultText = new GUIText("Axe", 1.4f, FontRenderer.font, 0, 0, 1.0f, false);
+		resultText = new GUIText("", 1.4f, FontRenderer.font, 0, 0, 1.0f, false);
 		resultText.setColor(1.0f, 1.0f, 1.0f);
 		
-		craftButton = new GUIButton("Craft", 0, 0, 100, 30);
+		for(int i = 0; i < 5; i++) {
+			ingredients.add(new Slot(0, 0, ingredientSize, ingredientSize, ResourceManager.getTexture("slot_ui")));
+			ingredients.get(i).showBackground = false;
+			ingredientsAmount.add(new GUIText("",
+					1.1f, FontRenderer.font, 0.0f, 0.0f, 1.0f, false).setColor(1.0f, 1.0f, 1.0f));
+		}
+		
+		craftButton = new GUIButton(ResourceManager.getTexture("list_ui"), "Craft", 0, 0, 100, 30);
 		
 		updatePositions();
 	}
@@ -75,8 +87,7 @@ public class Crafting {
 					if(slot.isMouseOvered()) {
 						if(slot.isHasItem()) {
 							activeItem = slot.getItem();
-							resultIcon.setTexture(activeItem.icon);
-							resultText.setText(activeItem.name);
+							updateRecipe();
 						}
 						
 						checkAllRecipes();
@@ -114,6 +125,10 @@ public class Crafting {
 			
 			GUIRenderer.render(resultIcon);
 			
+			for(Slot slot : ingredients) {
+				slot.render();
+			}
+			
 			craftButton.render();
 		}
 	}
@@ -127,12 +142,16 @@ public class Crafting {
 			FontRenderer.render(resultText);
 			
 			craftButton.renderText();
+		
+			for(GUIText text : ingredientsAmount) {
+				FontRenderer.render(text);
+			}
 		}
 	}
 	
 	private void updatePositions() {
-		float posX = (Display.getWidth() / 2) - (435 / 2) - 10;
-		float posY = Display.getHeight() / 3 - 10;
+		float posX = (Display.getWidth() / 2) - (545 / 2) - 10;
+		float posY = Display.getHeight() / 4 - 10;
 		frame.setPosition(posX, posY);
 	
 		int count = 0;
@@ -150,6 +169,15 @@ public class Crafting {
 		resultText.setPosition(
 				(1.0f / Display.getWidth()) * (resultIcon.getX() + resultIcon.getScaleX()), 
 				(1.0f / Display.getHeight()) * (frame.getY() + 5));
+		
+		for(int i = 0; i < ingredients.size(); i++) {
+			Slot slot = ingredients.get(i);
+			slot.setPosition(resultIcon.getX() + (i * (ingredientSize + 5)), 
+					resultIcon.getY() + resultIcon.getScaleY());
+			
+			ingredientsAmount.get(i).setPosition((1.0f / Display.getWidth()) * (slot.getX() + slot.getScaleX() / 3), 
+					(1.0f / Display.getHeight()) * (slot.getY() + slot.getScaleY()));
+		}
 		
 		craftButton.setPosition(frame.getX() + frame.getScaleX() - craftButton.getScaleX() - 5, 
 				frame.getY() + frame.getScaleY() - craftButton.getScaleY() - 5);
@@ -174,7 +202,40 @@ public class Crafting {
 		}
 	}
 	
+	private void updateRecipe() {
+		if(activeItem != null) {
+			resultIcon.setTexture(activeItem.icon);
+			resultText.setText(activeItem.name);
+			
+			int count = 0;
+			for(Slot i : ingredients)
+				i.removeItem();
+			
+			for(GUIText t : ingredientsAmount) {
+				t.setText("");
+			}
+			
+			for(int i = 0; i < activeItem.ingredients.length; i += 2) {
+				ingredients.get(count).addItem(ItemDatabase.getItem(activeItem.ingredients[i]));
+				
+				int currentItemsAmount = GUIManager.getGUI().inventory.getItemAmount(activeItem.ingredients[i]);
+				int requiredItemsAmount = activeItem.ingredients[i + 1];
+				if(currentItemsAmount < requiredItemsAmount) {
+					ingredientsAmount.get(count).setColor(1.0f, 0.0f, 0.0f);
+				} else {
+					ingredientsAmount.get(count).setColor(1.0f, 1.0f, 1.0f);
+				}
+				
+				ingredientsAmount.get(count)
+					.setText(currentItemsAmount + "/" + requiredItemsAmount);
+				count++;
+			}
+		}
+	}
+	
 	private void checkAllRecipes() {
+		updateRecipe();
+		
 		for(Slot slot : slots) {
 			if(slot.isHasItem()) {
 				slot.setActive(checkRecipe(slot.getItem()));

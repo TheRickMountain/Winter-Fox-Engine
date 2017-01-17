@@ -70,6 +70,7 @@ public class GUIRenderer {
 			shader.solidColor.loadBoolean(true);
 		} else {
 			shader.solidColor.loadBoolean(false);
+			shader.active.loadBoolean(false);
 			texture.getTexture().bind(0);
 		}
 		

@@ -12,11 +12,11 @@ public class GUIFrame {
 	private static final int LEFT_TOP_CORNER = 0, RIGHT_TOP_CORNER = 1, LEFT_BOTTOM_CORNER = 2, RIGHT_BOTTOM_CORNER = 3;
 	private static final int LEFT_EDGE = 4, RIGHT_EDGE = 5, TOP_EDGE = 6, BOTTOM_EDGE = 7;
 	private static final int BACKGROUND = 8;
-	private static final int RIM_SIZE = 5;
-	private static Texture cornerTexture = ResourceManager.getTexture("background_frame_ui");
+	private static final int RIM_SIZE = 1;
+	private static Texture cornerTexture = ResourceManager.getTexture("corner_frame_ui");
 	private static Texture hEdgeTexture = ResourceManager.getTexture("background_frame_ui");
 	private static Texture vEdgeTexture = ResourceManager.getTexture("background_frame_ui");
-	private static Texture backgroundTexture = ResourceManager.getTexture("background_frame_ui");
+	private static Texture backgroundTexture = ResourceManager.getTexture("background_ui");
 	private float posX;
 	private float posY;
 	private float scaleX;

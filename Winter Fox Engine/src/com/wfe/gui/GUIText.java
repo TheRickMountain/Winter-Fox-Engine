@@ -41,8 +41,9 @@ public class GUIText {
 		return font;
 	}
 	
-	public void setColor(float r, float g, float b) {
+	public GUIText setColor(float r, float g, float b) {
 		color.set(r, g, b);
+		return this;
 	}
 	
 	public Vector3f getColor() {

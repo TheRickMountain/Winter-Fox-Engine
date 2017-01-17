@@ -55,8 +55,8 @@ public class GUIButton {
 		this.posX = x;
 		this.posY = y;
 		
-		this.text.setPosition((1.0f / Display.getWidth()) * (posX + scaleX / 3), 
-				(1.0f / Display.getHeight()) * (posY + scaleY / 4));
+		this.text.setPosition((1.0f / Display.getWidth()) * (posX + scaleX / 4), 
+				(1.0f / Display.getHeight()) * (posY + scaleY / 6));
 	}
 	
 	public float getScaleX() {
