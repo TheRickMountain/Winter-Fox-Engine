@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.wfe.core.Display;
-import com.wfe.core.ResourceManager;
 import com.wfe.ecs.StaticEntity;
 import com.wfe.game.World;
+import com.wfe.gui.GUIElement;
 import com.wfe.gui.Item;
 import com.wfe.gui.ItemType;
 import com.wfe.gui.Slot;
@@ -14,11 +14,11 @@ import com.wfe.input.Key;
 import com.wfe.input.Keyboard;
 import com.wfe.input.Mouse;
 import com.wfe.math.Vector3f;
-import com.wfe.textures.Texture;
+import com.wfe.utils.Color;
 import com.wfe.utils.MousePicker;
 
 
-public class Inventory {
+public class Inventory implements GUIElement {
 	
 	private int quickSlotsAmount = 8;
 	
@@ -29,7 +29,7 @@ public class Inventory {
 	
 	private int offsetBetweenSlots = 5;
 	
-	private Texture slotTexture = ResourceManager.getTexture("slot_ui");
+	private Color slotColor = new Color(151, 148, 146, 125).convert();
 	private List<Slot> slots = new ArrayList<Slot>();
 	
 	public List<Slot> quickSlots = new ArrayList<Slot>();
@@ -43,12 +43,12 @@ public class Inventory {
 	
 	public Inventory() {
 		for(int i = 0; i < quickSlotsAmount; i++) {
-			quickSlots.add(new Slot(0, 0, slotSize, slotSize, slotTexture));
+			quickSlots.add(new Slot(0, 0, slotSize, slotSize, slotColor));
 			slots.add(quickSlots.get(i));
 		}
 		
 		for(int i = 0; i < inventorySlotsX * inventorySlotsY; i++) {
-			inventorySlots.add(new Slot(0, 0, slotSize, slotSize, slotTexture));
+			inventorySlots.add(new Slot(0, 0, slotSize, slotSize, slotColor));
 			slots.add(inventorySlots.get(i));
 		}
 		

@@ -2,6 +2,7 @@ package com.wfe.gui.inventory;
 
 import com.wfe.core.Display;
 import com.wfe.core.ResourceManager;
+import com.wfe.gui.GUIElement;
 import com.wfe.gui.GUIText;
 import com.wfe.gui.GUITexture;
 import com.wfe.gui.Item;
@@ -10,7 +11,7 @@ import com.wfe.input.Mouse;
 import com.wfe.renderEngine.FontRenderer;
 import com.wfe.renderEngine.GUIRenderer;
 
-public class GUIManager {
+public class GUIManager implements GUIElement {
 
 	private static GUIManager guiManager;
 	
@@ -50,6 +51,7 @@ public class GUIManager {
 		inventory.addItem(ItemDatabase.getItem(Item.CROSS_WALL), 10);
 		inventory.addItem(ItemDatabase.getItem(Item.WINDOW_WALL), 10);
 		inventory.addItem(ItemDatabase.getItem(Item.DOOR_WALL), 10);
+		inventory.addItem(ItemDatabase.getItem(Item.APPLE), 5);
 	}
 	
 	public void update(float dt) {
@@ -63,7 +65,8 @@ public class GUIManager {
 			
 			if(craftingButton.isMouseOvered()) {
 				Mouse.setActiveInGUI(true);
-				crafting.setShowCrafting(!crafting.isShowCrafting());
+				crafting.showCrafting = !crafting.showCrafting;
+				crafting.updateRecipe(false);
 			}
 		}
 		
@@ -87,7 +90,7 @@ public class GUIManager {
 		status.render();
 		
 		if(draggedItem != null) {
-			GUIRenderer.render(draggedItem.icon, Mouse.getX() - 25, Mouse.getY() - 25, 0, 55, 55, false, true);
+			GUIRenderer.render(draggedItem.icon, Mouse.getX() - 25, Mouse.getY() - 25, 0, 55, 55, false);
 		}
 	}
 	
@@ -97,9 +100,7 @@ public class GUIManager {
 		
 		if(draggedItem != null) {
 			if(draggedItemAmount > 1){
-				draggedItemAmountText.setPosition(
-						1.0f / Display.getWidth() * (Mouse.getX() - 25), 
-						1.0f / Display.getHeight() * (Mouse.getY() - 35));
+				draggedItemAmountText.setPosition(Mouse.getX() - 25, Mouse.getY() - 25);
 				FontRenderer.render(draggedItemAmountText);
 			}
 		}
@@ -125,7 +126,7 @@ public class GUIManager {
 	private void updatePositions() {
 		inventoryButton.setPosition(Display.getWidth() - inventoryButton.getScaleX(), Display.getHeight() / 3);
 		craftingButton.setPosition(Display.getWidth() - inventoryButton.getScaleX(), 
-				inventoryButton.getY() + inventoryButton.getScaleY() + 5);
+				inventoryButton.getPosY() + inventoryButton.getScaleY() + 5);
 	}
 	
 }

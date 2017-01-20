@@ -2,9 +2,9 @@ package com.wfe.renderEngine;
 
 import com.wfe.shaders.ShaderProgram;
 import com.wfe.shaders.UniformBoolean;
+import com.wfe.shaders.UniformColor;
 import com.wfe.shaders.UniformMatrix;
 import com.wfe.shaders.UniformSampler;
-import com.wfe.shaders.UniformVec3;
 import com.wfe.utils.MyFile;
 
 public class GUIShader extends ShaderProgram {
@@ -16,13 +16,12 @@ public class GUIShader extends ShaderProgram {
 	protected UniformMatrix modelMatrix = new UniformMatrix("modelMatrix");
 	
 	private UniformSampler image = new UniformSampler("image");
-	protected UniformVec3 color = new UniformVec3("color");
+	protected UniformColor color = new UniformColor("color");
 	protected UniformBoolean solidColor = new UniformBoolean("solidColor");
-	protected UniformBoolean active = new UniformBoolean("gray");
 	
 	public GUIShader() {
 		super(VERTEX_SHADER, FRAGMENT_SHADER, "in_data");
-		storeAllUniformLocations(projectionMatrix, modelMatrix, image, color, solidColor, active);
+		storeAllUniformLocations(projectionMatrix, modelMatrix, image, color, solidColor);
 		connectTextureUnits();
 	}
 

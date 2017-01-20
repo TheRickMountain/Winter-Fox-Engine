@@ -16,7 +16,7 @@ public class GUIFrame {
 	private static Texture cornerTexture = ResourceManager.getTexture("corner_frame_ui");
 	private static Texture hEdgeTexture = ResourceManager.getTexture("background_frame_ui");
 	private static Texture vEdgeTexture = ResourceManager.getTexture("background_frame_ui");
-	private static Texture backgroundTexture = ResourceManager.getTexture("background_ui");
+	private static Texture backgroundTexture = ResourceManager.getTexture("background_frame_ui");
 	private float posX;
 	private float posY;
 	private float scaleX;

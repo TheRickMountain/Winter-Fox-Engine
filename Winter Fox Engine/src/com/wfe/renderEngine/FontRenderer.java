@@ -5,6 +5,7 @@ import java.util.List;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL13;
 
+import com.wfe.core.Display;
 import com.wfe.core.ResourceManager;
 import com.wfe.font.FontType;
 import com.wfe.graph.Mesh;
@@ -24,8 +25,8 @@ public class FontRenderer {
 	
 	protected FontRenderer() throws Exception {	
 		shader = new FontShader();
-		font = new FontType(ResourceManager.getTexture("primitiveFont").getID(),
-				new MyFile("font/primitiveFont.fnt"));
+		font = new FontType(ResourceManager.getTexture("myFont").getID(),
+				new MyFile("font/myFont.fnt"));
 	}
 	
 	public void render(List<GUIText> texts) {
@@ -44,8 +45,21 @@ public class FontRenderer {
 	}
 	
 	public static void render(GUIText text) {
-		float newX = (2 * text.getX()) + (-1 + text.getScaleX());
-		float newY = (-2 * text.getY()) + (1 - text.getScaleY());
+		float newX = (2 * (1.0f / Display.getWidth()) * text.getX()) + (-1 + text.getScaleX());
+		float newY = (-2 * (1.0f / Display.getHeight()) * text.getY()) + (1 - text.getScaleY());
+		shader.modelMatrix.loadMatrix(MathUtils.getModelMatrix(modelMatrix, newX, newY, 0, 0, 0, 0,
+				text.getScaleX(), text.getScaleY(), 1));
+		shader.color.loadVec3(text.getColor());
+		
+		Mesh mesh = text.getMesh();
+		mesh.bind(0);
+		GL11.glDrawArrays(GL11.GL_TRIANGLES, 0, mesh.getVertexCount());
+		mesh.unbind(0);
+	}
+	
+	public static void render(GUIText text, float x, float y) {
+		float newX = (2 * (1.0f / Display.getWidth()) * x) + (-1 + text.getScaleX());
+		float newY = (-2 * (1.0f / Display.getHeight()) * y) + (1 - text.getScaleY());
 		shader.modelMatrix.loadMatrix(MathUtils.getModelMatrix(modelMatrix, newX, newY, 0, 0, 0, 0,
 				text.getScaleX(), text.getScaleY(), 1));
 		shader.color.loadVec3(text.getColor());

@@ -4,36 +4,35 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.wfe.input.Mouse;
-import com.wfe.math.Vector3f;
 import com.wfe.textures.Texture;
+import com.wfe.utils.Color;
 
 public class GUITexture {
 	
 	private Texture texture;
-	private Vector3f color;
-	private float x, y;
+	private Color color;
+	private float posX, posY;
 	private float rot;
 	private float scaleX, scaleY;
 	private boolean centered = false;
 	private boolean isSolidColor = false;
+	public boolean active = true;
 	
 	private List<GUIComponent> components = new ArrayList<GUIComponent>();
 	
-	public GUITexture(Texture texture, float x, float y, float rot, float scaleX, float scaleY, boolean centered) {
+	public GUITexture(Texture texture, float posX, float posY, float scaleX, float scaleY, boolean centered) {
 		this.texture = texture;
-		this.x = x;
-		this.y = y;
-		this.rot = rot;
+		this.posX = posX;
+		this.posY = posY;
 		this.scaleX = scaleX;
 		this.scaleY = scaleY;
 		this.centered = centered;
 	}
 	
-	public GUITexture(Vector3f color, float x, float y, float rot, float scaleX, float scaleY, boolean centered) {
+	public GUITexture(Color color, float posX, float posY, float scaleX, float scaleY, boolean centered) {
 		this.color = color;
-		this.x = x;
-		this.y = y;
-		this.rot = rot;
+		this.posX = posX;
+		this.posY = posY;
 		this.scaleX = scaleX;
 		this.scaleY = scaleY;
 		this.centered = centered;
@@ -41,7 +40,7 @@ public class GUITexture {
 	}
 	
 	public GUITexture(Texture texture) {
-		this(texture, 0, 0, 0, 0, 0, false);
+		this(texture, 0, 0, 0, 0, false);
 	}
 
 	public void update() {
@@ -53,21 +52,33 @@ public class GUITexture {
 	public Texture getTexture() {
 		return texture;
 	}
-
-	public float getX() {
-		return x;
+	
+	public void setTexture(Texture texture) {
+		this.texture = texture;
+	}
+	
+	public Color getColor() {
+		return color;
+	}
+	
+	public void setColor(float r, float g, float b) {
+		this.color.set(r, g, b);
 	}
 
-	public void setX(float x) {
-		this.x = x;
+	public float getPosX() {
+		return posX;
 	}
 
-	public float getY() {
-		return y;
+	public void setPosX(float posX) {
+		this.posX = posX;
 	}
 
-	public void setY(float y) {
-		this.y = y;
+	public float getPosY() {
+		return posY;
+	}
+
+	public void setPosY(float posY) {
+		this.posY = posY;
 	}
 
 	public float getRot() {
@@ -75,8 +86,8 @@ public class GUITexture {
 	}
 	
 	public void setPosition(float x, float y) {
-		this.x = x;
-		this.y = y;
+		this.posX = x;
+		this.posY = y;
 	}
 
 	public void setRot(float rot) {
@@ -103,10 +114,6 @@ public class GUITexture {
 		this.scaleX = scaleX;
 		this.scaleY = scaleY;
 	}
-	
-	public Vector3f getColor() {
-		return color;
-	}
 
 	public boolean isCentered() {
 		return centered;
@@ -118,20 +125,16 @@ public class GUITexture {
 	
 	public boolean isMouseOvered() {
 		if(centered) {
-			return Mouse.getX() > x - scaleX / 2 && Mouse.getX() < x + scaleX / 2 &&
-					Mouse.getY() > y - scaleX / 2 && Mouse.getY() < y + scaleY / 2;
+			return Mouse.getX() > posX - scaleX / 2 && Mouse.getX() < posX + scaleX / 2 &&
+					Mouse.getY() > posY - scaleX / 2 && Mouse.getY() < posY + scaleY / 2;
 		} else {
-			return Mouse.getX() > x && Mouse.getX() < x + scaleX &&
-					Mouse.getY() > y && Mouse.getY() < y + scaleY;
+			return Mouse.getX() > posX && Mouse.getX() < posX + scaleX &&
+					Mouse.getY() > posY && Mouse.getY() < posY + scaleY;
 		}
 	}
 
 	public boolean isSolidColor() {
 		return isSolidColor;
-	}
-	
-	public void setTexture(Texture texture) {
-		this.texture = texture;
 	}
 	
 }

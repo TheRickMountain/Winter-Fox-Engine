@@ -1,11 +1,12 @@
 package com.wfe.gui.inventory;
 
 import com.wfe.core.ResourceManager;
+import com.wfe.gui.GUIElement;
 import com.wfe.gui.StatusBar;
-import com.wfe.math.Vector3f;
+import com.wfe.utils.Color;
 import com.wfe.utils.TimeUtil;
 
-public class PlayerStatus {
+public class PlayerStatus implements GUIElement {
 	
 	private TimeUtil time1, time2;
 	public StatusBar healthBar;
@@ -14,11 +15,11 @@ public class PlayerStatus {
 	
 	public PlayerStatus() {
 		healthBar = new StatusBar(
-				ResourceManager.getTexture("health_icon_ui"), new Vector3f(1.0f, 0.2f, 0.2f), 15, 10);
+				ResourceManager.getTexture("health_icon_ui"), new Color(1.0f, 0.2f, 0.2f), 15, 10);
 		hungerBar = new StatusBar(
-				ResourceManager.getTexture("hunger_icon_ui"), new Vector3f(1.0f, 0.5f, 0.1f), 15, 35);
+				ResourceManager.getTexture("hunger_icon_ui"), new Color(1.0f, 0.5f, 0.1f), 15, 35);
 		thirstBar = new StatusBar(
-				ResourceManager.getTexture("thirst_icon_ui"), new Vector3f(0.2f, 0.2f, 1.0f), 15, 60);
+				ResourceManager.getTexture("thirst_icon_ui"), new Color(0.2f, 0.2f, 1.0f), 15, 60);
 		time1 = new TimeUtil();
 		time2 = new TimeUtil();
 	}
@@ -47,6 +48,11 @@ public class PlayerStatus {
 		healthBar.render();
 		hungerBar.render();
 		thirstBar.render();
+	}
+	
+	@Override
+	public void renderText() {
+		
 	}
 
 }

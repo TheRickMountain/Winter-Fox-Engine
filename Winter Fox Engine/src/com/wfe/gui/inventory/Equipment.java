@@ -1,22 +1,22 @@
 package com.wfe.gui.inventory;
 
 import com.wfe.core.Display;
-import com.wfe.core.ResourceManager;
+import com.wfe.gui.GUIElement;
 import com.wfe.gui.Item;
 import com.wfe.gui.ItemType;
 import com.wfe.gui.Slot;
 import com.wfe.input.Mouse;
-import com.wfe.textures.Texture;
+import com.wfe.utils.Color;
 
-public class Equipment {
+public class Equipment implements GUIElement {
 	
 	private int slotSize = 50;
 	
-	private Texture slotTexture = ResourceManager.getTexture("slot_ui");
+	private Color slotColor = new Color(128f / 255f, 128f / 255f, 128f / 255f, 1.0f);
 	private Slot handSlot;
 	
 	public Equipment() {
-		handSlot = new Slot(0, 0, slotSize, slotSize, slotTexture);
+		handSlot = new Slot(0, 0, slotSize, slotSize, slotColor);
 		updatePositions();
 	}
 	
@@ -50,6 +50,11 @@ public class Equipment {
 	
 	public void render() {
 		handSlot.render();
+	}
+	
+	@Override
+	public void renderText() {
+		
 	}
 
 	private void updatePositions() {

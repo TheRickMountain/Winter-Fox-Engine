@@ -60,6 +60,9 @@ public class ItemDatabase {
 		
 		items.add(new Item(Item.ROPE, ResourceManager.getTexture("rope_ui"), "Rope", ItemType.ITEM, 0, 10,
 				new int[] {Item.FIBER, 3}));
+		
+		items.add(new Item(Item.BOW, ResourceManager.getTexture("bow_ui"), "Bow", ItemType.WEAPON, 0, 1,
+				new int[] {Item.ROPE, 1, Item.STICK, 1}));
 	}
 	
 	public static void create() {

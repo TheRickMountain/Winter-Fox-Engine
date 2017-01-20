@@ -2,12 +2,12 @@ package com.wfe.gui;
 
 import com.wfe.core.Display;
 import com.wfe.game.World;
-import com.wfe.math.Vector3f;
 import com.wfe.renderEngine.FontRenderer;
 import com.wfe.renderEngine.GUIRenderer;
 import com.wfe.textures.Texture;
+import com.wfe.utils.Color;
 
-public class StatusBar {
+public class StatusBar implements GUIElement {
 	
 	private float x, y;
 	
@@ -20,14 +20,11 @@ public class StatusBar {
 	
 	private float spriteSizeOnePercent;
 	
-	private float screenSizeXPerPixel;
-	private float screenSizeYPerPixel;
-	
-	public StatusBar(Texture iconTexture, Vector3f color, float posX, float posY) {
+	public StatusBar(Texture iconTexture, Color color, float posX, float posY) {
 		this.x = posX;
 		this.y = posY;
-		line = new GUITexture(color, posX, posY, 0, 110, 15, false);
-		icon = new GUITexture(iconTexture, posX - 10, posY - 5, 0, 25, 25, false);
+		line = new GUITexture(color, posX, posY, 110, 15, false);
+		icon = new GUITexture(iconTexture, posX - 10, posY - 5, 25, 25, false);
 		text = new GUIText(maxValue + "/" + maxValue, 1.1f, FontRenderer.font, 0, 0, 1.0f, false);
 		text.setColor(1.0f, 1.0f, 1.0f);
 		World.getWorld().addGUIText(text);
@@ -47,6 +44,11 @@ public class StatusBar {
 	public void render() {
 		GUIRenderer.render(line);
 		GUIRenderer.render(icon);
+	}
+	
+	@Override
+	public void renderText() {
+		
 	}
 	
 	public void increase(int value) {
@@ -72,9 +74,7 @@ public class StatusBar {
 	}
 	
 	private void setPosition() {
-		screenSizeXPerPixel = 1.0f / (float)Display.getWidth();
-		screenSizeYPerPixel = 1.0f / (float)Display.getHeight();
-		text.setPosition((x + 20) * screenSizeXPerPixel, (y - 2.5f) * screenSizeYPerPixel);
+		text.setPosition(x + 20, y - 2.5f);
 	}
 	
 	public boolean isFull() {

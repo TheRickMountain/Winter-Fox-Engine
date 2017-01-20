@@ -8,8 +8,8 @@ import com.wfe.core.Display;
 import com.wfe.graph.Mesh;
 import com.wfe.gui.GUITexture;
 import com.wfe.math.Matrix4f;
-import com.wfe.math.Vector3f;
 import com.wfe.textures.Texture;
+import com.wfe.utils.Color;
 import com.wfe.utils.MathUtils;
 import com.wfe.utils.OpenglUtils;
 
@@ -35,19 +35,18 @@ public class GUIRenderer {
 		for(GUITexture texture : textures) {
 			if(!texture.isCentered()) {
 				shader.modelMatrix.loadMatrix(MathUtils.getModelMatrix(modelMatrix, 
-						texture.getX(), texture.getY(), texture.getRot(), texture.getScaleX(), texture.getScaleY()));
+						texture.getPosX(), texture.getPosY(), texture.getRot(), texture.getScaleX(), texture.getScaleY()));
 			} else {
 				shader.modelMatrix.loadMatrix(MathUtils.getModelMatrix(modelMatrix, 
-						texture.getX() - texture.getScaleX() / 2, texture.getY() - texture.getScaleY() / 2, 
+						texture.getPosX() - texture.getScaleX() / 2, texture.getPosY() - texture.getScaleY() / 2, 
 						texture.getRot(), texture.getScaleX(), texture.getScaleY()));
 			}
 			
 			if(texture.isSolidColor()) {
-				shader.color.loadVec3(texture.getColor());
+				shader.color.loadColor(texture.getColor());
 				shader.solidColor.loadBoolean(true);
 			} else {
 				shader.solidColor.loadBoolean(false);
-				shader.active.loadBoolean(false);
 				texture.getTexture().bind(0);
 			}
 			
@@ -58,26 +57,25 @@ public class GUIRenderer {
 	public static void render(GUITexture texture) {
 		if(!texture.isCentered()) {
 			shader.modelMatrix.loadMatrix(MathUtils.getModelMatrix(modelMatrix, 
-					texture.getX(), texture.getY(), texture.getRot(), texture.getScaleX(), texture.getScaleY()));
+					texture.getPosX(), texture.getPosY(), texture.getRot(), texture.getScaleX(), texture.getScaleY()));
 		} else {
 			shader.modelMatrix.loadMatrix(MathUtils.getModelMatrix(modelMatrix, 
-					texture.getX() - texture.getScaleX() / 2, texture.getY() - texture.getScaleY() / 2, 
+					texture.getPosX() - texture.getScaleX() / 2, texture.getPosY() - texture.getScaleY() / 2, 
 					texture.getRot(), texture.getScaleX(), texture.getScaleY()));
 		}
 		
 		if(texture.isSolidColor()) {
-			shader.color.loadVec3(texture.getColor());
+			shader.color.loadColor(texture.getColor());
 			shader.solidColor.loadBoolean(true);
 		} else {
 			shader.solidColor.loadBoolean(false);
-			shader.active.loadBoolean(false);
 			texture.getTexture().bind(0);
 		}
 		
 		GL11.glDrawArrays(GL11.GL_TRIANGLE_STRIP, 0, 4);
 	}
 	
-	public static void render(Texture texture, float x, float y, float rot, float scaleX, float scaleY, boolean centered, boolean active) {
+	public static void render(Texture texture, float x, float y, float rot, float scaleX, float scaleY, boolean centered) {
 		if(!centered) {
 			shader.modelMatrix.loadMatrix(MathUtils.getModelMatrix(modelMatrix, 
 					x, y, rot, scaleX, scaleY));
@@ -88,13 +86,12 @@ public class GUIRenderer {
 		}
 		
 		shader.solidColor.loadBoolean(false);
-		shader.active.loadBoolean(!active);
 		texture.bind(0);
 		
 		GL11.glDrawArrays(GL11.GL_TRIANGLE_STRIP, 0, 4);
 	}
 	
-	public static void render(Vector3f color, float x, float y, float rot, float scaleX, float scaleY, boolean centered) {
+	public static void render(Color color, float x, float y, float rot, float scaleX, float scaleY, boolean centered) {
 		if(!centered) {
 			shader.modelMatrix.loadMatrix(MathUtils.getModelMatrix(modelMatrix, 
 					x, y, rot, scaleX, scaleY));
@@ -104,7 +101,7 @@ public class GUIRenderer {
 					rot, scaleX, scaleY));
 		}
 		
-		shader.color.loadVec3(color);
+		shader.color.loadColor(color);
 		shader.solidColor.loadBoolean(true);
 		
 		GL11.glDrawArrays(GL11.GL_TRIANGLE_STRIP, 0, 4);

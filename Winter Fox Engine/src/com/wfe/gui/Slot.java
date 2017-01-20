@@ -1,39 +1,52 @@
 package com.wfe.gui;
 
-import com.wfe.core.Display;
 import com.wfe.input.Mouse;
 import com.wfe.renderEngine.FontRenderer;
 import com.wfe.renderEngine.GUIRenderer;
 import com.wfe.textures.Texture;
+import com.wfe.utils.Color;
 
 public class Slot {
 
-	private float x, y;
+	private float posX, posY;
 	private float scaleX, scaleY;
 	private Texture texture;
+	private Color color;
+	private boolean hasTexture = true;
 	private GUIText text;
 	private Item item;
 	private boolean hasItem;
 	private int itemsAmount = 0;
-	private boolean active = true;
-	public boolean showBackground = true;
 	
-	public Slot(float x, float y, float scaleX, float scaleY, Texture texture) {
-		this.x = x;
-		this.y = y;
+	public Slot(float posX, float posY, float scaleX, float scaleY, Texture texture) {
+		this.posX = posX;
+		this.posY = posY;
 		this.scaleX = scaleX;
 		this.scaleY = scaleY;
 		this.texture = texture;
-		this.text = new GUIText("", 1.2f, FontRenderer.font, 0, 0, 1.0f, false);
+		this.text = new GUIText("", 1.1f, FontRenderer.font, 0, 0, 1.0f, false);
 		this.text.setColor(1.0f, 1.0f, 1.0f);
 	}
 	
+	public Slot(float posX, float posY, float scaleX, float scaleY, Color color) {
+		this.posX = posX;
+		this.posY = posY;
+		this.scaleX = scaleX;
+		this.scaleY = scaleY;
+		this.color = color;
+		this.text = new GUIText("", 1.1f, FontRenderer.font, 0, 0, 1.0f, false);
+		this.text.setColor(1.0f, 1.0f, 1.0f);
+		this.hasTexture = false;
+	}
+	
 	public void render() {
-		if(showBackground)
-			GUIRenderer.render(texture, x, y, 0, scaleX, scaleY, false, true);
+		if(hasTexture)
+			GUIRenderer.render(texture, posX, posY, 0, scaleX, scaleY, false);
+		else
+			GUIRenderer.render(color, posX, posY, 0, scaleX, scaleY, false);
 		
 		if(hasItem) {
-			GUIRenderer.render(item.icon, x + scaleX / 2, y + scaleY / 2, 0, scaleX + 5, scaleY + 5, true, active);
+			GUIRenderer.render(item.icon, posX + scaleX / 2, posY + scaleY / 2, 0, scaleX, scaleY, true);
 		}
 	}
 	
@@ -56,27 +69,27 @@ public class Slot {
 		return item;
 	}
 	
-	public float getX() {
-		return x;
+	public float getPosX() {
+		return posX;
 	}
 
-	public void setX(float x) {
-		this.x = x;
+	public void setPosX(float posX) {
+		this.posX = posX;
 		updateTextPosition();
 	}
 
-	public float getY() {
-		return y;
+	public float getPosY() {
+		return posY;
 	}
 
-	public void setY(float y) {
-		this.y = y;
+	public void setPosY(float posY) {
+		this.posY = posY;
 		updateTextPosition();
 	}
 	
-	public void setPosition(float x, float y) {
-		this.x = x;
-		this.y = y;
+	public void setPosition(float posX, float posY) {
+		this.posX = posX;
+		this.posY = posY;
 		updateTextPosition();
 	}
 
@@ -106,8 +119,8 @@ public class Slot {
 	}
 	
 	public boolean isMouseOvered() {
-		return Mouse.getX() > x && Mouse.getX() < x + scaleX &&
-				Mouse.getY() > y && Mouse.getY() < y + scaleY;
+		return Mouse.getX() > posX && Mouse.getX() < posX + scaleX &&
+				Mouse.getY() > posY && Mouse.getY() < posY + scaleY;
 	}
 	
 	public int getItemsAmount() {
@@ -124,17 +137,7 @@ public class Slot {
 	}
 	
 	private void updateTextPosition() {
-		float tempX = 1.0f / Display.getWidth();
-		float tempY = 1.0f / Display.getHeight();
-		this.text.setPosition(tempX * x, tempY * (y - 10));
-	}
-
-	public boolean isActive() {
-		return active;
-	}
-
-	public void setActive(boolean active) {
-		this.active = active;
+		this.text.setPosition(posX, posY);
 	}
 	
 }

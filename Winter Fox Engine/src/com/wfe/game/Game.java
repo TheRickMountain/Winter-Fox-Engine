@@ -15,9 +15,7 @@ import com.wfe.entities.Shroom;
 import com.wfe.entities.Stick;
 import com.wfe.entities.Wheat;
 import com.wfe.graph.OBJLoader;
-import com.wfe.gui.GUIText;
 import com.wfe.math.Vector3f;
-import com.wfe.renderEngine.FontRenderer;
 import com.wfe.textures.Texture;
 import com.wfe.utils.MyFile;
 import com.wfe.utils.MyRandom;
@@ -35,6 +33,10 @@ public class Game implements IGameLogic {
 				.create());
 		
 		ResourceManager.loadTexture("primitiveFont", Texture.newTexture(new MyFile("font/primitiveFont.png"))
+				.normalMipMap()
+				.create());
+		
+		ResourceManager.loadTexture("myFont", Texture.newTexture(new MyFile("font/myFont.png"))
 				.normalMipMap()
 				.create());
 		
@@ -62,7 +64,10 @@ public class Game implements IGameLogic {
 				.normalMipMap().create());
 		ResourceManager.loadTexture("shroom_ui", Texture.newTexture(new MyFile("gui/items/shroom.png"))
 				.normalMipMap().create());
-		ResourceManager.loadTexture("bread_ui", Texture.newTexture(new MyFile("gui/items/bread.png")).create());
+		ResourceManager.loadTexture("bread_ui", Texture.newTexture(new MyFile("gui/items/bread.png"))
+				.normalMipMap().create());
+		ResourceManager.loadTexture("bow_ui", Texture.newTexture(new MyFile("gui/items/bow.png"))
+				.normalMipMap().create());
 		ResourceManager.loadTexture("bush_ui", Texture.newTexture(new MyFile("gui/items/bush.png")).create());
 		ResourceManager.loadTexture("slot_ui", Texture.newTexture(new MyFile("gui/slot.png"))
 				.normalMipMap().create());
@@ -75,7 +80,6 @@ public class Game implements IGameLogic {
 				.normalMipMap().create());
 		ResourceManager.loadTexture("background_frame_ui", Texture.newTexture(new MyFile("gui/background_frame.png"))
 				.normalMipMap().create());
-		ResourceManager.loadTexture("background_ui", Texture.newTexture(new MyFile("gui/background.png")).create());
 		ResourceManager.loadTexture("corner_frame_ui", Texture.newTexture(new MyFile("gui/corner_frame.png"))
 				.normalMipMap().create());
 		ResourceManager.loadTexture("h_edge_frame_ui", Texture.newTexture(new MyFile("gui/h_edge_frame.png")).create());
@@ -204,11 +208,6 @@ public class Game implements IGameLogic {
 		
 		player = new Player(camera, new Transformation(80, 0.65f, 80));
 		World.getWorld().addEntity(player);
-		
-		GUIText text = new GUIText("Winter Fox Engine", 1.1f, 
-				FontRenderer.font, 0.875f, 0.0f, 0.125f, true);
-		text.setColor(1, 1, 1);
-		World.getWorld().addGUIText(text);
 		
 		World.getWorld().addEntityToTile(new Flint(player, new Transformation(80 + 0.5f, 0, 82 + 0.5f)));
 		World.getWorld().addEntityToTile(new Stick(player, new Transformation(81 + 0.5f, 0, 82 + 0.5f)));

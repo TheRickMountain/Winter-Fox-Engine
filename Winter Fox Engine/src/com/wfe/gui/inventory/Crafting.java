@@ -5,129 +5,94 @@ import java.util.List;
 
 import com.wfe.core.Display;
 import com.wfe.core.ResourceManager;
-import com.wfe.game.World;
 import com.wfe.gui.GUIButton;
-import com.wfe.gui.GUIFrame;
+import com.wfe.gui.GUIElement;
 import com.wfe.gui.GUIText;
 import com.wfe.gui.GUITexture;
 import com.wfe.gui.Item;
 import com.wfe.gui.ItemDatabase;
-import com.wfe.gui.Slot;
-import com.wfe.input.Key;
-import com.wfe.input.Keyboard;
 import com.wfe.input.Mouse;
 import com.wfe.renderEngine.FontRenderer;
 import com.wfe.renderEngine.GUIRenderer;
+import com.wfe.utils.Color;
+import com.wfe.utils.Rect;
 
-public class Crafting {
+public class Crafting implements GUIElement {
+
+	private Color backgroundColor = new Color(131, 128, 126, 150).convert();
 	
-	private GUIFrame frame;
+	private GUITexture background;
 	
-	private List<Slot> slots = new ArrayList<Slot>();
+	/*** Information table ***/
+	private GUITexture infoBackground;
+	private GUITexture infoIcon;
+	private GUIText infoName;
+	private GUIText infoDesc;
+	private Item activeItem;
+	/*** *** ***/
 	
-	private int slotsX = 5;
-	private int slotsY = 7;
-	
-	private int slotSize = 50;
-	private int ingredientSize = 50;
-	
-	private GUITexture resultIcon;
-	private GUIText resultText;
+	private List<Ingredient> ingredients = new ArrayList<Ingredient>();
 	
 	private GUIButton craftButton;
 	
-	private Item activeItem;
+	private float borderOffset = 5;
+	private float elementOffset = 5;
 	
-	private boolean showCrafting = false;
+	private List<Element> list = new ArrayList<Element>();
 	
-	private List<Slot> ingredients = new ArrayList<Slot>();
-	private List<GUIText> ingredientsAmount = new ArrayList<GUIText>();
+	public boolean showCrafting = false;
 	
-	private GUIButton lessButton, moreButton;
-	private GUIText amountText;
-	private int amount = 1;
-	
-	public Crafting() {		
-		frame = new GUIFrame(0, 0, 545 + 10, 380 + 10);
+	public Crafting() {
+		background = new GUITexture(new Color(50f, 50f, 50f, 230).convert(), 0, 0, 
+				545 + (borderOffset * 2), 325 + (borderOffset * 2), false);
 		
-		for(int i = 0; i < slotsX * slotsY; i++) {
-			slots.add(new Slot(0, 0, slotSize, slotSize, ResourceManager.getTexture("slot_ui")));
-			slots.get(i).showBackground = false;
-		}
+		infoBackground = new GUITexture(backgroundColor,
+				0, 0, 270, 160, false);
+		infoIcon = new GUITexture(ResourceManager.getTexture("flint_ui"), 0, 0, 70, 70, false);
+		infoName = new GUIText("Flint", 1.4f, FontRenderer.font, 0.0f, 0.0f, 1.0f, false)
+				.setColor(1.0f, 1.0f, 1.0f);
+		infoDesc = new GUIText("Description text", 1.0f, FontRenderer.font, 0.0f, 0.0f, 
+				(1.0f / Display.getWidth()) * 185, false)
+				.setColor(1.0f, 1.0f, 1.0f);
 		
-		slots.get(0).addItem(ItemDatabase.getItem(Item.AXE));
-		slots.get(1).addItem(ItemDatabase.getItem(Item.HOE));
-		slots.get(2).addItem(ItemDatabase.getItem(Item.ROPE));
-		slots.get(3).addItem(ItemDatabase.getItem(Item.BREAD));
+		ingredients.add(new Ingredient(new Rect(0, 0, 50, 65), backgroundColor, ItemDatabase.getItem(Item.FLINT)));
+		ingredients.add(new Ingredient(new Rect(0, 0, 50, 65), backgroundColor, ItemDatabase.getItem(Item.FLINT)));
+		ingredients.add(new Ingredient(new Rect(0, 0, 50, 65), backgroundColor, ItemDatabase.getItem(Item.FLINT)));
+		ingredients.add(new Ingredient(new Rect(0, 0, 50, 65), backgroundColor, ItemDatabase.getItem(Item.FLINT)));
+		ingredients.add(new Ingredient(new Rect(0, 0, 50, 65), backgroundColor, ItemDatabase.getItem(Item.FLINT)));
 		
-		resultIcon = new GUITexture(ResourceManager.getTexture("slot_ui"));
-		resultIcon.setScale(80, 80);
+		craftButton = new GUIButton(new Rect(0, 0, 80, 25), new Color(96, 148, 205, 255).convert(), "Create");
 		
-		resultText = new GUIText("", 1.4f, FontRenderer.font, 0, 0, 1.0f, false);
-		
-		for(int i = 0; i < 5; i++) {
-			ingredients.add(new Slot(0, 0, ingredientSize, ingredientSize, ResourceManager.getTexture("slot_ui")));
-			ingredients.get(i).showBackground = false;
-			ingredientsAmount.add(new GUIText("",
-					1.1f, FontRenderer.font, 0.0f, 0.0f, 1.0f, false).setColor(1.0f, 1.0f, 1.0f));
-		}
-		
-		craftButton = new GUIButton(ResourceManager.getTexture("list_ui"), "Craft", 0, 0, 100, 30);
-		
-		lessButton = new GUIButton(ResourceManager.getTexture("list_ui"), "<", 0, 0, 25, 25);
-		moreButton = new GUIButton(ResourceManager.getTexture("list_ui"), ">", 0, 0, 25, 25);
-		amountText = new GUIText(amount + "", 1.2f, FontRenderer.font, 0.0f, 0.0f, 1.0f, false);
+		list.add(new Element(new Rect(0, 0, 270, 50), backgroundColor,
+				ItemDatabase.getItem(Item.AXE)));
+		list.add(new Element(new Rect(0, 0, 270, 50), backgroundColor,
+				ItemDatabase.getItem(Item.BREAD)));
+		list.add(new Element(new Rect(0, 0, 270, 50), backgroundColor,
+				ItemDatabase.getItem(Item.ROPE)));
+		list.add(new Element(new Rect(0, 0, 270, 50), backgroundColor,
+				ItemDatabase.getItem(Item.BOW)));
 		
 		updatePositions();
+		
+		activeItem = ItemDatabase.getItem(Item.AXE);
 	}
 	
-	public void update() {
+	public void update() {	
 		if(showCrafting) {
-			if(Keyboard.isKeyDown(Key.KEY_E)) {
-				setShowCrafting(false);
-			}
-			
 			if(Mouse.isButtonDown(0)) {
-				for(Slot slot : slots) {
-					Mouse.setActiveInGUI(true);
-					if(slot.isMouseOvered()) {
-						if(slot.isHasItem()) {
-							activeItem = slot.getItem();
-							updateRecipe();
-						}
-						
-						checkAllRecipes();
+				for(Element element : list) {
+					if(element.isMouseOvered()) {
+						activeItem = element.item;
+						updateRecipe(false);
+						break;
 					}
 				}
 				
-				if(craftButton.isMouseOvered()) {
-					Mouse.setActiveInGUI(true);
-					if(checkRecipe(activeItem)) {
-						GUIManager.getGUI().inventory.addItem(activeItem, amount);
-						
-						// В случае если все ингредиенты присутствуют удаляем их из инвентаря
-						int[] ingredients = activeItem.ingredients;
-						for(int i = 0; i < ingredients.length; i+=2) {
-							GUIManager.getGUI().inventory
-							.removeItem(ItemDatabase.getItem(ingredients[i]), ingredients[i + 1] * amount);
-						}
+				if(craftButton.rect.isMouseOvered()) {
+					if(updateRecipe(true)) {
+						GUIManager.getGUI().inventory.addItem(activeItem, 1);
+						updateRecipe(false);
 					}
-					
-					checkAllRecipes();
-				}
-				
-				if(lessButton.isMouseOvered()) {
-					if(amount != 1) {
-						amount--;
-						amountText.setText(amount + "");
-					}
-					checkAllRecipes();
-				} else if(moreButton.isMouseOvered()) {
-					if(amount != 50) {
-						amount++;
-						amountText.setText(amount + "");
-					}
-					checkAllRecipes();
 				}
 			}
 		}
@@ -137,158 +102,97 @@ public class Crafting {
 		}
 	}
 	
+	@Override
 	public void render() {
 		if(showCrafting) {
-			for(Slot slot : slots) {
-				slot.render();
-			}
-			
-			GUIRenderer.render(resultIcon);
-			
-			for(Slot slot : ingredients) {
-				slot.render();
-			}
-			
+			GUIRenderer.render(background);
+			GUIRenderer.render(infoBackground);
+			GUIRenderer.render(infoIcon);
+			for(Element element : list)
+				element.render();
+			for(Ingredient ingredient : ingredients)
+				ingredient.render();
 			craftButton.render();
-			
-			lessButton.render();
-			moreButton.render();
 		}
 	}
-	
+
+	@Override
 	public void renderText() {
 		if(showCrafting) {
-			for(Slot slot : slots) {
-				slot.renderText();
-			}
+			FontRenderer.render(infoName);
+			FontRenderer.render(infoDesc);
 			
-			FontRenderer.render(resultText);
-			
+			for(Element element : list)
+				element.renderText();
+			for(Ingredient ingredient : ingredients)
+				ingredient.renderText();
 			craftButton.renderText();
-		
-			for(GUIText text : ingredientsAmount) {
-				FontRenderer.render(text);
-			}
-			
-			lessButton.renderText();
-			FontRenderer.render(amountText);
-			moreButton.renderText();
 		}
 	}
 	
 	private void updatePositions() {
-		float posX = (Display.getWidth() / 2) - (545 / 2) - 10;
-		float posY = Display.getHeight() / 4 - 10;
-		frame.setPosition(posX, posY);
-	
-		int count = 0;
-		for(int y = 0; y < slotsY; y++) {
-			for(int x = 0; x < slotsX; x++) {
-				slots.get(count).setPosition(
-						posX + (x * (slotSize + 5)) + 5, 
-						posY + (y * (slotSize + 5)) + 5);
-				count++;
-			}
+		background.setPosition(
+				(Display.getWidth() / 2) - background.getScaleX() / 2, 
+				(Display.getHeight() / 2) - background.getScaleY() / 2);
+		
+		for(int i = 0; i < list.size(); i++) {
+			Element element = list.get(i);
+			element.rect.setPosition(
+					background.getPosX() + borderOffset, 
+					(background.getPosY() + (i * (element.rect.height + elementOffset))) + borderOffset);
 		}
 		
-		resultIcon.setPosition(frame.getX() + (frame.getScaleX() / 2) + 5, frame.getY() + 5);
-		
-		lessButton.setPosition(resultIcon.getX(), resultIcon.getY() + resultIcon.getScaleY() + 10);
-		amountText.setPosition(
-				(1.0f / Display.getWidth()) * (lessButton.getPosX() + lessButton.getScaleX()), 
-				(1.0f / Display.getHeight()) * lessButton.getPosY());
-		moreButton.setPosition(lessButton.getPosX() + lessButton.getScaleX() + 28, lessButton.getPosY());
-		
-		resultText.setPosition(
-				(1.0f / Display.getWidth()) * (resultIcon.getX() + resultIcon.getScaleX()), 
-				(1.0f / Display.getHeight()) * (frame.getY() + 5));
+		infoBackground.setPosition(list.get(0).rect.x + list.get(0).rect.width + 5, 
+				list.get(0).rect.y);
+		infoIcon.setPosition(infoBackground.getPosX() + borderOffset, infoBackground.getPosY() + borderOffset);
+		infoName.setPosition(infoIcon.getPosX() + infoIcon.getScaleX() + borderOffset, 
+				infoIcon.getPosY());
+		infoDesc.setPosition(infoIcon.getPosX() + infoIcon.getScaleX() + borderOffset, 
+				infoIcon.getPosY() + 30);
 		
 		for(int i = 0; i < ingredients.size(); i++) {
-			Slot slot = ingredients.get(i);
-			slot.setPosition(resultIcon.getX() + (i * (ingredientSize + 5)), 
-					lessButton.getPosY() + lessButton.getScaleY() + 10);
-			
-			ingredientsAmount.get(i).setPosition((1.0f / Display.getWidth()) * (slot.getX() + slot.getScaleX() / 3), 
-					(1.0f / Display.getHeight()) * (slot.getY() + slot.getScaleY()));
+			Ingredient ingred = ingredients.get(i);
+			ingred.rect.setPosition(infoBackground.getPosX() + (i * (ingred.rect.width + borderOffset)), 
+					infoBackground.getPosY() + infoBackground.getScaleY() + borderOffset);
 		}
 		
-		craftButton.setPosition(frame.getX() + frame.getScaleX() - craftButton.getScaleX() - 5, 
-				frame.getY() + frame.getScaleY() - craftButton.getScaleY() - 5);
+		craftButton.rect.setPosition(
+				(background.getPosX() + background.getScaleX() - borderOffset) - craftButton.rect.width, 
+				(background.getPosY() + background.getScaleY() - borderOffset) - craftButton.rect.height);
+	}
+	
+	public boolean updateRecipe(boolean remove) {
+		infoIcon.setTexture(activeItem.icon);
+		infoName.setText(activeItem.name);
 		
+		for(Ingredient ingredient : ingredients) {
+			ingredient.active = false;
+		}
+		
+		int count = 0;
+		boolean completed = true;
+		for(int i = 0; i < activeItem.ingredients.length; i+=2) {
+			Ingredient ingred = ingredients.get(count);
+			ingred.active = true;
+			ingred.item = ItemDatabase.getItem(activeItem.ingredients[i]);
+			ingred.set(GUIManager.getGUI().inventory.getItemAmount(activeItem.ingredients[i]), 
+					activeItem.ingredients[i + 1]);
+			count++;
+			
+			if(!ingred.completed){
+				completed = false;
+			}
+		}
+		
+		if(completed && remove) {
+			for(int i = 0; i < activeItem.ingredients.length; i+=2) {
+				GUIManager.getGUI().inventory.removeItem(
+						ItemDatabase.getItem(activeItem.ingredients[i]), activeItem.ingredients[i + 1]);
+			}
+		}
+		
+		return completed;
 	}
 
-	protected boolean isShowCrafting() {
-		return showCrafting;
-	}
-
-	protected void setShowCrafting(boolean showCrafting) {
-		if(this.showCrafting == showCrafting)
-			return;
-		
-		this.showCrafting = showCrafting;
-		
-		if(this.showCrafting) {
-			if(activeItem == null) {
-				activeItem = slots.get(0).getItem();
-			}
-			
-			World.getWorld().addGUITextures(frame.getFrameTextures());
-			checkAllRecipes();
-		} else {
-			World.getWorld().removeGUITextures(frame.getFrameTextures());
-		}
-	}
-	
-	private void updateRecipe() {
-		if(activeItem != null) {
-			resultIcon.setTexture(activeItem.icon);
-			resultText.setText(activeItem.name);
-			
-			int count = 0;
-			for(Slot i : ingredients)
-				i.removeItem();
-			
-			for(GUIText t : ingredientsAmount) {
-				t.setText("");
-			}
-			
-			for(int i = 0; i < activeItem.ingredients.length; i += 2) {
-				ingredients.get(count).addItem(ItemDatabase.getItem(activeItem.ingredients[i]));
-				
-				int currentItemsAmount = GUIManager.getGUI().inventory.getItemAmount(activeItem.ingredients[i]);
-				int requiredItemsAmount = activeItem.ingredients[i + 1] * amount;
-				if(currentItemsAmount < requiredItemsAmount) {
-					ingredientsAmount.get(count).setColor(1.0f, 0.0f, 0.0f);
-				} else {
-					ingredientsAmount.get(count).setColor(0.0f, 0.6f, 0.0f);
-				}
-				
-				ingredientsAmount.get(count)
-					.setText(currentItemsAmount + "/" + requiredItemsAmount);
-				count++;
-			}
-		}
-	}
-	
-	private void checkAllRecipes() {
-		updateRecipe();
-		
-		for(Slot slot : slots) {
-			if(slot.isHasItem()) {
-				slot.setActive(checkRecipe(slot.getItem()));
-			}
-		}
-	}
-	
-	private boolean checkRecipe(Item item) {
-		int[] ingredients = item.ingredients;
-		boolean craft = true;
-		for(int i = 0; i < ingredients.length; i+=2) {
-			if(GUIManager.getGUI().inventory.getItemAmount(ingredients[i]) < ingredients[i + 1] * amount) {
-				craft = false;
-			}
-		}
-		return craft;
-	}
 	
 }
