@@ -4,6 +4,7 @@ import com.wfe.core.Camera;
 import com.wfe.core.Display;
 import com.wfe.core.IGameLogic;
 import com.wfe.core.ResourceManager;
+import com.wfe.ecs.StaticEntity;
 import com.wfe.ecs.Transformation;
 import com.wfe.entities.Fern;
 import com.wfe.entities.Flint;
@@ -16,6 +17,7 @@ import com.wfe.entities.Stick;
 import com.wfe.entities.Wheat;
 import com.wfe.graph.OBJLoader;
 import com.wfe.math.Vector3f;
+import com.wfe.terrain.Terrain;
 import com.wfe.textures.Texture;
 import com.wfe.utils.MyFile;
 import com.wfe.utils.MyRandom;
@@ -23,7 +25,9 @@ import com.wfe.utils.MyRandom;
 public class Game implements IGameLogic {
 	
 	Camera camera;
-	Player player;
+	public static Player player;
+	
+	public static StaticEntity pickedEntity;
 	
 	@Override
 	public void loadResources() throws Exception {
@@ -31,6 +35,11 @@ public class Game implements IGameLogic {
 		ResourceManager.loadTexture("wall", Texture.newTexture(new MyFile("textures/wall.png"))
 				.normalMipMap(-0.4f)
 				.create());
+		
+		ResourceManager.loadTexture("terrain", Texture.newTexture(new MyFile("textures/terrain.png"))
+				.normalMipMap(-0.4f)
+				.create());
+		
 		
 		ResourceManager.loadTexture("primitiveFont", Texture.newTexture(new MyFile("font/primitiveFont.png"))
 				.normalMipMap()
@@ -179,6 +188,13 @@ public class Game implements IGameLogic {
 		ResourceManager.loadMesh("rock", OBJLoader.loadMesh("/entity/rock/rock_1.obj"));
 		/*** *** ***/
 		
+		/*** Arrow ***/
+		ResourceManager.loadTexture("arrow", Texture.newTexture(new MyFile("entity/arrow/diffuse.png"))
+				.create());
+		
+		ResourceManager.loadMesh("arrow", OBJLoader.loadMesh("/entity/arrow/model.obj"));
+		/*** *** ***/
+		
 		/*** Player ***/
 		ResourceManager.loadTexture("player", Texture.newTexture(new MyFile("entity/player/diffuse.png"))
 				.normalMipMap(-0.4f)
@@ -206,6 +222,9 @@ public class Game implements IGameLogic {
 		World.createWorld(camera);
 		World.getWorld().init();
 		
+		Terrain terrain = new Terrain(0, 0);
+        World.getWorld().addTerrain(terrain);
+		
 		player = new Player(camera, new Transformation(80, 0.65f, 80));
 		World.getWorld().addEntity(player);
 		
@@ -217,6 +236,8 @@ public class Game implements IGameLogic {
 		World.getWorld().addEntityToTile(new Wheat(new Transformation(80 + 0.5f, 0, 83 + 0.5f)));
 		World.getWorld().addEntityToTile(new Wheat(new Transformation(81 + 0.5f, 0, 83 + 0.5f)));
 		World.getWorld().addEntityToTile(new Wheat(new Transformation(82 + 0.5f, 0, 83 + 0.5f)));
+		
+		//World.getWorld().addEntity(new Arrow(player, new Transformation(80, 2, 80)));
 		
 		for(int i = 0; i < 100; i++) {		
 			Shroom shroom = new Shroom(player, new Transformation(MyRandom.nextInt(160) + 0.5f, 0, MyRandom.nextInt(160) + 0.5f));

@@ -4,6 +4,7 @@ import com.wfe.ecs.Component;
 import com.wfe.ecs.ComponentType;
 import com.wfe.ecs.StaticEntity;
 import com.wfe.ecs.Transformation;
+import com.wfe.game.Game;
 import com.wfe.game.World;
 import com.wfe.gui.ItemDatabase;
 import com.wfe.gui.inventory.GUIManager;
@@ -34,6 +35,12 @@ public class GatherableComponent implements Component {
 						World.getWorld().removeEntityFromTile((int)transform.getX(), (int)transform.getZ());
 					}
 				}
+			}
+		}
+		
+		if(Mouse.isButtonDown(0)) {
+			if(boundingBox.intersects()) {
+				Game.pickedEntity = (StaticEntity) transform.getParent();
 			}
 		}
 	}

@@ -14,12 +14,12 @@ public class Camera {
     public static final float Z_NEAR = 0.1f;
     public static final float Z_FAR = 1000.f;
 
-    private static final float MIN_DISTANCE = 10;
+    private static final float MIN_DISTANCE = 7;
     private static final float MAX_DISTANCE = 25;
 
     private float distanceFromPlayer = 12;
     private float angleAroundPlayer = 1;
-    private float zoomSpeed = 0;
+    private float zoomSpeed = 50;
 
     private static final float MAX_PITCH = 85;
     private static final float MIN_PITCH = 45;
@@ -66,15 +66,15 @@ public class Camera {
     }
 
     private void rotate(float dt) {
-    	if(Mouse.isButtonDown(2)) {
+    	if(Mouse.isButtonDown(1)) {
             Mouse.hide();
         }
 
-        if(Mouse.isButtonUp(2)) {
+        if(Mouse.isButtonUp(1)) {
             Mouse.show();
         }
     	
-    	if(Mouse.isButton(2)) {
+    	if(Mouse.isButton(1)) {
             calculateAngleAroundPlayer(dt);
             calculatePitch(dt);
     	} 

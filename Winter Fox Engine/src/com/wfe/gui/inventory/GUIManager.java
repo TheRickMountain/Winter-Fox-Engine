@@ -52,6 +52,7 @@ public class GUIManager implements GUIElement {
 		inventory.addItem(ItemDatabase.getItem(Item.WINDOW_WALL), 10);
 		inventory.addItem(ItemDatabase.getItem(Item.DOOR_WALL), 10);
 		inventory.addItem(ItemDatabase.getItem(Item.APPLE), 5);
+		inventory.addItem(ItemDatabase.getItem(Item.BOW), 1);
 	}
 	
 	public void update(float dt) {

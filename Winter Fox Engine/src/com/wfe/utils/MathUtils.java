@@ -126,12 +126,32 @@ public class MathUtils {
 		return (float) Math.sqrt((dX * dX) + (dY * dY));
 	}
 	
+	public static float getRotation(float x1, float y1, float x2, float y2){
+		return (float) -((Math.atan2(y2 - y1, x2 - x1)) * RADIANS_TO_DEGREES);
+	}
+	
 	public static float getAverageOfList(List<Float> numbers) {
         float total = 0;
         for (Float number : numbers) {
             total += number;
         }
         return total / numbers.size();
+    }
+	
+	public static Vector3f calculateNormal(Vector3f point0, Vector3f point1, Vector3f point2) {
+		Vector3f vectorA = Vector3f.sub(point1, point0, null);
+		Vector3f vectorB = Vector3f.sub(point2, point0, null);	
+		Vector3f normal = Vector3f.cross(vectorA, vectorB, null);
+		normal.normalise();
+		return normal;
+	}
+    
+    public static float barryCentric(Vector3f p1, Vector3f p2, Vector3f p3, Vector2f pos) {
+        float det = (p2.z - p3.z) * (p1.x - p3.x) + (p3.x - p2.x) * (p1.z - p3.z);
+        float l1 = ((p2.z - p3.z) * (pos.x - p3.x) + (p3.x - p2.x) * (pos.y - p3.z)) / det;
+        float l2 = ((p3.z - p1.z) * (pos.x - p3.x) + (p1.x - p3.x) * (pos.y - p3.z)) / det;
+        float l3 = 1.0f - l1 - l2;
+        return l1 * p1.y + l2 * p2.y + l3 * p3.y;
     }
 	
 }
