@@ -24,7 +24,7 @@ import com.wfe.utils.MyRandom;
 
 public class Game implements IGameLogic {
 	
-	Camera camera;
+	private Camera camera;
 	public static Player player;
 	
 	public static StaticEntity pickedEntity;
@@ -54,7 +54,7 @@ public class Game implements IGameLogic {
 				.create());
 		
 		ResourceManager.loadTexture("grass", Texture.newTexture(new MyFile("entity/grass/grass.png"))
-				.normalMipMap(-0.4f)
+				.normalMipMap(-0.2f)
 				.create());
 			
 		ResourceManager.loadTexture("banana_ui", Texture.newTexture(new MyFile("gui/items/banana.png")).create());
@@ -118,6 +118,19 @@ public class Game implements IGameLogic {
 		ResourceManager.loadMesh("pine_leaves", OBJLoader.loadMesh("/entity/pine/leaves.obj"));
 		/*** *** ***/
 		
+		/*** Birch ***/
+		ResourceManager.loadTexture("birch_bark", Texture.newTexture(new MyFile("entity/birch/bark.png"))
+				.normalMipMap(-0.4f)
+				.create());
+		
+		ResourceManager.loadTexture("birch_leaves", Texture.newTexture(new MyFile("entity/birch/leaves.png"))
+				.normalMipMap(-0.4f)
+				.create());
+		
+		ResourceManager.loadMesh("birch_bark", OBJLoader.loadMesh("/entity/birch/bark.obj"));
+		ResourceManager.loadMesh("birch_leaves", OBJLoader.loadMesh("/entity/birch/leaves.obj"));
+		/*** *** ***/
+		
 		/*** Willow ***/		
 		ResourceManager.loadTexture("willow", Texture.newTexture(new MyFile("entity/willow/diffuse.png"))
 				.normalMipMap(-0.4f)
@@ -173,6 +186,8 @@ public class Game implements IGameLogic {
 		/*** *** ***/
 		
 		/*** Wheat ***/
+		ResourceManager.loadTexture("wheat_ui", Texture.newTexture(new MyFile("entity/wheat/icon.png"))
+				.create());
 		ResourceManager.loadTexture("wheat", Texture.newTexture(new MyFile("entity/wheat/diffuse.png"))
 				.normalMipMap(-0.4f)
 				.create());
@@ -228,54 +243,36 @@ public class Game implements IGameLogic {
 		player = new Player(camera, new Transformation(80, 0.65f, 80));
 		World.getWorld().addEntity(player);
 		
-		World.getWorld().addEntityToTile(new Flint(player, new Transformation(80 + 0.5f, 0, 82 + 0.5f)));
-		World.getWorld().addEntityToTile(new Stick(player, new Transformation(81 + 0.5f, 0, 82 + 0.5f)));
-		World.getWorld().addEntityToTile(new Stick(player, new Transformation(82 + 0.5f, 0, 82 + 0.5f)));
+		World.getWorld().addEntity(new Flint(player, new Transformation(80 + 0.5f, 0, 82 + 0.5f)));
+		World.getWorld().addEntity(new Stick(player, new Transformation(81 + 0.5f, 0, 82 + 0.5f)));
+		World.getWorld().addEntity(new Stick(player, new Transformation(82 + 0.5f, 0, 82 + 0.5f)));
 		
-		World.getWorld().addEntityToTile(new Rock(player, new Transformation(80 + 0.5f, 0, 84 + 0.5f)));
-		World.getWorld().addEntityToTile(new Wheat(new Transformation(80 + 0.5f, 0, 83 + 0.5f)));
-		World.getWorld().addEntityToTile(new Wheat(new Transformation(81 + 0.5f, 0, 83 + 0.5f)));
-		World.getWorld().addEntityToTile(new Wheat(new Transformation(82 + 0.5f, 0, 83 + 0.5f)));
-		
-		//World.getWorld().addEntity(new Arrow(player, new Transformation(80, 2, 80)));
+		World.getWorld().addEntity(new Rock(player, new Transformation(80 + 0.5f, 0, 84 + 0.5f)));
+		World.getWorld().addEntity(new Wheat(player, new Transformation(80 + 0.5f, 0, 83 + 0.5f)));
+		World.getWorld().addEntity(new Wheat(player, new Transformation(81 + 0.5f, 0, 83 + 0.5f)));
+		World.getWorld().addEntity(new Wheat(player, new Transformation(82 + 0.5f, 0, 83 + 0.5f)));
 		
 		for(int i = 0; i < 100; i++) {		
 			Shroom shroom = new Shroom(player, new Transformation(MyRandom.nextInt(160) + 0.5f, 0, MyRandom.nextInt(160) + 0.5f));
-			World.getWorld().addEntityToTile(shroom);
+			World.getWorld().addEntity(shroom);
 			
 			Fern fern = new Fern(new Transformation(MyRandom.nextInt(160) + 0.5f, 0, MyRandom.nextInt(160) + 0.5f));
 			fern.setTextureIndex(MyRandom.nextInt(4));
-			World.getWorld().addEntityToTile(fern);
+			World.getWorld().addEntity(fern);
 		}
 		
 		for(int i = 60; i < 120; i++) {
 			for(int j = 60; j < 120; j++) {
-				int send = MyRandom.nextInt(5);
-				if(send == 1) {
+				if(MyRandom.nextInt(50) == 1) {
 					Grass grass = new Grass(player, new Transformation(i, 0, j));
-					int tileType = World.getWorld().getTile(i, j);
-					switch (tileType) {
-						case 4:
-						case 5:
-						case 8:
-						case 9:
-							grass.setTextureIndex(MyRandom.nextInt(3, 4, 5, 6));
-							break;
-						case 6:
-						case 7:
-						case 10:
-						case 11:
-							grass.setTextureIndex(MyRandom.nextInt(3, 4, 5, 6));
-							break;
-					}
-						
-					World.getWorld().addEntityToTile(grass);
+					grass.setTextureIndex(MyRandom.nextInt(3, 4, 5, 0));	
+					World.getWorld().addEntity(grass);
 				}
 			}
 		}
 		
-		Pine pine = new Pine(new Transformation(90.5f, 0, 88.5f));
-		World.getWorld().addEntity(pine);
+		World.getWorld().addEntity(new Pine(new Transformation(90.5f, 0, 88.5f)));
+		//World.getWorld().addEntity(new Birch(new Transformation(90.5f, 0, 88.5f)));
 	}
 	
 	@Override

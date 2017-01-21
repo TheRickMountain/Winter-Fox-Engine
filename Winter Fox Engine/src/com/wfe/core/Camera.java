@@ -66,15 +66,15 @@ public class Camera {
     }
 
     private void rotate(float dt) {
-    	if(Mouse.isButtonDown(1)) {
+    	if(Mouse.isButtonDown(2)) {
             Mouse.hide();
         }
 
-        if(Mouse.isButtonUp(1)) {
+        if(Mouse.isButtonUp(2)) {
             Mouse.show();
         }
     	
-    	if(Mouse.isButton(1)) {
+    	if(Mouse.isButton(2)) {
             calculateAngleAroundPlayer(dt);
             calculatePitch(dt);
     	} 

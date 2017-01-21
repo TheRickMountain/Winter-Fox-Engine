@@ -12,6 +12,7 @@ import org.lwjgl.opengl.GL32;
 import com.wfe.core.Camera;
 import com.wfe.core.Display;
 import com.wfe.core.ResourceManager;
+import com.wfe.game.Game;
 import com.wfe.math.Matrix4f;
 import com.wfe.terrain.Terrain;
 import com.wfe.terrain.TerrainBlock;
@@ -65,12 +66,13 @@ public class TerrainRenderer {
 			 prepareTerrainInstance(terrain, camera);
 			 List<TerrainBlock> batch = terrainBatches.get(terrain);
 			 for(TerrainBlock terrainBlock : batch) {
-				 //if(camera.testTerrainInView(terrainBlock)) {
+				 if(MathUtils.getDistance(terrainBlock.getX(), terrainBlock.getZ(), 
+						 Game.player.getTransform().getX(), Game.player.getTransform().getZ()) <= 100) {
 					 int[] indexInfo = terrainBlock.getIndicesVBOInfo();
 					 GL15.glBindBuffer(GL15.GL_ELEMENT_ARRAY_BUFFER, indexInfo[0]);
 					 render(terrainBlock.getIndex(), indexInfo[1]);
 					 GL15.glBindBuffer(GL15.GL_ELEMENT_ARRAY_BUFFER, 0);;
-				// }
+				 }
 			 }
 			 GL20.glDisableVertexAttribArray(0);
 			 GL20.glDisableVertexAttribArray(1);
