@@ -25,15 +25,15 @@ public class ItemDatabase {
 		items.add(new Item(Item.APPLE, ResourceManager.getTexture("apple_ui"), "Apple", ItemType.FOOD, 6, 20));
 		
 		items.add(new Item(Item.WALL, ResourceManager.getTexture("wall_ui"), "Wall", ItemType.BUILDING, 0,
-				new WallBlueprint(new Transformation(0, 0, 0)), 20));
+				new WallBlueprint(new Transformation(0, 0, 0)), 20,
+				new int[] {Item.LOG, 5}));
 		
 		items.add(new Item(Item.AXE, ResourceManager.getTexture("axe_ui"), "Axe", ItemType.WEAPON, 0, 1,
 				new int[] {Item.ROPE, 1, Item.STICK, 1, Item.FLINT, 1}));
 		
 		items.add(new Item(Item.SHROOM, ResourceManager.getTexture("shroom_ui"), "Shroom", ItemType.FOOD, 5, 20));
 		
-		items.add(new Item(Item.BREAD, ResourceManager.getTexture("bread_ui"), "Bread", ItemType.FOOD, 10, 20,
-				new int[] {Item.FIBER, 3, Item.SHROOM, 5, Item.AXE, 1, Item.STICK, 1, Item.ROPE, 3}));
+		items.add(new Item(Item.BREAD, ResourceManager.getTexture("bread_ui"), "Bread", ItemType.FOOD, 10, 20));
 		
 		items.add(new Item(Item.CROSS_WALL, ResourceManager.getTexture("cross_wall_ui"), "Cross Wall", ItemType.BUILDING, 0,
 				new CrossWallBlueprint(new Transformation(0, 0, 0)), 20));
@@ -64,7 +64,7 @@ public class ItemDatabase {
 		items.add(new Item(Item.BOW, ResourceManager.getTexture("bow_ui"), "Bow", ItemType.WEAPON, 0, 1,
 				new int[] {Item.ROPE, 1, Item.STICK, 1}));
 		
-		items.add(new Item(Item.WHEAT, ResourceManager.getTexture("wheat_ui"), "Wheat", ItemType.ITEM, 0, 40));
+		items.add(new Item(Item.LOG, ResourceManager.getTexture("log_ui"), "Log", ItemType.ITEM, 0, 40));
 	}
 	
 	public static void create() {

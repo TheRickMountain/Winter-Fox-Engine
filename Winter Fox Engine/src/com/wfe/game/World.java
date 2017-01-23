@@ -15,8 +15,7 @@ import com.wfe.gui.GUITexture;
 import com.wfe.gui.inventory.GUIManager;
 import com.wfe.physics.AABB;
 import com.wfe.renderEngine.RenderEngine;
-import com.wfe.terrain.Terrain;
-import com.wfe.terrain.TerrainBlock;
+import com.wfe.tileEngine.Terrain;
 import com.wfe.utils.MousePicker;
 import com.wfe.weather.Weather;
 
@@ -25,6 +24,7 @@ public class World {
 	private static World WORLD;
 	
 	private Camera camera;
+	private Terrain terrain;
 	private RenderEngine renderEngine;
 	
 	private List<StaticEntity> entities = new ArrayList<StaticEntity>();
@@ -32,13 +32,6 @@ public class World {
 	private List<StaticEntity> entitiesToAdd = new ArrayList<StaticEntity>();
 	
 	private Map<Mesh, List<StaticEntity>> entitiesToRender = new HashMap<Mesh, List<StaticEntity>>();
-	
-	public Map<Terrain, List<TerrainBlock>> terrains = new HashMap<Terrain, List<TerrainBlock>>();
-	
-	private static final int WORLD_TERRAIN_WIDTH = 3;
-    private static final int WORLD_TILE_WIDTH = WORLD_TERRAIN_WIDTH * Terrain.TERRAIN_WIDTH_BLOCKS;
-    
-    private final TerrainBlock[][] terrainGrid;
 	
 	private List<AABB> colliders = new ArrayList<AABB>();
 	
@@ -51,10 +44,10 @@ public class World {
 	
 	private World(Camera camera) {
 		this.camera = camera;
-		terrainGrid = new TerrainBlock[WORLD_TILE_WIDTH][WORLD_TILE_WIDTH];
 	}
 	
 	public void init() throws Exception {
+		this.terrain = new Terrain(10, 10, camera);
 		this.renderEngine = RenderEngine.create(camera);
 		this.weather = new Weather();
 		MousePicker.setUpMousePicker(camera);
@@ -76,6 +69,7 @@ public class World {
 		camera.update(dt);
 		MousePicker.update();
 		updateWeather(dt);
+		terrain.update(player.getTransform().x, player.getTransform().z);
 		
 		for(StaticEntity entity : entities) {
 			entity.update(dt);
@@ -101,7 +95,8 @@ public class World {
 	
 	public void render() {
 		renderEngine.clear();
-		renderEngine.render(entitiesToRender, terrains, guiTexts, guiTextures, guiManager);
+		terrain.render();
+		renderEngine.render(entitiesToRender, guiTexts, guiTextures, guiManager);
 	}
 	
 	public void addEntity(StaticEntity entity) {
@@ -167,26 +162,25 @@ public class World {
 	}
 	
 	public void setTile(int x, int y, int id) {
-		//terrain.setTile(x, y, id);
+		terrain.setTile(x, y, id);
 	}
 	
 	public int getTile(int x, int y) {
-		//return terrain.getTile(x, y);
-		return 0;
+		return terrain.getTile(x, y);
 	}
 	
 	public boolean addEntityToTile(StaticEntity entity) {
-		/*if(terrain.setTileEntity(
+		if(terrain.setTileEntity(
 				(int)entity.getTransform().getX(),
 				(int)entity.getTransform().getZ(), entity)) {
 			addEntity(entity);
 			return true;
-		}*/
+		}
 		return false;
 	}
 	
 	public void removeEntityFromTile(int x, int y) {
-		//terrain.removeTileEntity(x, y);
+		terrain.removeTileEntity(x, y);
 	}
 	
 	public void updateWeather(float dt) {
@@ -198,26 +192,8 @@ public class World {
 		weather.updateWeather(time, dt);
 	}
 	
-	public void addTerrain(Terrain terrain){
-        if(terrain.getGridX() > WORLD_TERRAIN_WIDTH || terrain.getGridZ() > WORLD_TERRAIN_WIDTH) {
-            System.err.println("World not large enough to add terrain at " + terrain.getGridX());
-            return;
-        }
-
-        List<TerrainBlock> terrainBlocks = new ArrayList<>();
-        for(TerrainBlock terrainBlock : terrain.getTerrainBlocks()){
-            int index = terrainBlock.getIndex();
-            int gridX = (index % Terrain.TERRAIN_WIDTH_BLOCKS)
-                    + (terrain.getGridX() * Terrain.TERRAIN_WIDTH_BLOCKS);
-            int gridZ = (int) (Math.floor(index / Terrain.TERRAIN_WIDTH_BLOCKS) + (terrain
-                    .getGridZ() * Terrain.TERRAIN_WIDTH_BLOCKS));
-            terrainGrid[gridX][gridZ] = terrainBlock;
-            terrainBlocks.add(terrainBlock);
-        }
-        terrains.put(terrain, terrainBlocks);
-    }
-	
 	public void cleanup() {
+		terrain.cleanup();
 		renderEngine.cleanup();
 	}
 	

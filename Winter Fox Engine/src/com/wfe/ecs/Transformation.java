@@ -170,49 +170,40 @@ public class Transformation {
 		return scaleZ;
 	}
 
-	public Transformation setX(float x) {
+	public void setX(float x) {
 		this.x = x;
-		return this;
 	}
 
-	public Transformation setY(float y) {
+	public void setY(float y) {
 		this.y = y;
-		return this;
 	}
 
-	public Transformation setZ(float z) {
+	public void setZ(float z) {
 		this.z = z;
-		return this;
 	}
 
-	public Transformation setRotX(float rotX) {
+	public void setRotX(float rotX) {
 		this.rotX = rotX;
-		return this;
 	}
 
-	public Transformation setRotY(float rotY) {
+	public void setRotY(float rotY) {
 		this.rotY = rotY;
-		return this;
 	}
 
-	public Transformation setRotZ(float rotZ) {
+	public void setRotZ(float rotZ) {
 		this.rotZ = rotZ;
-		return this;
 	}
 	
-	public Transformation setScaleX(float scaleX) {
+	public void setScaleX(float scaleX) {
 		this.scaleX = scaleX;
-		return this;
 	}
 	
-	public Transformation setScaleY(float scaleY) {
+	public void setScaleY(float scaleY) {
 		this.scaleY = scaleY;
-		return this;
 	}
 	
-	public Transformation setScaleZ(float scaleZ) {
+	public void setScaleZ(float scaleZ) {
 		this.scaleZ = scaleZ;
-		return this;
 	}
 	
 }

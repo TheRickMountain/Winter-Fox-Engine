@@ -23,7 +23,7 @@ public class Item {
 	public static final int STICK = 15;
 	public static final int ROPE = 16;
 	public static final int BOW = 17;
-	public static final int WHEAT = 18;
+	public static final int LOG = 18;
 	
 	public final int ID;
 	public final Texture icon;

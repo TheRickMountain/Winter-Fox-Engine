@@ -14,7 +14,7 @@ public class Camera {
     public static final float Z_NEAR = 0.1f;
     public static final float Z_FAR = 1000.f;
 
-    private static final float MIN_DISTANCE = 7;
+    private static final float MIN_DISTANCE = 10;
     private static final float MAX_DISTANCE = 25;
 
     private float distanceFromPlayer = 12;

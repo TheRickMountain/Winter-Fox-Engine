@@ -6,7 +6,6 @@ public enum ComponentType {
 	PLAYER_ANIMATION,
 	GATHERABLE,
 	COLLIDER,
-	ARROW,
 	NONE
 	
 }

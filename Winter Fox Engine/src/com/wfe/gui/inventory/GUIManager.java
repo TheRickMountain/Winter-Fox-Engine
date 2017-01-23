@@ -48,6 +48,7 @@ public class GUIManager implements GUIElement {
 		draggedItemAmountText.setColor(1.0f, 1.0f, 1.0f);
 		
 		inventory.addItem(ItemDatabase.getItem(Item.APPLE), 5);
+		inventory.addItem(ItemDatabase.getItem(Item.LOG), 100);
 	}
 	
 	public void update(float dt) {

@@ -1,4 +1,4 @@
-package com.wfe.renderEngine;
+package com.wfe.tileEngine;
 
 import com.wfe.shaders.ShaderProgram;
 import com.wfe.shaders.UniformMatrix;
@@ -13,15 +13,13 @@ public class TerrainShader extends ShaderProgram {
 	
 	protected UniformMatrix projectionMatrix = new UniformMatrix("projectionMatrix");
 	protected UniformMatrix viewMatrix = new UniformMatrix("viewMatrix");
-	protected UniformMatrix modelMatrix = new UniformMatrix("modelMatrix");
 	private UniformSampler diffuseMap = new UniformSampler("diffuseMap");
 	protected UniformVec3 lightPosition = new UniformVec3("lightPosition");
 	protected UniformVec3 lightColor = new UniformVec3("lightColor");
 	
 	public TerrainShader() {
 		super(VERTEX_SHADER, FRAGMENT_SHADER, "in_position", "in_textureCoords");
-		super.storeAllUniformLocations(projectionMatrix, viewMatrix, modelMatrix, 
-				diffuseMap, lightPosition, lightColor);
+		super.storeAllUniformLocations(projectionMatrix, viewMatrix, diffuseMap, lightPosition, lightColor);
 		connectTextureUnits();
 	}
 
