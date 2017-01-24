@@ -7,9 +7,12 @@ import com.wfe.gui.GUIText;
 import com.wfe.gui.GUITexture;
 import com.wfe.gui.Item;
 import com.wfe.gui.ItemDatabase;
+import com.wfe.gui.ProgressBar;
 import com.wfe.input.Mouse;
 import com.wfe.renderEngine.FontRenderer;
 import com.wfe.renderEngine.GUIRenderer;
+import com.wfe.utils.Color;
+import com.wfe.utils.Rect;
 
 public class GUIManager implements GUIElement {
 
@@ -27,6 +30,9 @@ public class GUIManager implements GUIElement {
 	public static Item draggedItem;
 	private GUIText draggedItemAmountText;
 	private int draggedItemAmount;
+	
+	public static ProgressBar progressBar;
+	public static boolean showProgressBar = false;
 	
 	private GUIManager() {	
 		ItemDatabase.create();
@@ -46,6 +52,10 @@ public class GUIManager implements GUIElement {
 		
 		draggedItemAmountText = new GUIText("", 1.3f, FontRenderer.font, 0, 0, 1f, false);
 		draggedItemAmountText.setColor(1.0f, 1.0f, 1.0f);
+		
+		progressBar = new ProgressBar(new Rect(0, 0, 100, 10), new Color(86, 198, 46, 255).convert());
+		progressBar.setCurrentValue(0);
+		System.out.println(progressBar.rect.width);
 		
 		inventory.addItem(ItemDatabase.getItem(Item.APPLE), 5);
 		inventory.addItem(ItemDatabase.getItem(Item.LOG), 100);
@@ -76,6 +86,9 @@ public class GUIManager implements GUIElement {
 		equipment.update();
 		crafting.update();
 		status.update(dt);
+		
+		if(showProgressBar)
+			progressBar.rect.setPosition(Mouse.getX(), Mouse.getY());
 	}
 	
 	public void render() {
@@ -86,6 +99,9 @@ public class GUIManager implements GUIElement {
 		equipment.render();
 		crafting.render();
 		status.render();
+		
+		if(showProgressBar)
+			progressBar.render();
 		
 		if(draggedItem != null) {
 			GUIRenderer.render(draggedItem.icon, Mouse.getX() - 25, Mouse.getY() - 25, 0, 55, 55, false);

@@ -21,6 +21,7 @@ public class GatherableComponent implements Component {
 	
 	private static final TimeUtil time = new TimeUtil();
 	private boolean start = false;
+	private float step = 0.0f;
 	
 	public GatherableComponent(int itemID, StaticEntity player, Transformation transform, BoundingBox boundingBox,
 			float gatheringTime) {
@@ -29,6 +30,7 @@ public class GatherableComponent implements Component {
 		this.transform = transform;
 		this.boundingBox = boundingBox;
 		this.gatheringTime = gatheringTime;
+		this.step = this.gatheringTime / 100.0f;
 	}
 	
 	@Override
@@ -44,20 +46,24 @@ public class GatherableComponent implements Component {
 		
 		if(start) {
 			float currentTime = (float)time.getTime();
+			GUIManager.showProgressBar = true;
 			if (currentTime <= gatheringTime) {
-				System.out.println(currentTime);
+				int value = (int) ((currentTime * 100) / gatheringTime);
+				GUIManager.progressBar.setCurrentValue(value);
 			} else {
 				if(GUIManager.getGUI().inventory.addItem(ItemDatabase.items.get(itemID), 1)) {
 					World.getWorld().removeEntityFromTile((int)transform.getX(), (int)transform.getZ());
 				}
 				time.reset();
 				start = false;
+				GUIManager.showProgressBar = false;
 			}
 		}
 		
 		if(Mouse.isButtonUp(1)) {
 			time.reset();
 			start = false;
+			GUIManager.showProgressBar = false;
 		}
 	}
 
