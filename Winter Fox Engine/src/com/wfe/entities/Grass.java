@@ -23,7 +23,7 @@ public class Grass extends StaticEntity {
 				getTransform().getY(), 
 				getTransform().getZ() + MyRandom.nextFloat(0.2f, 0.8f));
 		addComponent(new GatherableComponent(Item.FIBER, player, getTransform(), 
-				new BoundingBox(0.5f, 0.5f, 0.5f, getTransform())));
+				new BoundingBox(0.5f, 0.5f, 0.5f, getTransform()), 0.5f));
 	}
 
 }

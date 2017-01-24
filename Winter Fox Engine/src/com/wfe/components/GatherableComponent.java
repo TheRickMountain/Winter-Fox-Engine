@@ -9,6 +9,7 @@ import com.wfe.gui.ItemDatabase;
 import com.wfe.gui.inventory.GUIManager;
 import com.wfe.input.Mouse;
 import com.wfe.utils.MathUtils;
+import com.wfe.utils.TimeUtil;
 
 public class GatherableComponent implements Component {
 	
@@ -16,12 +17,18 @@ public class GatherableComponent implements Component {
 	private StaticEntity player;
 	private int itemID;
 	private BoundingBox boundingBox;
+	private float gatheringTime;
 	
-	public GatherableComponent(int itemID, StaticEntity player, Transformation transform, BoundingBox boundingBox) {
+	private static final TimeUtil time = new TimeUtil();
+	private boolean start = false;
+	
+	public GatherableComponent(int itemID, StaticEntity player, Transformation transform, BoundingBox boundingBox,
+			float gatheringTime) {
 		this.itemID = itemID;
 		this.player = player;
 		this.transform = transform;
 		this.boundingBox = boundingBox;
+		this.gatheringTime = gatheringTime;
 	}
 	
 	@Override
@@ -30,11 +37,27 @@ public class GatherableComponent implements Component {
 			if(MathUtils.getDistance(player.getTransform().x, player.getTransform().z, 
 					transform.x, transform.z) <= 2.5f) {
 				if(boundingBox.intersects()) {
-					if(GUIManager.getGUI().inventory.addItem(ItemDatabase.items.get(itemID), 1)) {
-						World.getWorld().removeEntityFromTile((int)transform.getX(), (int)transform.getZ());
-					}
+					start = true;
 				}
 			}
+		}
+		
+		if(start) {
+			float currentTime = (float)time.getTime();
+			if (currentTime <= gatheringTime) {
+				System.out.println(currentTime);
+			} else {
+				if(GUIManager.getGUI().inventory.addItem(ItemDatabase.items.get(itemID), 1)) {
+					World.getWorld().removeEntityFromTile((int)transform.getX(), (int)transform.getZ());
+				}
+				time.reset();
+				start = false;
+			}
+		}
+		
+		if(Mouse.isButtonUp(1)) {
+			time.reset();
+			start = false;
 		}
 	}
 

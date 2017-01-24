@@ -14,7 +14,7 @@ public class Shroom extends StaticEntity {
 		super(ResourceManager.getMesh("shroom"), 
 				new Material(ResourceManager.getTexture("shroom")), transform);
 		addComponent(new GatherableComponent(Item.SHROOM, player, getTransform(),
-				new BoundingBox(0.5f, 0.5f, 0.5f, getTransform())));
+				new BoundingBox(0.5f, 0.5f, 0.5f, getTransform()), 0.5f));
 		transform.setScale(0.5f);
 	}
 

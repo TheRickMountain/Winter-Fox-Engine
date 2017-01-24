@@ -17,7 +17,7 @@ public class Pine extends StaticEntity {
 				new Material(ResourceManager.getTexture("pine_bark")), transform);
 		addComponent(new ColliderComponent(0.5f, 1, 0.5f, transform));
 		addComponent(new GatherableComponent(Item.LOG, player, getTransform(), 
-				new BoundingBox(1f, 2f, 1f, getTransform())));
+				new BoundingBox(1f, 2f, 1f, getTransform()), 5));
 		
 		StaticEntity pineLeaves = new StaticEntity(ResourceManager.getMesh("pine_leaves"),
 				new Material(ResourceManager.getTexture("pine_leaves")).setHasTransparency(true), transform);

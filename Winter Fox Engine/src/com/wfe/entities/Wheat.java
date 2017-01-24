@@ -16,7 +16,7 @@ public class Wheat extends StaticEntity {
 				.setHasTransparency(true)
 				.setHasFakeLighting(true), transform);
 		addComponent(new GatherableComponent(Item.WHEAT, player, getTransform(), 
-				new BoundingBox(0.75f, 0.75f, 0.75f, getTransform())));
+				new BoundingBox(0.75f, 0.75f, 0.75f, getTransform()), 2));
 		getTransform().setScale(0.5f);
 	}
 

@@ -14,7 +14,7 @@ public class Amanita extends StaticEntity {
 		super(ResourceManager.getMesh("amanita"), 
 				new Material(ResourceManager.getTexture("amanita")), transform);
 		addComponent(new GatherableComponent(Item.AMANITA, player, getTransform(), 
-				new BoundingBox(0.5f, 0.5f, 0.5f, getTransform())));
+				new BoundingBox(0.5f, 0.5f, 0.5f, getTransform()), 0.5f));
 		transform.setScale(0.5f);
 	}
 
