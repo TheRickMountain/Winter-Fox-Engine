@@ -65,6 +65,9 @@ public class ItemDatabase {
 				new int[] {Item.ROPE, 1, Item.STICK, 1}));
 		
 		items.add(new Item(Item.LOG, ResourceManager.getTexture("log_ui"), "Log", ItemType.ITEM, 0, 40));
+		items.add(new Item(Item.WHEAT_SEED, ResourceManager.getTexture("wheat_seed_ui"), "Wheat seed", 
+				ItemType.ITEM, 0, 40, new int[] {Item.WHEAT, 1}));
+		items.add(new Item(Item.WHEAT, ResourceManager.getTexture("wheat_ui"), "Wheat", ItemType.ITEM, 0, 40));
 	}
 	
 	public static void create() {

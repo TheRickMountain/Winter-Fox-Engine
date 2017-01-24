@@ -51,6 +51,8 @@ public class Game implements IGameLogic {
 		ResourceManager.loadTexture("banana_ui", Texture.newTexture(new MyFile("gui/items/banana.png")).create());
 		ResourceManager.loadTexture("log_ui", Texture.newTexture(new MyFile("gui/items/log.png"))
 				.normalMipMap().create());
+		ResourceManager.loadTexture("wheat_seed_ui", Texture.newTexture(new MyFile("gui/items/wheat_seed.png"))
+				.normalMipMap().create());
 		ResourceManager.loadTexture("rope_ui", Texture.newTexture(new MyFile("gui/items/rope.png"))
 				.normalMipMap().create());
 		ResourceManager.loadTexture("fiber_ui", Texture.newTexture(new MyFile("gui/items/fiber.png"))
@@ -157,6 +159,7 @@ public class Game implements IGameLogic {
 		
 		/*** Stick ***/
 		ResourceManager.loadTexture("stick_ui", Texture.newTexture(new MyFile("entity/stick/icon.png"))
+				.normalMipMap()
 				.create());
 		ResourceManager.loadTexture("stick", Texture.newTexture(new MyFile("entity/stick/diffuse.png"))
 				.normalMipMap(-0.4f)
@@ -166,6 +169,9 @@ public class Game implements IGameLogic {
 		/*** *** ***/
 		
 		/*** Wheat ***/
+		ResourceManager.loadTexture("wheat_ui", Texture.newTexture(new MyFile("entity/wheat/icon.png"))
+				.normalMipMap()
+				.create());
 		ResourceManager.loadTexture("wheat", Texture.newTexture(new MyFile("entity/wheat/diffuse.png"))
 				.normalMipMap(-0.4f)
 				.create());
@@ -216,9 +222,11 @@ public class Game implements IGameLogic {
 		World.getWorld().addEntityToTile(new Stick(player, new Transformation(82 + 0.5f, 0, 82 + 0.5f)));
 		
 		World.getWorld().addEntityToTile(new Rock(player, new Transformation(80 + 0.5f, 0, 84 + 0.5f)));
-		World.getWorld().addEntityToTile(new Wheat(new Transformation(80 + 0.5f, 0, 83 + 0.5f)));
-		World.getWorld().addEntityToTile(new Wheat(new Transformation(81 + 0.5f, 0, 83 + 0.5f)));
-		World.getWorld().addEntityToTile(new Wheat(new Transformation(82 + 0.5f, 0, 83 + 0.5f)));
+		World.getWorld().addEntityToTile(new Wheat(player, new Transformation(80 + 0.5f, 0, 83 + 0.5f)));
+		World.getWorld().addEntityToTile(new Wheat(player, new Transformation(81 + 0.5f, 0, 83 + 0.5f)));
+		World.getWorld().addEntityToTile(new Wheat(player, new Transformation(82 + 0.5f, 0, 83 + 0.5f)));
+		
+		World.getWorld().addEntityToTile(new Pine(player, new Transformation(90.5f, 0, 88.5f)));
 		
 		for(int i = 0; i < 100; i++) {		
 			Shroom shroom = new Shroom(player, new Transformation(MyRandom.nextInt(160) + 0.5f, 0, MyRandom.nextInt(160) + 0.5f));
@@ -254,9 +262,6 @@ public class Game implements IGameLogic {
 				}
 			}
 		}
-		
-		Pine pine = new Pine(new Transformation(90.5f, 0, 88.5f));
-		World.getWorld().addEntity(pine);
 	}
 	
 	@Override

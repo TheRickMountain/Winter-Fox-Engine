@@ -24,6 +24,11 @@ public class StaticEntity extends Entity {
 	@Override
 	public void update(float dt) {		
 		if(remove) {
+			if(!childs.isEmpty()) {
+				for(Entity child : childs)
+					child.remove();
+			}
+			
 			World.getWorld().removeEntity(this);
 		}
 		

@@ -73,6 +73,8 @@ public class Crafting implements GUIElement {
 				ItemDatabase.getItem(Item.BOW)));
 		list.add(new Element(new Rect(0, 0, 270, 50), backgroundColor,
 				ItemDatabase.getItem(Item.HOE)));
+		list.add(new Element(new Rect(0, 0, 270, 50), backgroundColor,
+				ItemDatabase.getItem(Item.WHEAT_SEED)));
 		
 		updatePositions();
 		

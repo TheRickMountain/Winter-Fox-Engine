@@ -24,6 +24,8 @@ public class Item {
 	public static final int ROPE = 16;
 	public static final int BOW = 17;
 	public static final int LOG = 18;
+	public static final int WHEAT_SEED = 19;
+	public static final int WHEAT = 20;
 	
 	public final int ID;
 	public final Texture icon;
