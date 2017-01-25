@@ -151,6 +151,16 @@ public class Game implements IGameLogic {
 		ResourceManager.loadMesh("amanita", OBJLoader.loadMesh("/entity/amanita/model.obj"));
 		/*** *** ***/
 		
+		/*** Furnace ***/
+		ResourceManager.loadTexture("furnace_ui", Texture.newTexture(new MyFile("entity/furnace/icon.png"))
+				.create());
+		ResourceManager.loadTexture("furnace", Texture.newTexture(new MyFile("entity/furnace/diffuse.png"))
+				.normalMipMap(-0.4f)
+				.create());
+		
+		ResourceManager.loadMesh("furnace", OBJLoader.loadMesh("/entity/furnace/model.obj"));
+		/*** *** ***/
+		
 		/*** Flint ***/
 		ResourceManager.loadTexture("flint_ui", Texture.newTexture(new MyFile("entity/flint/icon.png"))
 				.create());
@@ -221,7 +231,6 @@ public class Game implements IGameLogic {
 		player = new Player(camera, new Transformation(80, 0.65f, 80));
 		World.getWorld().addEntity(player);
 		
-		World.getWorld().addEntityToTile(new Flint(player, new Transformation(80 + 0.5f, 0, 82 + 0.5f)));
 		World.getWorld().addEntityToTile(new Stick(player, new Transformation(81 + 0.5f, 0, 82 + 0.5f)));
 		World.getWorld().addEntityToTile(new Stick(player, new Transformation(82 + 0.5f, 0, 82 + 0.5f)));
 		
@@ -241,6 +250,9 @@ public class Game implements IGameLogic {
 			Fern fern = new Fern(new Transformation(MyRandom.nextInt(160) + 0.5f, 0, MyRandom.nextInt(160) + 0.5f));
 			fern.setTextureIndex(MyRandom.nextInt(4));
 			World.getWorld().addEntityToTile(fern);
+		
+			World.getWorld().addEntityToTile(new Flint(player, new Transformation(MyRandom.nextInt(160) + 0.5f, 0, 
+					MyRandom.nextInt(160) + 0.5f)));
 		}
 		
 		for(int i = 60; i < 120; i++) {

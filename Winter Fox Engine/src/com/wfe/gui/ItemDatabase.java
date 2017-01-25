@@ -6,6 +6,7 @@ import java.util.List;
 import com.wfe.blueprints.BushBlueprint;
 import com.wfe.blueprints.CrossWallBlueprint;
 import com.wfe.blueprints.DoorWallBlueprint;
+import com.wfe.blueprints.FurnaceBlueprint;
 import com.wfe.blueprints.WallBlueprint;
 import com.wfe.blueprints.WindowWallBlueprint;
 import com.wfe.core.ResourceManager;
@@ -25,7 +26,7 @@ public class ItemDatabase {
 		items.add(new Item(Item.APPLE, ResourceManager.getTexture("apple_ui"), "Apple", ItemType.FOOD, 6, 20));
 		
 		items.add(new Item(Item.WALL, ResourceManager.getTexture("wall_ui"), "Wall", ItemType.BUILDING, 0,
-				new WallBlueprint(new Transformation(0, 0, 0)), 20,
+				new WallBlueprint(new Transformation()), 20,
 				new int[] {Item.LOG, 5}));
 		
 		items.add(new Item(Item.AXE, ResourceManager.getTexture("axe_ui"), "Axe", ItemType.WEAPON, 0, 1,
@@ -36,16 +37,16 @@ public class ItemDatabase {
 		items.add(new Item(Item.BREAD, ResourceManager.getTexture("bread_ui"), "Bread", ItemType.FOOD, 10, 20));
 		
 		items.add(new Item(Item.CROSS_WALL, ResourceManager.getTexture("cross_wall_ui"), "Cross Wall", ItemType.BUILDING, 0,
-				new CrossWallBlueprint(new Transformation(0, 0, 0)), 20));
+				new CrossWallBlueprint(new Transformation()), 20));
 		
 		items.add(new Item(Item.WINDOW_WALL, ResourceManager.getTexture("window_wall_ui"), "Window Wall", ItemType.BUILDING, 0,
-				new WindowWallBlueprint(new Transformation(0, 0, 0)), 20));
+				new WindowWallBlueprint(new Transformation()), 20));
 		
 		items.add(new Item(Item.DOOR_WALL, ResourceManager.getTexture("door_wall_ui"), "Door Wall", ItemType.BUILDING, 0,
-				new DoorWallBlueprint(new Transformation(0, 0, 0)), 20));
+				new DoorWallBlueprint(new Transformation()), 20));
 		
 		items.add(new Item(Item.BUSH, ResourceManager.getTexture("bush_ui"), "Bush", ItemType.BUILDING, 0,
-				new BushBlueprint(new Transformation(0, 0, 0)), 10));
+				new BushBlueprint(new Transformation()), 10));
 		
 		items.add(new Item(Item.AMANITA, ResourceManager.getTexture("amanita_ui"), "Amanita", ItemType.FOOD, -10, 20));
 		
@@ -65,13 +66,21 @@ public class ItemDatabase {
 				new int[] {Item.ROPE, 1, Item.STICK, 1}));
 		
 		items.add(new Item(Item.LOG, ResourceManager.getTexture("log_ui"), "Log", ItemType.ITEM, 0, 40));
+		
 		items.add(new Item(Item.WHEAT_SEED, ResourceManager.getTexture("wheat_seed_ui"), "Wheat seed", 
 				ItemType.ITEM, 0, 40, new int[] {Item.WHEAT, 1}));
+		
 		items.add(new Item(Item.WHEAT, ResourceManager.getTexture("wheat_ui"), "Wheat", ItemType.ITEM, 0, 40));
+		
 		items.add(new Item(Item.FLOUR, ResourceManager.getTexture("flour_ui"), "Flour", ItemType.ITEM, 0, 40,
 				new int[] {Item.WHEAT_SEED, 5}));
+		
 		items.add(new Item(Item.DOUGH, ResourceManager.getTexture("dough_ui"), "Dough", ItemType.ITEM, 0, 20,
 				new int[] {Item.FLOUR, 1}));
+		
+		items.add(new Item(Item.FURNACE, ResourceManager.getTexture("furnace_ui"), "Furnace", ItemType.BUILDING, 0,
+				new FurnaceBlueprint(new Transformation()), 5,
+				new int[] {Item.FLINT, 10}));
 	}
 	
 	public static void create() {

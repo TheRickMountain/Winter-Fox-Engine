@@ -69,12 +69,16 @@ public class Crafting implements GUIElement {
 		
 		slots.get(0).addItem(ItemDatabase.getItem(Item.AXE));
 		slots.get(1).addItem(ItemDatabase.getItem(Item.WALL));
-		slots.get(2).addItem(ItemDatabase.getItem(Item.ROPE));
-		slots.get(3).addItem(ItemDatabase.getItem(Item.BOW));
-		slots.get(4).addItem(ItemDatabase.getItem(Item.HOE));
-		slots.get(5).addItem(ItemDatabase.getItem(Item.WHEAT_SEED));
-		slots.get(6).addItem(ItemDatabase.getItem(Item.FLOUR));
-		slots.get(7).addItem(ItemDatabase.getItem(Item.DOUGH));
+		slots.get(2).addItem(ItemDatabase.getItem(Item.WINDOW_WALL));
+		slots.get(3).addItem(ItemDatabase.getItem(Item.DOOR_WALL));
+		slots.get(4).addItem(ItemDatabase.getItem(Item.CROSS_WALL));
+		slots.get(5).addItem(ItemDatabase.getItem(Item.ROPE));
+		slots.get(6).addItem(ItemDatabase.getItem(Item.BOW));
+		slots.get(7).addItem(ItemDatabase.getItem(Item.HOE));
+		slots.get(8).addItem(ItemDatabase.getItem(Item.WHEAT_SEED));
+		slots.get(9).addItem(ItemDatabase.getItem(Item.FLOUR));
+		slots.get(10).addItem(ItemDatabase.getItem(Item.DOUGH));
+		slots.get(11).addItem(ItemDatabase.getItem(Item.FURNACE));
 		
 		updatePositions();
 		

@@ -21,7 +21,6 @@ public class GUIManager implements GUIElement {
 	public GUITexture inventoryButton;
 	public GUITexture craftingButton;
 	
-	
 	public Inventory inventory;
 	public Equipment equipment;
 	public Crafting crafting;
