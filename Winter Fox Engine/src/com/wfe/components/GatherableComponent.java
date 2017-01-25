@@ -6,7 +6,7 @@ import com.wfe.ecs.StaticEntity;
 import com.wfe.ecs.Transformation;
 import com.wfe.game.World;
 import com.wfe.gui.ItemDatabase;
-import com.wfe.gui.inventory.GUIManager;
+import com.wfe.gui.inventory.GUI;
 import com.wfe.input.Key;
 import com.wfe.input.Keyboard;
 import com.wfe.input.Mouse;
@@ -48,12 +48,12 @@ public class GatherableComponent implements Component {
 		
 		if(start) {			
 			float currentTime = (float)time.getTime();
-			GUIManager.showProgressBar = true;
+			GUI.showProgressBar = true;
 			if (currentTime <= gatheringTime) {
 				int value = (int) ((currentTime * 100) / gatheringTime);
-				GUIManager.progressBar.setCurrentValue(value);
+				GUI.progressBar.setCurrentValue(value);
 			} else {
-				if(GUIManager.getGUI().inventory.addItem(ItemDatabase.items.get(itemID), 1)) {
+				if(GUI.getGUI().inventory.addItem(ItemDatabase.items.get(itemID), 1)) {
 					World.getWorld().removeEntityFromTile((int)transform.getX(), (int)transform.getZ());
 				}
 				reset();
@@ -72,7 +72,7 @@ public class GatherableComponent implements Component {
 	private void reset() {
 		time.reset();
 		start = false;
-		GUIManager.showProgressBar = false;
+		GUI.showProgressBar = false;
 	}
 
 	@Override

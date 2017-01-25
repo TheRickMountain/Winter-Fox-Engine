@@ -12,7 +12,7 @@ import com.wfe.ecs.StaticEntity;
 import com.wfe.graph.Mesh;
 import com.wfe.gui.GUIText;
 import com.wfe.gui.GUITexture;
-import com.wfe.gui.inventory.GUIManager;
+import com.wfe.gui.inventory.GUI;
 import com.wfe.physics.AABB;
 import com.wfe.renderEngine.RenderEngine;
 import com.wfe.tileEngine.Terrain;
@@ -40,7 +40,7 @@ public class World {
 	
 	private float time = 12000;
 	private Weather weather;
-	private GUIManager guiManager;
+	private GUI guiManager;
 	
 	private World(Camera camera) {
 		this.camera = camera;
@@ -51,7 +51,7 @@ public class World {
 		this.renderEngine = RenderEngine.create(camera);
 		this.weather = new Weather();
 		MousePicker.setUpMousePicker(camera);
-		guiManager = GUIManager.getGUI();
+		guiManager = GUI.getGUI();
 	}
 	
 	public static World createWorld(Camera camera) throws Exception {

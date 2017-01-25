@@ -11,6 +11,7 @@ public class ResourceManager {
 	
 	private static Map<String, Texture> textures = new HashMap<>();
 	private static Map<String, Mesh> meshes = new HashMap<>();
+	private static Map<String, Integer> sounds = new HashMap<>();
 
 	public static void loadMesh(String name, Mesh mesh) {
         meshes.put(name, mesh);
@@ -27,5 +28,13 @@ public class ResourceManager {
 	public static Texture getTexture(String textureName) {
 		return textures.get(textureName);
 	}
+	
+	public static void loadSound(String name, int sound) {
+        sounds.put(name, sound);
+    }
+
+    public static int getSound(String soundName) {
+        return sounds.get(soundName);
+    }
 	
 }

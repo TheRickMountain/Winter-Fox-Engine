@@ -23,20 +23,20 @@ public class Equipment implements GUIElement {
 	public void update() {
 		if(Mouse.isButtonDown(0)) {
 			if(handSlot.isMouseOvered()) {
-				if(GUIManager.draggedItem != null) {
+				if(GUI.draggedItem != null) {
 					if(handSlot.isHasItem()) {
 						Item temp = handSlot.getItem();
 						handSlot.removeItem();
-						handSlot.addItem(GUIManager.draggedItem);
-						GUIManager.draggedItem = temp;
+						handSlot.addItem(GUI.draggedItem);
+						GUI.draggedItem = temp;
 					} else {
-						if(addItem(GUIManager.draggedItem)){
-							GUIManager.draggedItem = null;
+						if(addItem(GUI.draggedItem)){
+							GUI.draggedItem = null;
 						}
 					}
 				} else {
 					if(handSlot.isHasItem()) {
-						GUIManager.draggedItem = handSlot.getItem();
+						GUI.draggedItem = handSlot.getItem();
 						handSlot.removeItem();
 					}
 				}

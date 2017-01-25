@@ -108,7 +108,7 @@ public class Crafting implements GUIElement {
 				
 				if(craftButton.rect.isMouseOvered()) {
 					if(updateRecipe(true)) {
-						GUIManager.getGUI().inventory.addItem(activeItem, 1);
+						GUI.getGUI().inventory.addItem(activeItem, 1);
 						updateRecipe(false);
 					}
 				}
@@ -198,7 +198,7 @@ public class Crafting implements GUIElement {
 			Ingredient ingred = ingredients.get(count);
 			ingred.active = true;
 			ingred.item = ItemDatabase.getItem(activeItem.ingredients[i]);
-			ingred.set(GUIManager.getGUI().inventory.getItemAmount(activeItem.ingredients[i]), 
+			ingred.set(GUI.getGUI().inventory.getItemAmount(activeItem.ingredients[i]), 
 					activeItem.ingredients[i + 1]);
 			count++;
 			
@@ -209,7 +209,7 @@ public class Crafting implements GUIElement {
 		
 		if(completed && remove) {
 			for(int i = 0; i < activeItem.ingredients.length; i+=2) {
-				GUIManager.getGUI().inventory.removeItem(
+				GUI.getGUI().inventory.removeItem(
 						ItemDatabase.getItem(activeItem.ingredients[i]), activeItem.ingredients[i + 1]);
 			}
 		}

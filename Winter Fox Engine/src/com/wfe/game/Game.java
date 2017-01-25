@@ -1,5 +1,7 @@
 package com.wfe.game;
 
+import com.wfe.audio.AudioMaster;
+import com.wfe.audio.Source;
 import com.wfe.core.Camera;
 import com.wfe.core.Display;
 import com.wfe.core.IGameLogic;
@@ -15,6 +17,8 @@ import com.wfe.entities.Shroom;
 import com.wfe.entities.Stick;
 import com.wfe.entities.Wheat;
 import com.wfe.graph.OBJLoader;
+import com.wfe.input.Key;
+import com.wfe.input.Keyboard;
 import com.wfe.math.Vector3f;
 import com.wfe.textures.Texture;
 import com.wfe.utils.MyFile;
@@ -24,10 +28,19 @@ public class Game implements IGameLogic {
 	
 	Camera camera;
 	Player player;
+	Source source;
 	
 	@Override
 	public void loadResources() throws Exception {
-		/*** Textures ***/
+		/*** Audio Initialization ***/
+		AudioMaster.init();
+		AudioMaster.setListenerData(0, 0, 0);
+		
+		ResourceManager.loadSound("eating", AudioMaster.loadSound("audio/eating.wav"));
+		/*** *** ***/
+		
+		
+		/*** Textures ***/	
 		ResourceManager.loadTexture("wall", Texture.newTexture(new MyFile("textures/wall.png"))
 				.normalMipMap(-0.4f)
 				.create());
@@ -280,12 +293,18 @@ public class Game implements IGameLogic {
 				}
 			}
 		}
+		
+		source = new Source();
 	}
 	
 	@Override
 	public void update(float dt) {		
 		World.getWorld().update(dt, player);
 		player.update(dt);
+		
+		if(Keyboard.isKeyDown(Key.KEY_F)) {
+			source.play(ResourceManager.getSound("bounce"));
+		}
 	}
 
 	@Override
@@ -296,6 +315,7 @@ public class Game implements IGameLogic {
 	@Override
 	public void onExit() {
 		World.getWorld().cleanup();
+		AudioMaster.cleanup();
 	}
 
 }

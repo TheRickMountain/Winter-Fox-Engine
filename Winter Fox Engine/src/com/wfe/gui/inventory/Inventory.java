@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.wfe.core.Display;
+import com.wfe.core.ResourceManager;
 import com.wfe.ecs.StaticEntity;
 import com.wfe.game.World;
 import com.wfe.gui.GUIElement;
@@ -115,13 +116,13 @@ public class Inventory implements GUIElement {
 			currentBuildingEntity.getTransform().setRotY(buildingEntityRotation);
 			
 			if(Mouse.isButtonDown(0) && !Mouse.isActiveInGUI()) {
-				StaticEntity entity = GUIManager.draggedItem.entityBlueprint
+				StaticEntity entity = GUI.draggedItem.entityBlueprint
 						.createInstanceWithComponents(currentBuildingEntity.getTransform());
 				if(World.getWorld().addEntityToTile(entity)){
-					GUIManager.getGUI().setDraggedItemAmount(GUIManager.getGUI().getDraggedItemAmount() - 1);
+					GUI.getGUI().setDraggedItemAmount(GUI.getGUI().getDraggedItemAmount() - 1);
 					
-					if(GUIManager.getGUI().getDraggedItemAmount() == 0) {
-						GUIManager.draggedItem = null;
+					if(GUI.getGUI().getDraggedItemAmount() == 0) {
+						GUI.draggedItem = null;
 						World.getWorld().removeEntity(currentBuildingEntity);
 						currentBuildingEntity = null;
 					}
@@ -131,7 +132,7 @@ public class Inventory implements GUIElement {
 		
 		if(Mouse.isButtonDown(1)) {
 			if(!Mouse.isActiveInGUI()) {
-				if(GUIManager.getGUI().equipment.getHandSlotItemID() == Item.HOE) {
+				if(GUI.getGUI().equipment.getHandSlotItemID() == Item.HOE) {
 					World.getWorld().setTile(x, z, 3);
 				}
 			}
@@ -227,46 +228,46 @@ public class Inventory implements GUIElement {
 		if(slot.isMouseOvered()) {
 			Mouse.setActiveInGUI(true);
 			if(!use) {
-				if(GUIManager.draggedItem != null) {
+				if(GUI.draggedItem != null) {
 					if(!slot.isHasItem()) {
-						slot.addItem(GUIManager.draggedItem);
-						slot.setItemsAmount(GUIManager.getGUI().getDraggedItemAmount());
-						GUIManager.draggedItem = null;
+						slot.addItem(GUI.draggedItem);
+						slot.setItemsAmount(GUI.getGUI().getDraggedItemAmount());
+						GUI.draggedItem = null;
 					} else {
 						if(currentBuildingEntity != null) {
 							World.getWorld().removeEntity(currentBuildingEntity);
 							currentBuildingEntity = null;
 						}
 						
-						if(GUIManager.draggedItem.equals(slot.getItem())) {
+						if(GUI.draggedItem.equals(slot.getItem())) {
 							if(slot.getItemsAmount() == slot.getItem().stack) {
-								int draggedItemAmount = GUIManager.getGUI().getDraggedItemAmount();
-								GUIManager.getGUI().setDraggedItemAmount(slot.getItemsAmount());
+								int draggedItemAmount = GUI.getGUI().getDraggedItemAmount();
+								GUI.getGUI().setDraggedItemAmount(slot.getItemsAmount());
 								slot.setItemsAmount(draggedItemAmount);
 							} else {
-								int sum = slot.getItemsAmount() + GUIManager.getGUI().getDraggedItemAmount();
-								if(sum == GUIManager.draggedItem.stack) {
+								int sum = slot.getItemsAmount() + GUI.getGUI().getDraggedItemAmount();
+								if(sum == GUI.draggedItem.stack) {
 									slot.setItemsAmount(sum);
-									GUIManager.draggedItem = null;
-									GUIManager.getGUI().setDraggedItemAmount(0);
+									GUI.draggedItem = null;
+									GUI.getGUI().setDraggedItemAmount(0);
 								} else {
-									if(sum > GUIManager.draggedItem.stack) {
-										int surplus = sum % GUIManager.draggedItem.stack;
-										slot.setItemsAmount(GUIManager.draggedItem.stack);
-										GUIManager.getGUI().setDraggedItemAmount(surplus);
+									if(sum > GUI.draggedItem.stack) {
+										int surplus = sum % GUI.draggedItem.stack;
+										slot.setItemsAmount(GUI.draggedItem.stack);
+										GUI.getGUI().setDraggedItemAmount(surplus);
 									} else {
 										slot.setItemsAmount(sum);
-										GUIManager.draggedItem = null;
-										GUIManager.getGUI().setDraggedItemAmount(0);
+										GUI.draggedItem = null;
+										GUI.getGUI().setDraggedItemAmount(0);
 									}
 								}
 							}
 						} else {
-							Item tempItem = GUIManager.draggedItem;
-							int tempItemAmount = GUIManager.getGUI().getDraggedItemAmount();
+							Item tempItem = GUI.draggedItem;
+							int tempItemAmount = GUI.getGUI().getDraggedItemAmount();
 							
-							GUIManager.draggedItem = slot.getItem();
-							GUIManager.getGUI().setDraggedItemAmount(slot.getItemsAmount());
+							GUI.draggedItem = slot.getItem();
+							GUI.getGUI().setDraggedItemAmount(slot.getItemsAmount());
 							
 							slot.removeItem();
 							slot.addItem(tempItem);
@@ -275,23 +276,24 @@ public class Inventory implements GUIElement {
 					}
 				} else {
 					if(slot.isHasItem()) {
-						GUIManager.draggedItem = slot.getItem();
-						GUIManager.getGUI().setDraggedItemAmount(slot.getItemsAmount());
+						GUI.draggedItem = slot.getItem();
+						GUI.getGUI().setDraggedItemAmount(slot.getItemsAmount());
 						slot.removeItem();
 					}
 				}
 				
 				checkBuildingItem();
 			} else {
-				Item item = slot.getItem();
-				if(item != null) {
+				if(slot.isHasItem()) {
+					Item item = slot.getItem();
 					if(item.type.equals(ItemType.FOOD)) {
-						GUIManager.getGUI().status.hungerBar.increase(item.starvation);
+						GUI.getGUI().status.hungerBar.increase(item.starvation);
 						if(slot.getItemsAmount() > 1) {
 							slot.setItemsAmount(slot.getItemsAmount() - 1);
 						} else {
 							slot.removeItem();
 						}
+						GUI.soundSource.play(ResourceManager.getSound("eating"));
 					}
 				}
 			}
@@ -299,8 +301,8 @@ public class Inventory implements GUIElement {
 	}
 	
 	private void checkBuildingItem() {
-		if(GUIManager.draggedItem != null && GUIManager.draggedItem.type.equals(ItemType.BUILDING)) {
-			currentBuildingEntity = GUIManager.draggedItem.entityBlueprint.createInstance();
+		if(GUI.draggedItem != null && GUI.draggedItem.type.equals(ItemType.BUILDING)) {
+			currentBuildingEntity = GUI.draggedItem.entityBlueprint.createInstance();
 			World.getWorld().addEntity(currentBuildingEntity);
 			return;
 		}

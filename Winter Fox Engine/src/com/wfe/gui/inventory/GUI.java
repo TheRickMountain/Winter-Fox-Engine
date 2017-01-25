@@ -1,5 +1,6 @@
 package com.wfe.gui.inventory;
 
+import com.wfe.audio.Source;
 import com.wfe.core.Display;
 import com.wfe.core.ResourceManager;
 import com.wfe.gui.GUIElement;
@@ -14,9 +15,9 @@ import com.wfe.renderEngine.GUIRenderer;
 import com.wfe.utils.Color;
 import com.wfe.utils.Rect;
 
-public class GUIManager implements GUIElement {
+public class GUI implements GUIElement {
 
-	private static GUIManager guiManager;
+	private static GUI guiManager;
 	
 	public GUITexture inventoryButton;
 	public GUITexture craftingButton;
@@ -33,7 +34,9 @@ public class GUIManager implements GUIElement {
 	public static ProgressBar progressBar;
 	public static boolean showProgressBar = false;
 	
-	private GUIManager() {	
+	public static Source soundSource;
+	
+	private GUI() {	
 		ItemDatabase.create();
 		
 		inventoryButton = new GUITexture(ResourceManager.getTexture("sack_ui"));
@@ -54,7 +57,8 @@ public class GUIManager implements GUIElement {
 		
 		progressBar = new ProgressBar(new Rect(0, 0, 100, 10), new Color(86, 198, 46, 255).convert());
 		progressBar.setCurrentValue(0);
-		System.out.println(progressBar.rect.width);
+		
+		soundSource = new Source();
 		
 		inventory.addItem(ItemDatabase.getItem(Item.APPLE), 5);
 		inventory.addItem(ItemDatabase.getItem(Item.LOG), 105);
@@ -118,9 +122,9 @@ public class GUIManager implements GUIElement {
 		}
 	}
 	
-	public static GUIManager getGUI() {
+	public static GUI getGUI() {
 		if(guiManager == null) {
-			guiManager = new GUIManager();
+			guiManager = new GUI();
 		}
 		
 		return guiManager;
