@@ -104,7 +104,7 @@ public class Inventory implements GUIElement {
 		
 		if(currentBuildingEntity != null) {			
 			if(Keyboard.isKeyDown(Key.KEY_R)) {
-				buildingEntityRotation += 45;
+				buildingEntityRotation += 90;
 				
 				if(buildingEntityRotation == 360) {
 					buildingEntityRotation = 0;
@@ -193,8 +193,10 @@ public class Inventory implements GUIElement {
 				if(slot.getItem().equals(item)) {
 					if(slot.getItemsAmount() == amount) {
 						slot.removeItem();
+						return;
 					} else if(slot.getItemsAmount() > amount) {
 						slot.setItemsAmount(slot.getItemsAmount() - amount);
+						return;
 					} else {
 						amount -= slot.getItemsAmount();
 						slot.removeItem();
