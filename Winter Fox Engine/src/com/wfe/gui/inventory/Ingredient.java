@@ -72,5 +72,9 @@ public class Ingredient implements GUIElement {
 			completed = false;
 		}
 	}
-
+	
+	public Item getItem() {
+		return item;
+	}
+	
 }

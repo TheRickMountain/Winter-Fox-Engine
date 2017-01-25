@@ -78,6 +78,10 @@ public class Game implements IGameLogic {
 		ResourceManager.loadTexture("slot_light_ui", Texture.newTexture(new MyFile("gui/slot_light.png"))
 				.normalMipMap().create());
 		ResourceManager.loadTexture("sack_ui", Texture.newTexture(new MyFile("gui/sack.png")).create());
+		ResourceManager.loadTexture("flour_ui", Texture.newTexture(new MyFile("gui/items/flour.png"))
+				.normalMipMap().create());
+		ResourceManager.loadTexture("dough_ui", Texture.newTexture(new MyFile("gui/items/dough.png"))
+				.normalMipMap().create());
 		ResourceManager.loadTexture("craft_ui", Texture.newTexture(new MyFile("gui/craft.png")).create());
 		ResourceManager.loadTexture("list_ui", Texture.newTexture(new MyFile("gui/list.png")).create());
 		ResourceManager.loadTexture("hoe_ui", Texture.newTexture(new MyFile("gui/items/hoe.png"))

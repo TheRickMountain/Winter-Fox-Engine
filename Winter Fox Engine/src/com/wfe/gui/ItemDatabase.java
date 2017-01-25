@@ -68,6 +68,10 @@ public class ItemDatabase {
 		items.add(new Item(Item.WHEAT_SEED, ResourceManager.getTexture("wheat_seed_ui"), "Wheat seed", 
 				ItemType.ITEM, 0, 40, new int[] {Item.WHEAT, 1}));
 		items.add(new Item(Item.WHEAT, ResourceManager.getTexture("wheat_ui"), "Wheat", ItemType.ITEM, 0, 40));
+		items.add(new Item(Item.FLOUR, ResourceManager.getTexture("flour_ui"), "Flour", ItemType.ITEM, 0, 40,
+				new int[] {Item.WHEAT_SEED, 5}));
+		items.add(new Item(Item.DOUGH, ResourceManager.getTexture("dough_ui"), "Dough", ItemType.ITEM, 0, 20,
+				new int[] {Item.FLOUR, 1}));
 	}
 	
 	public static void create() {

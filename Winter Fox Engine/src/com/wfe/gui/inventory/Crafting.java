@@ -73,6 +73,8 @@ public class Crafting implements GUIElement {
 		slots.get(3).addItem(ItemDatabase.getItem(Item.BOW));
 		slots.get(4).addItem(ItemDatabase.getItem(Item.HOE));
 		slots.get(5).addItem(ItemDatabase.getItem(Item.WHEAT_SEED));
+		slots.get(6).addItem(ItemDatabase.getItem(Item.FLOUR));
+		slots.get(7).addItem(ItemDatabase.getItem(Item.DOUGH));
 		
 		updatePositions();
 		
@@ -87,6 +89,16 @@ public class Crafting implements GUIElement {
 						activeItem = slot.getItem();
 						updateRecipe(false);
 						break;
+					}
+				}
+				
+				for(Ingredient i : ingredients) {
+					if(i.rect.isMouseOvered()) {
+						if(i.getItem().ingredients != null) {
+							activeItem = i.getItem();
+							updateRecipe(false);
+							break;
+						}
 					}
 				}
 				
