@@ -59,7 +59,6 @@ public class GUIManager implements GUIElement {
 		
 		inventory.addItem(ItemDatabase.getItem(Item.APPLE), 5);
 		inventory.addItem(ItemDatabase.getItem(Item.LOG), 105);
-		inventory.addItem(ItemDatabase.getItem(Item.WHEAT_SEED), 4);
 	}
 	
 	public void update(float dt) {

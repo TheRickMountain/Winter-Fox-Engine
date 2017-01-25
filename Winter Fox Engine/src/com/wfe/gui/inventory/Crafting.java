@@ -11,6 +11,7 @@ import com.wfe.gui.GUIText;
 import com.wfe.gui.GUITexture;
 import com.wfe.gui.Item;
 import com.wfe.gui.ItemDatabase;
+import com.wfe.gui.Slot;
 import com.wfe.input.Mouse;
 import com.wfe.renderEngine.FontRenderer;
 import com.wfe.renderEngine.GUIRenderer;
@@ -36,9 +37,8 @@ public class Crafting implements GUIElement {
 	private GUIButton craftButton;
 	
 	private float borderOffset = 5;
-	private float elementOffset = 5;
 	
-	private List<Element> list = new ArrayList<Element>();
+	private List<Slot> slots = new ArrayList<Slot>();
 	
 	public boolean showCrafting = false;
 	
@@ -63,18 +63,16 @@ public class Crafting implements GUIElement {
 		
 		craftButton = new GUIButton(new Rect(0, 0, 80, 25), new Color(96, 148, 205, 255).convert(), "Create");
 		
-		list.add(new Element(new Rect(0, 0, 270, 50), backgroundColor,
-				ItemDatabase.getItem(Item.AXE)));
-		list.add(new Element(new Rect(0, 0, 270, 50), backgroundColor,
-				ItemDatabase.getItem(Item.WALL)));
-		list.add(new Element(new Rect(0, 0, 270, 50), backgroundColor,
-				ItemDatabase.getItem(Item.ROPE)));
-		list.add(new Element(new Rect(0, 0, 270, 50), backgroundColor,
-				ItemDatabase.getItem(Item.BOW)));
-		list.add(new Element(new Rect(0, 0, 270, 50), backgroundColor,
-				ItemDatabase.getItem(Item.HOE)));
-		list.add(new Element(new Rect(0, 0, 270, 50), backgroundColor,
-				ItemDatabase.getItem(Item.WHEAT_SEED)));
+		for(int i = 0; i < 30; i++) {
+			slots.add(new Slot(0, 0, 50, 50, backgroundColor));
+		}
+		
+		slots.get(0).addItem(ItemDatabase.getItem(Item.AXE));
+		slots.get(1).addItem(ItemDatabase.getItem(Item.WALL));
+		slots.get(2).addItem(ItemDatabase.getItem(Item.ROPE));
+		slots.get(3).addItem(ItemDatabase.getItem(Item.BOW));
+		slots.get(4).addItem(ItemDatabase.getItem(Item.HOE));
+		slots.get(5).addItem(ItemDatabase.getItem(Item.WHEAT_SEED));
 		
 		updatePositions();
 		
@@ -84,9 +82,9 @@ public class Crafting implements GUIElement {
 	public void update() {	
 		if(showCrafting) {
 			if(Mouse.isButtonDown(0)) {
-				for(Element element : list) {
-					if(element.isMouseOvered()) {
-						activeItem = element.item;
+				for(Slot slot : slots) {
+					if(slot.isMouseOvered()) {
+						activeItem = slot.getItem();
 						updateRecipe(false);
 						break;
 					}
@@ -112,8 +110,8 @@ public class Crafting implements GUIElement {
 			GUIRenderer.render(background);
 			GUIRenderer.render(infoBackground);
 			GUIRenderer.render(infoIcon);
-			for(Element element : list)
-				element.render();
+			for(Slot slot : slots)
+				slot.render();
 			for(Ingredient ingredient : ingredients)
 				ingredient.render();
 			craftButton.render();
@@ -126,8 +124,6 @@ public class Crafting implements GUIElement {
 			FontRenderer.render(infoName);
 			FontRenderer.render(infoDesc);
 			
-			for(Element element : list)
-				element.renderText();
 			for(Ingredient ingredient : ingredients)
 				ingredient.renderText();
 			craftButton.renderText();
@@ -139,15 +135,22 @@ public class Crafting implements GUIElement {
 				(Display.getWidth() / 2) - background.getScaleX() / 2, 
 				(Display.getHeight() / 2) - background.getScaleY() / 2);
 		
-		for(int i = 0; i < list.size(); i++) {
-			Element element = list.get(i);
-			element.rect.setPosition(
-					background.getPosX() + borderOffset, 
-					(background.getPosY() + (i * (element.rect.height + elementOffset))) + borderOffset);
+		int countX = 0;
+		int countY = 0;
+		for(int i = 0; i < slots.size(); i++) {
+			Slot slot = slots.get(i);
+			slot.setPosition(
+					background.getPosX() + (countX * (50 + borderOffset)) + borderOffset, 
+					background.getPosY() + (countY * (50 + borderOffset)) + borderOffset);
+			countX++;
+			if(countX == 5) {
+				countY++;
+				countX = 0;
+			}
 		}
 		
-		infoBackground.setPosition(list.get(0).rect.x + list.get(0).rect.width + 5, 
-				list.get(0).rect.y);
+		infoBackground.setPosition(slots.get(4).getPosX() + slots.get(4).getScaleX() + borderOffset, 
+				background.getPosY() + borderOffset);
 		infoIcon.setPosition(infoBackground.getPosX() + borderOffset, infoBackground.getPosY() + borderOffset);
 		infoName.setPosition(infoIcon.getPosX() + infoIcon.getScaleX() + borderOffset, 
 				infoIcon.getPosY());

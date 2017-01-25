@@ -225,6 +225,8 @@ public class Game implements IGameLogic {
 		World.getWorld().addEntityToTile(new Wheat(player, new Transformation(80 + 0.5f, 0, 83 + 0.5f)));
 		World.getWorld().addEntityToTile(new Wheat(player, new Transformation(81 + 0.5f, 0, 83 + 0.5f)));
 		World.getWorld().addEntityToTile(new Wheat(player, new Transformation(82 + 0.5f, 0, 83 + 0.5f)));
+		World.getWorld().addEntityToTile(new Wheat(player, new Transformation(83 + 0.5f, 0, 83 + 0.5f)));
+		World.getWorld().addEntityToTile(new Wheat(player, new Transformation(84 + 0.5f, 0, 83 + 0.5f)));
 		
 		World.getWorld().addEntityToTile(new Pine(player, new Transformation(90.5f, 0, 88.5f)));
 		
