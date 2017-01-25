@@ -7,6 +7,8 @@ import com.wfe.ecs.Transformation;
 import com.wfe.game.World;
 import com.wfe.gui.ItemDatabase;
 import com.wfe.gui.inventory.GUIManager;
+import com.wfe.input.Key;
+import com.wfe.input.Keyboard;
 import com.wfe.input.Mouse;
 import com.wfe.utils.MathUtils;
 import com.wfe.utils.TimeUtil;
@@ -44,7 +46,7 @@ public class GatherableComponent implements Component {
 			}
 		}
 		
-		if(start) {
+		if(start) {			
 			float currentTime = (float)time.getTime();
 			GUIManager.showProgressBar = true;
 			if (currentTime <= gatheringTime) {
@@ -54,17 +56,23 @@ public class GatherableComponent implements Component {
 				if(GUIManager.getGUI().inventory.addItem(ItemDatabase.items.get(itemID), 1)) {
 					World.getWorld().removeEntityFromTile((int)transform.getX(), (int)transform.getZ());
 				}
-				time.reset();
-				start = false;
-				GUIManager.showProgressBar = false;
+				reset();
 			}
+			
+			if(Keyboard.isKeyDown(Key.KEY_W) || Keyboard.isKeyDown(Key.KEY_S)
+					|| Keyboard.isKeyDown(Key.KEY_A) || Keyboard.isKeyDown(Key.KEY_D))
+				reset();
 		}
 		
 		if(Mouse.isButtonUp(1)) {
-			time.reset();
-			start = false;
-			GUIManager.showProgressBar = false;
+			reset();
 		}
+	}
+	
+	private void reset() {
+		time.reset();
+		start = false;
+		GUIManager.showProgressBar = false;
 	}
 
 	@Override

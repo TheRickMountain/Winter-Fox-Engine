@@ -163,10 +163,6 @@ public class Inventory implements GUIElement {
 	}
 	
 	public boolean addItem(Item item, int amount) {
-		//TODO: Проверить, нет ли одинаковых предметов
-		//TODO: Если есть, то стакать
-		//TODO: Если нет, то добавить предмет в первый попавшийся слот
-		
 		boolean hasItem = getItemAmount(item.ID) >= 1;
 		
 		if(hasItem) {
