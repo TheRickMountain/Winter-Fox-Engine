@@ -1,5 +1,6 @@
 package com.wfe.components;
 
+import com.wfe.core.ResourceManager;
 import com.wfe.ecs.Component;
 import com.wfe.ecs.ComponentType;
 import com.wfe.ecs.StaticEntity;
@@ -23,7 +24,6 @@ public class GatherableComponent implements Component {
 	
 	private static final TimeUtil time = new TimeUtil();
 	private boolean start = false;
-	private float step = 0.0f;
 	
 	public GatherableComponent(int itemID, StaticEntity player, Transformation transform, BoundingBox boundingBox,
 			float gatheringTime) {
@@ -32,7 +32,6 @@ public class GatherableComponent implements Component {
 		this.transform = transform;
 		this.boundingBox = boundingBox;
 		this.gatheringTime = gatheringTime;
-		this.step = this.gatheringTime / 100.0f;
 	}
 	
 	@Override
@@ -55,6 +54,7 @@ public class GatherableComponent implements Component {
 			} else {
 				if(GUI.getGUI().inventory.addItem(ItemDatabase.items.get(itemID), 1)) {
 					World.getWorld().removeEntityFromTile((int)transform.getX(), (int)transform.getZ());
+					GUI.soundSource.play(ResourceManager.getSound("taking"));
 				}
 				reset();
 			}

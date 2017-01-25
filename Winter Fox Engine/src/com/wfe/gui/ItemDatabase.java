@@ -37,13 +37,16 @@ public class ItemDatabase {
 		items.add(new Item(Item.BREAD, ResourceManager.getTexture("bread_ui"), "Bread", ItemType.FOOD, 10, 20));
 		
 		items.add(new Item(Item.CROSS_WALL, ResourceManager.getTexture("cross_wall_ui"), "Cross Wall", ItemType.BUILDING, 0,
-				new CrossWallBlueprint(new Transformation()), 20));
+				new CrossWallBlueprint(new Transformation()), 20,
+				new int[] {Item.LOG, 5}));
 		
 		items.add(new Item(Item.WINDOW_WALL, ResourceManager.getTexture("window_wall_ui"), "Window Wall", ItemType.BUILDING, 0,
-				new WindowWallBlueprint(new Transformation()), 20));
+				new WindowWallBlueprint(new Transformation()), 20,
+				new int[] {Item.LOG, 4}));
 		
 		items.add(new Item(Item.DOOR_WALL, ResourceManager.getTexture("door_wall_ui"), "Door Wall", ItemType.BUILDING, 0,
-				new DoorWallBlueprint(new Transformation()), 20));
+				new DoorWallBlueprint(new Transformation()), 20,
+				new int[] {Item.LOG, 2}));
 		
 		items.add(new Item(Item.BUSH, ResourceManager.getTexture("bush_ui"), "Bush", ItemType.BUILDING, 0,
 				new BushBlueprint(new Transformation()), 10));
