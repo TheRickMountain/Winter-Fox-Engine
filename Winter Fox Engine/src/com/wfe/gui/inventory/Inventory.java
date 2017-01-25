@@ -163,6 +163,33 @@ public class Inventory implements GUIElement {
 	}
 	
 	public boolean addItem(Item item, int amount) {
+		//TODO: Проверить, нет ли одинаковых предметов
+		//TODO: Если есть, то стакать
+		//TODO: Если нет, то добавить предмет в первый попавшийся слот
+		
+		boolean hasItem = getItemAmount(item.ID) >= 1;
+		
+		if(hasItem) {
+			for(int i = 0; i < slots.size(); i++) {
+				Slot slot = slots.get(i);
+				if(slot.isHasItem() && slot.getItem().equals(item)) {
+					if(slot.getItemsAmount() == item.stack) {
+						continue;
+					} else {
+						int fullAmount = slot.getItemsAmount() + amount;
+						if(fullAmount > item.stack) {
+							slot.setItemsAmount(item.stack);
+							amount = fullAmount - item.stack;
+							continue;
+						} else {
+							slot.setItemsAmount(fullAmount);
+							return true;
+						}
+					}
+				}
+			}
+		}
+		
 		for(Slot slot : slots) {
 			if(!slot.isHasItem()) {
 				slot.addItem(item);
@@ -171,14 +198,7 @@ public class Inventory implements GUIElement {
 					amount -= item.stack;
 					continue;
 				} else {
-					slot.setItemsAmount(amount);
-				}
-				return true;
-			} else if(slot.getItem().equals(item)) {
-				if(slot.getItemsAmount() == item.stack) {
-					continue;
-				} else {
-					slot.setItemsAmount(slot.getItemsAmount() + amount);
+					slot.setItemsAmount(amount);	
 					return true;
 				}
 			}

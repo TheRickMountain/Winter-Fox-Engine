@@ -58,7 +58,7 @@ public class GUIManager implements GUIElement {
 		System.out.println(progressBar.rect.width);
 		
 		inventory.addItem(ItemDatabase.getItem(Item.APPLE), 5);
-		inventory.addItem(ItemDatabase.getItem(Item.LOG), 100);
+		inventory.addItem(ItemDatabase.getItem(Item.LOG), 105);
 		inventory.addItem(ItemDatabase.getItem(Item.WHEAT_SEED), 4);
 	}
 	
