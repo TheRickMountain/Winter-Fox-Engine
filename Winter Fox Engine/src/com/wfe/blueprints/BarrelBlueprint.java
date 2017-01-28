@@ -9,12 +9,12 @@ import com.wfe.ecs.Transformation;
 import com.wfe.game.Game;
 import com.wfe.graph.Material;
 
-public class FurnaceBlueprint extends Blueprint {
+public class BarrelBlueprint extends Blueprint {
 
-	public FurnaceBlueprint(Transformation transform) {
-		super(ResourceManager.getMesh("furnace"),
-				new Material(ResourceManager.getTexture("furnace")), transform);	
-		transform.setScale(0.5f);
+	public BarrelBlueprint(Transformation transform) {
+		super(ResourceManager.getMesh("barrel"),
+				new Material(ResourceManager.getTexture("barrel")), transform);	
+		transform.setScale(0.4f);
 	}
 
 	@Override

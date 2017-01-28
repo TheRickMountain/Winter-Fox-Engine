@@ -3,6 +3,7 @@ package com.wfe.gui;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.wfe.blueprints.BarrelBlueprint;
 import com.wfe.blueprints.BushBlueprint;
 import com.wfe.blueprints.CrossWallBlueprint;
 import com.wfe.blueprints.DoorWallBlueprint;
@@ -76,7 +77,7 @@ public class ItemDatabase {
 		items.add(new Item(Item.WHEAT, ResourceManager.getTexture("wheat_ui"), "Wheat", ItemType.ITEM, 0, 40));
 		
 		items.add(new Item(Item.FLOUR, ResourceManager.getTexture("flour_ui"), "Flour", ItemType.ITEM, 0, 40,
-				new int[] {Item.WHEAT_SEED, 5}));
+				new int[] {Item.WHEAT, 5}));
 		
 		items.add(new Item(Item.DOUGH, ResourceManager.getTexture("dough_ui"), "Dough", ItemType.ITEM, 0, 20,
 				new int[] {Item.FLOUR, 1}));
@@ -84,6 +85,10 @@ public class ItemDatabase {
 		items.add(new Item(Item.FURNACE, ResourceManager.getTexture("furnace_ui"), "Furnace", ItemType.BUILDING, 0,
 				new FurnaceBlueprint(new Transformation()), 5,
 				new int[] {Item.FLINT, 10}));
+		
+		items.add(new Item(Item.BARREL, ResourceManager.getTexture("barrel_ui"), "Barrel", ItemType.BUILDING, 0,
+				new BarrelBlueprint(new Transformation()), 5,
+				new int[] {Item.LOG, 10}));
 	}
 	
 	public static void create() {

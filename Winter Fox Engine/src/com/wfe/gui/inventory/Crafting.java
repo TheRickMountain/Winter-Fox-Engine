@@ -11,12 +11,14 @@ import com.wfe.gui.GUIText;
 import com.wfe.gui.GUITexture;
 import com.wfe.gui.Item;
 import com.wfe.gui.ItemDatabase;
+import com.wfe.gui.ProgressBar;
 import com.wfe.gui.Slot;
 import com.wfe.input.Mouse;
 import com.wfe.renderEngine.FontRenderer;
 import com.wfe.renderEngine.GUIRenderer;
 import com.wfe.utils.Color;
 import com.wfe.utils.Rect;
+import com.wfe.utils.TimeUtil;
 
 public class Crafting implements GUIElement {
 
@@ -30,6 +32,7 @@ public class Crafting implements GUIElement {
 	private GUIText infoName;
 	private GUIText infoDesc;
 	private Item activeItem;
+	private ProgressBar progressBar;
 	/*** *** ***/
 	
 	private List<Ingredient> ingredients = new ArrayList<Ingredient>();
@@ -41,6 +44,10 @@ public class Crafting implements GUIElement {
 	private List<Slot> slots = new ArrayList<Slot>();
 	
 	public boolean showCrafting = false;
+	
+	private float craftingTime = 0.2f;
+	private boolean startCrafting = false;
+	private static final TimeUtil time = new TimeUtil();
 	
 	public Crafting() {
 		background = new GUITexture(new Color(50f, 50f, 50f, 230).convert(), 0, 0, 
@@ -61,6 +68,9 @@ public class Crafting implements GUIElement {
 		ingredients.add(new Ingredient(new Rect(0, 0, 50, 65), backgroundColor, ItemDatabase.getItem(Item.FLINT)));
 		ingredients.add(new Ingredient(new Rect(0, 0, 50, 65), backgroundColor, ItemDatabase.getItem(Item.FLINT)));
 		
+		progressBar = new ProgressBar(new Rect(0, 0, 270, 15), new Color(255, 213, 33, 255).convert());
+		progressBar.setCurrentValue(0);
+		
 		craftButton = new GUIButton(new Rect(0, 0, 80, 25), new Color(96, 148, 205, 255).convert(), "Create");
 		
 		for(int i = 0; i < 30; i++) {
@@ -79,6 +89,7 @@ public class Crafting implements GUIElement {
 		slots.get(9).addItem(ItemDatabase.getItem(Item.FLOUR));
 		slots.get(10).addItem(ItemDatabase.getItem(Item.DOUGH));
 		slots.get(11).addItem(ItemDatabase.getItem(Item.FURNACE));
+		slots.get(12).addItem(ItemDatabase.getItem(Item.BARREL));
 		
 		updatePositions();
 		
@@ -92,6 +103,8 @@ public class Crafting implements GUIElement {
 					if(slot.isMouseOvered()) {
 						activeItem = slot.getItem();
 						updateRecipe(false);
+						if(startCrafting)
+							reset();
 						break;
 					}
 				}
@@ -107,11 +120,23 @@ public class Crafting implements GUIElement {
 				}
 				
 				if(craftButton.rect.isMouseOvered()) {
-					if(updateRecipe(true)) {
-						GUI.getGUI().inventory.addItem(activeItem, 1);
-						updateRecipe(false);
+					if(updateRecipe(false)) {	
+						startCrafting = true;
 					}
 				}
+			}
+		}
+		
+		if(startCrafting) {			
+			float currentTime = (float)time.getTime();
+			if (currentTime <= craftingTime) {
+				int value = (int) ((currentTime * 100) / craftingTime);
+				progressBar.setCurrentValue(value);
+			} else {
+				GUI.getGUI().inventory.addItem(activeItem, 1);
+				updateRecipe(true);
+				updateRecipe(false);
+				reset();
 			}
 		}
 		
@@ -130,6 +155,7 @@ public class Crafting implements GUIElement {
 				slot.render();
 			for(Ingredient ingredient : ingredients)
 				ingredient.render();
+			progressBar.render();
 			craftButton.render();
 		}
 	}
@@ -179,6 +205,10 @@ public class Crafting implements GUIElement {
 					infoBackground.getPosY() + infoBackground.getScaleY() + borderOffset);
 		}
 		
+		progressBar.rect.setPosition(
+				infoBackground.getPosX() , 
+				ingredients.get(0).rect.y + ingredients.get(0).rect.height + borderOffset);
+		
 		craftButton.rect.setPosition(
 				(background.getPosX() + background.getScaleX() - borderOffset) - craftButton.rect.width, 
 				(background.getPosY() + background.getScaleY() - borderOffset) - craftButton.rect.height);
@@ -217,5 +247,11 @@ public class Crafting implements GUIElement {
 		return completed;
 	}
 
+	private void reset() {
+		time.reset();
+		startCrafting = false;
+		progressBar.setCurrentValue(0);
+	}
+	
 	
 }

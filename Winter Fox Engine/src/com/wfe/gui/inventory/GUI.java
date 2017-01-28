@@ -59,6 +59,7 @@ public class GUI implements GUIElement {
 		progressBar.setCurrentValue(0);
 		
 		soundSource = new Source();
+		soundSource.setVolume(0.1f);
 		
 		inventory.addItem(ItemDatabase.getItem(Item.APPLE), 5);
 		inventory.addItem(ItemDatabase.getItem(Item.LOG), 105);

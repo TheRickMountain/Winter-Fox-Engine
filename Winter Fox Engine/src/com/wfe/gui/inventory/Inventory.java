@@ -126,6 +126,8 @@ public class Inventory implements GUIElement {
 						World.getWorld().removeEntity(currentBuildingEntity);
 						currentBuildingEntity = null;
 					}
+					
+					GUI.soundSource.play(ResourceManager.getSound("taking"));
 				}
 			}
 		}

@@ -1,7 +1,6 @@
 package com.wfe.game;
 
 import com.wfe.audio.AudioMaster;
-import com.wfe.audio.Source;
 import com.wfe.core.Camera;
 import com.wfe.core.Display;
 import com.wfe.core.IGameLogic;
@@ -17,8 +16,6 @@ import com.wfe.entities.Shroom;
 import com.wfe.entities.Stick;
 import com.wfe.entities.Wheat;
 import com.wfe.graph.OBJLoader;
-import com.wfe.input.Key;
-import com.wfe.input.Keyboard;
 import com.wfe.math.Vector3f;
 import com.wfe.textures.Texture;
 import com.wfe.utils.MyFile;
@@ -27,8 +24,7 @@ import com.wfe.utils.MyRandom;
 public class Game implements IGameLogic {
 	
 	Camera camera;
-	Player player;
-	Source source;
+	public static Player player;
 	
 	@Override
 	public void loadResources() throws Exception {
@@ -175,6 +171,16 @@ public class Game implements IGameLogic {
 		ResourceManager.loadMesh("furnace", OBJLoader.loadMesh("/entity/furnace/model.obj"));
 		/*** *** ***/
 		
+		/*** Barrel ***/
+		ResourceManager.loadTexture("barrel_ui", Texture.newTexture(new MyFile("entity/barrel/icon.png"))
+				.create());
+		ResourceManager.loadTexture("barrel", Texture.newTexture(new MyFile("entity/barrel/diffuse.png"))
+				.normalMipMap(-0.4f)
+				.create());
+		
+		ResourceManager.loadMesh("barrel", OBJLoader.loadMesh("/entity/barrel/model.obj"));
+		/*** *** ***/
+		
 		/*** Flint ***/
 		ResourceManager.loadTexture("flint_ui", Texture.newTexture(new MyFile("entity/flint/icon.png"))
 				.create());
@@ -294,18 +300,12 @@ public class Game implements IGameLogic {
 				}
 			}
 		}
-		
-		source = new Source();
 	}
 	
 	@Override
 	public void update(float dt) {		
 		World.getWorld().update(dt, player);
 		player.update(dt);
-		
-		if(Keyboard.isKeyDown(Key.KEY_F)) {
-			source.play(ResourceManager.getSound("bounce"));
-		}
 	}
 
 	@Override
