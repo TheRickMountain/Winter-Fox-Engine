@@ -55,7 +55,7 @@ public class GUI implements GUIElement {
 		draggedItemAmountText = new GUIText("", 1.3f, FontRenderer.font, 0, 0, 1f, false);
 		draggedItemAmountText.setColor(1.0f, 1.0f, 1.0f);
 		
-		progressBar = new ProgressBar(new Rect(0, 0, 100, 10), new Color(86, 198, 46, 255).convert());
+		progressBar = new ProgressBar(new Rect(0, 0, 100, 10), new Color(255, 213, 33, 255).convert());
 		progressBar.setCurrentValue(0);
 		
 		soundSource = new Source();

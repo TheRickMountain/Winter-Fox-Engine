@@ -14,6 +14,8 @@ public class ProgressBar implements GUIElement{
 	
 	private float spriteSizeOnePercent;
 	
+	private Color backgroundColor = new Color(100, 100, 100, 150).convert();
+	
 	public ProgressBar(Rect rect, Color color) {
 		this.rect = rect;
 		this.color = color;
@@ -24,6 +26,7 @@ public class ProgressBar implements GUIElement{
 	
 	@Override
 	public void render() {
+		GUIRenderer.render(backgroundColor, rect.x, rect.y, 0, maxValue * spriteSizeOnePercent, rect.height, false);
 		GUIRenderer.render(color, rect.x, rect.y, 0, rect.width, rect.height, false);
 	}
 
