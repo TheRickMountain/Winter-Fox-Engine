@@ -126,6 +126,10 @@ public class MathUtils {
 		return (float) Math.sqrt((dX * dX) + (dY * dY));
 	}
 	
+	public static float getRotation(float x1, float y1, float x2, float y2){
+		return (float) ((Math.atan2(y2 - y1, x2 - x1)) * RADIANS_TO_DEGREES);
+	}
+	
 	public static float getAverageOfList(List<Float> numbers) {
         float total = 0;
         for (Float number : numbers) {

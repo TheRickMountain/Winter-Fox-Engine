@@ -37,17 +37,31 @@ public class Chunk {
 		initGL();
 	}
 	
+	int currentTile = 6;
+	
 	public void init(HeightGenerator heightGenerator, int iterX, int iterY) {
 		tiles = new Tile[16][16];
 		for(int x = 0; x < 16; x++) {
 			for(int y = 0; y < 16; y++) {
 				float height = heightGenerator.generateHeight(x + iterX, y + iterY);
+				if((y % 2 == 0)) {
+					if(x % 2 == 0) {
+						currentTile = 6;
+					} else {
+						currentTile = 7;
+					}
+				} else {
+					if((x + y) % 2 == 0) {
+						currentTile = 11;
+					} else {
+						currentTile = 10;
+					}
+				}
+				
 				if(height > -0.1f)
-					tiles[x][y] = new Tile(MyRandom.nextInt(6, 7, 10, 11));
+					tiles[x][y] = new Tile(currentTile);
 				else
-					tiles[x][y] = new Tile(MyRandom.nextInt(6, 7, 10, 11));
-					
-					//tiles[x][y] = new Tile(MyRandom.nextInt(4, 5, 8, 9));
+					tiles[x][y] = new Tile(currentTile);
 			}
 		}
 		
@@ -104,10 +118,10 @@ public class Chunk {
 		// Texture Coords
 		for(int x = 0; x < SIZE; x++) {
 			for(int y = 0; y < SIZE; y++) {
-				float u0 = (tiles[x][y].getId() % (int)SPRITE_SHEET) / SPRITE_SHEET;
-		        float u1 = u0 + (1.0f / SPRITE_SHEET);
-		        float v0 = (tiles[x][y].getId() / (int)SPRITE_SHEET) / SPRITE_SHEET;
-		        float v1 = v0 + (1.0f / SPRITE_SHEET);
+				float u0 = ((tiles[x][y].getId() % (int)SPRITE_SHEET) / SPRITE_SHEET) + 0.01f;
+		        float u1 = (u0 + (1.0f / SPRITE_SHEET)) - 0.02f;
+		        float v0 = ((tiles[x][y].getId() / (int)SPRITE_SHEET) / SPRITE_SHEET) + 0.01f;
+		        float v1 = (v0 + (1.0f / SPRITE_SHEET)) - 0.02f;
 		        
 				vtList.add(u0); vtList.add(v0);
 				vtList.add(u0); vtList.add(v1);
@@ -129,10 +143,10 @@ public class Chunk {
 		// Texture Coords
 		for(int x = 0; x < SIZE; x++) {
 			for(int y = 0; y < SIZE; y++) {
-				float u0 = (tiles[x][y].getId() % (int)SPRITE_SHEET) / SPRITE_SHEET;
-				float u1 = u0 + (1.0f / SPRITE_SHEET);
-				float v0 = (tiles[x][y].getId() / (int)SPRITE_SHEET) / SPRITE_SHEET;
-				float v1 = v0 + (1.0f / SPRITE_SHEET);
+				float u0 = ((tiles[x][y].getId() % (int)SPRITE_SHEET) / SPRITE_SHEET) + 0.01f;
+		        float u1 = (u0 + (1.0f / SPRITE_SHEET)) - 0.02f;
+		        float v0 = ((tiles[x][y].getId() / (int)SPRITE_SHEET) / SPRITE_SHEET) + 0.01f;
+		        float v1 = (v0 + (1.0f / SPRITE_SHEET)) - 0.02f;
 
 				vtList.add(u0); vtList.add(v0);
 				vtList.add(u0); vtList.add(v1);

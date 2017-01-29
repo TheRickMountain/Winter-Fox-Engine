@@ -34,7 +34,7 @@ public class Terrain {
 	
 	public void init() throws Exception {
 		spriteSheet = Texture.newTexture(new MyFile("textures/terrain.png"))
-				.normalMipMap().clampEdges().anisotropic().nearestFiltering().create();
+				.normalMipMap(-0.4f)/*.clampEdges().anisotropic().nearestFiltering()*/.create();
 		
 		for(int x = 0; x < sizeX; x++) {
 			for(int y = 0; y < sizeZ; y++) {

@@ -262,6 +262,7 @@ public class Game implements IGameLogic {
 		World.getWorld().addEntityToTile(new Wheat(player, new Transformation(84 + 0.5f, 0, 83 + 0.5f)));
 		
 		World.getWorld().addEntityToTile(new Pine(player, new Transformation(90.5f, 0, 88.5f)));
+		World.getWorld().addEntityToTile(new Pine(player, new Transformation(70.5f, 0, 85.5f)));
 		
 		for(int i = 0; i < 100; i++) {		
 			Shroom shroom = new Shroom(player, new Transformation(MyRandom.nextInt(160) + 0.5f, 0, MyRandom.nextInt(160) + 0.5f));
@@ -300,10 +301,12 @@ public class Game implements IGameLogic {
 				}
 			}
 		}
+		
+		//OpenglUtils.goWireframe(true);
 	}
 	
 	@Override
-	public void update(float dt) {		
+	public void update(float dt) {	
 		World.getWorld().update(dt, player);
 		player.update(dt);
 	}
