@@ -45,15 +45,15 @@ public class Chunk {
 				float height = heightGenerator.generateHeight(x + iterX, y + iterY);
 				if((y % 2 == 0)) {
 					if(x % 2 == 0) {
-						currentTile = 6;
+						currentTile = 2;
 					} else {
-						currentTile = 7;
+						currentTile = 3;
 					}
 				} else {
 					if((x + y) % 2 == 0) {
-						currentTile = 11;
+						currentTile = 7;
 					} else {
-						currentTile = 10;
+						currentTile = 6;
 					}
 				}
 				

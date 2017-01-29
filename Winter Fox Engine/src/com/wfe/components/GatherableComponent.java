@@ -5,6 +5,7 @@ import com.wfe.ecs.Component;
 import com.wfe.ecs.ComponentType;
 import com.wfe.ecs.Entity;
 import com.wfe.ecs.Transformation;
+import com.wfe.game.Game;
 import com.wfe.game.World;
 import com.wfe.gui.ItemDatabase;
 import com.wfe.gui.inventory.GUI;
@@ -41,6 +42,10 @@ public class GatherableComponent implements Component {
 					transform.x, transform.z) <= 2.5f) {
 				if(boundingBox.intersects()) {
 					start = true;
+					
+					float rot = MathUtils.getRotation(player.getTransform().x, player.getTransform().z, 
+							transform.x, transform.z);
+					player.getTransform().setRotY(-rot + 90);
 				}
 			}
 		}
@@ -62,6 +67,8 @@ public class GatherableComponent implements Component {
 			if(Keyboard.isKey(Key.KEY_W) || Keyboard.isKey(Key.KEY_S)
 					|| Keyboard.isKey(Key.KEY_A) || Keyboard.isKey(Key.KEY_D))
 				reset();
+			
+			Game.player.chopingAnimation(dt);
 		}
 		
 		if(Mouse.isButtonUp(1)) {
@@ -73,6 +80,7 @@ public class GatherableComponent implements Component {
 		time.reset();
 		start = false;
 		GUI.showProgressBar = false;
+		Game.player.idleAnim();
 	}
 
 	@Override

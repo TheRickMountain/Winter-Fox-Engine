@@ -81,6 +81,10 @@ public class Entity {
 		this.childs.add(entity);
 	}
 	
+	public void removeChild(Entity entity) {
+		this.childs.remove(entity);
+	}
+	
 	public Transformation getTransform() {
 		return transform;
 	}

@@ -3,8 +3,10 @@ package com.wfe.gui;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.wfe.blueprints.AxeBlueprint;
 import com.wfe.blueprints.BarrelBlueprint;
 import com.wfe.blueprints.BushBlueprint;
+import com.wfe.blueprints.CampfireBlueprint;
 import com.wfe.blueprints.CrossWallBlueprint;
 import com.wfe.blueprints.DoorWallBlueprint;
 import com.wfe.blueprints.FurnaceBlueprint;
@@ -30,7 +32,8 @@ public class ItemDatabase {
 				new WallBlueprint(new Transformation()), 20,
 				new int[] {Item.LOG, 5}));
 		
-		items.add(new Item(Item.AXE, ResourceManager.getTexture("axe_ui"), "Axe", ItemType.WEAPON, 0, 1,
+		items.add(new Item(Item.AXE, ResourceManager.getTexture("axe_ui"), "Axe", ItemType.WEAPON, 0, 
+				new AxeBlueprint(new Transformation()), 1,
 				new int[] {Item.ROPE, 1, Item.STICK, 1, Item.FLINT, 1}));
 		
 		items.add(new Item(Item.SHROOM, ResourceManager.getTexture("shroom_ui"), "Shroom", ItemType.FOOD, 5, 20));
@@ -83,12 +86,16 @@ public class ItemDatabase {
 				new int[] {Item.FLOUR, 1}));
 		
 		items.add(new Item(Item.FURNACE, ResourceManager.getTexture("furnace_ui"), "Furnace", ItemType.BUILDING, 0,
-				new FurnaceBlueprint(new Transformation()), 5,
+				new FurnaceBlueprint(new Transformation()), 1,
 				new int[] {Item.FLINT, 10}));
 		
 		items.add(new Item(Item.BARREL, ResourceManager.getTexture("barrel_ui"), "Barrel", ItemType.BUILDING, 0,
-				new BarrelBlueprint(new Transformation()), 5,
+				new BarrelBlueprint(new Transformation()), 1,
 				new int[] {Item.LOG, 10}));
+		
+		items.add(new Item(Item.CAMPFIRE, ResourceManager.getTexture("campfire_ui"), "Campfire", ItemType.BUILDING, 0,
+				new CampfireBlueprint(new Transformation()), 1,
+				new int[] {Item.STICK, 3, Item.FIBER, 5, Item.FLINT, 5}));
 	}
 	
 	public static void create() {

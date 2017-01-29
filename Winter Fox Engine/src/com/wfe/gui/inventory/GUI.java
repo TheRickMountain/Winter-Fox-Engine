@@ -63,6 +63,7 @@ public class GUI implements GUIElement {
 		
 		inventory.addItem(ItemDatabase.getItem(Item.APPLE), 5);
 		inventory.addItem(ItemDatabase.getItem(Item.LOG), 105);
+		inventory.addItem(ItemDatabase.getItem(Item.AXE), 1);
 	}
 	
 	public void update(float dt) {

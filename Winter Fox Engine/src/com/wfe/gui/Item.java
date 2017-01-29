@@ -30,6 +30,7 @@ public class Item {
 	public static final int DOUGH = 22;
 	public static final int FURNACE = 23;
 	public static final int BARREL = 24;
+	public static final int CAMPFIRE = 25;
 	
 	public final int ID;
 	public final Texture icon;

@@ -90,6 +90,7 @@ public class Crafting implements GUIElement {
 		slots.get(10).addItem(ItemDatabase.getItem(Item.DOUGH));
 		slots.get(11).addItem(ItemDatabase.getItem(Item.FURNACE));
 		slots.get(12).addItem(ItemDatabase.getItem(Item.BARREL));
+		slots.get(13).addItem(ItemDatabase.getItem(Item.CAMPFIRE));
 		
 		updatePositions();
 		

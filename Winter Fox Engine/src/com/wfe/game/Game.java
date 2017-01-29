@@ -34,6 +34,7 @@ public class Game implements IGameLogic {
 		
 		ResourceManager.loadSound("eating", AudioMaster.loadSound("audio/eating.wav"));
 		ResourceManager.loadSound("taking", AudioMaster.loadSound("audio/taking.wav"));
+		ResourceManager.loadSound("chopping", AudioMaster.loadSound("audio/chopping.wav"));
 		/*** *** ***/
 		
 		
@@ -169,6 +170,16 @@ public class Game implements IGameLogic {
 		ResourceManager.loadMesh("axe", OBJLoader.loadMesh("/entity/axe/model.obj"));
 		/*** *** ***/
 		
+		/*** Campfire ***/
+		ResourceManager.loadTexture("campfire_ui", Texture.newTexture(new MyFile("entity/campfire/icon.png"))
+				.create());
+		ResourceManager.loadTexture("campfire", Texture.newTexture(new MyFile("entity/campfire/diffuse.png"))
+				.normalMipMap(-0.4f)
+				.create());
+		
+		ResourceManager.loadMesh("campfire", OBJLoader.loadMesh("/entity/campfire/model.obj"));
+		/*** *** ***/
+		
 		/*** Furnace ***/
 		ResourceManager.loadTexture("furnace_ui", Texture.newTexture(new MyFile("entity/furnace/icon.png"))
 				.create());
@@ -250,11 +261,15 @@ public class Game implements IGameLogic {
 		World.createWorld(camera);
 		World.getWorld().init();
 		
-		player = new Player(camera, new Transformation(80, 0.65f, 80));
+		player = new Player(camera, new Transformation(80, 0.4f, 80));
 		World.getWorld().addEntity(player);
 		
 		World.getWorld().addEntityToTile(new Stick(player, new Transformation(81 + 0.5f, 0, 82 + 0.5f)));
 		World.getWorld().addEntityToTile(new Stick(player, new Transformation(82 + 0.5f, 0, 82 + 0.5f)));
+		World.getWorld().addEntityToTile(new Stick(player, new Transformation(83 + 0.5f, 0, 82 + 0.5f)));
+		World.getWorld().addEntityToTile(new Stick(player, new Transformation(84 + 0.5f, 0, 82 + 0.5f)));
+		World.getWorld().addEntityToTile(new Stick(player, new Transformation(85 + 0.5f, 0, 82 + 0.5f)));
+		World.getWorld().addEntityToTile(new Stick(player, new Transformation(86 + 0.5f, 0, 82 + 0.5f)));
 		
 		World.getWorld().addEntityToTile(new Rock(player, new Transformation(80 + 0.5f, 0, 84 + 0.5f)));
 		World.getWorld().addEntityToTile(new Wheat(player, new Transformation(80 + 0.5f, 0, 83 + 0.5f)));
