@@ -5,38 +5,31 @@ import java.util.List;
 import com.wfe.core.Camera;
 import com.wfe.ecs.Component;
 import com.wfe.ecs.ComponentType;
+import com.wfe.ecs.Entity;
 import com.wfe.ecs.Transformation;
 import com.wfe.game.World;
 import com.wfe.input.Key;
 import com.wfe.input.Keyboard;
 import com.wfe.physics.AABB;
 
-public class PlayerControllerComponent implements Component {
+public class PlayerComponent implements Component {
 
 	private Camera camera;
-	private PlayerAnimationComponent playerAnim;
 	private Transformation transform;
 	private float yRot;
 	private float xd, zd;
 
 	private AABB bb;
 	
-	public PlayerControllerComponent(Camera camera, Transformation transform, PlayerAnimationComponent playerAnim) {		
+	public PlayerComponent(Camera camera, Transformation transform) {		
 		this.camera = camera;
 		this.transform = transform;
-		this.playerAnim = playerAnim;
 		bb = new AABB(transform.x - 0.4f, 0, transform.z - 0.4f, transform.x + 0.4f, 0 + 1, transform.z + 0.4f);
 	}
 	
 	@Override
 	public void update(float dt) {	
 		move(dt);
-		
-		if(transform.isMoving) {
-			playerAnim.walkAnim(dt);
-		} else {
-			playerAnim.resetAnim();
-		}
 	}
 	
 	private void move(float dt) {	
@@ -144,4 +137,8 @@ public class PlayerControllerComponent implements Component {
 		return ComponentType.PLAYER_CONTROLLER;
 	}
 
+	public void addTool(Entity tool) {
+		transform.getParent().addChild(tool);
+	}
+	
 }

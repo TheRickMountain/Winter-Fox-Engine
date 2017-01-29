@@ -3,7 +3,11 @@ package com.wfe.ecs;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Entity {
+import com.wfe.game.World;
+import com.wfe.graph.Material;
+import com.wfe.graph.Mesh;
+
+public class Entity {
 	
 	protected Transformation transform;
 	
@@ -18,7 +22,37 @@ public abstract class Entity {
 	
 	protected boolean remove = false;
 	
-	public abstract void update(float dt);
+	private Mesh mesh;
+	private Material material;
+	
+	private int textureIndex = 0;
+	
+	public Entity(Mesh mesh, Material material, Transformation transform) {
+		this.transform = transform;
+		transform.setParent(this);
+		this.mesh = mesh;
+		this.material = material;
+		this.components = new ArrayList<Component>();
+	}
+	
+	public void update(float dt) {		
+		if(remove) {
+			if(!childs.isEmpty()) {
+				for(Entity child : childs)
+					child.remove();
+			}
+			
+			World.getWorld().removeEntity(this);
+		}
+		
+		for(Component component : components) {
+			component.update(dt);
+		}
+		
+		if(hasParent) {
+			transform.update(dt);
+		}
+	}
 	
 	public void addComponent(Component component) {
 		this.components.add(component);
@@ -82,6 +116,46 @@ public abstract class Entity {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+	
+	public float getTextureXOffset(){
+        int column = textureIndex % material.getNumberOfRows();
+        return (float) column / (float) material.getNumberOfRows();
+    }
+
+    public float getTextureYOffset(){
+        int row = textureIndex / material.getNumberOfRows();
+        return (float) row / (float)material.getNumberOfRows();
+    }
+	
+	public Mesh getMesh() {
+		return mesh;
+	}
+	
+	public Material getMaterial() {
+		return material;
+	}
+	
+	public int getTextureIndex() {
+		return textureIndex;
+	}
+
+	public Entity setTextureIndex(int textureIndex) {
+		int rowSquare = material.getNumberOfRows() * material.getNumberOfRows() - 1;
+		if(textureIndex < 0) {
+			textureIndex = 0;
+		} else if(textureIndex > rowSquare) {
+			textureIndex = rowSquare;
+		} else {
+			this.textureIndex = textureIndex;
+		}
+		
+		return this;
+	}
+
+	public void delete() {
+		mesh.delete();
+		material.delete();
 	}
 	
 }

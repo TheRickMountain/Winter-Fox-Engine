@@ -9,7 +9,7 @@ import org.lwjgl.opengl.GL30;
 
 import com.wfe.core.Camera;
 import com.wfe.core.Display;
-import com.wfe.ecs.StaticEntity;
+import com.wfe.ecs.Entity;
 import com.wfe.graph.Material;
 import com.wfe.graph.Mesh;
 import com.wfe.math.Matrix4f;
@@ -35,7 +35,7 @@ public class StaticEntityRenderer {
 		shader.stop();
 	}
 	
-	public void render(Map<Mesh, List<StaticEntity>> entities) {
+	public void render(Map<Mesh, List<Entity>> entities) {
 		prepare();	
 		for(Mesh mesh : entities.keySet()) {
 			GL30.glBindVertexArray(mesh.getVAO());
@@ -43,8 +43,8 @@ public class StaticEntityRenderer {
 			GL20.glEnableVertexAttribArray(1);
 			GL20.glEnableVertexAttribArray(2);
 			
-			List<StaticEntity> batch = entities.get(mesh);
-			for(StaticEntity entity : batch) {
+			List<Entity> batch = entities.get(mesh);
+			for(Entity entity : batch) {
 				if(entity.isVisible())
 					render(entity);
 			}
@@ -68,7 +68,7 @@ public class StaticEntityRenderer {
 		shader.lightColor.loadVec3(DirectionalLight.LIGHT_COLOR);
 	}
 	
-	private void render(StaticEntity entity) {
+	private void render(Entity entity) {
 		Material material = entity.getMaterial();
 		if(entity.isHasParent()) {
 			shader.modelMatrix.loadMatrix(MathUtils.getEulerModelMatrix(modelMatrix, 

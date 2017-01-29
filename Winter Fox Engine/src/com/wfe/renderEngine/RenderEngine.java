@@ -6,7 +6,7 @@ import java.util.Map;
 import org.lwjgl.opengl.GL11;
 
 import com.wfe.core.Camera;
-import com.wfe.ecs.StaticEntity;
+import com.wfe.ecs.Entity;
 import com.wfe.graph.Mesh;
 import com.wfe.gui.GUIText;
 import com.wfe.gui.GUITexture;
@@ -35,7 +35,7 @@ public class RenderEngine {
 		GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
 	}
 	
-	public void render(Map<Mesh, List<StaticEntity>> entities, 
+	public void render(Map<Mesh, List<Entity>> entities, 
 			List<GUIText> texts, List<GUITexture> textures, GUI guiManager) {
 		staticEntityRenderer.render(entities);
 		

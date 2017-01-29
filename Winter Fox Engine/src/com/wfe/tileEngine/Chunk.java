@@ -10,9 +10,8 @@ import org.lwjgl.opengl.GL15;
 import org.lwjgl.opengl.GL20;
 import org.lwjgl.opengl.GL30;
 
-import com.wfe.ecs.StaticEntity;
+import com.wfe.ecs.Entity;
 import com.wfe.math.Vector2f;
-import com.wfe.utils.MyRandom;
 
 public class Chunk {
 
@@ -118,10 +117,10 @@ public class Chunk {
 		// Texture Coords
 		for(int x = 0; x < SIZE; x++) {
 			for(int y = 0; y < SIZE; y++) {
-				float u0 = ((tiles[x][y].getId() % (int)SPRITE_SHEET) / SPRITE_SHEET) + 0.01f;
-		        float u1 = (u0 + (1.0f / SPRITE_SHEET)) - 0.02f;
-		        float v0 = ((tiles[x][y].getId() / (int)SPRITE_SHEET) / SPRITE_SHEET) + 0.01f;
-		        float v1 = (v0 + (1.0f / SPRITE_SHEET)) - 0.02f;
+				float u0 = ((tiles[x][y].getId() % (int)SPRITE_SHEET) / SPRITE_SHEET) + 0.005f;
+		        float u1 = (u0 + (1.0f / SPRITE_SHEET)) - 0.01f;
+		        float v0 = ((tiles[x][y].getId() / (int)SPRITE_SHEET) / SPRITE_SHEET) + 0.005f;
+		        float v1 = (v0 + (1.0f / SPRITE_SHEET)) - 0.01f;
 		        
 				vtList.add(u0); vtList.add(v0);
 				vtList.add(u0); vtList.add(v1);
@@ -143,10 +142,10 @@ public class Chunk {
 		// Texture Coords
 		for(int x = 0; x < SIZE; x++) {
 			for(int y = 0; y < SIZE; y++) {
-				float u0 = ((tiles[x][y].getId() % (int)SPRITE_SHEET) / SPRITE_SHEET) + 0.01f;
-		        float u1 = (u0 + (1.0f / SPRITE_SHEET)) - 0.02f;
-		        float v0 = ((tiles[x][y].getId() / (int)SPRITE_SHEET) / SPRITE_SHEET) + 0.01f;
-		        float v1 = (v0 + (1.0f / SPRITE_SHEET)) - 0.02f;
+				float u0 = ((tiles[x][y].getId() % (int)SPRITE_SHEET) / SPRITE_SHEET) + 0.005f;
+		        float u1 = (u0 + (1.0f / SPRITE_SHEET)) - 0.01f;
+		        float v0 = ((tiles[x][y].getId() / (int)SPRITE_SHEET) / SPRITE_SHEET) + 0.005f;
+		        float v1 = (v0 + (1.0f / SPRITE_SHEET)) - 0.01f;
 
 				vtList.add(u0); vtList.add(v0);
 				vtList.add(u0); vtList.add(v1);
@@ -195,7 +194,7 @@ public class Chunk {
 		return tiles[x][y].getId();
 	}
 	
-	public boolean setEntity(int x, int y, StaticEntity entity) {
+	public boolean setEntity(int x, int y, Entity entity) {
 		if(!tiles[x][y].isHasEntity()){
 			tiles[x][y].setEntity(entity);
 			return true;

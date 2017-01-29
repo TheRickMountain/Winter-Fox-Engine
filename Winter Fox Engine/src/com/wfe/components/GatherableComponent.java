@@ -3,7 +3,7 @@ package com.wfe.components;
 import com.wfe.core.ResourceManager;
 import com.wfe.ecs.Component;
 import com.wfe.ecs.ComponentType;
-import com.wfe.ecs.StaticEntity;
+import com.wfe.ecs.Entity;
 import com.wfe.ecs.Transformation;
 import com.wfe.game.World;
 import com.wfe.gui.ItemDatabase;
@@ -17,7 +17,7 @@ import com.wfe.utils.TimeUtil;
 public class GatherableComponent implements Component {
 	
 	private Transformation transform;
-	private StaticEntity player;
+	private Entity player;
 	private int itemID;
 	private BoundingBox boundingBox;
 	private float gatheringTime;
@@ -25,7 +25,7 @@ public class GatherableComponent implements Component {
 	private static final TimeUtil time = new TimeUtil();
 	private boolean start = false;
 	
-	public GatherableComponent(int itemID, StaticEntity player, Transformation transform, BoundingBox boundingBox,
+	public GatherableComponent(int itemID, Entity player, Transformation transform, BoundingBox boundingBox,
 			float gatheringTime) {
 		this.itemID = itemID;
 		this.player = player;
@@ -59,8 +59,8 @@ public class GatherableComponent implements Component {
 				reset();
 			}
 			
-			if(Keyboard.isKeyDown(Key.KEY_W) || Keyboard.isKeyDown(Key.KEY_S)
-					|| Keyboard.isKeyDown(Key.KEY_A) || Keyboard.isKeyDown(Key.KEY_D))
+			if(Keyboard.isKey(Key.KEY_W) || Keyboard.isKey(Key.KEY_S)
+					|| Keyboard.isKey(Key.KEY_A) || Keyboard.isKey(Key.KEY_D))
 				reset();
 		}
 		

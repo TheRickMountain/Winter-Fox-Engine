@@ -4,13 +4,13 @@ import com.wfe.components.BoundingBox;
 import com.wfe.components.ColliderComponent;
 import com.wfe.components.GatherableComponent;
 import com.wfe.core.ResourceManager;
-import com.wfe.ecs.StaticEntity;
+import com.wfe.ecs.Entity;
 import com.wfe.ecs.Transformation;
 import com.wfe.game.World;
 import com.wfe.graph.Material;
 import com.wfe.gui.Item;
 
-public class Pine extends StaticEntity {
+public class Pine extends Entity {
 
 	public Pine(Player player, Transformation transform) {
 		super(ResourceManager.getMesh("pine_bark"),
@@ -19,7 +19,7 @@ public class Pine extends StaticEntity {
 		addComponent(new GatherableComponent(Item.LOG, player, getTransform(), 
 				new BoundingBox(1f, 2f, 1f, getTransform()), 5));
 		
-		StaticEntity pineLeaves = new StaticEntity(ResourceManager.getMesh("pine_leaves"),
+		Entity pineLeaves = new Entity(ResourceManager.getMesh("pine_leaves"),
 				new Material(ResourceManager.getTexture("pine_leaves")).setHasTransparency(true), transform);
 		addChild(pineLeaves);
 		World.getWorld().addEntity(pineLeaves);

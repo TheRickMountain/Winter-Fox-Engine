@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.wfe.core.Display;
 import com.wfe.core.ResourceManager;
-import com.wfe.ecs.StaticEntity;
+import com.wfe.ecs.Entity;
 import com.wfe.game.World;
 import com.wfe.gui.GUIElement;
 import com.wfe.gui.Item;
@@ -39,7 +39,7 @@ public class Inventory implements GUIElement {
 	public boolean showInventory = false;
 	
 	// Building
-	private StaticEntity currentBuildingEntity;
+	private Entity currentBuildingEntity;
 	private int buildingEntityRotation;
 	
 	public Inventory() {
@@ -116,7 +116,7 @@ public class Inventory implements GUIElement {
 			currentBuildingEntity.getTransform().setRotY(buildingEntityRotation);
 			
 			if(Mouse.isButtonDown(0) && !Mouse.isActiveInGUI()) {
-				StaticEntity entity = GUI.draggedItem.entityBlueprint
+				Entity entity = GUI.draggedItem.entityBlueprint
 						.createInstanceWithComponents(currentBuildingEntity.getTransform());
 				if(World.getWorld().addEntityToTile(entity)){
 					GUI.getGUI().setDraggedItemAmount(GUI.getGUI().getDraggedItemAmount() - 1);

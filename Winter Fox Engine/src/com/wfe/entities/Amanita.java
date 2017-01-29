@@ -3,14 +3,14 @@ package com.wfe.entities;
 import com.wfe.components.BoundingBox;
 import com.wfe.components.GatherableComponent;
 import com.wfe.core.ResourceManager;
-import com.wfe.ecs.StaticEntity;
+import com.wfe.ecs.Entity;
 import com.wfe.ecs.Transformation;
 import com.wfe.graph.Material;
 import com.wfe.gui.Item;
 
-public class Amanita extends StaticEntity {
+public class Amanita extends Entity {
 
-	public Amanita(StaticEntity player, Transformation transform) {
+	public Amanita(Entity player, Transformation transform) {
 		super(ResourceManager.getMesh("amanita"), 
 				new Material(ResourceManager.getTexture("amanita")), transform);
 		addComponent(new GatherableComponent(Item.AMANITA, player, getTransform(), 

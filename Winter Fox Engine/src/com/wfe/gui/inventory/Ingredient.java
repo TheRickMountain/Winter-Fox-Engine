@@ -24,9 +24,6 @@ public class Ingredient implements GUIElement {
 	
 	public boolean active = true;
 	
-	private int required = 0;
-	private int current = 0;
-	
 	public Ingredient(Rect rect, Color backgroundColor, Item item) {
 		this.rect = rect;
 		this.backgroundColor = backgroundColor;
@@ -63,8 +60,6 @@ public class Ingredient implements GUIElement {
 	}
 	
 	public void set(int current, int required) {
-		this.current = current;
-		this.required = required;
 		this.text.setText(current + "/" + required);
 		if(current >= required) {
 			completed = true;

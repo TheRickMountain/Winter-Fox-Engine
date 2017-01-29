@@ -74,8 +74,6 @@ public class Game implements IGameLogic {
 		ResourceManager.loadTexture("cross_wall_ui", Texture.newTexture(new MyFile("gui/items/cross_wall.png")).create());
 		ResourceManager.loadTexture("window_wall_ui", Texture.newTexture(new MyFile("gui/items/window_wall.png")).create());
 		ResourceManager.loadTexture("door_wall_ui", Texture.newTexture(new MyFile("gui/items/door_wall.png")).create());
-		ResourceManager.loadTexture("axe_ui", Texture.newTexture(new MyFile("gui/items/axe.png"))
-				.normalMipMap().create());
 		ResourceManager.loadTexture("shroom_ui", Texture.newTexture(new MyFile("gui/items/shroom.png"))
 				.normalMipMap().create());
 		ResourceManager.loadTexture("bread_ui", Texture.newTexture(new MyFile("gui/items/bread.png"))
@@ -161,6 +159,16 @@ public class Game implements IGameLogic {
 		ResourceManager.loadMesh("amanita", OBJLoader.loadMesh("/entity/amanita/model.obj"));
 		/*** *** ***/
 		
+		/*** Axe ***/
+		ResourceManager.loadTexture("axe_ui", Texture.newTexture(new MyFile("entity/axe/icon.png"))
+				.create());
+		ResourceManager.loadTexture("axe", Texture.newTexture(new MyFile("entity/axe/diffuse.png"))
+				.normalMipMap(-0.4f)
+				.create());
+		
+		ResourceManager.loadMesh("axe", OBJLoader.loadMesh("/entity/axe/model.obj"));
+		/*** *** ***/
+		
 		/*** Furnace ***/
 		ResourceManager.loadTexture("furnace_ui", Texture.newTexture(new MyFile("entity/furnace/icon.png"))
 				.create());
@@ -232,12 +240,6 @@ public class Game implements IGameLogic {
 		ResourceManager.loadMesh("body", OBJLoader.loadMesh("/entity/player/body.obj"));
 		ResourceManager.loadMesh("head", OBJLoader.loadMesh("/entity/player/head.obj"));
 		ResourceManager.loadMesh("eyes", OBJLoader.loadMesh("/entity/player/eyes.obj"));
-		ResourceManager.loadMesh("hip", OBJLoader.loadMesh("/entity/player/hip.obj"));
-		ResourceManager.loadMesh("shin", OBJLoader.loadMesh("/entity/player/shin.obj"));
-		ResourceManager.loadMesh("leftArm", OBJLoader.loadMesh("/entity/player/leftArm.obj"));
-		ResourceManager.loadMesh("leftForearm", OBJLoader.loadMesh("/entity/player/leftForearm.obj"));
-		ResourceManager.loadMesh("rightArm", OBJLoader.loadMesh("/entity/player/rightArm.obj"));
-		ResourceManager.loadMesh("rightForearm", OBJLoader.loadMesh("/entity/player/rightForearm.obj"));
 		/*** *** ***/
 	}
 	

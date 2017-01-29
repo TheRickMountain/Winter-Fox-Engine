@@ -3,12 +3,12 @@ package com.wfe.entities;
 import com.wfe.components.BoundingBox;
 import com.wfe.components.GatherableComponent;
 import com.wfe.core.ResourceManager;
-import com.wfe.ecs.StaticEntity;
+import com.wfe.ecs.Entity;
 import com.wfe.ecs.Transformation;
 import com.wfe.graph.Material;
 import com.wfe.gui.Item;
 
-public class Wheat extends StaticEntity {
+public class Wheat extends Entity {
 
 	public Wheat(Player player, Transformation transform) {
 		super(ResourceManager.getMesh("wheat"),

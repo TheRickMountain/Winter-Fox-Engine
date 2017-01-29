@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.wfe.ecs.Component;
-import com.wfe.ecs.StaticEntity;
+import com.wfe.ecs.Entity;
 import com.wfe.ecs.Transformation;
 import com.wfe.graph.Material;
 import com.wfe.graph.Mesh;
@@ -28,8 +28,8 @@ public abstract class Blueprint {
 		this.components.add(component);
 	}
 	
-	public abstract StaticEntity createInstance();
+	public abstract Entity createInstance();
 
-	public abstract StaticEntity createInstanceWithComponents(Transformation transform);
+	public abstract Entity createInstanceWithComponents(Transformation transform);
 	
 }
