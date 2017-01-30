@@ -8,7 +8,6 @@ import com.wfe.ecs.Entity;
 import com.wfe.ecs.Transformation;
 import com.wfe.game.World;
 import com.wfe.graph.Material;
-import com.wfe.gui.Item;
 
 public class Pine extends Entity {
 
@@ -16,7 +15,7 @@ public class Pine extends Entity {
 		super(ResourceManager.getMesh("pine_bark"),
 				new Material(ResourceManager.getTexture("pine_bark")), transform);
 		addComponent(new ColliderComponent(0.5f, 1, 0.5f, transform));
-		addComponent(new GatherableComponent(Item.LOG, player, getTransform(), 
+		addComponent(new GatherableComponent(0, player, getTransform(), 
 				new BoundingBox(1f, 2f, 1f, getTransform()), 5));
 		
 		Entity pineLeaves = new Entity(ResourceManager.getMesh("pine_leaves"),

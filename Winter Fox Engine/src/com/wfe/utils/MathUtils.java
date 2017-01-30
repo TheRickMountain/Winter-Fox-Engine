@@ -113,11 +113,15 @@ public class MathUtils {
 		matrix.setIdentity();
 		Matrix4f.translate(new Vector2f(xPos, yPos), matrix, matrix);
         Matrix4f.translate(new Vector2f(0.5f * xScale, 0.5f * yScale), matrix, matrix);
-		Matrix4f.rotate(rotation* DEGREES_TO_RADIANS, AXIS_Z, matrix, matrix);
+		Matrix4f.rotate(rotation * DEGREES_TO_RADIANS, AXIS_Z, matrix, matrix);
 		Matrix4f.translate(new Vector2f(-0.5f * xScale, -0.5f * yScale), matrix, matrix);
 		Matrix4f.scale(new Vector3f(xScale, yScale, 0.0f), matrix, matrix);
         
 		return matrix;
+	}
+	
+	public static Matrix4f getModelMatrix(Matrix4f matrix, Rect rect){
+		return getModelMatrix(matrix, rect.x, rect.y, rect.rotation, rect.width, rect.height);
 	}
 	
 	public static float getDistance(float x1, float y1, float x2, float y2) {

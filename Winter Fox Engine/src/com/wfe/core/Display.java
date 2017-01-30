@@ -54,6 +54,7 @@ public class Display {
         glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
         glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
         glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
+        // Anti-aliasing
         glfwWindowHint(GLFW_SAMPLES, 4);
 
         window = glfwCreateWindow(width, height, title, NULL, NULL);

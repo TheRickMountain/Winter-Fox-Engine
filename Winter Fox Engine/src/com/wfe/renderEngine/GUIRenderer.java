@@ -33,35 +33,18 @@ public class GUIRenderer {
 	
 	public void render(List<GUITexture> textures) {
 		for(GUITexture texture : textures) {
-			if(!texture.isCentered()) {
-				shader.modelMatrix.loadMatrix(MathUtils.getModelMatrix(modelMatrix, 
-						texture.getPosX(), texture.getPosY(), texture.getRot(), texture.getScaleX(), texture.getScaleY()));
-			} else {
-				shader.modelMatrix.loadMatrix(MathUtils.getModelMatrix(modelMatrix, 
-						texture.getPosX() - texture.getScaleX() / 2, texture.getPosY() - texture.getScaleY() / 2, 
-						texture.getRot(), texture.getScaleX(), texture.getScaleY()));
-			}
-			
-			if(texture.isSolidColor()) {
-				shader.color.loadColor(texture.getColor());
-				shader.solidColor.loadBoolean(true);
-			} else {
-				shader.solidColor.loadBoolean(false);
-				texture.getTexture().bind(0);
-			}
-			
-			GL11.glDrawArrays(GL11.GL_TRIANGLE_STRIP, 0, 4);
+			render(texture);
 		}
 	}
 	
 	public static void render(GUITexture texture) {
 		if(!texture.isCentered()) {
 			shader.modelMatrix.loadMatrix(MathUtils.getModelMatrix(modelMatrix, 
-					texture.getPosX(), texture.getPosY(), texture.getRot(), texture.getScaleX(), texture.getScaleY()));
+					texture.rect));
 		} else {
 			shader.modelMatrix.loadMatrix(MathUtils.getModelMatrix(modelMatrix, 
-					texture.getPosX() - texture.getScaleX() / 2, texture.getPosY() - texture.getScaleY() / 2, 
-					texture.getRot(), texture.getScaleX(), texture.getScaleY()));
+					texture.rect.x - texture.rect.width / 2, texture.rect.y - texture.rect.height / 2, 
+					texture.rect.rotation, texture.rect.width, texture.rect.height));
 		}
 		
 		if(texture.isSolidColor()) {

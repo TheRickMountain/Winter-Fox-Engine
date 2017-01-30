@@ -6,6 +6,7 @@ public class Rect {
 
 	public float x, y;
 	public float width, height;
+	public float rotation;
 	
 	public Rect(float x, float y, float width, float height) {
 		super();
@@ -57,6 +58,14 @@ public class Rect {
 		this.height = height;
 	}
 	
+	public float getRotation() {
+		return rotation;
+	}
+
+	public void setRotation(float rotation) {
+		this.rotation = rotation;
+	}
+
 	public boolean isMouseOvered() {
 		return Mouse.getX() > x && Mouse.getX() < x + width &&
 				Mouse.getY() > y && Mouse.getY() < y + height;

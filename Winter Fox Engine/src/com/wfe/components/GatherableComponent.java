@@ -1,17 +1,11 @@
 package com.wfe.components;
 
-import com.wfe.core.ResourceManager;
 import com.wfe.ecs.Component;
 import com.wfe.ecs.ComponentType;
 import com.wfe.ecs.Entity;
 import com.wfe.ecs.Transformation;
 import com.wfe.game.Game;
-import com.wfe.game.World;
-import com.wfe.gui.ItemDatabase;
-import com.wfe.input.Key;
-import com.wfe.input.Keyboard;
 import com.wfe.input.Mouse;
-import com.wfe.userInterfaces.GUI;
 import com.wfe.utils.MathUtils;
 import com.wfe.utils.TimeUtil;
 
@@ -51,7 +45,7 @@ public class GatherableComponent implements Component {
 		}
 		
 		if(start) {			
-			float currentTime = (float)time.getTime();
+			/*float currentTime = (float)time.getTime();
 			GUI.showProgressBar = true;
 			if (currentTime <= gatheringTime) {
 				int value = (int) ((currentTime * 100) / gatheringTime);
@@ -68,7 +62,7 @@ public class GatherableComponent implements Component {
 					|| Keyboard.isKey(Key.KEY_A) || Keyboard.isKey(Key.KEY_D))
 				reset();
 			
-			Game.player.chopingAnimation(dt);
+			Game.player.chopingAnimation(dt);*/
 		}
 		
 		if(Mouse.isButtonUp(1)) {
@@ -79,7 +73,7 @@ public class GatherableComponent implements Component {
 	private void reset() {
 		time.reset();
 		start = false;
-		GUI.showProgressBar = false;
+		//GUI.showProgressBar = false;
 		Game.player.idleAnim();
 	}
 

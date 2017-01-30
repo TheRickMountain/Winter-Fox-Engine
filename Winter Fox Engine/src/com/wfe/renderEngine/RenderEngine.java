@@ -10,7 +10,6 @@ import com.wfe.ecs.Entity;
 import com.wfe.graph.Mesh;
 import com.wfe.gui.GUIText;
 import com.wfe.gui.GUITexture;
-import com.wfe.userInterfaces.GUI;
 import com.wfe.utils.OpenglUtils;
 
 public class RenderEngine {
@@ -36,17 +35,17 @@ public class RenderEngine {
 	}
 	
 	public void render(Map<Mesh, List<Entity>> entities, 
-			List<GUIText> texts, List<GUITexture> textures, GUI guiManager) {
+			List<GUIText> texts, List<GUITexture> textures) {
 		staticEntityRenderer.render(entities);
 		
 		guiRenderer.prepare();
 		guiRenderer.render(textures);
-		guiManager.render();
+		//guiManager.render();
 		guiRenderer.finish();
 		
 		fontRenderer.prepare();
 		fontRenderer.render(texts);
-		guiManager.renderText();
+		//guiManager.renderText();
 		fontRenderer.finish();
 	}
 

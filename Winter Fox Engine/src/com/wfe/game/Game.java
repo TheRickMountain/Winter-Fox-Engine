@@ -16,10 +16,12 @@ import com.wfe.entities.Shroom;
 import com.wfe.entities.Stick;
 import com.wfe.entities.Wheat;
 import com.wfe.graph.OBJLoader;
+import com.wfe.gui.GUIFrame;
 import com.wfe.math.Vector3f;
 import com.wfe.textures.Texture;
 import com.wfe.utils.MyFile;
 import com.wfe.utils.MyRandom;
+import com.wfe.utils.Rect;
 
 public class Game implements IGameLogic {
 	
@@ -92,7 +94,6 @@ public class Game implements IGameLogic {
 		ResourceManager.loadTexture("dough_ui", Texture.newTexture(new MyFile("gui/items/dough.png"))
 				.normalMipMap().create());
 		ResourceManager.loadTexture("craft_ui", Texture.newTexture(new MyFile("gui/craft.png")).create());
-		ResourceManager.loadTexture("list_ui", Texture.newTexture(new MyFile("gui/list.png")).create());
 		ResourceManager.loadTexture("hoe_ui", Texture.newTexture(new MyFile("gui/items/hoe.png"))
 				.normalMipMap().create());
 		ResourceManager.loadTexture("background_frame_ui", Texture.newTexture(new MyFile("gui/background_frame.png"))
@@ -168,16 +169,6 @@ public class Game implements IGameLogic {
 				.create());
 		
 		ResourceManager.loadMesh("axe", OBJLoader.loadMesh("/entity/axe/model.obj"));
-		/*** *** ***/
-		
-		/*** Helmet ***/
-		ResourceManager.loadTexture("helmet_ui", Texture.newTexture(new MyFile("entity/helmet/icon.png"))
-				.create());
-		ResourceManager.loadTexture("helmet", Texture.newTexture(new MyFile("entity/helmet/diffuse.png"))
-				.normalMipMap(-0.4f)
-				.create());
-		
-		ResourceManager.loadMesh("helmet", OBJLoader.loadMesh("/entity/helmet/model.obj"));
 		/*** *** ***/
 		
 		/*** Campfire ***/
@@ -308,11 +299,16 @@ public class Game implements IGameLogic {
 				int send = MyRandom.nextInt(5);
 				if(send == 1) {
 					Grass grass = new Grass(player, new Transformation(i, 0, j));
-					grass.setTextureIndex(MyRandom.nextInt(3, 4, 5, 6));
+					grass.setTextureIndex(MyRandom.nextInt(3, 4, 5, 6));		
 					World.getWorld().addEntityToTile(grass);
 				}
 			}
 		}
+		
+		//OpenglUtils.goWireframe(true);
+		
+		GUIFrame frame = new GUIFrame(new Rect(Display.getWidth() / 2 - 200, Display.getHeight() / 2 - 150, 400, 300));
+		World.getWorld().addGUITextures(frame.getFrameTextures());
 	}
 	
 	@Override

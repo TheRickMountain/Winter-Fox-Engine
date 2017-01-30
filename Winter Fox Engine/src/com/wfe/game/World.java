@@ -15,7 +15,6 @@ import com.wfe.gui.GUITexture;
 import com.wfe.physics.AABB;
 import com.wfe.renderEngine.RenderEngine;
 import com.wfe.tileEngine.Terrain;
-import com.wfe.userInterfaces.GUI;
 import com.wfe.utils.MousePicker;
 import com.wfe.weather.Weather;
 
@@ -40,7 +39,7 @@ public class World {
 	
 	private float time = 12000;
 	private Weather weather;
-	private GUI guiManager;
+	//private GUI guiManager;
 	
 	private World(Camera camera) {
 		this.camera = camera;
@@ -51,7 +50,7 @@ public class World {
 		this.renderEngine = RenderEngine.create(camera);
 		this.weather = new Weather();
 		MousePicker.setUpMousePicker(camera);
-		guiManager = GUI.getGUI();
+		//guiManager = GUI.getGUI();
 	}
 	
 	public static World createWorld(Camera camera) throws Exception {
@@ -89,14 +88,14 @@ public class World {
 			entitiesToRemove.clear();
 		}
 
-		guiManager.update(dt);
+		//guiManager.update(dt);
 		
 	}
 	
 	public void render() {
 		renderEngine.clear();
 		terrain.render();
-		renderEngine.render(entitiesToRender, guiTexts, guiTextures, guiManager);
+		renderEngine.render(entitiesToRender, guiTexts, guiTextures);
 	}
 	
 	public void addEntity(Entity entity) {
@@ -184,7 +183,7 @@ public class World {
 	}
 	
 	public void updateWeather(float dt) {
-		time += 5 * dt;
+		time += 15 * dt;
 		if(time >= 24000) {
 			time = 0;
 		}
