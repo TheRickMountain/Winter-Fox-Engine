@@ -7,11 +7,14 @@ import com.wfe.ecs.Entity;
 import com.wfe.ecs.Transformation;
 import com.wfe.game.World;
 import com.wfe.graph.Material;
-import com.wfe.gui.inventory.GUI;
+import com.wfe.userInterfaces.GUI;
 
 public class Player extends Entity {
 
 	private Entity weapon;
+	private Entity helmet;
+	
+	private Entity head;
 	
 	public Player(Camera camera, Transformation transform) {
 		super(null, 
@@ -23,7 +26,7 @@ public class Player extends Entity {
 		addChild(body);
 		World.getWorld().addEntity(body);
 		
-		Entity head = new Entity(ResourceManager.getMesh("head"), 
+		head = new Entity(ResourceManager.getMesh("head"), 
 				new Material(ResourceManager.getTexture("player")), new Transformation());
 		head.getTransform().localY = 1.15f;
 		body.addChild(head);
@@ -38,7 +41,7 @@ public class Player extends Entity {
 		addComponent(new PlayerComponent(camera, transform));
 	}
 
-	public void addTool(Entity weapon) {
+	public void addWeapon(Entity weapon) {
 		this.weapon = weapon;
 		
 		weapon.getTransform().localScaleX = 1.75f;
@@ -51,9 +54,20 @@ public class Player extends Entity {
 		World.getWorld().addEntity(weapon);
 	}
 	
-	public void removeTool() {
+	public void removeWeapon() {
 		removeChild(weapon);
 		World.getWorld().removeEntity(weapon);
+	}
+	
+	public void addHelmet(Entity helmet) {
+		this.helmet = helmet;
+		head.addChild(helmet);
+		World.getWorld().addEntity(helmet);
+	}
+	
+	public void removeHelmet() {
+		head.removeChild(helmet);
+		World.getWorld().removeEntity(helmet);
 	}
 	
 	private boolean down = false;

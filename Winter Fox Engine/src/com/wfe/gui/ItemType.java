@@ -2,10 +2,14 @@ package com.wfe.gui;
 
 public enum ItemType {
 	
-	FOOD,
-	BUILDING,
+	CONSUMABLE,
+	PLACEABLE,
 	TOOL,
 	WEAPON,
-	ITEM
+	RESOURCE,
+	SEED,
+	HELMET,
+	TUNIC,
+	PANTS
 
 }

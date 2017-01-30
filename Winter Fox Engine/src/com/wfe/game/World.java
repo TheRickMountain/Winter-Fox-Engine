@@ -12,10 +12,10 @@ import com.wfe.ecs.Entity;
 import com.wfe.graph.Mesh;
 import com.wfe.gui.GUIText;
 import com.wfe.gui.GUITexture;
-import com.wfe.gui.inventory.GUI;
 import com.wfe.physics.AABB;
 import com.wfe.renderEngine.RenderEngine;
 import com.wfe.tileEngine.Terrain;
+import com.wfe.userInterfaces.GUI;
 import com.wfe.utils.MousePicker;
 import com.wfe.weather.Weather;
 
@@ -184,7 +184,7 @@ public class World {
 	}
 	
 	public void updateWeather(float dt) {
-		time += 5;
+		time += 5 * dt;
 		if(time >= 24000) {
 			time = 0;
 		}

@@ -1,4 +1,4 @@
-package com.wfe.gui.inventory;
+package com.wfe.userInterfaces;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,6 +8,7 @@ import com.wfe.core.ResourceManager;
 import com.wfe.ecs.Entity;
 import com.wfe.game.World;
 import com.wfe.gui.GUIElement;
+import com.wfe.gui.GUITexture;
 import com.wfe.gui.Item;
 import com.wfe.gui.ItemType;
 import com.wfe.gui.Slot;
@@ -15,11 +16,16 @@ import com.wfe.input.Key;
 import com.wfe.input.Keyboard;
 import com.wfe.input.Mouse;
 import com.wfe.math.Vector3f;
+import com.wfe.renderEngine.GUIRenderer;
 import com.wfe.utils.Color;
 import com.wfe.utils.MousePicker;
 
 
 public class Inventory implements GUIElement {
+	
+	private GUITexture background;
+	
+	private float borderOffset = 5;
 	
 	private int quickSlotsAmount = 8;
 	
@@ -43,6 +49,10 @@ public class Inventory implements GUIElement {
 	private int buildingEntityRotation;
 	
 	public Inventory() {
+		background = new GUITexture(new Color(50f, 50f, 50f, 230).convert(), 0, 0, 
+				inventorySlotsX * slotSize + (inventorySlotsX + 1) * borderOffset, 
+				inventorySlotsY * slotSize + (inventorySlotsY + 1) * borderOffset, false);
+		
 		for(int i = 0; i < quickSlotsAmount; i++) {
 			quickSlots.add(new Slot(0, 0, slotSize, slotSize, slotColor));
 			slots.add(quickSlots.get(i));
@@ -142,7 +152,8 @@ public class Inventory implements GUIElement {
 	}
 	
 	public void render() {
-		if(showInventory) {			
+		if(showInventory) {	
+			GUIRenderer.render(background);
 			for(Slot slot : inventorySlots) {
 				slot.render();
 			}
@@ -166,7 +177,7 @@ public class Inventory implements GUIElement {
 	}
 	
 	public boolean addItem(Item item, int amount) {
-		boolean hasItem = getItemAmount(item.ID) >= 1;
+		boolean hasItem = getItemAmount(item.id) >= 1;
 		
 		if(hasItem) {
 			for(int i = 0; i < slots.size(); i++) {
@@ -288,7 +299,7 @@ public class Inventory implements GUIElement {
 			} else {
 				if(slot.isHasItem()) {
 					Item item = slot.getItem();
-					if(item.type.equals(ItemType.FOOD)) {
+					if(item.type.equals(ItemType.CONSUMABLE)) {
 						GUI.getGUI().status.hungerBar.increase(item.starvation);
 						if(slot.getItemsAmount() > 1) {
 							slot.setItemsAmount(slot.getItemsAmount() - 1);
@@ -303,7 +314,7 @@ public class Inventory implements GUIElement {
 	}
 	
 	private void checkBuildingItem() {
-		if(GUI.draggedItem != null && GUI.draggedItem.type.equals(ItemType.BUILDING)) {
+		if(GUI.draggedItem != null && GUI.draggedItem.type.equals(ItemType.PLACEABLE)) {
 			currentBuildingEntity = GUI.draggedItem.entityBlueprint.createInstance();
 			World.getWorld().addEntity(currentBuildingEntity);
 			return;
@@ -339,13 +350,16 @@ public class Inventory implements GUIElement {
 			}
 		}
 		
+		background.setPosition(inventorySlots.get(0).getPosX() - borderOffset, 
+				inventorySlots.get(0).getPosY() - borderOffset);
+		
 	}
 	
 	public int getItemAmount(int id) {
 		int amount = 0;
 		for(Slot slot : slots) {
 			if(slot.isHasItem()) {
-				if(slot.getItem().ID == id) {
+				if(slot.getItem().id == id) {
 					amount += slot.getItemsAmount();
 				}
 			}

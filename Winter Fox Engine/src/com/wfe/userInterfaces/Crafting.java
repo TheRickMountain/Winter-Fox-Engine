@@ -1,4 +1,4 @@
-package com.wfe.gui.inventory;
+package com.wfe.userInterfaces;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -217,7 +217,8 @@ public class Crafting implements GUIElement {
 	
 	public boolean updateRecipe(boolean remove) {
 		infoIcon.setTexture(activeItem.icon);
-		infoName.setText(activeItem.name);
+		infoName.setText(activeItem.title);
+		infoDesc.setText(activeItem.description);
 		
 		for(Ingredient ingredient : ingredients) {
 			ingredient.active = false;

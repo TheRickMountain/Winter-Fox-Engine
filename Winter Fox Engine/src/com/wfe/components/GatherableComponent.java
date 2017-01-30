@@ -8,10 +8,10 @@ import com.wfe.ecs.Transformation;
 import com.wfe.game.Game;
 import com.wfe.game.World;
 import com.wfe.gui.ItemDatabase;
-import com.wfe.gui.inventory.GUI;
 import com.wfe.input.Key;
 import com.wfe.input.Keyboard;
 import com.wfe.input.Mouse;
+import com.wfe.userInterfaces.GUI;
 import com.wfe.utils.MathUtils;
 import com.wfe.utils.TimeUtil;
 

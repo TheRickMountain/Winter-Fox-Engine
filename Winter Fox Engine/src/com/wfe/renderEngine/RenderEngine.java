@@ -10,7 +10,7 @@ import com.wfe.ecs.Entity;
 import com.wfe.graph.Mesh;
 import com.wfe.gui.GUIText;
 import com.wfe.gui.GUITexture;
-import com.wfe.gui.inventory.GUI;
+import com.wfe.userInterfaces.GUI;
 import com.wfe.utils.OpenglUtils;
 
 public class RenderEngine {

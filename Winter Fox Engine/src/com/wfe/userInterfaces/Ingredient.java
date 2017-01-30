@@ -1,4 +1,4 @@
-package com.wfe.gui.inventory;
+package com.wfe.userInterfaces;
 
 import com.wfe.core.Display;
 import com.wfe.gui.GUIElement;

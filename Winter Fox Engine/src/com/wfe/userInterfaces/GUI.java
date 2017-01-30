@@ -1,14 +1,18 @@
-package com.wfe.gui.inventory;
+package com.wfe.userInterfaces;
 
 import com.wfe.audio.Source;
 import com.wfe.core.Display;
 import com.wfe.core.ResourceManager;
+import com.wfe.ecs.Transformation;
+import com.wfe.game.Game;
 import com.wfe.gui.GUIElement;
 import com.wfe.gui.GUIText;
 import com.wfe.gui.GUITexture;
 import com.wfe.gui.Item;
 import com.wfe.gui.ItemDatabase;
 import com.wfe.gui.ProgressBar;
+import com.wfe.input.Key;
+import com.wfe.input.Keyboard;
 import com.wfe.input.Mouse;
 import com.wfe.renderEngine.FontRenderer;
 import com.wfe.renderEngine.GUIRenderer;
@@ -64,6 +68,7 @@ public class GUI implements GUIElement {
 		inventory.addItem(ItemDatabase.getItem(Item.APPLE), 5);
 		inventory.addItem(ItemDatabase.getItem(Item.LOG), 105);
 		inventory.addItem(ItemDatabase.getItem(Item.AXE), 1);
+		inventory.addItem(ItemDatabase.getItem(Item.HELMET), 1);
 	}
 	
 	public void update(float dt) {
@@ -80,6 +85,11 @@ public class GUI implements GUIElement {
 				crafting.showCrafting = !crafting.showCrafting;
 				crafting.updateRecipe(false);
 			}
+		}
+		
+		if(Keyboard.isKeyDown(Key.KEY_F)) {
+			Game.player.addHelmet(ItemDatabase.getItem(Item.HELMET)
+					.entityBlueprint.createInstanceWithComponents(new Transformation()));
 		}
 		
 		if(Display.isResized()) {

@@ -1,4 +1,4 @@
-package com.wfe.gui.inventory;
+package com.wfe.userInterfaces;
 
 import com.wfe.gui.GUIElement;
 import com.wfe.gui.GUIText;
@@ -19,7 +19,7 @@ public class Element implements GUIElement {
 		this.rect = rect;
 		this.backgroundColor = backgroundColor;
 		this.item = item;
-		this.text = new GUIText(this.item.name, 1.1f, FontRenderer.font, 0, 0, 1.0f, false)
+		this.text = new GUIText(this.item.title, 1.1f, FontRenderer.font, 0, 0, 1.0f, false)
 				.setColor(1.0f, 1.0f, 1.0f);
 	}
 	

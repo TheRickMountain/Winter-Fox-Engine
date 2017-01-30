@@ -1,4 +1,4 @@
-package com.wfe.gui.inventory;
+package com.wfe.userInterfaces;
 
 import com.wfe.core.Display;
 import com.wfe.ecs.Transformation;
@@ -33,7 +33,7 @@ public class Equipment implements GUIElement {
 						GUI.draggedItem = temp;
 					} else {
 						if(addItem(GUI.draggedItem)){
-							Game.player.addTool(GUI.draggedItem.entityBlueprint
+							Game.player.addWeapon(GUI.draggedItem.entityBlueprint
 									.createInstanceWithComponents(new Transformation()));
 							GUI.draggedItem = null;
 						}
@@ -42,7 +42,7 @@ public class Equipment implements GUIElement {
 					if(handSlot.isHasItem()) {
 						GUI.draggedItem = handSlot.getItem();
 						handSlot.removeItem();
-						Game.player.removeTool();
+						Game.player.removeWeapon();
 					}
 				}
 			}
@@ -80,7 +80,7 @@ public class Equipment implements GUIElement {
 		if(handSlot.getItem() == null) {
 			return -1;
 		} else {
-			return handSlot.getItem().ID;
+			return handSlot.getItem().id;
 		}
 	}
 	

@@ -170,6 +170,16 @@ public class Game implements IGameLogic {
 		ResourceManager.loadMesh("axe", OBJLoader.loadMesh("/entity/axe/model.obj"));
 		/*** *** ***/
 		
+		/*** Helmet ***/
+		ResourceManager.loadTexture("helmet_ui", Texture.newTexture(new MyFile("entity/helmet/icon.png"))
+				.create());
+		ResourceManager.loadTexture("helmet", Texture.newTexture(new MyFile("entity/helmet/diffuse.png"))
+				.normalMipMap(-0.4f)
+				.create());
+		
+		ResourceManager.loadMesh("helmet", OBJLoader.loadMesh("/entity/helmet/model.obj"));
+		/*** *** ***/
+		
 		/*** Campfire ***/
 		ResourceManager.loadTexture("campfire_ui", Texture.newTexture(new MyFile("entity/campfire/icon.png"))
 				.create());
@@ -298,28 +308,11 @@ public class Game implements IGameLogic {
 				int send = MyRandom.nextInt(5);
 				if(send == 1) {
 					Grass grass = new Grass(player, new Transformation(i, 0, j));
-					int tileType = World.getWorld().getTile(i, j);
-					switch (tileType) {
-						case 4:
-						case 5:
-						case 8:
-						case 9:
-							grass.setTextureIndex(MyRandom.nextInt(3, 4, 5, 6));
-							break;
-						case 6:
-						case 7:
-						case 10:
-						case 11:
-							grass.setTextureIndex(MyRandom.nextInt(3, 4, 5, 6));
-							break;
-					}
-						
+					grass.setTextureIndex(MyRandom.nextInt(3, 4, 5, 6));
 					World.getWorld().addEntityToTile(grass);
 				}
 			}
 		}
-		
-		//OpenglUtils.goWireframe(true);
 	}
 	
 	@Override

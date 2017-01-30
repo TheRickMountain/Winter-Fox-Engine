@@ -14,7 +14,7 @@ public class Flint extends Entity {
 		super(ResourceManager.getMesh("flint"), 
 				new Material(ResourceManager.getTexture("flint")), transform);
 		addComponent(new GatherableComponent(Item.FLINT, player, getTransform(), 
-				new BoundingBox(0.5f, 0.5f, 0.5f, getTransform()), 0.25f));
+				new BoundingBox(0.5f, 0.5f, 0.5f, getTransform()), 0.0f));
 		transform.setScale(0.125f);
 	}
 
