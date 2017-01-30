@@ -17,7 +17,9 @@ import com.wfe.entities.Stick;
 import com.wfe.entities.Wheat;
 import com.wfe.graph.OBJLoader;
 import com.wfe.gui.GUIFrame;
+import com.wfe.gui.GUIText;
 import com.wfe.math.Vector3f;
+import com.wfe.renderEngine.FontRenderer;
 import com.wfe.textures.Texture;
 import com.wfe.utils.MyFile;
 import com.wfe.utils.MyRandom;
@@ -34,9 +36,9 @@ public class Game implements IGameLogic {
 		AudioMaster.init();
 		AudioMaster.setListenerData(0, 0, 0);
 		
-		ResourceManager.loadSound("eating", AudioMaster.loadSound("audio/eating.wav"));
-		ResourceManager.loadSound("taking", AudioMaster.loadSound("audio/taking.wav"));
-		ResourceManager.loadSound("chopping", AudioMaster.loadSound("audio/chopping.wav"));
+		ResourceManager.loadSound("eating", AudioMaster.loadSound("audio/eat.wav"));
+		ResourceManager.loadSound("taking", AudioMaster.loadSound("audio/take.wav"));
+		ResourceManager.loadSound("chopping", AudioMaster.loadSound("audio/chop.wav"));
 		/*** *** ***/
 		
 		
@@ -84,10 +86,6 @@ public class Game implements IGameLogic {
 		ResourceManager.loadTexture("bow_ui", Texture.newTexture(new MyFile("gui/items/bow.png"))
 				.normalMipMap().create());
 		ResourceManager.loadTexture("bush_ui", Texture.newTexture(new MyFile("gui/items/bush.png")).create());
-		ResourceManager.loadTexture("slot_ui", Texture.newTexture(new MyFile("gui/slot.png"))
-				.normalMipMap().create());
-		ResourceManager.loadTexture("slot_light_ui", Texture.newTexture(new MyFile("gui/slot_light.png"))
-				.normalMipMap().create());
 		ResourceManager.loadTexture("sack_ui", Texture.newTexture(new MyFile("gui/sack.png")).create());
 		ResourceManager.loadTexture("flour_ui", Texture.newTexture(new MyFile("gui/items/flour.png"))
 				.normalMipMap().create());
@@ -309,6 +307,10 @@ public class Game implements IGameLogic {
 		
 		GUIFrame frame = new GUIFrame(new Rect(Display.getWidth() / 2 - 200, Display.getHeight() / 2 - 150, 400, 300));
 		World.getWorld().addGUITextures(frame.getFrameTextures());
+		GUIText text = new GUIText("Paleon Game", 1.2f, FontRenderer.font, frame.getX(), frame.getY(), 
+				(1.0f / Display.getWidth()) * (frame.rect.width - 5), true);
+		text.setColor(1.0f, 1.0f, 1.0f);
+		World.getWorld().addGUIText(text);
 	}
 	
 	@Override

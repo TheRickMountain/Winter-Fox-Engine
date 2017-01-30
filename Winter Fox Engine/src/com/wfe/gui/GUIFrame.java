@@ -102,5 +102,13 @@ public class GUIFrame {
 	public List<GUITexture> getFrameTextures() {
 		return frameTextures;
 	}
+	
+	public float getX() {
+		return rect.x + RIM_SIZE;
+	}
+	
+	public float getY() {
+		return rect.y + RIM_SIZE;
+	}
 
 }

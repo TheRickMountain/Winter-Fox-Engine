@@ -1,6 +1,5 @@
 package com.wfe.gui;
 
-import com.wfe.core.Display;
 import com.wfe.font.FontType;
 import com.wfe.graph.Mesh;
 import com.wfe.math.Vector3f;
@@ -28,8 +27,8 @@ public class GUIText {
 		this.textString = text;
 		this.fontSize = fontSize;
 		this.font = font;
-		this.x = (1.0f / Display.getWidth()) * x;
-		this.y = (1.0f / Display.getHeight()) * y;
+		this.x = x;
+		this.y = y;
 		this.scaleX = 1;
 		this.scaleY = 1;
 		this.lineMaxSize = maxLineLength;

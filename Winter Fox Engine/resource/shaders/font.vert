@@ -4,6 +4,7 @@ in vec4 in_data;
 
 out vec2 TextureCoords;
 
+uniform mat4 projectionMatrix;
 uniform mat4 modelMatrix;
 
 void main(void){
