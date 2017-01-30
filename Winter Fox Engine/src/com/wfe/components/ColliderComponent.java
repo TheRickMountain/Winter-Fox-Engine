@@ -5,7 +5,7 @@ import com.wfe.ecs.ComponentType;
 import com.wfe.ecs.Transformation;
 import com.wfe.physics.AABB;
 
-public class ColliderComponent implements Component {
+public class ColliderComponent extends Component {
 
 	private AABB aabb;
 	

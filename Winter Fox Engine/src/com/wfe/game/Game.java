@@ -16,14 +16,10 @@ import com.wfe.entities.Shroom;
 import com.wfe.entities.Stick;
 import com.wfe.entities.Wheat;
 import com.wfe.graph.OBJLoader;
-import com.wfe.gui.GUIFrame;
-import com.wfe.gui.GUIText;
 import com.wfe.math.Vector3f;
-import com.wfe.renderEngine.FontRenderer;
 import com.wfe.textures.Texture;
 import com.wfe.utils.MyFile;
 import com.wfe.utils.MyRandom;
-import com.wfe.utils.Rect;
 
 public class Game implements IGameLogic {
 	
@@ -304,19 +300,11 @@ public class Game implements IGameLogic {
 		}
 		
 		//OpenglUtils.goWireframe(true);
-		
-		GUIFrame frame = new GUIFrame(new Rect(Display.getWidth() / 2 - 200, Display.getHeight() / 2 - 150, 400, 300));
-		World.getWorld().addGUITextures(frame.getFrameTextures());
-		GUIText text = new GUIText("Paleon Game", 1.2f, FontRenderer.font, frame.getX(), frame.getY(), 
-				(1.0f / Display.getWidth()) * (frame.rect.width - 5), true);
-		text.setColor(1.0f, 1.0f, 1.0f);
-		World.getWorld().addGUIText(text);
 	}
 	
 	@Override
 	public void update(float dt) {	
 		World.getWorld().update(dt, player);
-		player.update(dt);
 	}
 
 	@Override

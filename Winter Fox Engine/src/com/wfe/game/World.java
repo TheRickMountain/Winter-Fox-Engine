@@ -10,8 +10,6 @@ import com.wfe.core.Camera;
 import com.wfe.ecs.ComponentType;
 import com.wfe.ecs.Entity;
 import com.wfe.graph.Mesh;
-import com.wfe.gui.GUIText;
-import com.wfe.gui.GUITexture;
 import com.wfe.physics.AABB;
 import com.wfe.renderEngine.RenderEngine;
 import com.wfe.tileEngine.Terrain;
@@ -34,12 +32,8 @@ public class World {
 	
 	private List<AABB> colliders = new ArrayList<AABB>();
 	
-	private List<GUIText> guiTexts = new ArrayList<GUIText>();
-	private List<GUITexture> guiTextures = new ArrayList<GUITexture>();
-	
 	private float time = 12000;
 	private Weather weather;
-	//private GUI guiManager;
 	
 	private World(Camera camera) {
 		this.camera = camera;
@@ -50,7 +44,6 @@ public class World {
 		this.renderEngine = RenderEngine.create(camera);
 		this.weather = new Weather();
 		MousePicker.setUpMousePicker(camera);
-		//guiManager = GUI.getGUI();
 	}
 	
 	public static World createWorld(Camera camera) throws Exception {
@@ -75,27 +68,20 @@ public class World {
 		}
 		
 		if(!entitiesToAdd.isEmpty()) {
-			for(Entity entity : entitiesToAdd) {
-				entities.add(entity);
-			}
+			entities.addAll(entitiesToAdd);
 			entitiesToAdd.clear();
 		}
 		
 		if(!entitiesToRemove.isEmpty()) {
-			for(Entity entity : entitiesToRemove) {
-				entities.remove(entity);
-			}
+			entities.removeAll(entitiesToRemove);
 			entitiesToRemove.clear();
 		}
-
-		//guiManager.update(dt);
-		
 	}
 	
 	public void render() {
 		renderEngine.clear();
 		terrain.render();
-		renderEngine.render(entitiesToRender, guiTexts, guiTextures);
+		renderEngine.render(entitiesToRender);
 	}
 	
 	public void addEntity(Entity entity) {
@@ -126,34 +112,6 @@ public class World {
 		if(batch.isEmpty()) {
 			entitiesToRender.remove(entity.getMesh());
 		}
-	}
-	
-	public void addGUIText(GUIText text) {
-		guiTexts.add(text);
-	}
-	
-	public void removeGUIText(GUIText text) {
-		guiTexts.remove(text);
-	}
-	
-	public void addGUITexture(GUITexture texture) {
-		guiTextures.add(texture);
-	}
-	
-	public void addGUITextures(List<GUITexture> textures) {
-		for(int i = 0; i < textures.size(); i++) {
-			guiTextures.add(textures.get(i));
-		}
-	}
-	
-	public void removeGUITextures(List<GUITexture> textures) {
-		for(int i = 0; i < textures.size(); i++) {
-			guiTextures.remove(textures.get(i));
-		}
-	}
-	
-	public void removeGUITexture(GUITexture texture) {
-		guiTextures.remove(texture);
 	}
 	
 	public List<AABB> getColliders() {

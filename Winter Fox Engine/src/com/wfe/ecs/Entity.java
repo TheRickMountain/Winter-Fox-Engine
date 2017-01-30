@@ -55,6 +55,7 @@ public class Entity {
 	}
 	
 	public void addComponent(Component component) {
+		component.parent = this;
 		this.components.add(component);
 	}
 	

@@ -8,8 +8,7 @@ import org.lwjgl.opengl.GL11;
 import com.wfe.core.Camera;
 import com.wfe.ecs.Entity;
 import com.wfe.graph.Mesh;
-import com.wfe.gui.GUIText;
-import com.wfe.gui.GUITexture;
+import com.wfe.gui.GUIManager;
 import com.wfe.utils.OpenglUtils;
 
 public class RenderEngine {
@@ -34,18 +33,23 @@ public class RenderEngine {
 		GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
 	}
 	
-	public void render(Map<Mesh, List<Entity>> entities, 
-			List<GUIText> texts, List<GUITexture> textures) {
+	public void render(Map<Mesh, List<Entity>> entities) {
 		staticEntityRenderer.render(entities);
 		
 		guiRenderer.prepare();
-		guiRenderer.render(textures);
-		//guiManager.render();
+		guiRenderer.render(GUIManager.interfaces);
 		guiRenderer.finish();
 		
 		fontRenderer.prepare();
-		fontRenderer.render(texts);
-		//guiManager.renderText();
+		fontRenderer.render(GUIManager.interfacesText);
+		fontRenderer.finish();
+		
+		guiRenderer.prepare();
+		guiRenderer.render(GUIManager.popUps);
+		guiRenderer.finish();
+		
+		fontRenderer.prepare();
+		fontRenderer.render(GUIManager.popUpsText);
 		fontRenderer.finish();
 	}
 

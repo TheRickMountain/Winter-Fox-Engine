@@ -1,8 +1,9 @@
 package com.wfe.ecs;
 
-public interface Component {
+public abstract class Component {
 
-	public void update(float dt);
-	public ComponentType getType();
+	protected Entity parent;
+	public abstract void update(float dt);
+	public abstract ComponentType getType();
 	
 }

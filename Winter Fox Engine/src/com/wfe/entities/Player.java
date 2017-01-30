@@ -1,5 +1,6 @@
 package com.wfe.entities;
 
+import com.wfe.components.InventoryComponent;
 import com.wfe.components.PlayerComponent;
 import com.wfe.core.Camera;
 import com.wfe.core.ResourceManager;
@@ -9,12 +10,9 @@ import com.wfe.game.World;
 import com.wfe.graph.Material;
 
 public class Player extends Entity {
-
-	private Entity weapon;
 	
 	public Player(Camera camera, Transformation transform) {
-		super(null, 
-				null, transform);
+		super(null, null, transform);
 		transform.setScale(0.3f);
 		
 		Entity body = new Entity(ResourceManager.getMesh("body"), 
@@ -35,50 +33,7 @@ public class Player extends Entity {
 		World.getWorld().addEntity(eyes);
 		
 		addComponent(new PlayerComponent(camera, transform));
-	}
-
-	public void addTool(Entity weapon) {
-		this.weapon = weapon;
-		
-		weapon.getTransform().localScaleX = 1.75f;
-		weapon.getTransform().localScaleY = 1.75f;
-		weapon.getTransform().localScaleZ = 1.75f;
-		weapon.getTransform().localRotY = 180;
-		weapon.getTransform().localX = -1.1f;
-		weapon.getTransform().localY = 0.5f;
-		addChild(weapon);
-		World.getWorld().addEntity(weapon);
-	}
-	
-	public void removeTool() {
-		removeChild(weapon);
-		World.getWorld().removeEntity(weapon);
-	}
-	
-	private boolean down = false;
-	private float animationSpeed = 300;
-	
-	public void chopingAnimation(float dt) {
-		if(weapon != null) {
-			Transformation transform = weapon.getTransform();
-			if(transform.localRotX >= 80)
-				down = true;
-			else if(transform.localRotX <= -10) {
-				down = false;
-				//GUI.soundSource.play(ResourceManager.getSound("chopping"));
-			}
-			
-			if(down) {
-				transform.localRotX -= animationSpeed * dt;
-			} else {
-				transform.localRotX += animationSpeed * dt;
-			}
-		}
-	}
-	
-	public void idleAnim() {
-		if(weapon != null)
-			weapon.getTransform().localRotX = 0;
+		addComponent(new InventoryComponent());
 	}
 
 }

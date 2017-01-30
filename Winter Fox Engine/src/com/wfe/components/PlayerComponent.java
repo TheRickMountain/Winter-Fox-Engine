@@ -5,14 +5,13 @@ import java.util.List;
 import com.wfe.core.Camera;
 import com.wfe.ecs.Component;
 import com.wfe.ecs.ComponentType;
-import com.wfe.ecs.Entity;
 import com.wfe.ecs.Transformation;
 import com.wfe.game.World;
 import com.wfe.input.Key;
 import com.wfe.input.Keyboard;
 import com.wfe.physics.AABB;
 
-public class PlayerComponent implements Component {
+public class PlayerComponent extends Component {
 
 	private Camera camera;
 	private Transformation transform;
@@ -28,7 +27,7 @@ public class PlayerComponent implements Component {
 	}
 	
 	@Override
-	public void update(float dt) {	
+	public void update(float dt) {		
 		move(dt);
 	}
 	
@@ -135,10 +134,6 @@ public class PlayerComponent implements Component {
 	@Override
 	public ComponentType getType() {
 		return ComponentType.PLAYER_CONTROLLER;
-	}
-
-	public void addTool(Entity tool) {
-		transform.getParent().addChild(tool);
 	}
 	
 }
