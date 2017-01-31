@@ -5,6 +5,7 @@ public enum ComponentType {
 	PLAYER_CONTROLLER,
 	COLLIDER,
 	INVENTORY,
+	CHEST,
 	NONE
 	
 }

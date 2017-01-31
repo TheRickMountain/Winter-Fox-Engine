@@ -18,7 +18,7 @@ public class GUIGrid implements GUIComponent {
 	public final static int SLOT_SIZE = 50;
 	private final static int OFFSET_BETWEEN_SLOTS = 5;
 	
-	private List<GUISlot> slots = new ArrayList<GUISlot>();
+	private List<Slot> slots = new ArrayList<Slot>();
 	
 	public GUIGrid(int numColumns, int numRows) {
 		this.numColumns = numColumns;
@@ -47,14 +47,14 @@ public class GUIGrid implements GUIComponent {
 				rect.height + (OFFSET_BETWEEN_SLOTS * 2), 
 				false);
 		
-		for(GUISlot slot : slots) {
+		for(Slot slot : slots) {
 			slot.render();
 		}
 	}
 
 	@Override
 	public void renderText() {
-		for(GUISlot slot : slots) {
+		for(Slot slot : slots) {
 			slot.renderText();
 		}
 	}
@@ -71,7 +71,7 @@ public class GUIGrid implements GUIComponent {
 	
 	private void setUpGridValues() {
 		for(int i = 0; i < numRows * numColumns; i++) {
-			slots.add(new GUISlot(new Rect(0, 0, SLOT_SIZE, SLOT_SIZE)));
+			slots.add(new Slot(new Rect(0, 0, SLOT_SIZE, SLOT_SIZE)));
 		}
 		
 		rect.width = (numColumns * SLOT_SIZE) + ((numColumns - 1) * OFFSET_BETWEEN_SLOTS);
@@ -100,7 +100,7 @@ public class GUIGrid implements GUIComponent {
 		updatePositions();
 	}
 	
-	public List<GUISlot> getSlots() {
+	public List<Slot> getSlots() {
 		return slots;
 	}
 

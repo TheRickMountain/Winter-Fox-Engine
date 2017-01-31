@@ -4,13 +4,17 @@ import com.wfe.ecs.Component;
 import com.wfe.ecs.ComponentType;
 import com.wfe.gui.GUIManager;
 import com.wfe.gui.ItemDatabase;
+import com.wfe.input.Mouse;
 
-public class InventoryComponent extends Component {
+public class ChestComponent extends Component {
+
+	private int[] slots;
+	private int[] counts;
 	
-	public final int[] slots = new int[24];
-	public final int[] counts = new int[24];
-	
-	public InventoryComponent() {
+	public ChestComponent(int column, int row) {
+		slots = new int[column * row];
+		counts = new int[slots.length];
+		
 		for(int i = 0; i < slots.length; i++) {
 			this.slots[i] = -1;
 			this.counts[i] = 0;
@@ -19,7 +23,9 @@ public class InventoryComponent extends Component {
 	
 	@Override
 	public void update(float dt) {
-		
+		if(Mouse.isButtonDown(1)) {
+			GUIManager.open(this); // Send chest data to the GUIManager
+		}
 	}
 	
 	private int hasItem(int item) {
@@ -77,6 +83,7 @@ public class InventoryComponent extends Component {
 				addItem(slot, item, count);
 			}
 		}
+		
 		GUIManager.inventory.update(slots, counts);
 		return true;
 	}
@@ -87,7 +94,7 @@ public class InventoryComponent extends Component {
 	
 	@Override
 	public ComponentType getType() {
-		return ComponentType.INVENTORY;
+		return ComponentType.CHEST;
 	}
 
 }

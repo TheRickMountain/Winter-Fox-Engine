@@ -1,10 +1,12 @@
 package com.wfe.game;
 
 import com.wfe.audio.AudioMaster;
+import com.wfe.components.InventoryComponent;
 import com.wfe.core.Camera;
 import com.wfe.core.Display;
 import com.wfe.core.IGameLogic;
 import com.wfe.core.ResourceManager;
+import com.wfe.ecs.ComponentType;
 import com.wfe.ecs.Transformation;
 import com.wfe.entities.Fern;
 import com.wfe.entities.Flint;
@@ -16,6 +18,9 @@ import com.wfe.entities.Shroom;
 import com.wfe.entities.Stick;
 import com.wfe.entities.Wheat;
 import com.wfe.graph.OBJLoader;
+import com.wfe.gui.Item;
+import com.wfe.input.Key;
+import com.wfe.input.Keyboard;
 import com.wfe.math.Vector3f;
 import com.wfe.textures.Texture;
 import com.wfe.utils.MyFile;
@@ -302,11 +307,19 @@ public class Game implements IGameLogic {
 			}
 		}
 		
-		//OpenglUtils.goWireframe(true);
+		InventoryComponent inventory = (InventoryComponent) player.getComponent(ComponentType.INVENTORY);
+		inventory.addItem(Item.APPLE, 5);
+		inventory.addItem(Item.FLINT, 7);
+		inventory.addItem(Item.AXE, 2);
 	}
 	
 	@Override
 	public void update(float dt) {	
+		if(Keyboard.isKeyDown(Key.KEY_F)) {
+			InventoryComponent inventory = (InventoryComponent) player.getComponent(ComponentType.INVENTORY);
+			inventory.addItem(Item.APPLE, 5);
+		}
+		
 		World.getWorld().update(dt, player);
 	}
 

@@ -11,13 +11,15 @@ public class Item {
 	public final int id;
 	public final String name;
 	public final Texture icon;
-	public final int stack;
+	public final ItemType type;
+	public final int stackSize;
 	
-	public Item(int id, String name, Texture icon, int stack) {
+	public Item(int id, String name, Texture icon, ItemType type, int stackSize) {
 		this.id = id;
 		this.name = name;
 		this.icon = icon;
-		this.stack = stack;
+		this.type = type;
+		this.stackSize = stackSize;
 	}
 	
 }

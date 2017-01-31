@@ -28,6 +28,7 @@ public class AudioMaster {
 		AL.createCapabilities(ALC.createCapabilities(device));
 		
 		defaultSource = new Source();
+		//defaultSource.setVolume(0.1f);
 	}
 	
 	public static void setListenerData(final float x, final float y, final float z)

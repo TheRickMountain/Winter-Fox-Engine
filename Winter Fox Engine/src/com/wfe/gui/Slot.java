@@ -1,23 +1,25 @@
 package com.wfe.gui;
 
+import com.wfe.core.Display;
 import com.wfe.renderEngine.FontRenderer;
 import com.wfe.renderEngine.GUIRenderer;
 import com.wfe.utils.Color;
 import com.wfe.utils.Rect;
 
-public class GUISlot implements GUIComponent {
+public class Slot implements GUIComponent {
 
 	public Rect rect;
-	private static final Color COLOR = new Color(0, 0, 0, 150).convert();
+	private static final Color COLOR = new Color(25, 25, 25, 150).convert();
 	//private static final Color TEXT_COLOR = new Color(1.0f, 1.0f, 1.0f, 1.0f);
 	private Item item;
 	private int count;
 	private boolean hasItem;
 	private GUIText text;
 	
-	public GUISlot(Rect rect) {
+	public Slot(Rect rect) {
 		this.rect = rect;
-		this.text = new GUIText("", 1.1f, FontRenderer.font, 0.0f, 0.0f, 1.0f, false);
+		this.text = new GUIText("", 1.1f, FontRenderer.font, 0.0f, 0.0f, 
+				(1.0f / Display.getWidth()) * GUIGrid.SLOT_SIZE, true);
 		this.text.setColor(1.0f, 1.0f, 1.0f);
 	}
 	
@@ -60,8 +62,22 @@ public class GUISlot implements GUIComponent {
 		}
 	}
 	
+	public void removeItem() {
+		this.item = null;
+		this.count = 0;
+		this.hasItem = false;
+	}
+	
 	public boolean isHasItem() {
 		return hasItem;
+	}
+	
+	public Item getItem() {
+		return item;
+	}
+	
+	public int getCount() {
+		return count;
 	}
 
 }

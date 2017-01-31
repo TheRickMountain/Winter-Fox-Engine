@@ -12,9 +12,9 @@ public class ItemDatabase {
 	private static ItemDatabase instance;
 	
 	private ItemDatabase() {
-		addItem(new Item(Item.APPLE, "Apple", ResourceManager.getTexture("apple_ui"), 40));
-		addItem(new Item(Item.FLINT, "Flint", ResourceManager.getTexture("flint_ui"), 40));
-		addItem(new Item(Item.AXE, 	 "Axe",   ResourceManager.getTexture("axe_ui"),    1));
+		addItem(new Item(Item.APPLE, "Apple", ResourceManager.getTexture("apple_ui"), ItemType.CONSUMABLE, 40));
+		addItem(new Item(Item.FLINT, "Flint", ResourceManager.getTexture("flint_ui"), ItemType.RESOURCE, 40));
+		addItem(new Item(Item.AXE, "Axe", ResourceManager.getTexture("axe_ui"), ItemType.TOOL, 1));
 	}
 	
 	public static void create() {
