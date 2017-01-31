@@ -1,5 +1,7 @@
 package com.wfe.gui;
 
+import com.wfe.audio.AudioMaster;
+import com.wfe.core.ResourceManager;
 import com.wfe.input.Key;
 import com.wfe.input.Keyboard;
 
@@ -17,6 +19,7 @@ public class GUIManager  {
 	public static void update() {
 		if(Keyboard.isKeyDown(Key.KEY_E)) {
 			open = !open;
+			AudioMaster.defaultSource.play(ResourceManager.getSound("inventory"));
 		}
 		
 		inventory.update();

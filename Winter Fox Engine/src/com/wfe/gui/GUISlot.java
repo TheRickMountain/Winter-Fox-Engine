@@ -11,6 +11,7 @@ public class GUISlot implements GUIComponent {
 	private static final Color COLOR = new Color(0, 0, 0, 150).convert();
 	//private static final Color TEXT_COLOR = new Color(1.0f, 1.0f, 1.0f, 1.0f);
 	private Item item;
+	private int count;
 	private boolean hasItem;
 	private GUIText text;
 	
@@ -35,7 +36,7 @@ public class GUISlot implements GUIComponent {
 
 	@Override
 	public void renderText() {
-		if(hasItem) {
+		if(hasItem && (count > 1)) {
 			FontRenderer.render(text, rect.x, rect.y);
 		}
 	}
@@ -54,6 +55,7 @@ public class GUISlot implements GUIComponent {
 		this.item = item;
 		if(this.item != null) {
 			hasItem = true;
+			this.count = count;
 			text.setText("" + count);
 		}
 	}

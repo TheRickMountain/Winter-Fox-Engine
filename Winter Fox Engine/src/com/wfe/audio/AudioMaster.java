@@ -16,6 +16,8 @@ public class AudioMaster {
 	private static long device;
 	private static long context;
 	
+	public static Source defaultSource;
+	
 	public static void init() {
 		device = alcOpenDevice((ByteBuffer)null);
 
@@ -24,6 +26,8 @@ public class AudioMaster {
 		alcMakeContextCurrent(context);
 		 
 		AL.createCapabilities(ALC.createCapabilities(device));
+		
+		defaultSource = new Source();
 	}
 	
 	public static void setListenerData(final float x, final float y, final float z)

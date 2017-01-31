@@ -17,12 +17,7 @@ public class InventoryComponent extends Component {
 			this.counts[i] = 0;
 		}
 		
-		addItem(Item.APPLE, 100);
-		addItem(Item.APPLE, 35);
-		addItem(Item.FLINT, 87);
-		addItem(Item.AXE, 5);
-		
-		GUIManager.inventory.update(slots, counts);
+		addItem(Item.AXE, 3);
 	}
 	
 	@Override
@@ -49,45 +44,44 @@ public class InventoryComponent extends Component {
 		return -1;
 	}
 	
+	private void addItem(int slot, int item, int count) {
+		int stack = ItemDatabase.getItem(item).stack;
+		if(count <= stack) {
+			counts[slot] = count;
+		} else {
+			counts[slot] = stack;
+			count -= stack;
+			addItem(item, count);
+		}
+	}
+	
 	public boolean addItem(int item, int count) {
 		int slot = hasItem(item);
 		if(slot == -1) {
 			slot = hasItem(slot);
-			slots[slot] = item;
-			int stack = ItemDatabase.getItem(item).stack;
-			if(count <= stack) {
-				counts[slot] = count;
-			} else {
-				counts[slot] = stack;
-				count -= stack;
-				addItem(item, count);
+			if(slot == -1) {
+				return false;
 			}
+			
+			slots[slot] = item;
+			addItem(slot, item, count);
 		} else {
 			slot = canStackWithSuchItem(item);
 			if(slot == -1) {
 				slot = hasItem(slot);
-				slots[slot] = item;
-				int stack = ItemDatabase.getItem(item).stack;
-				if(count <= stack) {
-					counts[slot] = count;
-				} else {
-					counts[slot] = stack;
-					count -= stack;
-					addItem(item, count);
+				if(slot == -1) {
+					return false;
 				}
+				
+				slots[slot] = item;
+				addItem(slot, item, count);
 			} else {
 				count = this.counts[slot] + count;
-				int stack = ItemDatabase.getItem(item).stack;
-				if(count <= stack) {
-					counts[slot] = count;
-				} else {
-					counts[slot] = stack;
-					count -= stack;
-					addItem(item, count);
-				}
+				addItem(slot, item, count);
 			}
 		}
 		
+		GUIManager.inventory.update(slots, counts);
 		return true;
 	}
 	
