@@ -17,18 +17,18 @@ import com.wfe.utils.MathUtils;
 import com.wfe.utils.OpenglUtils;
 import com.wfe.weather.DirectionalLight;
 
-public class StaticEntityRenderer {
+public class StaticRenderer {
 	
 	private Camera camera;
 	
-	private StaticEntityShader shader;
+	private StaticShader shader;
 	
 	private Matrix4f modelMatrix = new Matrix4f();
 	
-	protected StaticEntityRenderer(Camera camera) throws Exception {
+	protected StaticRenderer(Camera camera) throws Exception {
 		this.camera = camera;
 		
-		shader = new StaticEntityShader();
+		shader = new StaticShader();
 		
 		shader.start();
 		shader.projectionMatrix.loadMatrix(camera.getProjectionMatrix());

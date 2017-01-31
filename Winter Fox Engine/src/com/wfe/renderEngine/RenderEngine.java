@@ -15,12 +15,12 @@ public class RenderEngine {
 	
 	private static RenderEngine renderer;
 	
-	private StaticEntityRenderer staticEntityRenderer;
+	private StaticRenderer staticEntityRenderer;
 	private GUIRenderer guiRenderer;
 	private FontRenderer fontRenderer;
 	
 	private RenderEngine(Camera camera) throws Exception {
-		this.staticEntityRenderer = new StaticEntityRenderer(camera);
+		this.staticEntityRenderer = new StaticRenderer(camera);
 		this.guiRenderer = new GUIRenderer();
 		this.fontRenderer = new FontRenderer();
 		
@@ -37,19 +37,19 @@ public class RenderEngine {
 		staticEntityRenderer.render(entities);
 		
 		guiRenderer.prepare();
-		guiRenderer.render(GUIManager.interfaces);
+		GUIManager.render();
 		guiRenderer.finish();
 		
 		fontRenderer.prepare();
-		fontRenderer.render(GUIManager.interfacesText);
+		GUIManager.renderText();
 		fontRenderer.finish();
 		
 		guiRenderer.prepare();
-		guiRenderer.render(GUIManager.popUps);
+		GUIManager.renderPopUp();
 		guiRenderer.finish();
 		
 		fontRenderer.prepare();
-		fontRenderer.render(GUIManager.popUpsText);
+		GUIManager.renderPopUpText();
 		fontRenderer.finish();
 	}
 

@@ -10,7 +10,7 @@ import com.wfe.shaders.UniformVec3;
 import com.wfe.shaders.UniformVec4;
 import com.wfe.utils.MyFile;
 
-public class StaticEntityShader extends ShaderProgram {
+public class StaticShader extends ShaderProgram {
 
 	private static final MyFile VERTEX_SHADER = new MyFile("shaders/static.vert");
 	private static final MyFile FRAGMENT_SHADER = new MyFile("shaders/static.frag");
@@ -27,7 +27,7 @@ public class StaticEntityShader extends ShaderProgram {
 	protected UniformVec3 lightColor = new UniformVec3("lightColor");
 	protected UniformBoolean hasFakeLighting = new UniformBoolean("hasFakeLighting");
 	
-	public StaticEntityShader() {
+	public StaticShader() {
 		super(VERTEX_SHADER, FRAGMENT_SHADER, "in_position", "in_textureCoords", "in_normal");
 		super.storeAllUniformLocations(projectionMatrix, viewMatrix, modelMatrix, numberOfRows,
 				offset, diffuseMap, color, lightPosition, lightColor, hasFakeLighting);

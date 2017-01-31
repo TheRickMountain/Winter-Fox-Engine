@@ -12,14 +12,18 @@ public class GUIFrame {
 	private static final int LEFT_TOP_CORNER = 0, RIGHT_TOP_CORNER = 1, LEFT_BOTTOM_CORNER = 2, RIGHT_BOTTOM_CORNER = 3;
 	private static final int LEFT_EDGE = 4, RIGHT_EDGE = 5, TOP_EDGE = 6, BOTTOM_EDGE = 7;
 	private static final int BACKGROUND = 8;
-	private static final int RIM_SIZE = 5;
+	public static final int RIM_SIZE = 5;
+	
 	private static Texture cornerTexture = ResourceManager.getTexture("corner_frame_ui");
 	private static Texture hEdgeTexture = ResourceManager.getTexture("h_edge_frame_ui");
 	private static Texture vEdgeTexture = ResourceManager.getTexture("v_edge_frame_ui");
 	private static Texture backgroundTexture = ResourceManager.getTexture("background_frame_ui");
+	
 	public final Rect rect;
 	
 	private List<GUITexture> frameTextures = new ArrayList<GUITexture>();
+	
+	private boolean active = true;
 	
 	public GUIFrame(Rect rect) {
 		this.rect = rect;
@@ -109,6 +113,27 @@ public class GUIFrame {
 	
 	public float getY() {
 		return rect.y + RIM_SIZE;
+	}
+	
+	public void setPosition(float x, float y) {
+		this.rect.setPosition(x, y);
+		setTexturePositions();
+	}
+	
+	public void setSize(float width, float height) {
+		this.rect.setSize(width, height);
+		setTextureSizes();
+	}
+
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
+		for(GUITexture texture : frameTextures) {
+			texture.setActive(active);
+		}
 	}
 
 }

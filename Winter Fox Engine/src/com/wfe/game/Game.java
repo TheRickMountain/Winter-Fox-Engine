@@ -90,15 +90,16 @@ public class Game implements IGameLogic {
 		ResourceManager.loadTexture("craft_ui", Texture.newTexture(new MyFile("gui/craft.png")).create());
 		ResourceManager.loadTexture("hoe_ui", Texture.newTexture(new MyFile("gui/items/hoe.png"))
 				.normalMipMap().create());
+		
 		ResourceManager.loadTexture("background_frame_ui", Texture.newTexture(new MyFile("gui/background_frame.png"))
 				.normalMipMap().create());
 		ResourceManager.loadTexture("corner_frame_ui", Texture.newTexture(new MyFile("gui/corner_frame.png"))
 				.normalMipMap().create());
-		ResourceManager.loadTexture("h_edge_frame_ui", Texture.newTexture(new MyFile("gui/h_edge_frame.png")).create());
-		ResourceManager.loadTexture("v_edge_frame_ui", Texture.newTexture(new MyFile("gui/v_edge_frame.png")).create());
-		ResourceManager.loadTexture("health_icon_ui", Texture.newTexture(new MyFile("gui/health_icon.png")).create());
-		ResourceManager.loadTexture("hunger_icon_ui", Texture.newTexture(new MyFile("gui/hunger_icon.png")).create());
-		ResourceManager.loadTexture("thirst_icon_ui", Texture.newTexture(new MyFile("gui/thirst_icon.png")).create());
+		ResourceManager.loadTexture("h_edge_frame_ui", Texture.newTexture(new MyFile("gui/h_edge_frame.png"))
+				.normalMipMap().create());
+		ResourceManager.loadTexture("v_edge_frame_ui", Texture.newTexture(new MyFile("gui/v_edge_frame.png"))
+				.normalMipMap().create());
+		
 		
 		/*** Meshes ***/
 		ResourceManager.loadMesh("wall", OBJLoader.loadMesh("/models/wall.obj"));

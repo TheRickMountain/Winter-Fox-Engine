@@ -17,13 +17,15 @@ public class PlayerComponent extends Component {
 	private Transformation transform;
 	private float yRot;
 	private float xd, zd;
+	private float speed;
 
 	private AABB bb;
 	
 	public PlayerComponent(Camera camera, Transformation transform) {		
 		this.camera = camera;
 		this.transform = transform;
-		bb = new AABB(transform.x - 0.4f, 0, transform.z - 0.4f, transform.x + 0.4f, 0 + 1, transform.z + 0.4f);
+		this.bb = new AABB(transform.x - 0.4f, 0, transform.z - 0.4f, transform.x + 0.4f, 0 + 1, transform.z + 0.4f);
+		this.speed = 2.0f;
 	}
 	
 	@Override
@@ -76,7 +78,7 @@ public class PlayerComponent extends Component {
 			transform.isMoving = true;
 		}
 		
-		moveRelative(xa, za, 1.0f, dt);
+		moveRelative(xa, za, speed, dt);
 		move(xd, zd);
 		
 		this.xd *= 0.91f;

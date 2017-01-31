@@ -12,6 +12,7 @@ public class GUITexture {
 	
 	private boolean centered = false;
 	private boolean isSolidColor = false;
+	private boolean active = true;
 	
 	public GUITexture(Texture texture, Rect rect, boolean centered) {
 		this.texture = texture;
@@ -52,6 +53,14 @@ public class GUITexture {
 
 	public boolean isSolidColor() {
 		return isSolidColor;
+	}
+	
+	public void setActive(boolean active) {
+		this.active = active;
+	}
+	
+	public boolean isActive() {
+		return active;
 	}
 	
 }

@@ -10,6 +10,7 @@ import com.wfe.core.Camera;
 import com.wfe.ecs.ComponentType;
 import com.wfe.ecs.Entity;
 import com.wfe.graph.Mesh;
+import com.wfe.gui.GUIManager;
 import com.wfe.physics.AABB;
 import com.wfe.renderEngine.RenderEngine;
 import com.wfe.tileEngine.Terrain;
@@ -44,6 +45,7 @@ public class World {
 		this.renderEngine = RenderEngine.create(camera);
 		this.weather = new Weather();
 		MousePicker.setUpMousePicker(camera);
+		GUIManager.init();
 	}
 	
 	public static World createWorld(Camera camera) throws Exception {
@@ -76,6 +78,8 @@ public class World {
 			entities.removeAll(entitiesToRemove);
 			entitiesToRemove.clear();
 		}
+		
+		GUIManager.update();
 	}
 	
 	public void render() {

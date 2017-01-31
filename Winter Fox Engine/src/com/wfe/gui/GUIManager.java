@@ -1,14 +1,49 @@
 package com.wfe.gui;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.wfe.input.Key;
+import com.wfe.input.Keyboard;
 
-public class GUIManager {
+public class GUIManager  {
+	
+	public static Inventory inventory;
+	
+	private static boolean open = false;
+	
+	public static void init() {
+		ItemDatabase.create();
+		inventory = new Inventory();
+	}
+	
+	public static void update() {
+		if(Keyboard.isKeyDown(Key.KEY_E)) {
+			open = !open;
+		}
+		
+		inventory.update();
+	}
+	
+	public static void render() {
+		if(open) {
+			inventory.render();
+		}
+		inventory.quickInventory.render();
+	}
 
-	public final static List<GUITexture> interfaces = new ArrayList<GUITexture>();
-	public final static List<GUIText> interfacesText = new ArrayList<GUIText>();
+	public static void renderText() {
+		if(open) {
+			inventory.renderText();
+		}
+		inventory.quickInventory.renderText();
+	}
+
+	public static void renderPopUp() {
+		
+	}
+
+	public static void renderPopUpText() {
+		
+	}
 	
-	public final static List<GUITexture> popUps = new ArrayList<GUITexture>();
-	public final static List<GUIText> popUpsText = new ArrayList<GUIText>();
 	
+
 }

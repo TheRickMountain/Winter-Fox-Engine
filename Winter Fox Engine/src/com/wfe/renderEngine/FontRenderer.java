@@ -29,9 +29,7 @@ public class FontRenderer {
 				new MyFile("font/myFont.fnt"));
 	}
 	
-	public void render(List<GUIText> texts) {
-		GL13.glActiveTexture(GL13.GL_TEXTURE0);
-		GL11.glBindTexture(GL11.GL_TEXTURE_2D, font.getTextureAtlas());
+	public static void render(List<GUIText> texts) {
 		for(GUIText text : texts) {
 			render(text);
 		}
@@ -42,6 +40,9 @@ public class FontRenderer {
 		OpenglUtils.depthTest(false);
 		
 		shader.start();
+		
+		GL13.glActiveTexture(GL13.GL_TEXTURE0);
+		GL11.glBindTexture(GL11.GL_TEXTURE_2D, font.getTextureAtlas());
 	}
 	
 	public static void render(GUIText text) {

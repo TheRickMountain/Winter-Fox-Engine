@@ -31,31 +31,33 @@ public class GUIRenderer {
 		shader.stop();
 	}
 	
-	public void render(List<GUITexture> textures) {
+	public static void render(List<GUITexture> textures) {
 		for(GUITexture texture : textures) {
 			render(texture);
 		}
 	}
 	
 	public static void render(GUITexture texture) {
-		if(!texture.isCentered()) {
-			shader.modelMatrix.loadMatrix(MathUtils.getModelMatrix(modelMatrix, 
-					texture.rect));
-		} else {
-			shader.modelMatrix.loadMatrix(MathUtils.getModelMatrix(modelMatrix, 
-					texture.rect.x - texture.rect.width / 2, texture.rect.y - texture.rect.height / 2, 
-					texture.rect.rotation, texture.rect.width, texture.rect.height));
+		if(texture.isActive()) {
+			if(!texture.isCentered()) {
+				shader.modelMatrix.loadMatrix(MathUtils.getModelMatrix(modelMatrix, 
+						texture.rect));
+			} else {
+				shader.modelMatrix.loadMatrix(MathUtils.getModelMatrix(modelMatrix, 
+						texture.rect.x - texture.rect.width / 2, texture.rect.y - texture.rect.height / 2, 
+						texture.rect.rotation, texture.rect.width, texture.rect.height));
+			}
+			
+			if(texture.isSolidColor()) {
+				shader.color.loadColor(texture.getColor());
+				shader.solidColor.loadBoolean(true);
+			} else {
+				shader.solidColor.loadBoolean(false);
+				texture.getTexture().bind(0);
+			}
+			
+			GL11.glDrawArrays(GL11.GL_TRIANGLE_STRIP, 0, 4);
 		}
-		
-		if(texture.isSolidColor()) {
-			shader.color.loadColor(texture.getColor());
-			shader.solidColor.loadBoolean(true);
-		} else {
-			shader.solidColor.loadBoolean(false);
-			texture.getTexture().bind(0);
-		}
-		
-		GL11.glDrawArrays(GL11.GL_TRIANGLE_STRIP, 0, 4);
 	}
 	
 	public static void render(Texture texture, float x, float y, float rot, float scaleX, float scaleY, boolean centered) {
