@@ -3,7 +3,6 @@ package com.wfe.gui;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.wfe.core.Display;
 import com.wfe.renderEngine.GUIRenderer;
 import com.wfe.utils.Color;
 import com.wfe.utils.Rect;
@@ -32,9 +31,7 @@ public class GUIGrid implements GUIComponent {
 
 	@Override
 	public void update() {
-		if(Display.isResized()) {
-			updatePositions();
-		}
+		
 	}
 
 	@Override

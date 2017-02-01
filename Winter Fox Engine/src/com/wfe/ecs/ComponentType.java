@@ -6,6 +6,7 @@ public enum ComponentType {
 	COLLIDER,
 	INVENTORY,
 	CHEST,
+	GATHERABLE,
 	NONE
 	
 }

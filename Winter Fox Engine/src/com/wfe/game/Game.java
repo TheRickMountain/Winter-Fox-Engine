@@ -28,7 +28,6 @@ import com.wfe.utils.MyRandom;
 
 public class Game implements IGameLogic {
 	
-	Camera camera;
 	public static Player player;
 	
 	@Override
@@ -259,7 +258,7 @@ public class Game implements IGameLogic {
 	
 	@Override
 	public void onEnter(Display display) throws Exception {
-		camera = new Camera(new Vector3f(16, 0, 16));	
+		Camera camera = new Camera(new Vector3f(16, 0, 16));	
 		
 		World.createWorld(camera);
 		World.getWorld().init();

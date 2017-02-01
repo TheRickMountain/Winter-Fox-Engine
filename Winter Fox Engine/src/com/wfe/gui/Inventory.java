@@ -17,6 +17,8 @@ public class Inventory implements GUIComponent {
 	public final List<Slot> quickSlots;
 	public final List<Slot> mainSlots;
 	
+	public boolean open = false;
+	
 	public Inventory() {
 		quickInventory = new GUIGrid(6, 1);
 		mainInventory = new GUIGrid(6, 3);
@@ -29,9 +31,6 @@ public class Inventory implements GUIComponent {
 	
 	@Override
 	public void update() {
-		quickInventory.update();
-		mainInventory.update();
-		
 		updateSlots(Mouse.BUTTON_1);
 		updateSlots(Mouse.BUTTON_2);
 		
@@ -46,8 +45,10 @@ public class Inventory implements GUIComponent {
 				doSlotOperations(slot, event == 1);
 			}
 			
-			for(Slot slot : mainSlots) {
-				doSlotOperations(slot, event == 1);
+			if(GUIManager.open) {
+				for(Slot slot : mainSlots) {
+					doSlotOperations(slot, event == 1);
+				}
 			}
 		}
 		
@@ -73,6 +74,7 @@ public class Inventory implements GUIComponent {
 	
 	private void doSlotOperations(Slot slot, boolean eat) {
 		if(slot.rect.isMouseOvered()) {
+			Mouse.setActiveInGUI(true);
 			if(!eat) {
 				Item draggedItem = GUIManager.getDraggedItem();
 				int draggedItemCount = GUIManager.getDraggedItemCount();
@@ -124,12 +126,16 @@ public class Inventory implements GUIComponent {
 
 	@Override
 	public void render() {
-		mainInventory.render();
+		quickInventory.render();
+		if(GUIManager.open)
+			mainInventory.render();
 	}
 
 	@Override
 	public void renderText() {
-		mainInventory.renderText();
+		quickInventory.renderText();
+		if(GUIManager.open)
+			mainInventory.renderText();
 	}
 
 	@Override

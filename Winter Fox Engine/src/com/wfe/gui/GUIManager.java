@@ -14,7 +14,7 @@ public class GUIManager  {
 	
 	public static Inventory inventory;
 	
-	private static boolean open = false;
+	public static boolean open = false;
 	
 	private static Item draggedItem;
 	private static int draggedItemCount;
@@ -30,6 +30,8 @@ public class GUIManager  {
 	}
 	
 	public static void update() {	
+		Mouse.setActiveInGUI(false);
+		
 		if(Keyboard.isKeyDown(Key.KEY_E)) {
 			AudioMaster.defaultSource.play(ResourceManager.getSound("inventory"));
 			open = !open;
@@ -39,17 +41,11 @@ public class GUIManager  {
 	}
 	
 	public static void render() {
-		if(open) {
-			inventory.render();
-		}
-		inventory.quickInventory.render();
+		inventory.render();
 	}
 
 	public static void renderText() {
-		if(open) {
-			inventory.renderText();
-		}
-		inventory.quickInventory.renderText();
+		inventory.renderText();
 	}
 
 	public static void renderPopUp() {
