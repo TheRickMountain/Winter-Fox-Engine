@@ -1,6 +1,5 @@
 package com.wfe.gui;
 
-import com.wfe.core.Display;
 import com.wfe.core.ResourceManager;
 import com.wfe.renderEngine.FontRenderer;
 import com.wfe.renderEngine.GUIRenderer;
@@ -10,22 +9,20 @@ import com.wfe.utils.Rect;
 public class Slot implements GUIComponent {
 
 	private static final Texture SLOT_TEXTURE = ResourceManager.getTexture("slot_ui");
-	private static final Texture SELECTED_SLOT_TEXTURE = ResourceManager.getTexture("selected_slot_ui");
 	public static final int SLOT_SIZE = 60;
 	
 	public Rect rect;
 	private Item item;
-	private int count;
-	private boolean hasItem;
 	private GUIText text;
-	public int slotSize = 60;
-	public float textSize = 1.0f;
+	
+	private int itemCount;
+	private boolean hasItem;
+	
 	public boolean selected = false;
 	
 	public Slot(Rect rect) {
 		this.rect = rect;
-		this.text = new GUIText("", 1.1f, FontRenderer.font, 0.0f, 0.0f, 
-				(1.0f / Display.getWidth()) * SLOT_SIZE, true);
+		this.text = new GUIText("", 1.1f, FontRenderer.font, 0.0f, 0.0f, rect.width, true);
 		this.text.setColor(1.0f, 1.0f, 1.0f);
 	}
 	
@@ -37,26 +34,22 @@ public class Slot implements GUIComponent {
 	@Override
 	public void render() {
 		if(selected) {
-			slotSize = 70;
-			textSize = 1.1f;
+			GUIRenderer.render(SLOT_TEXTURE, rect.x + rect.width / 2, rect.y + rect.height / 2, 
+					rect.rotation, SLOT_SIZE + 10, SLOT_SIZE + 10, true);
 		} else {
-			slotSize = SLOT_SIZE;
-			textSize = 1.0f;
+			GUIRenderer.render(SLOT_TEXTURE, rect.x + rect.width / 2, rect.y + rect.height / 2, 
+					rect.rotation, SLOT_SIZE, SLOT_SIZE, true);
 		}
-		
-		GUIRenderer.render(SLOT_TEXTURE, rect.x + rect.width / 2, rect.y + rect.height / 2, 
-				rect.rotation, slotSize, slotSize, true);
 		
 		if(hasItem) {
 			GUIRenderer.render(item.icon, rect.x + rect.width / 2, rect.y + rect.height / 2, 
-					rect.rotation, slotSize - 10, slotSize - 10, true);
+					rect.rotation, SLOT_SIZE - 10, SLOT_SIZE - 10, true);
 		}
 	}
 
 	@Override
 	public void renderText() {
-		if(hasItem && (count > 1)) {
-			text.setScale(textSize);
+		if(hasItem && (itemCount > 1)) {
 			FontRenderer.render(text, rect.x, rect.y);
 		}
 	}
@@ -75,14 +68,14 @@ public class Slot implements GUIComponent {
 		this.item = item;
 		if(this.item != null) {
 			hasItem = true;
-			this.count = count;
+			this.itemCount = count;
 			text.setText("" + count);
 		}
 	}
 	
 	public void removeItem() {
 		this.item = null;
-		this.count = 0;
+		this.itemCount = 0;
 		this.hasItem = false;
 	}
 	
@@ -94,8 +87,8 @@ public class Slot implements GUIComponent {
 		return item;
 	}
 	
-	public int getCount() {
-		return count;
+	public int getItemCount() {
+		return itemCount;
 	}
 
 }

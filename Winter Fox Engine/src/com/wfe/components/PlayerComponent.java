@@ -9,7 +9,10 @@ import com.wfe.ecs.Transformation;
 import com.wfe.game.World;
 import com.wfe.input.Key;
 import com.wfe.input.Keyboard;
+import com.wfe.math.Vector3f;
 import com.wfe.physics.AABB;
+import com.wfe.utils.MathUtils;
+import com.wfe.utils.MousePicker;
 
 public class PlayerComponent extends Component {
 
@@ -29,8 +32,18 @@ public class PlayerComponent extends Component {
 	}
 	
 	@Override
-	public void update(float dt) {		
+	public void update(float dt) {	
+		rotate();
 		move(dt);
+	}
+	
+	private void rotate() {
+		Vector3f tp = MousePicker.getCurrentTerrainPoint();
+		if(tp != null) {
+			transform.setRotY(-MathUtils.getRotation(
+					transform.getX(), transform.getZ(), 
+					tp.x, tp.z) + 90);
+		}
 	}
 	
 	private void move(float dt) {	
@@ -52,7 +65,7 @@ public class PlayerComponent extends Component {
 		
 		yRot = camera.getYaw();
 		
-		if(xa < 0) {
+		/*if(xa < 0) {
 			transform.rotY = (-yRot) - 90;
 		} else if(xa > 0) {
 			transform.rotY = (-yRot) + 90;
@@ -72,7 +85,7 @@ public class PlayerComponent extends Component {
 			transform.rotY = (-yRot) - 45;
 		} else if(za < 0 && xa < 0) {
 			transform.rotY = (-yRot) - 135;
-		}
+		}*/
 		
 		if(xa != 0 || za != 0) {
 			transform.isMoving = true;

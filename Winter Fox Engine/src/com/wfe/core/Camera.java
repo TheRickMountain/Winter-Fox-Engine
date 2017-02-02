@@ -26,7 +26,7 @@ public class Camera {
 
     private final Vector3f position;
 
-    private float pitch = 45;
+    private float pitch = 55;
 
     private float yaw = 0;
 
