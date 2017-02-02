@@ -4,7 +4,7 @@ import com.wfe.input.Mouse;
 
 public class GUIManager  {
 	
-	private static Inventory inventory;
+	public static Inventory inventory;
 	
 	public static void init() {
 		ItemDatabase.create();

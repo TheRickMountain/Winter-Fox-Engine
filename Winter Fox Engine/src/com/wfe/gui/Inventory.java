@@ -26,10 +26,6 @@ public class Inventory implements GUIComponent {
 		
 		updatePositions();
 		
-		slots.get(0).addItem(ItemDatabase.getItem(Item.APPLE), 2);
-		slots.get(1).addItem(ItemDatabase.getItem(Item.FLINT), 1);
-		slots.get(4).addItem(ItemDatabase.getItem(Item.AXE), 1);
-		
 		slots.get(selectedSlot).selected = true;
 	}
 	
@@ -94,6 +90,15 @@ public class Inventory implements GUIComponent {
 			slots.get(i).rect.setPosition(
 					(Display.getWidth() / 2) - (totalWidth / 2) + (i * (Slot.SLOT_SIZE + offset)), 
 					Display.getHeight() - Slot.SLOT_SIZE - offset);
+		}
+	}
+	
+	public void update(int[] slots, int[] count) {
+		for(int i = 0; i < slots.length; i++) {
+			int slot = slots[i];
+			if(slot >= 0) {
+				this.slots.get(i).addItem(ItemDatabase.getItem(slot), count[i]);
+			}
 		}
 	}
 

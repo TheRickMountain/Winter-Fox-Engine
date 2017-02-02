@@ -2,6 +2,7 @@ package com.wfe.components;
 
 import com.wfe.ecs.Component;
 import com.wfe.ecs.ComponentType;
+import com.wfe.gui.GUIManager;
 import com.wfe.gui.ItemDatabase;
 
 public class InventoryComponent extends Component {
@@ -76,11 +77,12 @@ public class InventoryComponent extends Component {
 				addItem(slot, item, count);
 			}
 		}
-		//GUIManager.inventory.update(slots, counts);
+		GUIManager.inventory.update(slots, counts);
 		return true;
 	}
 	
 	public boolean removeItem(int item) {
+		GUIManager.inventory.update(slots, counts);
 		return true;
 	}
 	
