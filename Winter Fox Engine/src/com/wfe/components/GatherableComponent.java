@@ -23,11 +23,11 @@ public class GatherableComponent extends Component {
 		if(Mouse.isButtonDown(1)) {
 			Player player = Game.player;
 			if(MathUtils.getDistance(player.getTransform().x, player.getTransform().z, 
-					parent.getTransform().x, parent.getTransform().z) <= 2.5f) {
+					getParent().getTransform().x, getParent().getTransform().z) <= 2.5f) {
 				if(boundingBox.intersects()) {
 					InventoryComponent inv = (InventoryComponent) player.getComponent(ComponentType.INVENTORY);
 					inv.addItem(givenItem, 1);
-					parent.remove();
+					getParent().remove();
 				}
 			}
 		}

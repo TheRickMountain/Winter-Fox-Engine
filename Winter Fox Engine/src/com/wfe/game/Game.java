@@ -42,6 +42,10 @@ public class Game implements IGameLogic {
 		ResourceManager.loadSound("chopping", AudioMaster.loadSound("audio/chop.wav"));
 		ResourceManager.loadSound("equip", AudioMaster.loadSound("audio/equip.wav"));
 		ResourceManager.loadSound("inventory", AudioMaster.loadSound("audio/inventory.wav"));
+		ResourceManager.loadSound("footstep1", AudioMaster.loadSound("audio/footstep1.wav"));
+		ResourceManager.loadSound("footstep2", AudioMaster.loadSound("audio/footstep2.wav"));
+		
+		ResourceManager.loadSound("hills", AudioMaster.loadSound("audio/hills.wav"));
 		/*** *** ***/
 		
 		
@@ -229,6 +233,12 @@ public class Game implements IGameLogic {
 		ResourceManager.loadMesh("body", OBJLoader.loadMesh("/entity/player/body.obj"));
 		ResourceManager.loadMesh("head", OBJLoader.loadMesh("/entity/player/head.obj"));
 		ResourceManager.loadMesh("eyes", OBJLoader.loadMesh("/entity/player/eyes.obj"));
+		ResourceManager.loadMesh("hip", OBJLoader.loadMesh("/entity/player/hip.obj"));
+		ResourceManager.loadMesh("shin", OBJLoader.loadMesh("/entity/player/shin.obj"));
+		ResourceManager.loadMesh("leftArm", OBJLoader.loadMesh("/entity/player/leftArm.obj"));
+		ResourceManager.loadMesh("leftForearm", OBJLoader.loadMesh("/entity/player/leftForearm.obj"));
+		ResourceManager.loadMesh("rightArm", OBJLoader.loadMesh("/entity/player/rightArm.obj"));
+		ResourceManager.loadMesh("rightForearm", OBJLoader.loadMesh("/entity/player/rightForearm.obj"));
 		/*** *** ***/
 	}
 	
@@ -239,7 +249,7 @@ public class Game implements IGameLogic {
 		World.createWorld(camera);
 		World.getWorld().init();
 		
-		player = new Player(camera, new Transformation(80, 0.4f, 80));
+		player = new Player(camera, new Transformation(80, 0.65f, 80));
 		World.getWorld().addEntity(player);
 		
 		World.getWorld().addEntityToTile(new Stick(player, new Transformation(81 + 0.5f, 0, 82 + 0.5f)));
@@ -286,10 +296,12 @@ public class Game implements IGameLogic {
 		inventory.addItem(Item.APPLE, 5);
 		inventory.addItem(Item.FLINT, 7);
 		inventory.addItem(Item.AXE, 2);
+		
+		AudioMaster.ambientSource.play(ResourceManager.getSound("hills"));
 	}
 	
 	@Override
-	public void update(float dt) {		
+	public void update(float dt) {
 		if(Keyboard.isKeyDown(Key.KEY_F)) {
 			InventoryComponent inventory = (InventoryComponent) player.getComponent(ComponentType.INVENTORY);
 			inventory.addItem(Item.APPLE, 5);

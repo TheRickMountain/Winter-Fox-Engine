@@ -2,8 +2,16 @@ package com.wfe.ecs;
 
 public abstract class Component {
 
-	protected Entity parent;
+	private Entity parent;
 	public abstract void update(float dt);
 	public abstract ComponentType getType();
+	
+	protected void setParent(Entity parent) {
+		this.parent = parent;
+	}
+	
+	protected Entity getParent() {
+		return parent;
+	}
 	
 }
