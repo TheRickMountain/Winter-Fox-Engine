@@ -23,7 +23,6 @@ import java.util.List;
 
 import org.lwjgl.glfw.GLFWCursorPosCallback;
 import org.lwjgl.glfw.GLFWMouseButtonCallback;
-import org.lwjgl.glfw.GLFWScrollCallback;
 
 import com.wfe.core.Display;
 
@@ -39,23 +38,6 @@ public class Mouse extends GLFWMouseButtonCallback {
     
     public Mouse(Display display) {
     	Mouse.display = display;
-    }
-
-    public static class Scroll extends GLFWScrollCallback {
-
-        private static float scroll;
-
-        public static float getScroll() {
-            float scroll = Scroll.scroll;
-            Scroll.scroll = 0;
-            return scroll;
-        }
-
-        @Override
-        public void invoke(long window, double scrollX, double scrollY) {
-            Scroll.scroll = (float) scrollY;
-        }
-
     }
 
     public static class Cursor extends GLFWCursorPosCallback {

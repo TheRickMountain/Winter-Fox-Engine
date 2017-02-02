@@ -17,9 +17,9 @@ public class Camera {
     private static final float MIN_DISTANCE = 10;
     private static final float MAX_DISTANCE = 25;
 
-    private float distanceFromPlayer = 12;
+    private float distanceFromPlayer = 15;
     private float angleAroundPlayer = 1;
-    private float zoomSpeed = 50;
+    private float zoomSpeed = 0;
 
     private static final float MAX_PITCH = 85;
     private static final float MIN_PITCH = 45;
@@ -78,7 +78,7 @@ public class Camera {
             calculateAngleAroundPlayer(dt);
             calculatePitch(dt);
     	} 
-        calculateZoom(dt);
+        //calculateZoom(dt);
 
         float horizontalDistance = calculateHorizontalDistance();
         float verticalDistance = calculateVerticalDistance();

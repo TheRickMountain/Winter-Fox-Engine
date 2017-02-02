@@ -9,14 +9,17 @@ import com.wfe.utils.Rect;
 
 public class Slot implements GUIComponent {
 
+	private static final Texture SLOT_TEXTURE = ResourceManager.getTexture("slot_ui");
+	private static final Texture SELECTED_SLOT_TEXTURE = ResourceManager.getTexture("selected_slot_ui");
+	public static final int SLOT_SIZE = 60;
+	
 	public Rect rect;
 	private Item item;
 	private int count;
 	private boolean hasItem;
 	private GUIText text;
-	private static final Texture SLOT_TEXTURE = ResourceManager.getTexture("slot_ui");
 	public int itemSize = 50;
-	public static final int SLOT_SIZE = 60;
+	public boolean selected = false;
 	
 	public Slot(Rect rect) {
 		this.rect = rect;
@@ -32,7 +35,11 @@ public class Slot implements GUIComponent {
 
 	@Override
 	public void render() {
-		GUIRenderer.render(SLOT_TEXTURE, rect.x, rect.y, rect.rotation, rect.width, rect.height, false);
+		if(!selected)
+			GUIRenderer.render(SLOT_TEXTURE, rect.x, rect.y, rect.rotation, rect.width, rect.height, false);
+		else
+			GUIRenderer.render(SELECTED_SLOT_TEXTURE, rect.x, rect.y, rect.rotation, rect.width, rect.height, false);
+		
 		if(hasItem) {
 			GUIRenderer.render(item.icon, rect.x + rect.width / 2, rect.y + rect.height / 2, 
 					rect.rotation, itemSize, itemSize, true);

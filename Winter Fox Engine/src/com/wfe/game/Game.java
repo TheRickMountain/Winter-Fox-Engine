@@ -37,6 +37,7 @@ public class Game implements IGameLogic {
 		AudioMaster.setListenerData(0, 0, 0);
 		
 		ResourceManager.loadSound("eating", AudioMaster.loadSound("audio/eat.wav"));
+		ResourceManager.loadSound("tick", AudioMaster.loadSound("audio/tick.wav"));
 		ResourceManager.loadSound("taking", AudioMaster.loadSound("audio/take.wav"));
 		ResourceManager.loadSound("chopping", AudioMaster.loadSound("audio/chop.wav"));
 		ResourceManager.loadSound("equip", AudioMaster.loadSound("audio/equip.wav"));
@@ -58,6 +59,9 @@ public class Game implements IGameLogic {
 				.normalMipMap().create());
 		
 		ResourceManager.loadTexture("slot_ui", Texture.newTexture(new MyFile("gui/elements/slot.png"))
+				.normalMipMap().create());
+		
+		ResourceManager.loadTexture("selected_slot_ui", Texture.newTexture(new MyFile("gui/elements/selected_slot.png"))
 				.normalMipMap().create());
 		
 		ResourceManager.loadTexture("background_frame_ui", Texture.newTexture(new MyFile("gui/background_frame.png"))
@@ -139,7 +143,7 @@ public class Game implements IGameLogic {
 		
 		/*** Axe ***/
 		ResourceManager.loadTexture("axe_ui", Texture.newTexture(new MyFile("entity/axe/icon.png"))
-				.create());
+				.normalMipMap().create());
 		ResourceManager.loadTexture("axe", Texture.newTexture(new MyFile("entity/axe/diffuse.png"))
 				.normalMipMap(-0.4f)
 				.create());
@@ -179,7 +183,7 @@ public class Game implements IGameLogic {
 		
 		/*** Flint ***/
 		ResourceManager.loadTexture("flint_ui", Texture.newTexture(new MyFile("entity/flint/icon.png"))
-				.create());
+				.normalMipMap().create());
 		ResourceManager.loadTexture("flint", Texture.newTexture(new MyFile("entity/flint/diffuse.png"))
 				.normalMipMap(-0.4f)
 				.create());
@@ -288,7 +292,7 @@ public class Game implements IGameLogic {
 	}
 	
 	@Override
-	public void update(float dt) {	
+	public void update(float dt) {		
 		if(Keyboard.isKeyDown(Key.KEY_F)) {
 			InventoryComponent inventory = (InventoryComponent) player.getComponent(ComponentType.INVENTORY);
 			inventory.addItem(Item.APPLE, 5);

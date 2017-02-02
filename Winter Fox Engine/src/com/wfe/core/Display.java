@@ -15,6 +15,7 @@ import org.lwjgl.opengl.GL;
 
 import com.wfe.input.Keyboard;
 import com.wfe.input.Mouse;
+import com.wfe.input.Scroll;
 import com.wfe.utils.MathUtils;
 
 /**
@@ -85,7 +86,7 @@ public class Display {
         glfwSetKeyCallback(window, new Keyboard());
         glfwSetMouseButtonCallback(window, new Mouse(this));
         glfwSetCursorPosCallback(window, new Mouse.Cursor());
-        glfwSetScrollCallback(window, new Mouse.Scroll());
+        glfwSetScrollCallback(window, new Scroll());
         
         lastFrame = getTime();
     }
