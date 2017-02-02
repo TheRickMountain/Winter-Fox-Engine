@@ -2,13 +2,12 @@ package com.wfe.components;
 
 import com.wfe.ecs.Component;
 import com.wfe.ecs.ComponentType;
-import com.wfe.gui.GUIManager;
 import com.wfe.gui.ItemDatabase;
 
 public class InventoryComponent extends Component {
 	
-	public final int[] slots = new int[24];
-	public final int[] counts = new int[24];
+	public final int[] slots = new int[6];
+	public final int[] counts = new int[6];
 	
 	public InventoryComponent() {
 		for(int i = 0; i < slots.length; i++) {
@@ -77,7 +76,7 @@ public class InventoryComponent extends Component {
 				addItem(slot, item, count);
 			}
 		}
-		GUIManager.inventory.update(slots, counts);
+		//GUIManager.inventory.update(slots, counts);
 		return true;
 	}
 	

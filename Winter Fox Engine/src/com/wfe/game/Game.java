@@ -46,55 +46,18 @@ public class Game implements IGameLogic {
 		
 		/*** Textures ***/	
 		ResourceManager.loadTexture("wall", Texture.newTexture(new MyFile("textures/wall.png"))
-				.normalMipMap(-0.4f)
-				.create());
+				.normalMipMap(-0.4f).create());
 		
 		ResourceManager.loadTexture("primitiveFont", Texture.newTexture(new MyFile("font/primitiveFont.png"))
-				.normalMipMap()
-				.create());
+				.normalMipMap().create());
 		
 		ResourceManager.loadTexture("myFont", Texture.newTexture(new MyFile("font/myFont.png"))
-				.normalMipMap()
-				.create());
+				.normalMipMap().create());
 		
-		ResourceManager.loadTexture("fern", Texture.newTexture(new MyFile("entity/fern/fern.png"))
-				.normalMipMap(-0.4f)
-				.create());
-		
-		ResourceManager.loadTexture("grass", Texture.newTexture(new MyFile("entity/grass/grass.png"))
-				.normalMipMap(-0.4f)
-				.create());
-			
-		ResourceManager.loadTexture("banana_ui", Texture.newTexture(new MyFile("gui/items/banana.png")).create());
-		ResourceManager.loadTexture("log_ui", Texture.newTexture(new MyFile("gui/items/log.png"))
-				.normalMipMap().create());
-		ResourceManager.loadTexture("wheat_seed_ui", Texture.newTexture(new MyFile("gui/items/wheat_seed.png"))
-				.normalMipMap().create());
-		ResourceManager.loadTexture("rope_ui", Texture.newTexture(new MyFile("gui/items/rope.png"))
-				.normalMipMap().create());
-		ResourceManager.loadTexture("fiber_ui", Texture.newTexture(new MyFile("gui/items/fiber.png"))
-				.normalMipMap().create());
-		ResourceManager.loadTexture("cookie_ui", Texture.newTexture(new MyFile("gui/items/cookie.png")).create());
 		ResourceManager.loadTexture("apple_ui", Texture.newTexture(new MyFile("gui/items/apple.png"))
 				.normalMipMap().create());
-		ResourceManager.loadTexture("wall_ui", Texture.newTexture(new MyFile("gui/items/wall.png")).create());
-		ResourceManager.loadTexture("cross_wall_ui", Texture.newTexture(new MyFile("gui/items/cross_wall.png")).create());
-		ResourceManager.loadTexture("window_wall_ui", Texture.newTexture(new MyFile("gui/items/window_wall.png")).create());
-		ResourceManager.loadTexture("door_wall_ui", Texture.newTexture(new MyFile("gui/items/door_wall.png")).create());
-		ResourceManager.loadTexture("shroom_ui", Texture.newTexture(new MyFile("gui/items/shroom.png"))
-				.normalMipMap().create());
-		ResourceManager.loadTexture("bread_ui", Texture.newTexture(new MyFile("gui/items/bread.png"))
-				.normalMipMap().create());
-		ResourceManager.loadTexture("bow_ui", Texture.newTexture(new MyFile("gui/items/bow.png"))
-				.normalMipMap().create());
-		ResourceManager.loadTexture("bush_ui", Texture.newTexture(new MyFile("gui/items/bush.png")).create());
-		ResourceManager.loadTexture("sack_ui", Texture.newTexture(new MyFile("gui/sack.png")).create());
-		ResourceManager.loadTexture("flour_ui", Texture.newTexture(new MyFile("gui/items/flour.png"))
-				.normalMipMap().create());
-		ResourceManager.loadTexture("dough_ui", Texture.newTexture(new MyFile("gui/items/dough.png"))
-				.normalMipMap().create());
-		ResourceManager.loadTexture("craft_ui", Texture.newTexture(new MyFile("gui/craft.png")).create());
-		ResourceManager.loadTexture("hoe_ui", Texture.newTexture(new MyFile("gui/items/hoe.png"))
+		
+		ResourceManager.loadTexture("slot_ui", Texture.newTexture(new MyFile("gui/elements/slot.png"))
 				.normalMipMap().create());
 		
 		ResourceManager.loadTexture("background_frame_ui", Texture.newTexture(new MyFile("gui/background_frame.png"))
@@ -112,8 +75,20 @@ public class Game implements IGameLogic {
 		ResourceManager.loadMesh("cross_wall", OBJLoader.loadMesh("/models/cross_wall.obj"));
 		ResourceManager.loadMesh("door_wall", OBJLoader.loadMesh("/models/door_wall.obj"));
 		ResourceManager.loadMesh("window_wall", OBJLoader.loadMesh("/models/window_wall.obj"));
+		
+		/*** Fern ***/
+		ResourceManager.loadTexture("fern", Texture.newTexture(new MyFile("entity/fern/fern.png"))
+				.normalMipMap(-0.4f)
+				.create());
 		ResourceManager.loadMesh("fern", OBJLoader.loadMesh("/entity/fern/fern.obj"));
+		/*** *** ***/
+		
+		/*** Grass ***/
+		ResourceManager.loadTexture("grass", Texture.newTexture(new MyFile("entity/grass/grass.png"))
+				.normalMipMap(-0.4f)
+				.create());
 		ResourceManager.loadMesh("grass", OBJLoader.loadMesh("/entity/grass/grass.obj"));
+		/*** *** ***/
 		
 		/*** Pine ***/
 		ResourceManager.loadTexture("pine_bark", Texture.newTexture(new MyFile("entity/pine/bark.png"))

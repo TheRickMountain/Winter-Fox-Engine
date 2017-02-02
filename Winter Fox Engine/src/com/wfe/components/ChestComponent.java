@@ -2,9 +2,7 @@ package com.wfe.components;
 
 import com.wfe.ecs.Component;
 import com.wfe.ecs.ComponentType;
-import com.wfe.gui.GUIManager;
 import com.wfe.gui.ItemDatabase;
-import com.wfe.input.Mouse;
 
 public class ChestComponent extends Component {
 
@@ -23,9 +21,9 @@ public class ChestComponent extends Component {
 	
 	@Override
 	public void update(float dt) {
-		if(Mouse.isButtonDown(1)) {
+		/*if(Mouse.isButtonDown(1)) {
 			GUIManager.open(this); // Send chest data to the GUIManager
-		}
+		}*/
 	}
 	
 	private int hasItem(int item) {
@@ -83,8 +81,6 @@ public class ChestComponent extends Component {
 				addItem(slot, item, count);
 			}
 		}
-		
-		GUIManager.inventory.update(slots, counts);
 		return true;
 	}
 	

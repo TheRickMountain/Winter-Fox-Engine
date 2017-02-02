@@ -1,141 +1,47 @@
 package com.wfe.gui;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import com.wfe.audio.AudioMaster;
-import com.wfe.components.InventoryComponent;
 import com.wfe.core.Display;
-import com.wfe.core.ResourceManager;
-import com.wfe.ecs.ComponentType;
-import com.wfe.game.Game;
-import com.wfe.input.Mouse;
+import com.wfe.utils.Rect;
 
 public class Inventory implements GUIComponent {
 	
-	public GUIGrid quickInventory;
-	public GUIGrid mainInventory;
-	public final List<Slot> quickSlots;
-	public final List<Slot> mainSlots;
-	
-	public boolean open = false;
+	private List<Slot> slots = new ArrayList<Slot>();
+	private float offset = 5;
 	
 	public Inventory() {
-		quickInventory = new GUIGrid(6, 1);
-		mainInventory = new GUIGrid(6, 3);
-		
-		quickSlots = quickInventory.getSlots();
-		mainSlots = mainInventory.getSlots();
+		for(int i = 0; i < 6; i++) {
+			slots.add(new Slot(new Rect(0, 0, Slot.SLOT_SIZE, Slot.SLOT_SIZE)));
+		}
 		
 		updatePositions();
+		
+		slots.get(0).addItem(ItemDatabase.getItem(Item.APPLE), 2);
+		slots.get(1).addItem(ItemDatabase.getItem(Item.FLINT), 1);
+		slots.get(4).addItem(ItemDatabase.getItem(Item.AXE), 1);
 	}
 	
 	@Override
 	public void update() {
-		updateSlots(Mouse.BUTTON_1);
-		updateSlots(Mouse.BUTTON_2);
-		
 		if(Display.isResized()) {
 			updatePositions();
-		}
-	}
-	
-	private void updateSlots(int event) {
-		if(Mouse.isButtonDown(event)) {
-			for(Slot slot : quickSlots) {
-				doSlotOperations(slot, event == 1);
-			}
-			
-			if(GUIManager.open) {
-				for(Slot slot : mainSlots) {
-					doSlotOperations(slot, event == 1);
-				}
-			}
-		}
-		
-		// Обновляем информацию InventoryComponent у Player
-		InventoryComponent inv = (InventoryComponent)Game.player.getComponent(ComponentType.INVENTORY);
-		for(int i = 0; i < quickSlots.size() + mainSlots.size(); i++) {
-			Item item = null;
-			int count = 0;
-			if(i < quickSlots.size()) {
-				Slot slot = quickSlots.get(i);
-				item = slot.getItem();
-				count = slot.getCount();
-			} else {
-				Slot slot = mainSlots.get(i - quickSlots.size());
-				item = slot.getItem();
-				count = slot.getCount();
-			}
-			
-			inv.slots[i] = (item == null) ? -1 : item.id;
-			inv.counts[i] = count;
-		}
-	}
-	
-	private void doSlotOperations(Slot slot, boolean eat) {
-		if(slot.rect.isMouseOvered()) {
-			Mouse.setActiveInGUI(true);
-			if(!eat) {
-				Item draggedItem = GUIManager.getDraggedItem();
-				int draggedItemCount = GUIManager.getDraggedItemCount();
-				if(draggedItem == null) {
-					if(slot.isHasItem()) {
-						GUIManager.setDraggedItem(slot.getItem(), slot.getCount());
-						slot.removeItem();
-					}
-				} else {
-					if(slot.isHasItem()) {
-						Item item = slot.getItem();
-						if(item.equals(draggedItem)) {
-							int totalCount = slot.getCount() + draggedItemCount;
-							if(totalCount <= item.stackSize) {
-								slot.addItem(draggedItem, totalCount);
-								GUIManager.removeDraggedItem();
-							} else {
-								totalCount -= item.stackSize;
-								slot.addItem(draggedItem, item.stackSize);
-								GUIManager.setDraggedItem(draggedItem, totalCount);
-							}
-						} else {
-							int count = slot.getCount();
-							slot.addItem(draggedItem, draggedItemCount);
-							GUIManager.setDraggedItem(item, count);
-						}
-					} else {
-						slot.addItem(draggedItem, draggedItemCount);
-						GUIManager.removeDraggedItem();
-					}
-				}
-			} else {
-				if(slot.isHasItem()) {
-					Item item = slot.getItem();
-					if(item.type.equals(ItemType.CONSUMABLE)) {
-						int count = slot.getCount();
-						count--;
-						if(count == 0) {
-							slot.removeItem();
-						} else {
-							slot.addItem(item, slot.getCount() - 1);
-						}
-						AudioMaster.defaultSource.play(ResourceManager.getSound("eating"));
-					}
-				}
-			}
 		}
 	}
 
 	@Override
 	public void render() {
-		quickInventory.render();
-		if(GUIManager.open)
-			mainInventory.render();
+		for(Slot slot : slots) {
+			slot.render();
+		}
 	}
 
 	@Override
 	public void renderText() {
-		quickInventory.renderText();
-		if(GUIManager.open)
-			mainInventory.renderText();
+		for(Slot slot : slots) {
+			slot.renderText();
+		}
 	}
 
 	@Override
@@ -149,28 +55,11 @@ public class Inventory implements GUIComponent {
 	}
 	
 	private void updatePositions() {
-		quickInventory.setPosition(
-				(Display.getWidth() / 2) - (quickInventory.rect.width / 2), 
-				Display.getHeight() - quickInventory.rect.height);
-		
-		mainInventory.setPosition(
-				(Display.getWidth() / 2) - (mainInventory.rect.width / 2), 
-				quickInventory.rect.y - mainInventory.rect.height - (GUIGrid.SLOT_SIZE / 2));
-	}
-	
-	public void update(int[] slots, int[] count) {
-		for(int i = 0; i < 24; i++) {
-			addItem(i, slots[i], count[i]);
-		}
-	}
-	
-	public void addItem(int slot, int item, int count) {
-		if(item != -1) {
-			if(slot < quickSlots.size()) {
-				quickSlots.get(slot).addItem(ItemDatabase.getItem(item), count);
-			} else {
-				mainSlots.get(slot - quickSlots.size()).addItem(ItemDatabase.getItem(item), count);
-			}
+		float totalWidth = (slots.size() * Slot.SLOT_SIZE) + ((slots.size() - 1) * offset);
+		for(int i = 0; i < slots.size(); i++) {
+			slots.get(i).rect.setPosition(
+					(Display.getWidth() / 2) - (totalWidth / 2) + (i * (Slot.SLOT_SIZE + offset)), 
+					Display.getHeight() - Slot.SLOT_SIZE - offset);
 		}
 	}
 

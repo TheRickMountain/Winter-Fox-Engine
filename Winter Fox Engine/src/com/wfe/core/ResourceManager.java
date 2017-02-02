@@ -26,7 +26,10 @@ public class ResourceManager {
     }
 	
 	public static Texture getTexture(String textureName) {
-		return textures.get(textureName);
+		Texture texture = textures.get(textureName);
+		if(texture == null)
+			System.err.println("There is no '" + textureName + "' texture");
+		return texture;
 	}
 	
 	public static void loadSound(String name, int sound) {

@@ -12,9 +12,17 @@ public class ItemDatabase {
 	private static ItemDatabase instance;
 	
 	private ItemDatabase() {
-		addItem(new Item(Item.APPLE, "Apple", ResourceManager.getTexture("apple_ui"), ItemType.CONSUMABLE, 40));
-		addItem(new Item(Item.FLINT, "Flint", ResourceManager.getTexture("flint_ui"), ItemType.RESOURCE, 40));
-		addItem(new Item(Item.AXE, "Axe", ResourceManager.getTexture("axe_ui"), ItemType.TOOL, 1));
+		addItem(new Item(Item.APPLE, "Apple", "Sweet apple is so sweet", ResourceManager.getTexture("apple_ui"), 
+				ItemType.CONSUMABLE, 40));
+		
+		addItem(new Item(Item.FLINT, "Flint", "Common useful resource", ResourceManager.getTexture("flint_ui"), 
+				ItemType.RESOURCE, 40));
+		
+		addItem(new Item(Item.AXE, "Axe" , "Can chop trees and protect from enemies", ResourceManager.getTexture("axe_ui"), 
+				ItemType.TOOL, 1));
+		
+		addItem(new Item(Item.STICK, "Stick", "Common useful resource", ResourceManager.getTexture("stick_ui"), 
+				ItemType.RESOURCE, 40));
 	}
 	
 	public static void create() {

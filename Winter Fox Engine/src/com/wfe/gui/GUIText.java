@@ -101,9 +101,10 @@ public class GUIText {
 	}
 	
 	public void setText(String text) {
-		this.textString = text;
-		
-		rebuild();
+		if(!this.textString.equals(text)) {
+			this.textString = text;
+			rebuild();
+		}
 	}
 	
 	public void cleanup() {

@@ -1,9 +1,8 @@
-package com.wfe.components;
+package com.wfe.utils;
 
 import com.wfe.ecs.Transformation;
 import com.wfe.math.Vector3f;
 import com.wfe.physics.AABB;
-import com.wfe.utils.MousePicker;
 
 public class BoundingBox {
 
