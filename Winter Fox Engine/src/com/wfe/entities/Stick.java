@@ -14,6 +14,7 @@ public class Stick extends Entity {
 	public Stick(Entity player, Transformation transform) {
 		super(ResourceManager.getMesh("stick"), 
 				new Material(ResourceManager.getTexture("stick")), transform);
+		setTag("stick");
 		transform.setRotY(MyRandom.nextInt(360));
 		transform.setScale(0.2f);
 		addComponent(new GatherableComponent(Item.STICK, new BoundingBox(0.5f, 0.5f, 0.5f, transform)));

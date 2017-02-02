@@ -10,6 +10,7 @@ public class Flint extends Entity {
 	public Flint(Entity player, Transformation transform) {
 		super(ResourceManager.getMesh("flint"), 
 				new Material(ResourceManager.getTexture("flint")), transform);
+		setTag("flint");
 		transform.setScale(0.125f);
 	}
 

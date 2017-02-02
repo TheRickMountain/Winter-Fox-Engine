@@ -14,7 +14,7 @@ public class Entity {
 	protected List<Component> components = new ArrayList<Component>();
 	protected List<Entity> childs = new ArrayList<Entity>();
 	protected boolean hasParent;
-	protected String name;
+	protected String tag;
 	
 	private Entity parent;
 
@@ -115,12 +115,12 @@ public class Entity {
 		return hasParent;
 	}
 
-	public String getName() {
-		return name;
+	public String getTag() {
+		return tag;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setTag(String tag) {
+		this.tag = tag;
 	}
 	
 	public float getTextureXOffset(){

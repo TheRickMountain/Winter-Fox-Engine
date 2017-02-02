@@ -12,6 +12,7 @@ public class Pine extends Entity {
 	public Pine(Player player, Transformation transform) {
 		super(ResourceManager.getMesh("pine_bark"),
 				new Material(ResourceManager.getTexture("pine_bark")), transform);
+		setTag("tree");
 		addComponent(new ColliderComponent(0.5f, 1, 0.5f, transform));
 		
 		Entity pineLeaves = new Entity(ResourceManager.getMesh("pine_leaves"),

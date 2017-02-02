@@ -4,8 +4,8 @@ import com.wfe.ecs.Entity;
 
 public class Tile {
 	
-	public int id;
-	public Entity entity;
+	private int id;
+	private Entity entity;
 	private boolean hasEntity = false;
 	public static final Tile GRASS = new Tile(0);
 	public static final Tile DRY_GRASS = new Tile(1);
@@ -16,10 +16,6 @@ public class Tile {
 	
 	public Tile(int id) {
 		this.id = id;
-	}
-	
-	public int getId() {
-		return id;
 	}
 
 	public void setId(int id) {
@@ -45,4 +41,8 @@ public class Tile {
 		return hasEntity;
 	}
 
+	public int getId() {
+		return id;
+	}
+	
 }

@@ -14,6 +14,7 @@ import com.wfe.gui.GUIManager;
 import com.wfe.physics.AABB;
 import com.wfe.renderEngine.RenderEngine;
 import com.wfe.tileEngine.Terrain;
+import com.wfe.tileEngine.Tile;
 import com.wfe.utils.MousePicker;
 import com.wfe.weather.Weather;
 
@@ -126,7 +127,7 @@ public class World {
 		terrain.setTile(x, y, id);
 	}
 	
-	public int getTile(int x, int y) {
+	public Tile getTile(int x, int y) {
 		return terrain.getTile(x, y);
 	}
 	

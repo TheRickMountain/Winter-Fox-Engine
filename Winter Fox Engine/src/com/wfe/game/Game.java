@@ -19,10 +19,11 @@ import com.wfe.entities.Stick;
 import com.wfe.entities.Wheat;
 import com.wfe.graph.OBJLoader;
 import com.wfe.gui.Item;
-import com.wfe.input.Key;
-import com.wfe.input.Keyboard;
+import com.wfe.input.Mouse;
 import com.wfe.math.Vector3f;
 import com.wfe.textures.Texture;
+import com.wfe.tileEngine.Tile;
+import com.wfe.utils.MousePicker;
 import com.wfe.utils.MyFile;
 import com.wfe.utils.MyRandom;
 
@@ -267,7 +268,7 @@ public class Game implements IGameLogic {
 		World.getWorld().addEntityToTile(new Wheat(player, new Transformation(84 + 0.5f, 0, 83 + 0.5f)));
 		
 		World.getWorld().addEntityToTile(new Pine(player, new Transformation(90.5f, 0, 88.5f)));
-		World.getWorld().addEntityToTile(new Pine(player, new Transformation(70.5f, 0, 85.5f)));
+		World.getWorld().addEntityToTile(new Pine(player, new Transformation(93.5f, 0, 88.5f)));
 		
 		for(int i = 0; i < 100; i++) {		
 			Shroom shroom = new Shroom(player, new Transformation(MyRandom.nextInt(160) + 0.5f, 0, MyRandom.nextInt(160) + 0.5f));
@@ -302,9 +303,14 @@ public class Game implements IGameLogic {
 	
 	@Override
 	public void update(float dt) {
-		if(Keyboard.isKeyDown(Key.KEY_F)) {
-			InventoryComponent inventory = (InventoryComponent) player.getComponent(ComponentType.INVENTORY);
-			inventory.addItem(Item.APPLE, 5);
+		if(Mouse.isButtonDown(0)) {
+			Vector3f tp = MousePicker.getCurrentTerrainPoint();
+			Tile tile = World.getWorld().getTile((int)tp.x, (int)tp.z);
+			if(tile.isHasEntity()) {
+				System.out.println(tile.getEntity().getTag());
+			} else {
+				System.out.println("Empty");
+			}
 		}
 		
 		World.getWorld().update(dt, player);

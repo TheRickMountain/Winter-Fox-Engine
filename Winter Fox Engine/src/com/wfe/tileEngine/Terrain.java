@@ -90,7 +90,7 @@ public class Terrain {
 		}
 	}
 	
-	public int getTile(int x, int y) {
+	public Tile getTile(int x, int y) {
 		int tX = (x / 16) * 16;
 		int tY = (y / 16) * 16;
 		
@@ -100,7 +100,7 @@ public class Terrain {
 			}
 		}
 		
-		return -1;
+		return null;
 	}
 	
 	public boolean setTileEntity(int x, int y, Entity entity) {

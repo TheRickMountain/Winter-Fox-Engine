@@ -190,8 +190,8 @@ public class Chunk {
 		rebuild = true;
 	}
 	
-	public int getTile(int x, int y) {
-		return tiles[x][y].getId();
+	public Tile getTile(int x, int y) {
+		return tiles[x][y];
 	}
 	
 	public boolean setEntity(int x, int y, Entity entity) {
@@ -230,7 +230,7 @@ public class Chunk {
 		for(int i = 0; i < SIZE; i++) {
 			for(int j = 0; j < SIZE; j++) {
 				if(tiles[i][j].isHasEntity()) {
-					tiles[i][j].entity.setVisible(isVisible);
+					tiles[i][j].getEntity().setVisible(isVisible);
 				}
 			}
 		}

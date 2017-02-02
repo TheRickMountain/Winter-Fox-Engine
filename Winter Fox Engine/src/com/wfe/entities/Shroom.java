@@ -10,6 +10,7 @@ public class Shroom extends Entity {
 	public Shroom(Entity player, Transformation transform) {
 		super(ResourceManager.getMesh("shroom"), 
 				new Material(ResourceManager.getTexture("shroom")), transform);
+		setTag("consumable");
 		transform.setScale(0.5f);
 	}
 
