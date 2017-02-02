@@ -96,6 +96,11 @@ public class GUIText {
 		this.scaleY = scaleY;
 	}
 	
+	public void setScale(float scale) {
+		this.scaleX = scale;
+		this.scaleY = scale;
+	}
+	
 	public Mesh getMesh() {
 		return mesh;
 	}

@@ -160,7 +160,7 @@ public class Camera {
         return (float) (distanceFromPlayer * Math.sin(Math.toRadians(pitch)));
     }
 
-    private void calculateZoom(float dt){
+   /* private void calculateZoom(float dt){
         float zoomLevel = Mouse.getScroll() * dt * zoomSpeed;
         float temp = distanceFromPlayer;
         temp -= zoomLevel;
@@ -170,7 +170,7 @@ public class Camera {
             temp = MIN_DISTANCE;
         }
         distanceFromPlayer = temp;
-    }
+    }*/
 
     public void updateProjectionMatrix() {
     	MathUtils.getProjectionMatrix(projectionMatrix, FOV, Display.getWidth(), Display.getHeight(), 

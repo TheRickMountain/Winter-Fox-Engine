@@ -18,7 +18,8 @@ public class Slot implements GUIComponent {
 	private int count;
 	private boolean hasItem;
 	private GUIText text;
-	public int itemSize = 50;
+	public int slotSize = 60;
+	public float textSize = 1.0f;
 	public boolean selected = false;
 	
 	public Slot(Rect rect) {
@@ -35,20 +36,27 @@ public class Slot implements GUIComponent {
 
 	@Override
 	public void render() {
-		if(!selected)
-			GUIRenderer.render(SLOT_TEXTURE, rect.x, rect.y, rect.rotation, rect.width, rect.height, false);
-		else
-			GUIRenderer.render(SELECTED_SLOT_TEXTURE, rect.x, rect.y, rect.rotation, rect.width, rect.height, false);
+		if(selected) {
+			slotSize = 70;
+			textSize = 1.1f;
+		} else {
+			slotSize = SLOT_SIZE;
+			textSize = 1.0f;
+		}
+		
+		GUIRenderer.render(SLOT_TEXTURE, rect.x + rect.width / 2, rect.y + rect.height / 2, 
+				rect.rotation, slotSize, slotSize, true);
 		
 		if(hasItem) {
 			GUIRenderer.render(item.icon, rect.x + rect.width / 2, rect.y + rect.height / 2, 
-					rect.rotation, itemSize, itemSize, true);
+					rect.rotation, slotSize - 10, slotSize - 10, true);
 		}
 	}
 
 	@Override
 	public void renderText() {
 		if(hasItem && (count > 1)) {
+			text.setScale(textSize);
 			FontRenderer.render(text, rect.x, rect.y);
 		}
 	}
