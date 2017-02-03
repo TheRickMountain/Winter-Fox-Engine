@@ -91,16 +91,13 @@ public class Terrain {
 	}
 	
 	public Tile getTile(int x, int y) {
-		int tX = (x / 16) * 16;
-		int tY = (y / 16) * 16;
+		int terrainX = x / 16;
+		int terrainY = y / 16;
 		
-		for(Chunk chunk : chunks) {
-			if(chunk.getPosX() == tX && chunk.getPosY() == tY) {
-				return chunk.getTile(x - tX, y - tY);
-			}
-		}
+		int tileX = x - terrainX * 16;
+		int tileY = y - terrainY * 16;
 		
-		return null;
+		return chunks.get(terrainX * sizeZ + terrainY).getTile(tileX, tileY);
 	}
 	
 	public boolean setTileEntity(int x, int y, Entity entity) {
