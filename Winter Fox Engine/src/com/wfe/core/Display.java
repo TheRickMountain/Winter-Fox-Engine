@@ -1,14 +1,47 @@
 package com.wfe.core;
 
 import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
-import static org.lwjgl.glfw.GLFW.*;
+import static org.lwjgl.glfw.GLFW.GLFW_CONTEXT_VERSION_MAJOR;
+import static org.lwjgl.glfw.GLFW.GLFW_CONTEXT_VERSION_MINOR;
+import static org.lwjgl.glfw.GLFW.GLFW_FALSE;
+import static org.lwjgl.glfw.GLFW.GLFW_OPENGL_CORE_PROFILE;
+import static org.lwjgl.glfw.GLFW.GLFW_OPENGL_FORWARD_COMPAT;
+import static org.lwjgl.glfw.GLFW.GLFW_OPENGL_PROFILE;
+import static org.lwjgl.glfw.GLFW.GLFW_RESIZABLE;
+import static org.lwjgl.glfw.GLFW.GLFW_SAMPLES;
+import static org.lwjgl.glfw.GLFW.GLFW_TRUE;
+import static org.lwjgl.glfw.GLFW.GLFW_VISIBLE;
+import static org.lwjgl.glfw.GLFW.glfwCreateWindow;
+import static org.lwjgl.glfw.GLFW.glfwDefaultWindowHints;
+import static org.lwjgl.glfw.GLFW.glfwDestroyWindow;
+import static org.lwjgl.glfw.GLFW.glfwGetPrimaryMonitor;
+import static org.lwjgl.glfw.GLFW.glfwGetVideoMode;
+import static org.lwjgl.glfw.GLFW.glfwInit;
+import static org.lwjgl.glfw.GLFW.glfwMakeContextCurrent;
+import static org.lwjgl.glfw.GLFW.glfwPollEvents;
+import static org.lwjgl.glfw.GLFW.glfwSetCursorPosCallback;
+import static org.lwjgl.glfw.GLFW.glfwSetErrorCallback;
+import static org.lwjgl.glfw.GLFW.glfwSetKeyCallback;
+import static org.lwjgl.glfw.GLFW.glfwSetMouseButtonCallback;
+import static org.lwjgl.glfw.GLFW.glfwSetScrollCallback;
+import static org.lwjgl.glfw.GLFW.glfwSetWindowPos;
+import static org.lwjgl.glfw.GLFW.glfwSetWindowSizeCallback;
+import static org.lwjgl.glfw.GLFW.glfwShowWindow;
+import static org.lwjgl.glfw.GLFW.glfwSwapBuffers;
+import static org.lwjgl.glfw.GLFW.glfwSwapInterval;
+import static org.lwjgl.glfw.GLFW.glfwTerminate;
+import static org.lwjgl.glfw.GLFW.glfwWindowHint;
+import static org.lwjgl.glfw.GLFW.glfwWindowShouldClose;
 import static org.lwjgl.opengl.GL11.GL_TRUE;
 import static org.lwjgl.system.MemoryUtil.NULL;
 
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.lwjgl.glfw.GLFW;
 import org.lwjgl.glfw.GLFWErrorCallback;
+import org.lwjgl.glfw.GLFWImage;
 import org.lwjgl.glfw.GLFWVidMode;
 import org.lwjgl.glfw.GLFWWindowSizeCallback;
 import org.lwjgl.opengl.GL;
@@ -16,7 +49,10 @@ import org.lwjgl.opengl.GL;
 import com.wfe.input.Keyboard;
 import com.wfe.input.Mouse;
 import com.wfe.input.Scroll;
+import com.wfe.textures.TextureData;
+import com.wfe.textures.TextureUtils;
 import com.wfe.utils.MathUtils;
+import com.wfe.utils.MyFile;
 
 /**
  * Created by Rick on 06.10.2016.
@@ -26,7 +62,7 @@ public class Display {
 	private static final int ROLLING_AVERAGE_LENGTH = 10;
 	private static final float DELTA_FACTOR = 1000;
 	
-    private long window;
+    private static long window;
     private String title = "";
     private static boolean isResized;
     private static int width;
@@ -35,6 +71,10 @@ public class Display {
     private static float delta = 0;
 	private static long lastFrame = 0;
 	private static List<Float> previousTimes = new ArrayList<Float>();
+	
+	public static long defaultCursor;
+	public static long takeCursor;
+	private static long currentCursor;
 
     public Display(String title, int width, int height) {
         this.title = title;
@@ -67,6 +107,13 @@ public class Display {
                 window,
                 (vidmode.width() - width) / 2,
                 (vidmode.height() - height) / 2);
+        
+        /*** Cursor ***/
+        defaultCursor = loadCursor(new MyFile("gui/cursor/cursor.png"));
+    	takeCursor = loadCursor(new MyFile("gui/cursor/take.png"));
+    	
+    	setCursor(defaultCursor);
+    	/*** *** ***/
 
         glfwMakeContextCurrent(window);
         
@@ -162,5 +209,24 @@ public class Display {
         glfwDestroyWindow(window);
         glfwTerminate();
         glfwSetErrorCallback(null).free();
+    }
+    
+    private long loadCursor(MyFile file) {
+    	TextureData textureData = TextureUtils.decodeTextureFile(file);
+    	int width = textureData.getWidth();
+    	int height = textureData.getHeight();
+    	ByteBuffer buffer = textureData.getBuffer();
+    	
+    	try(GLFWImage img = GLFWImage.malloc().set(width, height, buffer)) {
+    		return GLFW.glfwCreateCursor(img, 0, 8);
+    	}
+    }
+    
+    public static void setCursor(long cursor) {
+    	if(currentCursor != cursor) {
+    		currentCursor = cursor;
+    		System.out.println("Cursor changed");
+    		GLFW.glfwSetCursor(window, cursor);
+    	}
     }
 }

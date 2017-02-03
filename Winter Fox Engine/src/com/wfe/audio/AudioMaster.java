@@ -30,8 +30,10 @@ public class AudioMaster {
 		
 		defaultSource = new Source();
 		defaultSource.setVolume(10f);
+		
 		ambientSource = new Source();
 		ambientSource.setVolume(0.5f);
+		ambientSource.continuePlaying();
 	}
 	
 	public static void setListenerData(final float x, final float y, final float z)

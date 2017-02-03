@@ -101,5 +101,9 @@ public class Inventory implements GUIComponent {
 			}
 		}
 	}
+	
+	public Item getSelectedItem() {
+		return slots.get(selectedSlot).getItem();
+	}
 
 }

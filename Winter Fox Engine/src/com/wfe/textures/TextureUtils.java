@@ -18,7 +18,7 @@ import de.matthiasmann.twl.utils.PNGDecoder.Format;
 
 public class TextureUtils {
 
-	protected static TextureData decodeTextureFile(MyFile file) {
+	public static TextureData decodeTextureFile(MyFile file) {
 		int width = 0;
 		int height = 0;
 		ByteBuffer buffer = null;

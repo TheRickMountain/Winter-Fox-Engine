@@ -1,12 +1,14 @@
 package com.wfe.game;
 
 import com.wfe.audio.AudioMaster;
+import com.wfe.components.GatherableComponent;
 import com.wfe.components.InventoryComponent;
 import com.wfe.core.Camera;
 import com.wfe.core.Display;
 import com.wfe.core.IGameLogic;
 import com.wfe.core.ResourceManager;
 import com.wfe.ecs.ComponentType;
+import com.wfe.ecs.Entity;
 import com.wfe.ecs.Transformation;
 import com.wfe.entities.Fern;
 import com.wfe.entities.Flint;
@@ -303,13 +305,35 @@ public class Game implements IGameLogic {
 	
 	@Override
 	public void update(float dt) {
-		if(Mouse.isButtonDown(0)) {
+		/*if(Mouse.isButtonDown(0)) {
 			Vector3f tp = MousePicker.getCurrentTerrainPoint();
 			Tile tile = World.getWorld().getTile((int)tp.x, (int)tp.z);
 			if(tile.isHasEntity()) {
 				System.out.println(tile.getEntity().getTag());
 			} else {
 				System.out.println("Empty");
+			}
+		}*/
+		
+		Vector3f tp = MousePicker.getCurrentTerrainPoint();
+		if(tp != null) {
+			Tile tile = World.getWorld().getTile((int)tp.x, (int)tp.z);
+			if(tile.isHasEntity()) {
+				Entity entity = tile.getEntity();
+				if(entity.hasComponent(ComponentType.GATHERABLE)) {
+					Display.setCursor(Display.takeCursor);
+					if(Mouse.isButtonDown(1)) {
+						GatherableComponent gc = (GatherableComponent)entity.getComponent(ComponentType.GATHERABLE);
+						
+						InventoryComponent inv = (InventoryComponent) player.getComponent(ComponentType.INVENTORY);
+						inv.addItem(gc.getItem(), gc.getCount());
+						tile.removeEntity();
+						
+						AudioMaster.defaultSource.play(ResourceManager.getSound("taking"));
+					}
+				}
+			} else {
+				Display.setCursor(Display.defaultCursor);
 			}
 		}
 		
