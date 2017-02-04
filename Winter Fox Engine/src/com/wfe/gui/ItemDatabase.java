@@ -3,6 +3,7 @@ package com.wfe.gui;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.wfe.blueprints.AxeBlueprint;
 import com.wfe.core.ResourceManager;
 
 public class ItemDatabase {
@@ -12,17 +13,17 @@ public class ItemDatabase {
 	private static ItemDatabase instance;
 	
 	private ItemDatabase() {
-		addItem(new Item(Item.APPLE, "Apple", "Sweet apple is so sweet", ResourceManager.getTexture("apple_ui"), 
-				ItemType.CONSUMABLE, 40));
+		addItem(new Item(Item.APPLE, "Apple", "Sweet apple is so sweet", ResourceManager.getTexture("apple_ui"),
+				null, ItemType.CONSUMABLE, 40));
 		
 		addItem(new Item(Item.FLINT, "Flint", "Common useful resource", ResourceManager.getTexture("flint_ui"), 
-				ItemType.RESOURCE, 40));
+				null, ItemType.RESOURCE, 40));
 		
-		addItem(new Item(Item.AXE, "Axe" , "Can chop trees and protect from enemies", ResourceManager.getTexture("axe_ui"), 
-				ItemType.TOOL, 1));
+		addItem(new Item(Item.AXE, "Axe" , "Can chop trees and protect from enemies", ResourceManager.getTexture("axe_ui"),
+				new AxeBlueprint(), ItemType.TOOL, 1));
 		
-		addItem(new Item(Item.STICK, "Stick", "Common useful resource", ResourceManager.getTexture("stick_ui"), 
-				ItemType.RESOURCE, 40));
+		addItem(new Item(Item.STICK, "Stick", "Common useful resource", ResourceManager.getTexture("stick_ui"),
+				null, ItemType.RESOURCE, 40));
 	}
 	
 	public static void create() {

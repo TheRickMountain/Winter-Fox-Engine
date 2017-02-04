@@ -1,25 +1,69 @@
 package com.wfe.components;
 
+import com.wfe.audio.AudioMaster;
+import com.wfe.core.ResourceManager;
 import com.wfe.ecs.Component;
 import com.wfe.ecs.ComponentType;
+import com.wfe.ecs.Entity;
+import com.wfe.ecs.Transformation;
+import com.wfe.entities.Player;
+import com.wfe.game.World;
 import com.wfe.gui.GUIManager;
+import com.wfe.gui.Item;
 import com.wfe.gui.ItemDatabase;
+import com.wfe.input.Key;
+import com.wfe.input.Keyboard;
+import com.wfe.input.Scroll;
 
 public class InventoryComponent extends Component {
 	
-	public final int[] slots = new int[6];
-	public final int[] counts = new int[6];
+	private Entity rightForearm;
 	
-	public InventoryComponent() {
+	private final int[] slots = new int[6];
+	private final int[] counts = new int[6];
+	
+	private int selected = 0;
+	private int lastSelected = 0;
+	
+	public Entity currentEntity;
+	private Item selectedItem;
+	
+	public InventoryComponent(Player player) {
+		this.rightForearm = player.rightForearm;
 		for(int i = 0; i < slots.length; i++) {
 			this.slots[i] = -1;
 			this.counts[i] = 0;
 		}
+		
+		selectedItem = ItemDatabase.getItem(Item.AXE);
+		currentEntity = selectedItem.blueprint.createInstanceWithComponents(new Transformation());
+		rightForearm.addChild(currentEntity);
+		World.getWorld().addEntity(currentEntity);
+		
+		GUIManager.inventory.setSelected(selected);
 	}
 	
 	@Override
 	public void update(float dt) {
+		if(Keyboard.isKeyDown(Key.KEY_1)) selected = 0;
+		else if(Keyboard.isKeyDown(Key.KEY_2)) selected = 1;
+		else if(Keyboard.isKeyDown(Key.KEY_3)) selected = 2;
+		else if(Keyboard.isKeyDown(Key.KEY_4)) selected = 3;
+		else if(Keyboard.isKeyDown(Key.KEY_5)) selected = 4;
+		else if(Keyboard.isKeyDown(Key.KEY_6)) selected = 5;
 		
+		selected -= Scroll.getScroll();
+		
+		if(selected != lastSelected) {
+			if(selected >= slots.length) selected = 0;
+			else if(selected < 0) selected = slots.length - 1;
+			
+			lastSelected = selected;
+			
+			GUIManager.inventory.setSelected(selected);
+			
+			AudioMaster.defaultSource.play(ResourceManager.getSound("tick"));
+		}
 	}
 	
 	private int hasItem(int item) {
@@ -84,6 +128,10 @@ public class InventoryComponent extends Component {
 	public boolean removeItem(int item) {
 		GUIManager.inventory.update(slots, counts);
 		return true;
+	}
+	
+	public int getSelected() {
+		return selected;
 	}
 	
 	@Override

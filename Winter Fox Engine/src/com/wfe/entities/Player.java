@@ -109,7 +109,7 @@ public class Player extends Entity {
 		
 		addComponent(new PlayerAnimationComponent(this));
 		addComponent(new PlayerControllerComponent(camera, transform));
-		addComponent(new InventoryComponent());
+		addComponent(new InventoryComponent(this));
 	}
 
 }

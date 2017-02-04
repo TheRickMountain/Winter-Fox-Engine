@@ -305,16 +305,7 @@ public class Game implements IGameLogic {
 	
 	@Override
 	public void update(float dt) {
-		/*if(Mouse.isButtonDown(0)) {
-			Vector3f tp = MousePicker.getCurrentTerrainPoint();
-			Tile tile = World.getWorld().getTile((int)tp.x, (int)tp.z);
-			if(tile.isHasEntity()) {
-				System.out.println(tile.getEntity().getTag());
-			} else {
-				System.out.println("Empty");
-			}
-		}*/
-		
+		/*** Получение Entity по расположению курсора на Terrain ***/
 		Vector3f tp = MousePicker.getCurrentTerrainPoint();
 		if(tp != null) {
 			Tile tile = World.getWorld().getTile((int)tp.x, (int)tp.z);
@@ -336,6 +327,7 @@ public class Game implements IGameLogic {
 				Display.setCursor(Display.defaultCursor);
 			}
 		}
+		/*** *** ***/
 		
 		World.getWorld().update(dt, player);
 	}

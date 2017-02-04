@@ -68,6 +68,17 @@ public class Transformation {
 		this.scaleX = transform.scaleX;
 		this.scaleY = transform.scaleY;
 		this.scaleZ = transform.scaleZ;
+		
+		this.localX = transform.localX;
+		this.localY = transform.localY;
+		this.localZ = transform.localZ;
+		this.localRotX = transform.localRotX;
+		this.localRotY = transform.localRotY;
+		this.localRotZ = transform.localRotZ;
+		this.localScaleX = transform.localScaleX;
+		this.localScaleY = transform.localScaleY;
+		this.localScaleZ = transform.localScaleZ;
+		
 		this.temp = new Vector4f();
 		this.tempMatrix = new Matrix4f();
 	}

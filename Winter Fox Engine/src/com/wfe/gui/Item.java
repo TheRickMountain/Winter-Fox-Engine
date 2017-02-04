@@ -1,5 +1,6 @@
 package com.wfe.gui;
 
+import com.wfe.blueprints.Blueprint;
 import com.wfe.textures.Texture;
 
 public class Item {
@@ -13,14 +14,17 @@ public class Item {
 	public final String name;
 	public final String description;
 	public final Texture icon;
+	public final Blueprint blueprint;
 	public final ItemType type;
 	public final int stackSize;
 	
-	public Item(int id, String name, String description, Texture icon, ItemType type, int stackSize) {
+	public Item(int id, String name, String description, Texture icon, Blueprint blueprint, 
+			ItemType type, int stackSize) {
 		this.id = id;
 		this.name = name;
 		this.description = description;
 		this.icon = icon;
+		this.blueprint = blueprint;
 		this.type = type;
 		this.stackSize = stackSize;
 	}
