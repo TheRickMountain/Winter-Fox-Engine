@@ -123,6 +123,16 @@ public class Game implements IGameLogic {
 		ResourceManager.loadMesh("mushroom", OBJLoader.loadMesh("/entity/mushroom/model.obj"));
 		/*** *** ***/
 		
+		/*** Pickaxe ***/
+		ResourceManager.loadTexture("pickaxe_ui", Texture.newTexture(new MyFile("entity/pickaxe/icon.png"))
+				.normalMipMap().create());
+		ResourceManager.loadTexture("pickaxe", Texture.newTexture(new MyFile("entity/pickaxe/diffuse.png"))
+				.normalMipMap(-0.4f)
+				.create());
+		
+		ResourceManager.loadMesh("pickaxe", OBJLoader.loadMesh("/entity/pickaxe/model.obj"));
+		/*** *** ***/
+		
 		/*** Axe ***/
 		ResourceManager.loadTexture("axe_ui", Texture.newTexture(new MyFile("entity/axe/icon.png"))
 				.normalMipMap().create());
@@ -240,9 +250,9 @@ public class Game implements IGameLogic {
 		}
 		
 		InventoryComponent inventory = (InventoryComponent) player.getComponent(ComponentType.INVENTORY);
-		inventory.addItem(Item.APPLE, 5);
 		inventory.addItem(Item.FLINT, 7);
-		inventory.addItem(Item.AXE, 2);
+		inventory.addItem(Item.AXE, 1);
+		inventory.addItem(Item.PICKAXE, 1);
 		
 		AudioMaster.ambientSource.play(ResourceManager.getSound("hills"));
 	}

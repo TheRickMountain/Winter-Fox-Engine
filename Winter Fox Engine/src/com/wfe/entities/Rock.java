@@ -20,7 +20,7 @@ public class Rock extends Entity {
 		addComponent(new ColliderComponent(0.5f, 1, 0.5f, transform));
 		
 		addComponent(new MineableComponent(Item.FLINT, MyRandom.nextInt(1, 2), 
-				ResourceManager.getSound("mine"), Item.AXE, 2));
+				ResourceManager.getSound("mine"), Item.PICKAXE, 2));
 	}
 
 }

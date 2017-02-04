@@ -99,11 +99,10 @@ public class PlayerControllerComponent extends Component {
 						Display.setCursor(Display.takeCursor);
 						if(Mouse.isButton(0)) {
 							if(checkDistance(tp.x, tp.z)) {
-								turnTo((int)tp.x, (int)tp.z);
-								
 								mineableComponent = (MineableComponent)entity.getComponent(ComponentType.MINEABLE);	
 								
 								if(inventory.getSelected() == mineableComponent.getRequiredItem()) {
+									turnTo((int)tp.x, (int)tp.z);
 									mining = true;
 								}
 							}

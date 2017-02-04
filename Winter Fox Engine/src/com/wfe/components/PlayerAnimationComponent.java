@@ -29,7 +29,7 @@ public class PlayerAnimationComponent extends Component {
     private boolean extremitiesState = false;
 
     private int walkAnimSpeed = 180;
-    private int hitAnimSpeed = 150;
+    private int hitAnimSpeed = 180;
 	
 	public PlayerAnimationComponent(Player player) {
 		rightArm = player.rightArm.getTransform();

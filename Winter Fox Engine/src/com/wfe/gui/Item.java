@@ -11,6 +11,7 @@ public class Item {
 	public static final int STICK = 3;
 	public static final int MUSHROOM = 4;
 	public static final int LOG = 5;
+	public static final int PICKAXE = 6;
 	
 	public final int id;
 	public final String name;
