@@ -3,6 +3,8 @@ package com.wfe.game;
 import com.wfe.audio.AudioMaster;
 import com.wfe.components.GatherableComponent;
 import com.wfe.components.InventoryComponent;
+import com.wfe.components.MineableComponent;
+import com.wfe.components.PlayerAnimationComponent;
 import com.wfe.core.Camera;
 import com.wfe.core.Display;
 import com.wfe.core.IGameLogic;
@@ -13,10 +15,10 @@ import com.wfe.ecs.Transformation;
 import com.wfe.entities.Fern;
 import com.wfe.entities.Flint;
 import com.wfe.entities.Grass;
+import com.wfe.entities.Mushroom;
 import com.wfe.entities.Pine;
 import com.wfe.entities.Player;
 import com.wfe.entities.Rock;
-import com.wfe.entities.Mushroom;
 import com.wfe.entities.Stick;
 import com.wfe.entities.Wheat;
 import com.wfe.graph.OBJLoader;
@@ -39,6 +41,8 @@ public class Game implements IGameLogic {
 		AudioMaster.init();
 		AudioMaster.setListenerData(0, 0, 0);
 		
+		ResourceManager.loadSound("chop", AudioMaster.loadSound("audio/chop.wav"));
+		ResourceManager.loadSound("mine", AudioMaster.loadSound("audio/mine.wav"));
 		ResourceManager.loadSound("eating", AudioMaster.loadSound("audio/eat.wav"));
 		ResourceManager.loadSound("tick", AudioMaster.loadSound("audio/tick.wav"));
 		ResourceManager.loadSound("taking", AudioMaster.loadSound("audio/take.wav"));
@@ -75,15 +79,25 @@ public class Game implements IGameLogic {
 		/* Icons */
 		ResourceManager.loadTexture("apple_ui", Texture.newTexture(new MyFile("gui/items/apple.png"))
 				.normalMipMap().create());
+		
+		ResourceManager.loadTexture("log_ui", Texture.newTexture(new MyFile("gui/items/log.png"))
+				.normalMipMap().create());
 		/* * */
 		
 		/*** *** ***/
 		
 		/*** Fern ***/
-		ResourceManager.loadTexture("fern", Texture.newTexture(new MyFile("entity/fern/fern.png"))
+		ResourceManager.loadTexture("fern", Texture.newTexture(new MyFile("entity/fern/diffuse.png"))
 				.normalMipMap(-0.4f)
 				.create());
-		ResourceManager.loadMesh("fern", OBJLoader.loadMesh("/entity/fern/fern.obj"));
+		ResourceManager.loadMesh("fern", OBJLoader.loadMesh("/entity/fern/model.obj"));
+		/*** *** ***/
+		
+		/*** Rock ***/
+		ResourceManager.loadTexture("rock", Texture.newTexture(new MyFile("entity/rock/diffuse.png"))
+				.normalMipMap(-0.4f)
+				.create());
+		ResourceManager.loadMesh("rock", OBJLoader.loadMesh("/entity/rock/model.obj"));
 		/*** *** ***/
 		
 		/*** Grass ***/
@@ -188,6 +202,11 @@ public class Game implements IGameLogic {
 		player = new Player(camera, new Transformation(80, 0.65f, 80));
 		World.getWorld().addEntity(player);
 		
+		World.getWorld().addEntityToTile(new Rock(player, new Transformation(81 + 0.5f, 0, 84 + 0.5f)));
+		World.getWorld().addEntityToTile(new Rock(player, new Transformation(82 + 0.5f, 0, 84 + 0.5f)));
+		World.getWorld().addEntityToTile(new Rock(player, new Transformation(83 + 0.5f, 0, 85 + 0.5f)));
+		World.getWorld().addEntityToTile(new Rock(player, new Transformation(84 + 0.5f, 0, 86 + 0.5f)));
+		
 		World.getWorld().addEntityToTile(new Stick(player, new Transformation(81 + 0.5f, 0, 82 + 0.5f)));
 		World.getWorld().addEntityToTile(new Stick(player, new Transformation(82 + 0.5f, 0, 82 + 0.5f)));
 		World.getWorld().addEntityToTile(new Stick(player, new Transformation(83 + 0.5f, 0, 82 + 0.5f)));
@@ -195,7 +214,6 @@ public class Game implements IGameLogic {
 		World.getWorld().addEntityToTile(new Stick(player, new Transformation(85 + 0.5f, 0, 82 + 0.5f)));
 		World.getWorld().addEntityToTile(new Stick(player, new Transformation(86 + 0.5f, 0, 82 + 0.5f)));
 		
-		World.getWorld().addEntityToTile(new Rock(player, new Transformation(80 + 0.5f, 0, 84 + 0.5f)));
 		World.getWorld().addEntityToTile(new Wheat(player, new Transformation(80 + 0.5f, 0, 83 + 0.5f)));
 		World.getWorld().addEntityToTile(new Wheat(player, new Transformation(81 + 0.5f, 0, 83 + 0.5f)));
 		World.getWorld().addEntityToTile(new Wheat(player, new Transformation(82 + 0.5f, 0, 83 + 0.5f)));
@@ -237,31 +255,7 @@ public class Game implements IGameLogic {
 	}
 	
 	@Override
-	public void update(float dt) {
-		/*** Получение Entity по расположению курсора на Terrain ***/
-		Vector3f tp = MousePicker.getCurrentTerrainPoint();
-		if(tp != null) {
-			Tile tile = World.getWorld().getTile((int)tp.x, (int)tp.z);
-			if(tile.isHasEntity()) {
-				Entity entity = tile.getEntity();
-				if(entity.hasComponent(ComponentType.GATHERABLE)) {
-					Display.setCursor(Display.takeCursor);
-					if(Mouse.isButtonDown(1)) {
-						GatherableComponent gc = (GatherableComponent)entity.getComponent(ComponentType.GATHERABLE);
-						
-						InventoryComponent inv = (InventoryComponent) player.getComponent(ComponentType.INVENTORY);
-						inv.addItem(gc.getItem(), gc.getCount());
-						tile.removeEntity();
-						
-						AudioMaster.defaultSource.play(ResourceManager.getSound("taking"));
-					}
-				}
-			} else {
-				Display.setCursor(Display.defaultCursor);
-			}
-		}
-		/*** *** ***/
-		
+	public void update(float dt) {	
 		World.getWorld().update(dt, player);
 	}
 

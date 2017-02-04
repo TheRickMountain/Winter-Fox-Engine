@@ -2,14 +2,22 @@ package com.wfe.components;
 
 import java.util.List;
 
+import com.wfe.audio.AudioMaster;
 import com.wfe.core.Camera;
+import com.wfe.core.Display;
+import com.wfe.core.ResourceManager;
 import com.wfe.ecs.Component;
 import com.wfe.ecs.ComponentType;
+import com.wfe.ecs.Entity;
 import com.wfe.ecs.Transformation;
 import com.wfe.game.World;
 import com.wfe.input.Key;
 import com.wfe.input.Keyboard;
+import com.wfe.input.Mouse;
+import com.wfe.math.Vector3f;
 import com.wfe.physics.AABB;
+import com.wfe.tileEngine.Tile;
+import com.wfe.utils.MousePicker;
 
 public class PlayerControllerComponent extends Component {
 
@@ -21,16 +29,67 @@ public class PlayerControllerComponent extends Component {
 
 	private AABB bb;
 	
-	public PlayerControllerComponent(Camera camera, Transformation transform) {		
+	private PlayerAnimationComponent animation;
+	private InventoryComponent inventory;
+	
+	public PlayerControllerComponent(Camera camera, Transformation transform, PlayerAnimationComponent playerAnim) {		
 		this.camera = camera;
 		this.transform = transform;
+		this.animation = playerAnim;
 		this.bb = new AABB(transform.x - 0.4f, 0, transform.z - 0.4f, transform.x + 0.4f, 0 + 1, transform.z + 0.4f);
 		this.speed = 2.0f;
 	}
 	
 	@Override
 	public void update(float dt) {	
+		iteractWithWorld();
 		move(dt);
+	}
+	
+	private void iteractWithWorld() {
+		/*** Получение Entity по расположению курсора на Terrain ***/
+		Vector3f tp = MousePicker.getCurrentTerrainPoint();
+		if(tp != null) {
+			Tile tile = World.getWorld().getTile((int)tp.x, (int)tp.z);
+			if(tile.isHasEntity()) {
+				Entity entity = tile.getEntity();
+				if(entity.hasComponent(ComponentType.GATHERABLE)) {
+					Display.setCursor(Display.takeCursor);
+					if(Mouse.isButtonDown(1)) {
+						GatherableComponent gc = (GatherableComponent)entity.getComponent(ComponentType.GATHERABLE);
+						
+						InventoryComponent inv = (InventoryComponent) getParent().getComponent(ComponentType.INVENTORY);
+						inv.addItem(gc.getItem(), gc.getCount());
+						tile.removeEntity();
+						
+						AudioMaster.defaultSource.play(ResourceManager.getSound("taking"));
+					}
+				} else if(entity.hasComponent(ComponentType.MINEABLE)) {
+					Display.setCursor(Display.takeCursor);
+					if(Mouse.isButton(0)) {
+						MineableComponent mc = (MineableComponent)entity.getComponent(ComponentType.MINEABLE);
+						
+						/*int item = inventory.getSelected();
+						if(item == mc.getRequiredItem()) {
+							animation.hit();
+							if(!animation.isHitAnimProcess()) {
+								AudioMaster.defaultSource.play(mc.getSound());
+								mc.decreasetHealth();
+							}
+						}
+						
+						if(mc.getHealth() == 0) {
+							inventory.addItem(mc.getItem(), mc.getCount());
+							tile.removeEntity();
+							animation.idle();
+						}*/
+					}
+				}
+			} else {
+				Display.setCursor(Display.defaultCursor);
+			}
+		}
+		/*** *** ***/
 	}
 	
 	private void move(float dt) {	

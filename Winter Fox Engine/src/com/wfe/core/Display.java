@@ -225,7 +225,6 @@ public class Display {
     public static void setCursor(long cursor) {
     	if(currentCursor != cursor) {
     		currentCursor = cursor;
-    		System.out.println("Cursor changed");
     		GLFW.glfwSetCursor(window, cursor);
     	}
     }

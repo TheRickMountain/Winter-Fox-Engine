@@ -9,6 +9,12 @@ import com.wfe.entities.Player;
 
 public class PlayerAnimationComponent extends Component {
 
+	private enum AnimationType {
+		WALK,
+		HIT,
+		IDLE
+	};
+	
 	private Transformation rightArm;
     private Transformation leftArm;
     private Transformation rightHip;
@@ -18,9 +24,12 @@ public class PlayerAnimationComponent extends Component {
     private Transformation leftShin;
     private Transformation rightShin;
     
+    public AnimationType type = AnimationType.IDLE;
+    
     private boolean extremitiesState = false;
 
-    private int animSpeed = 180;
+    private int walkAnimSpeed = 180;
+    private int hitAnimSpeed = 50;
 	
 	public PlayerAnimationComponent(Player player) {
 		rightArm = player.rightArm.getTransform();
@@ -34,12 +43,8 @@ public class PlayerAnimationComponent extends Component {
 	}
 	
 	@Override
-	public void update(float dt) {
-		if(getParent().getTransform().isMoving) {
-			walkAnim(dt);
-		} else {
-			resetAnim();
-		}
+	public void update(float dt) {	
+		
 	}
 	
 	public void walkAnim(float dt) {
@@ -52,17 +57,17 @@ public class PlayerAnimationComponent extends Component {
         }
 
         if(extremitiesState) {
-            leftArm.localRotX -= animSpeed * dt;
-            rightArm.localRotX += animSpeed * dt;
+            leftArm.localRotX -= walkAnimSpeed * dt;
+            rightArm.localRotX += walkAnimSpeed * dt;
 
-            leftHip.localRotX += animSpeed * dt;
-            rightHip.localRotX -= animSpeed * dt;
+            leftHip.localRotX += walkAnimSpeed * dt;
+            rightHip.localRotX -= walkAnimSpeed * dt;
         } else {
-            leftArm.localRotX += animSpeed * dt;
-            rightArm.localRotX -= animSpeed * dt;
+            leftArm.localRotX += walkAnimSpeed * dt;
+            rightArm.localRotX -= walkAnimSpeed * dt;
 
-            leftHip.localRotX -= animSpeed * dt;
-            rightHip.localRotX += animSpeed * dt;
+            leftHip.localRotX -= walkAnimSpeed * dt;
+            rightHip.localRotX += walkAnimSpeed * dt;
         }
 
         leftForearm.localRotX = -60;
@@ -72,7 +77,14 @@ public class PlayerAnimationComponent extends Component {
         rightShin.localRotX = 20;
     }
 	
-	public void resetAnim() {
+	public void hitAnim(float dt) {
+		if(rightArm.localRotX >= -45) {
+		} else {
+			rightArm.localRotX += hitAnimSpeed * dt;
+		}
+	}
+	
+	public void idleAnim() {
 		leftArm.localRotX = 0;
         rightArm.localRotX = 0;
 

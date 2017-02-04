@@ -35,11 +35,6 @@ public class InventoryComponent extends Component {
 			this.counts[i] = 0;
 		}
 		
-		/*selectedItem = ItemDatabase.getItem(Item.AXE);
-		currentEntity = selectedItem.blueprint.createInstanceWithComponents(new Transformation());
-		rightForearm.addChild(currentEntity);
-		World.getWorld().addEntity(currentEntity);*/
-		
 		GUIManager.inventory.setSelected(selected);
 	}
 	
@@ -64,13 +59,14 @@ public class InventoryComponent extends Component {
 			
 			AudioMaster.defaultSource.play(ResourceManager.getSound("tick"));
 			
-			/* If selected item has entity than equip it to the player */
+			/* If player has been equipped than delete current equipped one */
 			if(equippedEntity != null) {
 				rightForearm.removeChild(equippedEntity);
 				equippedEntity.remove();
 				equippedEntity = null;
 			}
 			
+			/* If selected item has entity than equip it to the player */
 			int slot = slots[selected];
 			if(slot != -1) {
 				Item item = ItemDatabase.getItem(slots[selected]);
@@ -148,7 +144,7 @@ public class InventoryComponent extends Component {
 	}
 	
 	public int getSelected() {
-		return selected;
+		return slots[selected];
 	}
 	
 	@Override

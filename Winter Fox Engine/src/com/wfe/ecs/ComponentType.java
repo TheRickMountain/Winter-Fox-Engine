@@ -8,6 +8,7 @@ public enum ComponentType {
 	INVENTORY,
 	CHEST,
 	GATHERABLE,
+	MINEABLE,
 	NONE
 	
 }
