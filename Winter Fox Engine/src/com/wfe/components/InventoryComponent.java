@@ -11,6 +11,7 @@ import com.wfe.game.World;
 import com.wfe.gui.GUIManager;
 import com.wfe.gui.Item;
 import com.wfe.gui.ItemDatabase;
+import com.wfe.gui.ItemType;
 import com.wfe.input.Key;
 import com.wfe.input.Keyboard;
 import com.wfe.input.Scroll;
@@ -25,8 +26,7 @@ public class InventoryComponent extends Component {
 	private int selected = 0;
 	private int lastSelected = 0;
 	
-	public Entity currentEntity;
-	private Item selectedItem;
+	private Entity equippedEntity;
 	
 	public InventoryComponent(Player player) {
 		this.rightForearm = player.rightForearm;
@@ -35,10 +35,10 @@ public class InventoryComponent extends Component {
 			this.counts[i] = 0;
 		}
 		
-		selectedItem = ItemDatabase.getItem(Item.AXE);
+		/*selectedItem = ItemDatabase.getItem(Item.AXE);
 		currentEntity = selectedItem.blueprint.createInstanceWithComponents(new Transformation());
 		rightForearm.addChild(currentEntity);
-		World.getWorld().addEntity(currentEntity);
+		World.getWorld().addEntity(currentEntity);*/
 		
 		GUIManager.inventory.setSelected(selected);
 	}
@@ -63,6 +63,23 @@ public class InventoryComponent extends Component {
 			GUIManager.inventory.setSelected(selected);
 			
 			AudioMaster.defaultSource.play(ResourceManager.getSound("tick"));
+			
+			/* If selected item has entity than equip it to the player */
+			if(equippedEntity != null) {
+				rightForearm.removeChild(equippedEntity);
+				equippedEntity.remove();
+				equippedEntity = null;
+			}
+			
+			int slot = slots[selected];
+			if(slot != -1) {
+				Item item = ItemDatabase.getItem(slots[selected]);
+				if(item.type.equals(ItemType.TOOL)) {					
+					equippedEntity = item.blueprint.createInstanceWithComponents(new Transformation());
+					rightForearm.addChild(equippedEntity);
+					World.getWorld().addEntity(equippedEntity);
+				}
+			}
 		}
 	}
 	
