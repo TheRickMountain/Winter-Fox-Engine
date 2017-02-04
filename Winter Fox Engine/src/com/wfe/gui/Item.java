@@ -9,6 +9,7 @@ public class Item {
 	public static final int FLINT = 1;
 	public static final int AXE = 2;
 	public static final int STICK = 3;
+	public static final int MUSHROOM = 4;
 	
 	public final int id;
 	public final String name;

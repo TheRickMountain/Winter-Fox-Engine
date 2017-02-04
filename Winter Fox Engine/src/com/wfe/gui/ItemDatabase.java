@@ -24,6 +24,9 @@ public class ItemDatabase {
 		
 		addItem(new Item(Item.STICK, "Stick", "Common useful resource", ResourceManager.getTexture("stick_ui"),
 				null, ItemType.RESOURCE, 40));
+		
+		addItem(new Item(Item.MUSHROOM, "Mushroom", "Common useful resource", ResourceManager.getTexture("mushroom_ui"),
+				null, ItemType.RESOURCE, 40));
 	}
 	
 	public static void create() {
