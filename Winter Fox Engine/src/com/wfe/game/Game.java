@@ -1,16 +1,12 @@
 package com.wfe.game;
 
 import com.wfe.audio.AudioMaster;
-import com.wfe.components.GatherableComponent;
 import com.wfe.components.InventoryComponent;
-import com.wfe.components.MineableComponent;
-import com.wfe.components.PlayerAnimationComponent;
 import com.wfe.core.Camera;
 import com.wfe.core.Display;
 import com.wfe.core.IGameLogic;
 import com.wfe.core.ResourceManager;
 import com.wfe.ecs.ComponentType;
-import com.wfe.ecs.Entity;
 import com.wfe.ecs.Transformation;
 import com.wfe.entities.Fern;
 import com.wfe.entities.Flint;
@@ -23,11 +19,8 @@ import com.wfe.entities.Stick;
 import com.wfe.entities.Wheat;
 import com.wfe.graph.OBJLoader;
 import com.wfe.gui.Item;
-import com.wfe.input.Mouse;
 import com.wfe.math.Vector3f;
 import com.wfe.textures.Texture;
-import com.wfe.tileEngine.Tile;
-import com.wfe.utils.MousePicker;
 import com.wfe.utils.MyFile;
 import com.wfe.utils.MyRandom;
 
@@ -202,10 +195,10 @@ public class Game implements IGameLogic {
 		player = new Player(camera, new Transformation(80, 0.65f, 80));
 		World.getWorld().addEntity(player);
 		
-		World.getWorld().addEntityToTile(new Rock(player, new Transformation(81 + 0.5f, 0, 84 + 0.5f)));
-		World.getWorld().addEntityToTile(new Rock(player, new Transformation(82 + 0.5f, 0, 84 + 0.5f)));
-		World.getWorld().addEntityToTile(new Rock(player, new Transformation(83 + 0.5f, 0, 85 + 0.5f)));
-		World.getWorld().addEntityToTile(new Rock(player, new Transformation(84 + 0.5f, 0, 86 + 0.5f)));
+		World.getWorld().addEntityToTile(new Rock(player, new Transformation(81.5f, 0, 84.5f)));
+		World.getWorld().addEntityToTile(new Rock(player, new Transformation(82.5f, 0, 84.5f)));
+		World.getWorld().addEntityToTile(new Rock(player, new Transformation(83.5f, 0, 85.5f)));
+		World.getWorld().addEntityToTile(new Rock(player, new Transformation(84.5f, 0, 86.5f)));
 		
 		World.getWorld().addEntityToTile(new Stick(player, new Transformation(81 + 0.5f, 0, 82 + 0.5f)));
 		World.getWorld().addEntityToTile(new Stick(player, new Transformation(82 + 0.5f, 0, 82 + 0.5f)));

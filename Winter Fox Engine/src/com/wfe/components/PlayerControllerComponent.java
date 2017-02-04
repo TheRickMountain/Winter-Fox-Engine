@@ -17,6 +17,7 @@ import com.wfe.input.Mouse;
 import com.wfe.math.Vector3f;
 import com.wfe.physics.AABB;
 import com.wfe.tileEngine.Tile;
+import com.wfe.utils.MathUtils;
 import com.wfe.utils.MousePicker;
 
 public class PlayerControllerComponent extends Component {
@@ -82,21 +83,29 @@ public class PlayerControllerComponent extends Component {
 					if(entity.hasComponent(ComponentType.GATHERABLE)) {
 						Display.setCursor(Display.takeCursor);
 						if(Mouse.isButtonDown(1)) {
-							GatherableComponent gc = (GatherableComponent)entity.getComponent(ComponentType.GATHERABLE);
-							
-							InventoryComponent inv = (InventoryComponent) getParent().getComponent(ComponentType.INVENTORY);
-							inv.addItem(gc.getItem(), gc.getCount());
-							currentTile.removeEntity();
-							
-							AudioMaster.defaultSource.play(ResourceManager.getSound("taking"));
+							if(checkDistance(tp.x, tp.z)) {
+								turnTo((int)tp.x, (int)tp.z);
+								
+								GatherableComponent gc = (GatherableComponent)entity.getComponent(ComponentType.GATHERABLE);
+								
+								InventoryComponent inv = (InventoryComponent) getParent().getComponent(ComponentType.INVENTORY);
+								inv.addItem(gc.getItem(), gc.getCount());
+								currentTile.removeEntity();
+								
+								AudioMaster.defaultSource.play(ResourceManager.getSound("taking"));
+							}
 						}
 					} else if(entity.hasComponent(ComponentType.MINEABLE)) {
 						Display.setCursor(Display.takeCursor);
 						if(Mouse.isButton(0)) {
-							mineableComponent = (MineableComponent)entity.getComponent(ComponentType.MINEABLE);	
-							
-							if(inventory.getSelected() == mineableComponent.getRequiredItem()) {
-								mining = true;
+							if(checkDistance(tp.x, tp.z)) {
+								turnTo((int)tp.x, (int)tp.z);
+								
+								mineableComponent = (MineableComponent)entity.getComponent(ComponentType.MINEABLE);	
+								
+								if(inventory.getSelected() == mineableComponent.getRequiredItem()) {
+									mining = true;
+								}
 							}
 						}
 					}
@@ -106,6 +115,22 @@ public class PlayerControllerComponent extends Component {
 			}
 		}
 		/*** *** ***/
+	}
+	
+	private boolean checkDistance(float x, float z) {
+		float distance = MathUtils.getDistance(
+				(int)getParent().getTransform().x, 
+				(int)getParent().getTransform().z, 
+				(int)x, (int)z);
+		return (distance == 1.0f || distance == 1.4142135f);
+	}
+	
+	private void turnTo(int x, int z) {
+		getParent().getTransform().setRotY(
+				-MathUtils.getRotation(
+						getParent().getTransform().x, 
+						getParent().getTransform().z, 
+						x, z) + 90);
 	}
 	
 	private void move(float dt) {	
