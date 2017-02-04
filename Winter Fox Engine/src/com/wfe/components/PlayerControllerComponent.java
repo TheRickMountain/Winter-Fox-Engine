@@ -113,16 +113,18 @@ public class PlayerControllerComponent extends Component {
 		float xa = 0.0f;
 		float za = 0.0f;
 		
-		if(Keyboard.isKey(Key.KEY_A) || Keyboard.isKey(Key.KEY_LEFT)) {
-			xa = -1.0f;
-		} else if(Keyboard.isKey(Key.KEY_D) || Keyboard.isKey(Key.KEY_RIGHT)) {
-			xa = 1.0f;
-		}
-		
-		if(Keyboard.isKey(Key.KEY_W) || Keyboard.isKey(Key.KEY_UP)) {
-			za = -1.0f;
-		} else if(Keyboard.isKey(Key.KEY_S) || Keyboard.isKey(Key.KEY_DOWN)) {
-			za = 1.0f;
+		if(!mining) {
+			if(Keyboard.isKey(Key.KEY_A) || Keyboard.isKey(Key.KEY_LEFT)) {
+				xa = -1.0f;
+			} else if(Keyboard.isKey(Key.KEY_D) || Keyboard.isKey(Key.KEY_RIGHT)) {
+				xa = 1.0f;
+			}
+			
+			if(Keyboard.isKey(Key.KEY_W) || Keyboard.isKey(Key.KEY_UP)) {
+				za = -1.0f;
+			} else if(Keyboard.isKey(Key.KEY_S) || Keyboard.isKey(Key.KEY_DOWN)) {
+				za = 1.0f;
+			}
 		}
 		
 		yRot = camera.getYaw();
@@ -149,8 +151,13 @@ public class PlayerControllerComponent extends Component {
 			transform.rotY = (-yRot) - 135;
 		}
 		
-		if(xa != 0 || za != 0) {
-			transform.isMoving = true;
+		if(!mining) {
+			if(xa != 0 || za != 0) {
+				transform.isMoving = true;
+				animation.walkAnim(dt);
+			} else {
+				animation.idleAnim();
+			}
 		}
 		
 		moveRelative(xa, za, speed, dt);
