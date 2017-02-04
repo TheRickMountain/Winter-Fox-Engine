@@ -107,10 +107,11 @@ public class Player extends Entity {
 			World.getWorld().addEntity(rightShin);
 		}
 		
-		PlayerAnimationComponent playerAnim = new PlayerAnimationComponent(this);
-		addComponent(playerAnim);
-		addComponent(new PlayerControllerComponent(camera, transform, playerAnim));
-		addComponent(new InventoryComponent(this));
+		PlayerAnimationComponent animation = new PlayerAnimationComponent(this);
+		addComponent(animation);
+		InventoryComponent inventory = new InventoryComponent(this);
+		addComponent(inventory);
+		addComponent(new PlayerControllerComponent(camera, transform, animation, inventory));
 	}
 
 }

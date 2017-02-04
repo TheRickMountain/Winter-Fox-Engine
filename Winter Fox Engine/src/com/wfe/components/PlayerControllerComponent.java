@@ -32,61 +32,77 @@ public class PlayerControllerComponent extends Component {
 	private PlayerAnimationComponent animation;
 	private InventoryComponent inventory;
 	
-	public PlayerControllerComponent(Camera camera, Transformation transform, PlayerAnimationComponent playerAnim) {		
+	private MineableComponent mineableComponent;
+	private Tile currentTile;
+	private boolean mining = false;
+	
+	public PlayerControllerComponent(Camera camera, Transformation transform, PlayerAnimationComponent playerAnim,
+			InventoryComponent inventory) {		
 		this.camera = camera;
 		this.transform = transform;
 		this.animation = playerAnim;
+		this.inventory = inventory;
 		this.bb = new AABB(transform.x - 0.4f, 0, transform.z - 0.4f, transform.x + 0.4f, 0 + 1, transform.z + 0.4f);
 		this.speed = 2.0f;
 	}
 	
 	@Override
 	public void update(float dt) {	
-		iteractWithWorld();
+		iteractWithWorld(dt);
 		move(dt);
 	}
 	
-	private void iteractWithWorld() {
+	private void iteractWithWorld(float dt) {
+		if(mining) {
+			if(animation.hitAnim(dt)) {
+				mineableComponent.decreasetHealth();
+				animation.idleAnim();
+				AudioMaster.defaultSource.play(mineableComponent.getSound());
+				
+				/* Если добыча окончена, проверяем здоровье добываемого предмета */
+				/* В случае если здоровье равно 0, удаляем объект */
+				if(mineableComponent.getHealth() == 0) {
+					inventory.addItem(mineableComponent.getItem(), mineableComponent.getCount());
+					currentTile.removeEntity();
+				}
+				
+				mining = false;
+				mineableComponent = null;
+			}
+		}
+		
 		/*** Получение Entity по расположению курсора на Terrain ***/
-		Vector3f tp = MousePicker.getCurrentTerrainPoint();
-		if(tp != null) {
-			Tile tile = World.getWorld().getTile((int)tp.x, (int)tp.z);
-			if(tile.isHasEntity()) {
-				Entity entity = tile.getEntity();
-				if(entity.hasComponent(ComponentType.GATHERABLE)) {
-					Display.setCursor(Display.takeCursor);
-					if(Mouse.isButtonDown(1)) {
-						GatherableComponent gc = (GatherableComponent)entity.getComponent(ComponentType.GATHERABLE);
-						
-						InventoryComponent inv = (InventoryComponent) getParent().getComponent(ComponentType.INVENTORY);
-						inv.addItem(gc.getItem(), gc.getCount());
-						tile.removeEntity();
-						
-						AudioMaster.defaultSource.play(ResourceManager.getSound("taking"));
-					}
-				} else if(entity.hasComponent(ComponentType.MINEABLE)) {
-					Display.setCursor(Display.takeCursor);
-					if(Mouse.isButton(0)) {
-						MineableComponent mc = (MineableComponent)entity.getComponent(ComponentType.MINEABLE);
-						
-						/*int item = inventory.getSelected();
-						if(item == mc.getRequiredItem()) {
-							animation.hit();
-							if(!animation.isHitAnimProcess()) {
-								AudioMaster.defaultSource.play(mc.getSound());
-								mc.decreasetHealth();
+		/* Пока идет добыча чего-либо данный код бездействует в ожидании окончания добычи */
+		if(!mining) {
+			Vector3f tp = MousePicker.getCurrentTerrainPoint();
+			if(tp != null) {
+				currentTile = World.getWorld().getTile((int)tp.x, (int)tp.z);
+				if(currentTile.isHasEntity()) {
+					Entity entity = currentTile.getEntity();
+					if(entity.hasComponent(ComponentType.GATHERABLE)) {
+						Display.setCursor(Display.takeCursor);
+						if(Mouse.isButtonDown(1)) {
+							GatherableComponent gc = (GatherableComponent)entity.getComponent(ComponentType.GATHERABLE);
+							
+							InventoryComponent inv = (InventoryComponent) getParent().getComponent(ComponentType.INVENTORY);
+							inv.addItem(gc.getItem(), gc.getCount());
+							currentTile.removeEntity();
+							
+							AudioMaster.defaultSource.play(ResourceManager.getSound("taking"));
+						}
+					} else if(entity.hasComponent(ComponentType.MINEABLE)) {
+						Display.setCursor(Display.takeCursor);
+						if(Mouse.isButton(0)) {
+							mineableComponent = (MineableComponent)entity.getComponent(ComponentType.MINEABLE);	
+							
+							if(inventory.getSelected() == mineableComponent.getRequiredItem()) {
+								mining = true;
 							}
 						}
-						
-						if(mc.getHealth() == 0) {
-							inventory.addItem(mc.getItem(), mc.getCount());
-							tile.removeEntity();
-							animation.idle();
-						}*/
 					}
+				} else {
+					Display.setCursor(Display.defaultCursor);
 				}
-			} else {
-				Display.setCursor(Display.defaultCursor);
 			}
 		}
 		/*** *** ***/

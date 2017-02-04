@@ -10,7 +10,7 @@ public abstract class Component {
 		this.parent = parent;
 	}
 	
-	protected Entity getParent() {
+	public Entity getParent() {
 		return parent;
 	}
 	
