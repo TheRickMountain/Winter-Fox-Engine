@@ -34,6 +34,7 @@ public class Game implements IGameLogic {
 		AudioMaster.init();
 		AudioMaster.setListenerData(0, 0, 0);
 		
+		ResourceManager.loadSound("hoe", AudioMaster.loadSound("audio/hoe.wav"));
 		ResourceManager.loadSound("chop", AudioMaster.loadSound("audio/chop.wav"));
 		ResourceManager.loadSound("mine", AudioMaster.loadSound("audio/mine.wav"));
 		ResourceManager.loadSound("eating", AudioMaster.loadSound("audio/eat.wav"));
@@ -71,6 +72,9 @@ public class Game implements IGameLogic {
 		
 		/* Icons */
 		ResourceManager.loadTexture("apple_ui", Texture.newTexture(new MyFile("gui/items/apple.png"))
+				.normalMipMap().create());
+		
+		ResourceManager.loadTexture("fiber_ui", Texture.newTexture(new MyFile("gui/items/fiber.png"))
 				.normalMipMap().create());
 		
 		ResourceManager.loadTexture("log_ui", Texture.newTexture(new MyFile("gui/items/log.png"))
@@ -121,6 +125,16 @@ public class Game implements IGameLogic {
 				.create());
 		
 		ResourceManager.loadMesh("mushroom", OBJLoader.loadMesh("/entity/mushroom/model.obj"));
+		/*** *** ***/
+		
+		/*** Pickaxe ***/
+		ResourceManager.loadTexture("hoe_ui", Texture.newTexture(new MyFile("entity/hoe/icon.png"))
+				.normalMipMap().create());
+		ResourceManager.loadTexture("hoe", Texture.newTexture(new MyFile("entity/hoe/diffuse.png"))
+				.normalMipMap(-0.4f)
+				.create());
+		
+		ResourceManager.loadMesh("hoe", OBJLoader.loadMesh("/entity/hoe/model.obj"));
 		/*** *** ***/
 		
 		/*** Pickaxe ***/
@@ -250,9 +264,9 @@ public class Game implements IGameLogic {
 		}
 		
 		InventoryComponent inventory = (InventoryComponent) player.getComponent(ComponentType.INVENTORY);
-		inventory.addItem(Item.FLINT, 7);
 		inventory.addItem(Item.AXE, 1);
 		inventory.addItem(Item.PICKAXE, 1);
+		inventory.addItem(Item.HOE, 1);
 		
 		AudioMaster.ambientSource.play(ResourceManager.getSound("hills"));
 	}

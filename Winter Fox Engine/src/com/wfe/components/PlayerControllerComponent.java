@@ -11,6 +11,7 @@ import com.wfe.ecs.ComponentType;
 import com.wfe.ecs.Entity;
 import com.wfe.ecs.Transformation;
 import com.wfe.game.World;
+import com.wfe.gui.Item;
 import com.wfe.input.Key;
 import com.wfe.input.Keyboard;
 import com.wfe.input.Mouse;
@@ -92,7 +93,7 @@ public class PlayerControllerComponent extends Component {
 								inv.addItem(gc.getItem(), gc.getCount());
 								currentTile.removeEntity();
 								
-								AudioMaster.defaultSource.play(ResourceManager.getSound("taking"));
+								AudioMaster.defaultSource.play(gc.getSound());
 							}
 						}
 					} else if(entity.hasComponent(ComponentType.MINEABLE)) {
@@ -109,6 +110,16 @@ public class PlayerControllerComponent extends Component {
 						}
 					}
 				} else {
+					if(Mouse.isButtonDown(0)) {
+						if(inventory.getSelected() == Item.HOE) {
+							if(checkDistance(tp.x, tp.z)) {
+								turnTo((int)tp.x, (int)tp.z);
+								World.getWorld().setTile((int)tp.x, (int)tp.z, 10);
+								AudioMaster.defaultSource.play(ResourceManager.getSound("hoe"));
+							}
+						}
+					}
+					
 					Display.setCursor(Display.defaultCursor);
 				}
 			}
@@ -129,7 +140,7 @@ public class PlayerControllerComponent extends Component {
 				-MathUtils.getRotation(
 						getParent().getTransform().x, 
 						getParent().getTransform().z, 
-						x, z) + 90);
+						x + 0.5f, z + 0.5f) + 90);
 	}
 	
 	private void move(float dt) {	

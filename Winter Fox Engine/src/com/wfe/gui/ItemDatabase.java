@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.wfe.blueprints.AxeBlueprint;
+import com.wfe.blueprints.HoeBlueprint;
 import com.wfe.blueprints.PickaxeBlueprint;
 import com.wfe.core.ResourceManager;
 
@@ -34,6 +35,12 @@ public class ItemDatabase {
 		
 		addItem(new Item(Item.PICKAXE, "Pickaxe", "Common useful resource", ResourceManager.getTexture("pickaxe_ui"),
 				new PickaxeBlueprint(), ItemType.TOOL, 1));
+		
+		addItem(new Item(Item.HOE, "Hoe", "Common useful resource", ResourceManager.getTexture("hoe_ui"),
+				new HoeBlueprint(), ItemType.TOOL, 1));
+		
+		addItem(new Item(Item.FIBER, "Fiber", "Common useful resource", ResourceManager.getTexture("fiber_ui"), 
+				null, ItemType.RESOURCE, 40));
 	}
 	
 	public static void create() {

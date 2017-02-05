@@ -1,9 +1,11 @@
 package com.wfe.entities;
 
+import com.wfe.components.GatherableComponent;
 import com.wfe.core.ResourceManager;
 import com.wfe.ecs.Entity;
 import com.wfe.ecs.Transformation;
 import com.wfe.graph.Material;
+import com.wfe.gui.Item;
 import com.wfe.utils.MyRandom;
 
 public class Grass extends Entity {
@@ -19,6 +21,7 @@ public class Grass extends Entity {
 				getTransform().getX() + MyRandom.nextFloat(0.2f, 0.8f), 
 				getTransform().getY(), 
 				getTransform().getZ() + MyRandom.nextFloat(0.2f, 0.8f));
+		addComponent(new GatherableComponent(Item.FIBER, 1, ResourceManager.getSound("taking")));
 	}
 
 }
