@@ -7,9 +7,9 @@ import com.wfe.graph.Material;
 
 public class DoorWallBlueprint extends Blueprint {
 
-	public DoorWallBlueprint(Transformation transform) {
+	public DoorWallBlueprint() {
 		super(ResourceManager.getMesh("door_wall"),
-				new Material(ResourceManager.getTexture("wall")), transform);
+				new Material(ResourceManager.getTexture("walls")), new Transformation());
 		transform.setScale(0.5f);
 	}
 
@@ -21,6 +21,7 @@ public class DoorWallBlueprint extends Blueprint {
 	@Override
 	public Entity createInstanceWithComponents(Transformation transform) {
 		Entity entity = new Entity(mesh, material, new Transformation(transform));
+		entity.getTransform().setScale(0.5f);
 		return entity;
 	}
 

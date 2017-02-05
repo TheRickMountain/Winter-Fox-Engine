@@ -60,6 +60,9 @@ public class Inventory implements GUIComponent {
 	}
 	
 	public void update(int[] slots, int[] count) {
+		for(Slot slot : this.slots) {
+			slot.removeItem();
+		}
 		for(int i = 0; i < slots.length; i++) {
 			int slot = slots[i];
 			if(slot >= 0) {

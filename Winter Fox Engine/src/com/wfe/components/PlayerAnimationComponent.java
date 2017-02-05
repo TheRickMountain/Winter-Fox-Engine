@@ -84,7 +84,6 @@ public class PlayerAnimationComponent extends Component {
 		if(rightArm.localRotX >= -45) {
 			return true;
 		} else {
-			System.out.println("Here");
 			rightArm.localRotX += hitAnimSpeed * dt; 
 			return false;
 		}

@@ -14,6 +14,10 @@ public class Item {
 	public static final int PICKAXE = 6;
 	public static final int HOE = 7;
 	public static final int FIBER = 8;
+	public static final int WALL = 9;
+	public static final int CROSS_WALL = 10;
+	public static final int WINDOW_WALL = 11;
+	public static final int DOOR_WALL = 12;
 	
 	public final int id;
 	public final String name;

@@ -11,14 +11,15 @@ import com.wfe.game.World;
 import com.wfe.gui.GUIManager;
 import com.wfe.gui.Item;
 import com.wfe.gui.ItemDatabase;
-import com.wfe.gui.ItemType;
 import com.wfe.input.Key;
 import com.wfe.input.Keyboard;
 import com.wfe.input.Scroll;
+import com.wfe.math.Vector3f;
+import com.wfe.utils.MousePicker;
 
 public class InventoryComponent extends Component {
 	
-	private Entity rightForearm;
+	private Entity hand;
 	
 	private final int[] slots = new int[6];
 	private final int[] counts = new int[6];
@@ -26,10 +27,13 @@ public class InventoryComponent extends Component {
 	private int selected = 0;
 	private int lastSelected = 0;
 	
-	private Entity equippedEntity;
+	private Entity equipment;
+	
+	private Entity building;
+	public float buildingRotation;
 	
 	public InventoryComponent(Player player) {
-		this.rightForearm = player.rightForearm;
+		this.hand = player.rightForearm;
 		for(int i = 0; i < slots.length; i++) {
 			this.slots[i] = -1;
 			this.counts[i] = 0;
@@ -60,22 +64,57 @@ public class InventoryComponent extends Component {
 			AudioMaster.defaultSource.play(ResourceManager.getSound("tick"));
 			
 			/* If player has been equipped than delete current equipped one */
-			if(equippedEntity != null) {
-				rightForearm.removeChild(equippedEntity);
-				equippedEntity.remove();
-				equippedEntity = null;
+			if(equipment != null) {
+				hand.removeChild(equipment);
+				equipment.remove();
+				equipment = null;
+			}
+			
+			if(building != null) {
+				building.remove();
+				building = null;
 			}
 			
 			/* If selected item has entity than equip it to the player */
 			int slot = slots[selected];
 			if(slot != -1) {
 				Item item = ItemDatabase.getItem(slots[selected]);
-				if(item.type.equals(ItemType.TOOL)) {					
-					equippedEntity = item.blueprint.createInstanceWithComponents(new Transformation());
-					rightForearm.addChild(equippedEntity);
-					World.getWorld().addEntity(equippedEntity);
+				switch(item.type) {
+				case TOOL:
+					equipment = item.blueprint.createInstanceWithComponents(new Transformation());
+					hand.addChild(equipment);
+					World.getWorld().addEntity(equipment);
+					break;
+				case BUILDING:
+					building = item.blueprint.createInstance();
+					World.getWorld().addEntity(building);
+					break;
 				}
 			}
+		}
+		
+		if(building != null) {
+			building();
+		}
+	}
+	
+	private void building() {
+		if(Keyboard.isKeyDown(Key.KEY_R)) {
+			buildingRotation += 90;
+			if(buildingRotation == 360) 
+				buildingRotation = 0;
+		}
+		
+		building.getTransform().setRotation(0, buildingRotation, 0);
+		
+		Vector3f tp = MousePicker.getCurrentTerrainPoint();
+		if(tp != null) {
+			building.getTransform().setPosition(((int)tp.x) + 0.5f, 0, ((int)tp.z) + 0.5f);
+		}
+		
+		if(counts[selected] == 0) {
+			World.getWorld().removeEntity(building);
+			building = null;
 		}
 	}
 	
@@ -138,13 +177,26 @@ public class InventoryComponent extends Component {
 		return true;
 	}
 	
-	public boolean removeItem(int item) {
+	public boolean removeItem(int item, int count, int slot) {
+		counts[slot]-= count;
+		if(counts[slot] == 0) {
+			slots[slot] = -1;
+		}
 		GUIManager.inventory.update(slots, counts);
 		return true;
 	}
 	
-	public int getSelected() {
+	public boolean removeItem(int item, int count) {
+		GUIManager.inventory.update(slots, counts);
+		return true;
+	}
+	
+	public int getSelectedItem() {
 		return slots[selected];
+	}
+	
+	public int getSelectedSlot() {
+		return selected;
 	}
 	
 	@Override

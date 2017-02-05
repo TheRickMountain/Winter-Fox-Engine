@@ -4,8 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.wfe.blueprints.AxeBlueprint;
+import com.wfe.blueprints.CrossWallBlueprint;
+import com.wfe.blueprints.DoorWallBlueprint;
 import com.wfe.blueprints.HoeBlueprint;
 import com.wfe.blueprints.PickaxeBlueprint;
+import com.wfe.blueprints.WallBlueprint;
+import com.wfe.blueprints.WindowWallBlueprint;
 import com.wfe.core.ResourceManager;
 
 public class ItemDatabase {
@@ -41,6 +45,18 @@ public class ItemDatabase {
 		
 		addItem(new Item(Item.FIBER, "Fiber", "Common useful resource", ResourceManager.getTexture("fiber_ui"), 
 				null, ItemType.RESOURCE, 40));
+		
+		addItem(new Item(Item.WALL, "Wall", "Common useful resource", ResourceManager.getTexture("wall_ui"), 
+				new WallBlueprint(), ItemType.BUILDING, 40));
+		
+		addItem(new Item(Item.CROSS_WALL, "Cross wall", "Common useful resource", ResourceManager.getTexture("cross_wall_ui"), 
+				new CrossWallBlueprint(), ItemType.BUILDING, 40));
+		
+		addItem(new Item(Item.WINDOW_WALL, "Window wall", "Common useful resource", ResourceManager.getTexture("window_wall_ui"), 
+				new WindowWallBlueprint(), ItemType.BUILDING, 40));
+		
+		addItem(new Item(Item.DOOR_WALL, "Door wall", "Common useful resource", ResourceManager.getTexture("door_wall_ui"), 
+				new DoorWallBlueprint(), ItemType.BUILDING, 40));
 	}
 	
 	public static void create() {

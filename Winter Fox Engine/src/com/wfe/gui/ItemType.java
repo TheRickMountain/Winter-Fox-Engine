@@ -4,6 +4,7 @@ public enum ItemType {
 	
 	CONSUMABLE,
 	TOOL,
+	BUILDING,
 	RESOURCE
 
 }

@@ -90,6 +90,28 @@ public class Game implements IGameLogic {
 		ResourceManager.loadMesh("fern", OBJLoader.loadMesh("/entity/fern/model.obj"));
 		/*** *** ***/
 		
+		/*** Walls ***/
+		ResourceManager.loadTexture("walls", Texture.newTexture(new MyFile("entity/walls/diffuse.png"))
+				.normalMipMap(-0.4f)
+				.create());
+		
+		ResourceManager.loadTexture("cross_wall_ui", Texture.newTexture(new MyFile("entity/walls/cross_wall.png"))
+				.normalMipMap().create());
+		ResourceManager.loadMesh("cross_wall", OBJLoader.loadMesh("/entity/walls/cross_wall.obj"));
+		
+		ResourceManager.loadTexture("door_wall_ui", Texture.newTexture(new MyFile("entity/walls/door_wall.png"))
+				.normalMipMap().create());
+		ResourceManager.loadMesh("door_wall", OBJLoader.loadMesh("/entity/walls/door_wall.obj"));
+		
+		ResourceManager.loadTexture("window_wall_ui", Texture.newTexture(new MyFile("entity/walls/window_wall.png"))
+				.normalMipMap().create());
+		ResourceManager.loadMesh("window_wall", OBJLoader.loadMesh("/entity/walls/window_wall.obj"));
+		
+		ResourceManager.loadTexture("wall_ui", Texture.newTexture(new MyFile("entity/walls/wall.png"))
+				.normalMipMap().create());
+		ResourceManager.loadMesh("wall", OBJLoader.loadMesh("/entity/walls/wall.obj"));
+		/*** *** ***/
+		
 		/*** Rock ***/
 		ResourceManager.loadTexture("rock", Texture.newTexture(new MyFile("entity/rock/diffuse.png"))
 				.normalMipMap(-0.4f)
@@ -266,7 +288,10 @@ public class Game implements IGameLogic {
 		InventoryComponent inventory = (InventoryComponent) player.getComponent(ComponentType.INVENTORY);
 		inventory.addItem(Item.AXE, 1);
 		inventory.addItem(Item.PICKAXE, 1);
-		inventory.addItem(Item.HOE, 1);
+		inventory.addItem(Item.CROSS_WALL, 4);
+		inventory.addItem(Item.WINDOW_WALL, 5);
+		inventory.addItem(Item.DOOR_WALL, 1);
+		inventory.addItem(Item.WALL, 6);
 		
 		AudioMaster.ambientSource.play(ResourceManager.getSound("hills"));
 	}

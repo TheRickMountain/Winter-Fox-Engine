@@ -12,6 +12,8 @@ import com.wfe.ecs.Entity;
 import com.wfe.ecs.Transformation;
 import com.wfe.game.World;
 import com.wfe.gui.Item;
+import com.wfe.gui.ItemDatabase;
+import com.wfe.gui.ItemType;
 import com.wfe.input.Key;
 import com.wfe.input.Keyboard;
 import com.wfe.input.Mouse;
@@ -102,7 +104,7 @@ public class PlayerControllerComponent extends Component {
 							if(checkDistance(tp.x, tp.z)) {
 								mineableComponent = (MineableComponent)entity.getComponent(ComponentType.MINEABLE);	
 								
-								if(inventory.getSelected() == mineableComponent.getRequiredItem()) {
+								if(inventory.getSelectedItem() == mineableComponent.getRequiredItem()) {
 									turnTo((int)tp.x, (int)tp.z);
 									mining = true;
 								}
@@ -111,11 +113,27 @@ public class PlayerControllerComponent extends Component {
 					}
 				} else {
 					if(Mouse.isButtonDown(0)) {
-						if(inventory.getSelected() == Item.HOE) {
-							if(checkDistance(tp.x, tp.z)) {
-								turnTo((int)tp.x, (int)tp.z);
-								World.getWorld().setTile((int)tp.x, (int)tp.z, 10);
-								AudioMaster.defaultSource.play(ResourceManager.getSound("hoe"));
+						if(inventory.getSelectedItem() >= 0) {
+							Item item = ItemDatabase.getItem(inventory.getSelectedItem());
+					
+							if(item.id == Item.HOE) {
+								if(checkDistance(tp.x, tp.z)) {
+									turnTo((int)tp.x, (int)tp.z);
+									World.getWorld().setTile((int)tp.x, (int)tp.z, 10);
+									AudioMaster.defaultSource.play(ResourceManager.getSound("hoe"));
+								}
+							}
+							
+							if(item.type.equals(ItemType.BUILDING)) {
+								if(checkDistance(tp.x, tp.z)) {
+									turnTo((int)tp.x, (int)tp.z);
+									World.getWorld().addEntityToTile(item.blueprint
+											.createInstanceWithComponents(
+													new Transformation(((int)tp.x) + 0.5f, 0, ((int)tp.z) + 0.5f,
+															0, inventory.buildingRotation, 0)));
+									AudioMaster.defaultSource.play(ResourceManager.getSound("taking"));
+									inventory.removeItem(item.id, 1, inventory.getSelectedSlot());
+								}
 							}
 						}
 					}

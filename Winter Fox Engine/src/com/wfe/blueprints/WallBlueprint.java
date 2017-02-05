@@ -8,9 +8,9 @@ import com.wfe.graph.Material;
 
 public class WallBlueprint extends Blueprint {
 
-	public WallBlueprint(Transformation transform) {
+	public WallBlueprint() {
 		super(ResourceManager.getMesh("wall"),
-				new Material(ResourceManager.getTexture("wall")), transform);	
+				new Material(ResourceManager.getTexture("walls")), new Transformation());	
 		transform.setScale(0.5f);
 	}
 
@@ -22,6 +22,7 @@ public class WallBlueprint extends Blueprint {
 	@Override
 	public Entity createInstanceWithComponents(Transformation transform) {
 		Entity entity = new Entity(mesh, material, new Transformation(transform));
+		entity.getTransform().setScale(0.5f);
 		entity.addComponent(new ColliderComponent(1, 1, 1, entity.getTransform()));
 		return entity;
 	}
