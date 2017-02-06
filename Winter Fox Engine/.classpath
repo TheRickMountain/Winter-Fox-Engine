@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="resource"/>
+	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="lib" path="D:/GitHub/Winter-Fox-Engine/Winter Fox Engine/libs/lwjgl.jar"/>
 	<classpathentry kind="lib" path="D:/GitHub/Winter-Fox-Engine/Winter Fox Engine/libs/lwjgl-assimp.jar"/>
 	<classpathentry kind="lib" path="D:/GitHub/Winter-Fox-Engine/Winter Fox Engine/libs/lwjgl-assimp-javadoc.jar"/>

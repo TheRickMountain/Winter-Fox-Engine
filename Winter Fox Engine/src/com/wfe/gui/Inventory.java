@@ -14,7 +14,7 @@ public class Inventory implements GUIComponent {
 	
 	private List<Slot> quickSlots = new ArrayList<Slot>();
 	private List<Slot> mainSlots = new ArrayList<Slot>();
-	private float offset = 5;
+	private float offset = 2.5f;
 	
 	private boolean open = false;
 	
@@ -91,7 +91,7 @@ public class Inventory implements GUIComponent {
 		for(int i = 0; i < mainSlots.size(); i++) {
 			mainSlots.get(i).rect.setPosition(
 					(Display.getWidth() / 2) - (totalWidth / 2) + (countX * (Slot.SLOT_SIZE + offset)), 
-					((quickSlots.get(0).rect.y - Slot.SLOT_SIZE) - ((Slot.SLOT_SIZE - offset) * 3))
+					((quickSlots.get(0).rect.y - Slot.SLOT_SIZE / 2) - ((Slot.SLOT_SIZE - offset) * 3))
 					+ (countY * (Slot.SLOT_SIZE + offset)));
 			
 			countX++;
