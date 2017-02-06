@@ -21,8 +21,10 @@ public class InventoryComponent extends Component {
 	
 	private Entity hand;
 	
-	private final int[] slots = new int[6];
-	private final int[] counts = new int[6];
+	private final int[] slots = new int[24];
+	private final int[] counts = new int[24];
+	
+	private int quickSlotsCount = 6;
 	
 	private int selected = 0;
 	private int lastSelected = 0;
@@ -54,8 +56,8 @@ public class InventoryComponent extends Component {
 		selected -= Scroll.getScroll();
 		
 		if(selected != lastSelected) {
-			if(selected >= slots.length) selected = 0;
-			else if(selected < 0) selected = slots.length - 1;
+			if(selected >= quickSlotsCount) selected = 0;
+			else if(selected < 0) selected = quickSlotsCount - 1;
 			
 			lastSelected = selected;
 			

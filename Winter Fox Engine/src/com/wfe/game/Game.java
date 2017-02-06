@@ -19,6 +19,8 @@ import com.wfe.entities.Stick;
 import com.wfe.entities.Wheat;
 import com.wfe.graph.OBJLoader;
 import com.wfe.gui.Item;
+import com.wfe.input.Key;
+import com.wfe.input.Keyboard;
 import com.wfe.math.Vector3f;
 import com.wfe.textures.Texture;
 import com.wfe.utils.MyFile;
@@ -287,6 +289,7 @@ public class Game implements IGameLogic {
 		
 		InventoryComponent inventory = (InventoryComponent) player.getComponent(ComponentType.INVENTORY);
 		inventory.addItem(Item.AXE, 1);
+		inventory.addItem(Item.HOE, 1);
 		inventory.addItem(Item.PICKAXE, 1);
 		inventory.addItem(Item.CROSS_WALL, 4);
 		inventory.addItem(Item.WINDOW_WALL, 5);
@@ -298,6 +301,11 @@ public class Game implements IGameLogic {
 	
 	@Override
 	public void update(float dt) {	
+		if(Keyboard.isKeyDown(Key.KEY_H)) {
+			InventoryComponent inventory = (InventoryComponent) player.getComponent(ComponentType.INVENTORY);
+			inventory.addItem(Item.APPLE, 32);
+		}
+		
 		World.getWorld().update(dt, player);
 	}
 
