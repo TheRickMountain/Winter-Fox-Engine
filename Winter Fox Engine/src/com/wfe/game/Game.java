@@ -295,6 +295,7 @@ public class Game implements IGameLogic {
 		inventory.addItem(Item.WINDOW_WALL, 5);
 		inventory.addItem(Item.DOOR_WALL, 1);
 		inventory.addItem(Item.WALL, 6);
+		inventory.addItem(Item.APPLE, 5);
 		
 		AudioMaster.ambientSource.play(ResourceManager.getSound("hills"));
 	}
