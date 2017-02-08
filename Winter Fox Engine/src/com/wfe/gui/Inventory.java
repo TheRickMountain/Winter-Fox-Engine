@@ -3,7 +3,10 @@ package com.wfe.gui;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.wfe.components.InventoryComponent;
 import com.wfe.core.Display;
+import com.wfe.ecs.ComponentType;
+import com.wfe.game.Game;
 import com.wfe.input.Mouse;
 import com.wfe.renderEngine.FontRenderer;
 import com.wfe.renderEngine.GUIRenderer;
@@ -13,19 +16,26 @@ public class Inventory implements GUIComponent {
 	
 	private List<Slot> hotbarSlots = new ArrayList<Slot>();
 	private List<Slot> inventorySlots = new ArrayList<Slot>();
+	private List<Slot> allSlots = new ArrayList<Slot>();
 	private float offset = 5;
 	
 	private Item selectedItem;
 	private GUIText name;
 	private GUIText description;
 	
+	private Item draggedItem;
+	private int draggedItemCount;
+	private GUIText draggedItemCountText;
+	
 	public Inventory() {	
 		for(int i = 0; i < 6; i++) {
 			hotbarSlots.add(new Slot(new Rect(0, 0, Slot.SLOT_SIZE, Slot.SLOT_SIZE)));
+			allSlots.add(hotbarSlots.get(i));
 		}
 		
 		for(int i = 0; i < 18; i++) {
 			inventorySlots.add(new Slot(new Rect(0, 0, Slot.SLOT_SIZE, Slot.SLOT_SIZE)));
+			allSlots.add(inventorySlots.get(i));
 		}
 		
 		name = new GUIText("", 1.4f, FontRenderer.font, 0.0f, 0.0f, GUIManager.inspectFrame.rect.width, true);
@@ -33,12 +43,15 @@ public class Inventory implements GUIComponent {
 		description = new GUIText("", 1.1f, FontRenderer.font, 0.0f, 0.0f, 
 				GUIManager.inspectFrame.rect.width - 20, false);
 		description.setColor(0.9f, 0.9f, 0.9f);
+		
+		draggedItemCountText = new GUIText("", 1.2f, FontRenderer.font, 0.0f, 0.0f, Slot.SLOT_SIZE, true);
+		draggedItemCountText.setColor(1.0f, 1.0f, 1.0f);
 	}
 	
 	@Override
 	public void update() {	
 		if(Mouse.isButtonDown(1)) {
-			for(Slot slot : inventorySlots) {
+			for(Slot slot : allSlots) {
 				if(slot.rect.isMouseOvered()) {
 					if(slot.isHasItem()) {
 						selectedItem = slot.getItem();
@@ -48,6 +61,42 @@ public class Inventory implements GUIComponent {
 				}
 			}
 		}
+		
+		if(Mouse.isButtonDown(0)) {
+			InventoryComponent inv = (InventoryComponent) Game.player.getComponent(ComponentType.INVENTORY);
+			
+			int count = 0;
+			for(Slot slot : allSlots) {
+				if(slot.rect.isMouseOvered()) {
+					if(slot.isHasItem()) {
+						if(draggedItem == null) {
+							draggedItem = slot.getItem();
+							draggedItemCount = slot.getItemCount();
+							draggedItemCountText.setText("" + draggedItemCount);
+							inv.removeItemFromSlot(count);
+						} else {
+							Item temp = ItemDatabase.getItem(inv.slots[count]);
+							int tempCount = inv.counts[count];
+							
+							inv.slots[count] = draggedItem.id;
+							inv.counts[count] = draggedItemCount;
+							
+							draggedItem = temp;
+							draggedItemCount = tempCount;
+							draggedItemCountText.setText("" + draggedItemCount);
+						}
+					} else {
+						if(draggedItem != null) {
+							inv.addItemToSlot(draggedItem.id, draggedItemCount, count);
+							draggedItem = null;
+						}
+					}
+				}
+				count++;
+			}
+			
+			update(inv.slots, inv.counts);
+		}	
 	}
 
 	@Override
@@ -92,12 +141,20 @@ public class Inventory implements GUIComponent {
 
 	@Override
 	public void renderPopUp() {
-		
+		if(draggedItem != null) {
+			GUIRenderer.render(draggedItem.icon, Mouse.getX(), Mouse.getY(), 0, Slot.SLOT_SIZE, Slot.SLOT_SIZE, true);
+		}
 	}
 
 	@Override
 	public void renderPopUpText() {
-		
+		if(draggedItem != null) {
+			if(draggedItemCount > 1) {
+				FontRenderer.render(draggedItemCountText, 
+						Mouse.getX() - Slot.SLOT_SIZE / 2, 
+						Mouse.getY() - Slot.SLOT_SIZE / 2);
+			}
+		}
 	}
 	
 	public void updatePositions() {

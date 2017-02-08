@@ -33,7 +33,7 @@ public class AudioMaster {
 		
 		ambientSource = new Source();
 		ambientSource.setVolume(0.5f);
-		ambientSource.continuePlaying();
+		ambientSource.setLooping(true);
 	}
 	
 	public static void setListenerData(final float x, final float y, final float z)

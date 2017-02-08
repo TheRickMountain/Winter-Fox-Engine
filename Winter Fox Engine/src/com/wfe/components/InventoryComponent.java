@@ -21,8 +21,8 @@ public class InventoryComponent extends Component {
 	
 	private Entity hand;
 	
-	private final int[] slots = new int[24];
-	private final int[] counts = new int[24];
+	public final int[] slots = new int[24];
+	public final int[] counts = new int[24];
 	
 	private int quickSlotsCount = 6;
 	
@@ -160,6 +160,13 @@ public class InventoryComponent extends Component {
 		}
 	}
 	
+	public void addItemToSlot(int item, int count, int slot) {
+		slots[slot] = item;
+		counts[slot] = count;
+		
+		GUIManager.inventory.update(slots, counts);
+	}
+	
 	public boolean addItem(int item, int count) {
 		int slot = hasItem(item);
 		if(slot == -1) {
@@ -196,6 +203,12 @@ public class InventoryComponent extends Component {
 		}
 		GUIManager.inventory.update(slots, counts);
 		return true;
+	}
+	
+	public void removeItemFromSlot(int slot) {
+		slots[slot] = -1;
+		counts[slot] = 0;
+		GUIManager.inventory.update(slots, counts);
 	}
 	
 	public boolean removeItem(int item, int count) {

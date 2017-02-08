@@ -132,11 +132,15 @@ public class GUIManager  {
 	}
 
 	public static void renderPopUp() {
-		
+		if(open) {
+			inventory.renderPopUp();
+		}
 	}
 
 	public static void renderPopUpText() {
-		
+		if(open) {
+			inventory.renderPopUpText();
+		}
 	}
 	
 	private static void updatePositions() {	

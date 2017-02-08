@@ -296,17 +296,6 @@ public class Game implements IGameLogic {
 			}
 		}
 		
-		InventoryComponent inventory = (InventoryComponent) player.getComponent(ComponentType.INVENTORY);
-		inventory.addItem(Item.AXE, 1);
-		inventory.addItem(Item.HOE, 1);
-		inventory.addItem(Item.PICKAXE, 1);
-		inventory.addItem(Item.CROSS_WALL, 4);
-		inventory.addItem(Item.WINDOW_WALL, 5);
-		inventory.addItem(Item.DOOR_WALL, 1);
-		inventory.addItem(Item.WALL, 6);
-		inventory.addItem(Item.APPLE, 5);
-		inventory.addItem(Item.ROPE, 4);
-		
 		AudioMaster.ambientSource.play(ResourceManager.getSound("hills"));
 	}
 	
