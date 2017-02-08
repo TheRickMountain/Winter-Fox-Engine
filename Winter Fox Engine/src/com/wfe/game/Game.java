@@ -62,6 +62,12 @@ public class Game implements IGameLogic {
 		/*** GUI Elements ***/							
 		ResourceManager.loadTexture("slot_ui", Texture.newTexture(new MyFile("gui/elements/slot.png"))
 				.normalMipMap().create());
+		ResourceManager.loadTexture("crafting_ui", Texture.newTexture(new MyFile("gui/elements/crafting.png"))
+				.normalMipMap().create());
+		ResourceManager.loadTexture("inventory_ui", Texture.newTexture(new MyFile("gui/elements/inventory.png"))
+				.normalMipMap().create());
+		ResourceManager.loadTexture("equipment_ui", Texture.newTexture(new MyFile("gui/elements/equipment.png"))
+				.normalMipMap().create());
 		
 		ResourceManager.loadTexture("background_frame_ui", Texture.newTexture(new MyFile("gui/background_frame.png"))
 				.normalMipMap().create());
@@ -80,6 +86,9 @@ public class Game implements IGameLogic {
 				.normalMipMap().create());
 		
 		ResourceManager.loadTexture("log_ui", Texture.newTexture(new MyFile("gui/items/log.png"))
+				.normalMipMap().create());
+		
+		ResourceManager.loadTexture("rope_ui", Texture.newTexture(new MyFile("gui/items/rope.png"))
 				.normalMipMap().create());
 		/* * */
 		
@@ -296,6 +305,7 @@ public class Game implements IGameLogic {
 		inventory.addItem(Item.DOOR_WALL, 1);
 		inventory.addItem(Item.WALL, 6);
 		inventory.addItem(Item.APPLE, 5);
+		inventory.addItem(Item.ROPE, 4);
 		
 		AudioMaster.ambientSource.play(ResourceManager.getSound("hills"));
 	}

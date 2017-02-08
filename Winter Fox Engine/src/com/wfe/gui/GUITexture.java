@@ -17,6 +17,7 @@ public class GUITexture {
 	public GUITexture(Texture texture, Rect rect, boolean centered) {
 		this.texture = texture;
 		this.rect = rect;
+		this.rect.centered = centered;
 		this.centered = centered;
 	}
 	

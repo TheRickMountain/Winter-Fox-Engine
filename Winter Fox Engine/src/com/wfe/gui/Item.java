@@ -18,6 +18,7 @@ public class Item {
 	public static final int CROSS_WALL = 10;
 	public static final int WINDOW_WALL = 11;
 	public static final int DOOR_WALL = 12;
+	public static final int ROPE = 13;
 	
 	public final int id;
 	public final String name;
@@ -26,9 +27,10 @@ public class Item {
 	public final Blueprint blueprint;
 	public final ItemType type;
 	public final int stackSize;
+	public final int[] ingredients;
 	
 	public Item(int id, String name, String description, Texture icon, Blueprint blueprint, 
-			ItemType type, int stackSize) {
+			ItemType type, int stackSize, int[] ingredients) {
 		this.id = id;
 		this.name = name;
 		this.description = description;
@@ -36,6 +38,7 @@ public class Item {
 		this.blueprint = blueprint;
 		this.type = type;
 		this.stackSize = stackSize;
+		this.ingredients = ingredients;
 	}
 	
 }

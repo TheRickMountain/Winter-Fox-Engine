@@ -7,6 +7,7 @@ public class Rect {
 	public float x, y;
 	public float width, height;
 	public float rotation;
+	public boolean centered = false;
 	
 	public Rect(float x, float y, float width, float height) {
 		super();
@@ -67,8 +68,13 @@ public class Rect {
 	}
 
 	public boolean isMouseOvered() {
-		return Mouse.getX() > x && Mouse.getX() < x + width &&
-				Mouse.getY() > y && Mouse.getY() < y + height;
+		if(centered) {
+			return Mouse.getX() > x - (width / 2) && Mouse.getX() < x + (width / 2) &&
+					Mouse.getY() > y - (height / 2) && Mouse.getY() < y + (height / 2);
+		} else {
+			return Mouse.getX() > x && Mouse.getX() < x + width &&
+					Mouse.getY() > y && Mouse.getY() < y + height;
+		}
 	}
 	
 	public String toString() {
