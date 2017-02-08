@@ -33,7 +33,7 @@ public class Inventory implements GUIComponent {
 			allSlots.add(hotbarSlots.get(i));
 		}
 		
-		for(int i = 0; i < 18; i++) {
+		for(int i = 0; i < 20; i++) {
 			inventorySlots.add(new Slot(new Rect(0, 0, Slot.SLOT_SIZE, Slot.SLOT_SIZE)));
 			allSlots.add(inventorySlots.get(i));
 		}
@@ -221,7 +221,7 @@ public class Inventory implements GUIComponent {
 			slot.removeItem();
 		}
 		
-		for(int i = 6; i < 24; i++) {
+		for(int i = 6; i < 26; i++) {
 			int slot = slots[i];
 			if(slot >= 0) {
 				this.inventorySlots.get(i - 6).addItem(ItemDatabase.getItem(slot), count[i]);

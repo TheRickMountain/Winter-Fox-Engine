@@ -21,8 +21,8 @@ public class InventoryComponent extends Component {
 	
 	private Entity hand;
 	
-	public final int[] slots = new int[24];
-	public final int[] counts = new int[24];
+	public final int[] slots = new int[26];
+	public final int[] counts = new int[26];
 	
 	private int quickSlotsCount = 6;
 	

@@ -92,10 +92,11 @@ public class PlayerControllerComponent extends Component {
 								GatherableComponent gc = (GatherableComponent)entity.getComponent(ComponentType.GATHERABLE);
 								
 								InventoryComponent inv = (InventoryComponent) getParent().getComponent(ComponentType.INVENTORY);
-								inv.addItem(gc.getItem(), gc.getCount());
-								currentTile.removeEntity();
+								if(inv.addItem(gc.getItem(), gc.getCount())) {
+									currentTile.removeEntity();
 								
-								AudioMaster.defaultSource.play(gc.getSound());
+									AudioMaster.defaultSource.play(gc.getSound());
+								}
 							}
 						}
 					} else if(entity.hasComponent(ComponentType.MINEABLE)) {
