@@ -296,6 +296,10 @@ public class Game implements IGameLogic {
 			}
 		}
 		
+		InventoryComponent inv = (InventoryComponent)player.getComponent(ComponentType.INVENTORY);
+		inv.addItemToSlot(Item.APPLE, 5, 0);
+		inv.addItemToSlot(Item.APPLE, 37, 1);
+		
 		AudioMaster.ambientSource.play(ResourceManager.getSound("hills"));
 	}
 	

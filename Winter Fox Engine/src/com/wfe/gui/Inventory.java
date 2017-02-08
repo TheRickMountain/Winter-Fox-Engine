@@ -75,15 +75,38 @@ public class Inventory implements GUIComponent {
 							draggedItemCountText.setText("" + draggedItemCount);
 							inv.removeItemFromSlot(count);
 						} else {
-							Item temp = ItemDatabase.getItem(inv.slots[count]);
-							int tempCount = inv.counts[count];
-							
-							inv.slots[count] = draggedItem.id;
-							inv.counts[count] = draggedItemCount;
-							
-							draggedItem = temp;
-							draggedItemCount = tempCount;
-							draggedItemCountText.setText("" + draggedItemCount);
+							if(inv.slots[count] == draggedItem.id) {
+								if(inv.counts[count] == draggedItem.stackSize) {
+									int tempCount = inv.counts[count];
+									
+									inv.counts[count] = draggedItemCount;
+									
+									draggedItemCount = tempCount;
+									draggedItemCountText.setText("" + draggedItemCount);
+								} else {
+									int totalCount = inv.counts[count] + draggedItemCount;
+									if(totalCount <= draggedItem.stackSize) {
+										inv.counts[count] = totalCount;
+										draggedItem = null;
+									} else if(totalCount > draggedItem.stackSize){
+										inv.counts[count] = draggedItem.stackSize;
+										totalCount -= draggedItem.stackSize;
+										
+										draggedItemCount = totalCount;
+										draggedItemCountText.setText("" + draggedItemCount);
+									}
+								}
+							} else {
+								Item temp = ItemDatabase.getItem(inv.slots[count]);
+								int tempCount = inv.counts[count];
+								
+								inv.slots[count] = draggedItem.id;
+								inv.counts[count] = draggedItemCount;
+								
+								draggedItem = temp;
+								draggedItemCount = tempCount;
+								draggedItemCountText.setText("" + draggedItemCount);
+							}
 						}
 					} else {
 						if(draggedItem != null) {
