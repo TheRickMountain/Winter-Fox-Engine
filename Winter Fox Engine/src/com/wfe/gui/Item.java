@@ -28,6 +28,7 @@ public class Item {
 	public final ItemType type;
 	public final int stackSize;
 	public final int[] ingredients;
+	private boolean isHasCraft;
 	
 	public Item(int id, String name, String description, Texture icon, Blueprint blueprint, 
 			ItemType type, int stackSize, int[] ingredients) {
@@ -39,6 +40,13 @@ public class Item {
 		this.type = type;
 		this.stackSize = stackSize;
 		this.ingredients = ingredients;
+		if(this.ingredients != null) {
+			isHasCraft = true;
+		}
+	}
+	
+	public boolean isHasCraft() {
+		return isHasCraft;
 	}
 	
 }

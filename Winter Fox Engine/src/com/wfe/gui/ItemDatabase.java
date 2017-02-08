@@ -83,5 +83,8 @@ public class ItemDatabase {
 		return null;
 	}
 
-
+	protected static List<Item> getDatabase() {
+		return database;
+	}
+	
 }

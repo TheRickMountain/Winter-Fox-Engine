@@ -128,6 +128,16 @@ public class InventoryComponent extends Component {
 		return -1;
 	}
 	
+	public int hasItemCount(int item) {
+		int totalCount = 0;
+		for(int i = 0; i < this.slots.length; i++) {
+			if(item == this.slots[i]) {
+				totalCount += this.counts[i];
+			}
+		}
+		return totalCount;
+	}
+	
 	private int canStackWithSuchItem(int item) {
 		for(int i = 0; i < this.slots.length; i++) {
 			if(item == this.slots[i]) {
@@ -189,6 +199,21 @@ public class InventoryComponent extends Component {
 	}
 	
 	public boolean removeItem(int item, int count) {
+		for(int i = 0; i < slots.length; i++) {
+			if(slots[i] == item) {
+				if(counts[i] == count) {
+					slots[i] = -1;
+					counts[i] = 0;
+				} else if(counts[i] > count) {
+					counts[i] -= count;
+				} else if(counts[i] < count) {
+					count -= counts[i];
+					counts[i] = 0;
+					slots[i] = 1;
+					removeItem(item, count);
+				}
+			}
+		}
 		GUIManager.inventory.update(slots, counts);
 		return true;
 	}

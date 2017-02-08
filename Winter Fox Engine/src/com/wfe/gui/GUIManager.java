@@ -54,19 +54,21 @@ public class GUIManager  {
 		if(Keyboard.isKeyDown(Key.KEY_E)) {
 			open = !open;
 			AudioMaster.defaultSource.play(ResourceManager.getSound("inventory"));
+			
+			if(open) {
+				crafting.updateIngredients();
+			}
 		}
 		
 		if(open) {
 			if(Mouse.isButtonDown(0)) {
 				if(craftingButton.rect.isMouseOvered()) {
 					state = State.CRAFTING;
-					System.out.println("Crafting");
+					crafting.updateIngredients();
 				} else if(inventoryButton.rect.isMouseOvered()) {
 					state = State.INVENTORY;
-					System.out.println("Inventory");
 				} else if(equipmentButton.rect.isMouseOvered()) {
 					state = State.EQUIPMENT;
-					System.out.println("Equipment");
 				}
 			}
 			
