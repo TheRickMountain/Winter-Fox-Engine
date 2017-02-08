@@ -9,6 +9,7 @@ import com.wfe.utils.Rect;
 public class Slot implements GUIComponent {
 
 	private static final Texture SLOT_TEXTURE = ResourceManager.getTexture("slot_ui");
+	private static final Texture SELECTED_SLOT_TEXTURE = ResourceManager.getTexture("selected_slot_ui");
 	public static final int SLOT_SIZE = 60;
 	
 	public Rect rect;
@@ -34,8 +35,8 @@ public class Slot implements GUIComponent {
 	@Override
 	public void render() {
 		if(selected) {
-			GUIRenderer.render(SLOT_TEXTURE, rect.x + rect.width / 2, rect.y + rect.height / 2, 
-					rect.rotation, SLOT_SIZE + 10, SLOT_SIZE + 10, true);
+			GUIRenderer.render(SELECTED_SLOT_TEXTURE, rect.x + rect.width / 2, rect.y + rect.height / 2, 
+					rect.rotation, SLOT_SIZE, SLOT_SIZE, true);
 		} else {
 			GUIRenderer.render(SLOT_TEXTURE, rect.x + rect.width / 2, rect.y + rect.height / 2, 
 					rect.rotation, SLOT_SIZE, SLOT_SIZE, true);

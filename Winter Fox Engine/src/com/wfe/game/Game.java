@@ -62,11 +62,21 @@ public class Game implements IGameLogic {
 		/*** GUI Elements ***/							
 		ResourceManager.loadTexture("slot_ui", Texture.newTexture(new MyFile("gui/elements/slot.png"))
 				.normalMipMap().create());
+		ResourceManager.loadTexture("selected_slot_ui", Texture.newTexture(new MyFile("gui/elements/selected_slot.png"))
+				.normalMipMap().create());
+		
 		ResourceManager.loadTexture("crafting_ui", Texture.newTexture(new MyFile("gui/elements/crafting.png"))
 				.normalMipMap().create());
 		ResourceManager.loadTexture("inventory_ui", Texture.newTexture(new MyFile("gui/elements/inventory.png"))
 				.normalMipMap().create());
 		ResourceManager.loadTexture("equipment_ui", Texture.newTexture(new MyFile("gui/elements/equipment.png"))
+				.normalMipMap().create());
+		
+		ResourceManager.loadTexture("selected_crafting_ui", Texture.newTexture(new MyFile("gui/elements/selected_crafting.png"))
+				.normalMipMap().create());
+		ResourceManager.loadTexture("selected_inventory_ui", Texture.newTexture(new MyFile("gui/elements/selected_inventory.png"))
+				.normalMipMap().create());
+		ResourceManager.loadTexture("selected_equipment_ui", Texture.newTexture(new MyFile("gui/elements/selected_equipment.png"))
 				.normalMipMap().create());
 		
 		ResourceManager.loadTexture("background_frame_ui", Texture.newTexture(new MyFile("gui/background_frame.png"))
@@ -295,10 +305,6 @@ public class Game implements IGameLogic {
 				}
 			}
 		}
-		
-		InventoryComponent inv = (InventoryComponent)player.getComponent(ComponentType.INVENTORY);
-		inv.addItemToSlot(Item.APPLE, 5, 0);
-		inv.addItemToSlot(Item.APPLE, 37, 1);
 		
 		AudioMaster.ambientSource.play(ResourceManager.getSound("hills"));
 	}

@@ -42,6 +42,8 @@ public class GUIManager  {
 		inventoryButton = new GUITexture(ResourceManager.getTexture("inventory_ui"), new Rect(0, 0, 50, 50), true);
 		equipmentButton = new GUITexture(ResourceManager.getTexture("equipment_ui"), new Rect(0, 0, 50, 50), true);
 		
+		inventoryButton.setTexture(ResourceManager.getTexture("selected_inventory_ui"));
+		
 		inventory = new Inventory();
 		crafting = new Crafting();
 		
@@ -62,13 +64,30 @@ public class GUIManager  {
 		
 		if(open) {
 			if(Mouse.isButtonDown(0)) {
+				
 				if(craftingButton.rect.isMouseOvered()) {
 					state = State.CRAFTING;
 					crafting.updateIngredients();
+					
+					inventoryButton.setTexture(ResourceManager.getTexture("inventory_ui"));
+					equipmentButton.setTexture(ResourceManager.getTexture("equipment_ui"));
+					
+					craftingButton.setTexture(ResourceManager.getTexture("selected_crafting_ui"));
+					
 				} else if(inventoryButton.rect.isMouseOvered()) {
 					state = State.INVENTORY;
+					
+					craftingButton.setTexture(ResourceManager.getTexture("crafting_ui"));
+					equipmentButton.setTexture(ResourceManager.getTexture("equipment_ui"));
+					
+					inventoryButton.setTexture(ResourceManager.getTexture("selected_inventory_ui"));
 				} else if(equipmentButton.rect.isMouseOvered()) {
 					state = State.EQUIPMENT;
+					
+					craftingButton.setTexture(ResourceManager.getTexture("crafting_ui"));
+					inventoryButton.setTexture(ResourceManager.getTexture("inventory_ui"));
+					
+					equipmentButton.setTexture(ResourceManager.getTexture("selected_equipment_ui"));
 				}
 			}
 			
