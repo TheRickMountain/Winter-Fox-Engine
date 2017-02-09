@@ -20,7 +20,7 @@ public class HoeBlueprint extends Blueprint {
 
 	@Override
 	public Entity createInstanceWithComponents(Transformation transform) {
-		transform.localScaleX = transform.localScaleY = transform.localScaleZ = 1.5f;
+		transform.localScaleX = transform.localScaleY = transform.localScaleZ = 2f;
 		transform.localY = -0.5f;
 		transform.localX = 0.5f;
 		Entity entity = new Entity(mesh, material, new Transformation(transform));
