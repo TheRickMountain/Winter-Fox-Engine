@@ -151,7 +151,7 @@ public class PlayerControllerComponent extends Component {
 				(int)getParent().getTransform().x, 
 				(int)getParent().getTransform().z, 
 				(int)x, (int)z);
-		return (distance == 1.0f || distance == 1.4142135f);
+		return distance <= 1.4142135f;
 	}
 	
 	private void turnTo(int x, int z) {
