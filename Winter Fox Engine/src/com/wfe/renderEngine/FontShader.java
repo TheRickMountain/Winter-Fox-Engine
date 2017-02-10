@@ -12,13 +12,14 @@ public class FontShader extends ShaderProgram{
 	private static final MyFile FRAGMENT_SHADER = new MyFile("shaders/font.frag");
 	
 	public UniformMatrix modelMatrix = new UniformMatrix("modelMatrix");
+	public UniformMatrix projectionMatrix = new UniformMatrix("projectionMatrix");
 	public UniformVec3 color = new UniformVec3("color");
 	
 	private UniformSampler fontAtlas = new UniformSampler("fontAtlas");
 	
 	public FontShader() {
-		super(VERTEX_SHADER, FRAGMENT_SHADER, "in_data");
-		storeAllUniformLocations(modelMatrix, fontAtlas, color);
+		super(VERTEX_SHADER, FRAGMENT_SHADER, "in_position", "in_texCoord");
+		storeAllUniformLocations(modelMatrix, projectionMatrix, fontAtlas, color);
 		connectTextureUnits();
 	}
 

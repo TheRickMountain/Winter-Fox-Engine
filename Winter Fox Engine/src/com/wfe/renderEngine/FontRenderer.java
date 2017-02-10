@@ -19,6 +19,7 @@ public class FontRenderer {
 	
 	private static FontShader shader;
 	
+	private static Matrix4f projectionMatrix = new Matrix4f();
 	private static Matrix4f modelMatrix = new Matrix4f();
 	
 	public static FontType font;
@@ -27,6 +28,11 @@ public class FontRenderer {
 		shader = new FontShader();
 		font = new FontType(ResourceManager.getTexture("myFont").getID(),
 				new MyFile("font/myFont.fnt"));
+		
+		MathUtils.getOrthoProjectionMatrix(projectionMatrix, 0, Display.getWidth(), Display.getHeight(), 0);
+		shader.start();
+		shader.projectionMatrix.loadMatrix(projectionMatrix);
+		shader.stop();
 	}
 	
 	public static void render(List<GUIText> texts) {
@@ -40,6 +46,11 @@ public class FontRenderer {
 		OpenglUtils.depthTest(false);
 		
 		shader.start();
+		
+		if(Display.isResized()) {
+			MathUtils.getOrthoProjectionMatrix(projectionMatrix, 0, Display.getWidth(), Display.getHeight(), 0);
+			shader.projectionMatrix.loadMatrix(projectionMatrix);
+		}
 		
 		GL13.glActiveTexture(GL13.GL_TEXTURE0);
 		GL11.glBindTexture(GL11.GL_TEXTURE_2D, font.getTextureAtlas());

@@ -9,7 +9,7 @@ import com.wfe.input.Mouse;
 public class MainApp {
 	
 	public static void main(String[] args) throws Exception {
-		Display display = new Display("Paleon", 1152, 648);
+		Display display = new Display("Paleon", 1152, 648, false);
 		display.init();
 
 		IGameLogic gameLogic = new Game();

@@ -9,7 +9,6 @@ import static org.lwjgl.glfw.GLFW.GLFW_OPENGL_FORWARD_COMPAT;
 import static org.lwjgl.glfw.GLFW.GLFW_OPENGL_PROFILE;
 import static org.lwjgl.glfw.GLFW.GLFW_RESIZABLE;
 import static org.lwjgl.glfw.GLFW.GLFW_SAMPLES;
-import static org.lwjgl.glfw.GLFW.GLFW_TRUE;
 import static org.lwjgl.glfw.GLFW.GLFW_VISIBLE;
 import static org.lwjgl.glfw.GLFW.glfwCreateWindow;
 import static org.lwjgl.glfw.GLFW.glfwDefaultWindowHints;
@@ -45,6 +44,7 @@ import org.lwjgl.glfw.GLFWImage;
 import org.lwjgl.glfw.GLFWVidMode;
 import org.lwjgl.glfw.GLFWWindowSizeCallback;
 import org.lwjgl.opengl.GL;
+import org.lwjgl.opengl.GL11;
 
 import com.wfe.input.Keyboard;
 import com.wfe.input.Mouse;
@@ -72,14 +72,17 @@ public class Display {
 	private static long lastFrame = 0;
 	private static List<Float> previousTimes = new ArrayList<Float>();
 	
+	private boolean fullscreen = false;
+	
 	public static long defaultCursor;
 	public static long takeCursor;
 	private static long currentCursor;
 
-    public Display(String title, int width, int height) {
+    public Display(String title, int width, int height, boolean fullscreen) {
         this.title = title;
     	Display.width = width;
         Display.height = height;
+        this.fullscreen = fullscreen;
     }
         
     public void init() {
@@ -94,11 +97,19 @@ public class Display {
         glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
         glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
         glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
-        glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
+        glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
         // Anti-aliasing
         glfwWindowHint(GLFW_SAMPLES, 4);
 
-        window = glfwCreateWindow(width, height, title, NULL, NULL);
+        if(fullscreen) {
+        	GLFWVidMode vidmode = glfwGetVideoMode(glfwGetPrimaryMonitor());
+        	Display.width = vidmode.width();
+        	Display.height = vidmode.height();
+        	window = glfwCreateWindow(Display.width, Display.height, title, glfwGetPrimaryMonitor(), NULL);
+        } else {
+        	window = glfwCreateWindow(width, height, title, NULL, NULL);
+        }
+        
         if ( window == NULL )
             throw new RuntimeException("Failed to create the GLFW window");
         
@@ -142,6 +153,7 @@ public class Display {
     	Display.width = width;
     	Display.height = height;
     	setResized(true);
+    	GL11.glViewport(0, 0, Display.width, Display.height);
     }
 
     public boolean isCloseRequested() {

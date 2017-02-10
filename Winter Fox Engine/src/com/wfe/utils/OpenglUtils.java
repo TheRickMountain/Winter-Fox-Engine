@@ -3,8 +3,8 @@ package com.wfe.utils;
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 
-import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
+import org.lwjgl.system.MemoryUtil;
 
 public class OpenglUtils {
 
@@ -43,20 +43,19 @@ public class OpenglUtils {
 	}
 	
 	public static FloatBuffer toFloatBuffer(float[] data) {
-		FloatBuffer buffer = BufferUtils.createFloatBuffer(data.length);
+		FloatBuffer buffer = MemoryUtil.memAllocFloat(data.length);
 		buffer.put(data).flip();
 		return buffer;
 	}
 	
 	public static IntBuffer toIntBuffer(int[] data) {
-		IntBuffer buffer = BufferUtils.createIntBuffer(data.length);
+		IntBuffer buffer = MemoryUtil.memAllocInt(data.length);
 		buffer.put(data).flip();
 		return buffer;
 	}
 	
 	public static FloatBuffer toFloatBuffer(float[] vertices, float[] texCoords) {
-        FloatBuffer interleavedBuffer = BufferUtils.createFloatBuffer(vertices.length
-                + texCoords.length);
+        FloatBuffer interleavedBuffer = MemoryUtil.memAllocFloat(vertices.length + texCoords.length);
         int veticesPointer = 0;
         int texturePointer = 0;
         for (int i = 0; i < vertices.length / 2; i++) {
@@ -70,8 +69,7 @@ public class OpenglUtils {
     }
 	
 	public static FloatBuffer toFloatBuffer(float[] vertices, float[] texCoords, float[] normals) {
-        FloatBuffer interleavedBuffer = BufferUtils.createFloatBuffer(vertices.length +
-                texCoords.length + normals.length);
+        FloatBuffer interleavedBuffer = MemoryUtil.memAllocFloat(vertices.length + texCoords.length + normals.length);
         int veticesPointer = 0;
         int texturePointer = 0;
         int normalsPointer = 0;
