@@ -86,7 +86,7 @@ public class World {
 	public void render() {
 		renderEngine.clear();
 		terrain.render();
-		renderEngine.render(entitiesToRender);
+		renderEngine.render(entitiesToRender);	
 	}
 	
 	public void addEntity(Entity entity) {

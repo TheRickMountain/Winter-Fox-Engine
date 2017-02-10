@@ -1,14 +1,12 @@
 package com.wfe.gui;
 
-import com.wfe.core.Display;
-import com.wfe.renderEngine.FontRenderer;
 import com.wfe.renderEngine.GUIRenderer;
 import com.wfe.utils.Rect;
 
 public class Ingredient {
 	
 	public Rect rect;
-	private GUIText nameText;
+	//private GUIText nameText;
 	
 	private Item item;
 	
@@ -17,8 +15,8 @@ public class Ingredient {
 	
 	public Ingredient(Rect rect) {
 		this.rect = rect;
-		this.nameText = new GUIText("", 1.1f, FontRenderer.font, 0.0f, 0.0f, Display.getWidth(), false);
-		this.nameText.setColor(1.0f, 1.0f, 1.0f);
+		//this.nameText = new GUIText("", 1.1f, FontRenderer.font, 0.0f, 0.0f, Display.getWidth(), false);
+		//this.nameText.setColor(1.0f, 1.0f, 1.0f);
 	}
 	
 	public void render() {
@@ -29,7 +27,7 @@ public class Ingredient {
 	
 	public void renderText() {
 		if(item != null) {
-			FontRenderer.render(nameText, rect.x + rect.width + 5, rect.y);
+			//FontRenderer.render(nameText, rect.x + rect.width + 5, rect.y);
 		}
 	}
 	
@@ -38,7 +36,7 @@ public class Ingredient {
 		this.current = current;
 		this.required = required;
 		if(item != null) {
-			this.nameText.setText(item.name + " (" + current + "/" + required + ")");
+			//this.nameText.setText(item.name + " (" + current + "/" + required + ")");
 		}
 	}
 	

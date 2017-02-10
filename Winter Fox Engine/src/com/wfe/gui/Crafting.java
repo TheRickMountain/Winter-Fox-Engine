@@ -8,7 +8,6 @@ import com.wfe.core.ResourceManager;
 import com.wfe.ecs.ComponentType;
 import com.wfe.game.Game;
 import com.wfe.input.Mouse;
-import com.wfe.renderEngine.FontRenderer;
 import com.wfe.renderEngine.GUIRenderer;
 import com.wfe.utils.Rect;
 
@@ -18,8 +17,8 @@ public class Crafting implements GUIComponent {
 	private float offset = 5;
 	
 	private Item selectedItem;
-	private GUIText name;
-	private GUIText description;
+	//private GUIText name;
+	//private GUIText description;
 	
 	private List<Ingredient> ingredients = new ArrayList<Ingredient>();
 	
@@ -30,11 +29,11 @@ public class Crafting implements GUIComponent {
 			slots.add(new Slot(new Rect(0, 0, Slot.SLOT_SIZE, Slot.SLOT_SIZE)));
 		}
 		
-		name = new GUIText("", 1.2f, FontRenderer.font, 0.0f, 0.0f, GUIManager.inspectFrame.rect.width, true);
-		name.setColor(1.0f, 1.0f, 1.0f);
-		description = new GUIText("", 1.0f, FontRenderer.font, 0.0f, 0.0f, 
-				GUIManager.inspectFrame.rect.width - 20 - 80, false);
-		description.setColor(0.9f, 0.9f, 0.9f);
+		//name = new GUIText("", 1.2f, FontRenderer.font, 0.0f, 0.0f, GUIManager.inspectFrame.rect.width, true);
+		//name.setColor(1.0f, 1.0f, 1.0f);
+		//description = new GUIText("", 1.0f, FontRenderer.font, 0.0f, 0.0f, 
+				//GUIManager.inspectFrame.rect.width - 20 - 80, false);
+		//description.setColor(0.9f, 0.9f, 0.9f);
 		
 		for(int i = 0; i < 5; i++) {
 			ingredients.add(new Ingredient(new Rect(0, 0, 30, 30)));
@@ -53,8 +52,8 @@ public class Crafting implements GUIComponent {
 				if(slot.rect.isMouseOvered()) {
 					if(slot.isHasItem()) {
 						selectedItem = slot.getItem();
-						name.setText(selectedItem.name);
-						description.setText(selectedItem.description);
+						//name.setText(selectedItem.name);
+						//description.setText(selectedItem.description);
 						
 						updateIngredients();
 					}
@@ -132,12 +131,12 @@ public class Crafting implements GUIComponent {
 				ing.renderText();
 			}
 			
-			FontRenderer.render(name, 
+			/*FontRenderer.render(name, 
 					GUIManager.inspectFrame.getX(), 
 					GUIManager.inspectFrame.getY() + offset);
 			
 			FontRenderer.render(description, GUIManager.inspectFrame.getX() + 80 + offset, 
-					GUIManager.inspectFrame.getY() + offset + 20);
+					GUIManager.inspectFrame.getY() + offset + 20);*/
 			
 			craftButton.renderText();
 		}

@@ -1,96 +1,95 @@
 package com.wfe.renderEngine;
 
-import java.util.List;
+import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
+import static org.lwjgl.opengl.GL11.GL_DEPTH_BUFFER_BIT;
+import static org.lwjgl.opengl.GL11.GL_TEXTURE_2D;
+import static org.lwjgl.opengl.GL11.GL_TRIANGLES;
+import static org.lwjgl.opengl.GL11.GL_UNSIGNED_INT;
+import static org.lwjgl.opengl.GL11.glBindTexture;
+import static org.lwjgl.opengl.GL11.glClear;
+import static org.lwjgl.opengl.GL11.glDrawElements;
+import static org.lwjgl.opengl.GL13.GL_TEXTURE0;
+import static org.lwjgl.opengl.GL13.glActiveTexture;
+
+import java.awt.Font;
 
 import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL13;
 
 import com.wfe.core.Display;
-import com.wfe.core.ResourceManager;
-import com.wfe.font.FontType;
+import com.wfe.font.FontTexture;
+import com.wfe.font.GUIText;
 import com.wfe.graph.Mesh;
-import com.wfe.gui.GUIText;
 import com.wfe.math.Matrix4f;
 import com.wfe.utils.MathUtils;
-import com.wfe.utils.MyFile;
 import com.wfe.utils.OpenglUtils;
 
 public class FontRenderer {
+
+	private static final String CHARSET = "ISO-8859-1";
 	
-	private static FontShader shader;
-	
-	private static Matrix4f projectionMatrix = new Matrix4f();
-	private static Matrix4f modelMatrix = new Matrix4f();
-	
-	public static FontType font;
-	
-	protected FontRenderer() throws Exception {	
-		shader = new FontShader();
-		font = new FontType(ResourceManager.getTexture("myFont").getID(),
-				new MyFile("font/myFont.fnt"));
-		
-		MathUtils.getOrthoProjectionMatrix(projectionMatrix, 0, Display.getWidth(), Display.getHeight(), 0);
-		shader.start();
-		shader.projectionMatrix.loadMatrix(projectionMatrix);
-		shader.stop();
-	}
-	
-	public static void render(List<GUIText> texts) {
-		for(GUIText text : texts) {
-			render(text);
-		}
-	}
-	
-	public void prepare() {
+    private final static Matrix4f projModelMatrix = new Matrix4f();
+    private final static Matrix4f orthProjMatrix = new Matrix4f();
+    private final static Matrix4f modelMatrix = new Matrix4f();
+    
+    private static FontShader shader;
+    
+    public static final FontTexture ARIAL = new FontTexture(new Font("Arial", Font.PLAIN, 20), CHARSET);
+
+    public FontRenderer() {
+    	shader = new FontShader();
+    	
+    	MathUtils.getOrthoProjectionMatrix(orthProjMatrix, 0, Display.getWidth(), Display.getHeight(), 0);
+        
+        GL11.glEnable(GL11.GL_BLEND);
+        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+    }
+
+    public void clear() {
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    }
+    
+    public void prebare() {
+    	OpenglUtils.cullBackFaces(false);
 		OpenglUtils.alphaBlending(true);
 		OpenglUtils.depthTest(false);
+    	
+    	if(Display.isResized()) {
+    		MathUtils.getOrthoProjectionMatrix(orthProjMatrix, 0, Display.getWidth(), Display.getHeight(), 0);
+    	}
+    	
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, ARIAL.getTexture().getID());
+    	
+        shader.start();
+    }
+
+    public static void render(GUIText text) {        
+        MathUtils.getModelMatrix(modelMatrix, text.getX(), text.getY(), 
+        		text.getRotation(), text.getScaleX(), text.getScaleY());
+        Matrix4f.mul(orthProjMatrix, modelMatrix, projModelMatrix);
+        
+        Mesh mesh = text.getMesh();
+        
+        shader.projModelMatrix.loadMatrix(projModelMatrix);
+        shader.colour.loadColor(text.getColor());
+        shader.hasTexture.loadBoolean(true);
+
+        mesh.bind(0, 1);
+        
+        glDrawElements(GL_TRIANGLES, mesh.getVertexCount(), GL_UNSIGNED_INT, 0);
+
+        mesh.unbind(0, 1);
+    }
+    
+    public void finish() {
+    	shader.stop();
 		
-		shader.start();
-		
-		if(Display.isResized()) {
-			MathUtils.getOrthoProjectionMatrix(projectionMatrix, 0, Display.getWidth(), Display.getHeight(), 0);
-			shader.projectionMatrix.loadMatrix(projectionMatrix);
-		}
-		
-		GL13.glActiveTexture(GL13.GL_TEXTURE0);
-		GL11.glBindTexture(GL11.GL_TEXTURE_2D, font.getTextureAtlas());
-	}
-	
-	public static void render(GUIText text) {
-		float newX = (2 * (1.0f / Display.getWidth()) * text.getX()) + (-1 + text.getScaleX());
-		float newY = (-2 * (1.0f / Display.getHeight()) * text.getY()) + (1 - text.getScaleY());
-		shader.modelMatrix.loadMatrix(MathUtils.getModelMatrix(modelMatrix, newX, newY, 0, 0, 0, 0,
-				text.getScaleX(), text.getScaleY(), 1));
-		shader.color.loadVec3(text.getColor());
-		
-		Mesh mesh = text.getMesh();
-		mesh.bind(0);
-		GL11.glDrawArrays(GL11.GL_TRIANGLES, 0, mesh.getVertexCount());
-		mesh.unbind(0);
-	}
-	
-	public static void render(GUIText text, float x, float y) {
-		float newX = (2 * (1.0f / Display.getWidth()) * x) + (-1 + text.getScaleX());
-		float newY = (-2 * (1.0f / Display.getHeight()) * y) + (1 - text.getScaleY());
-		shader.modelMatrix.loadMatrix(MathUtils.getModelMatrix(modelMatrix, newX, newY, 0, 0, 0, 0,
-				text.getScaleX(), text.getScaleY(), 1));
-		shader.color.loadVec3(text.getColor());
-		
-		Mesh mesh = text.getMesh();
-		mesh.bind(0);
-		GL11.glDrawArrays(GL11.GL_TRIANGLES, 0, mesh.getVertexCount());
-		mesh.unbind(0);
-	}
-	
-	public void finish() {
-		shader.stop();
-		
+		OpenglUtils.cullBackFaces(true);
 		OpenglUtils.alphaBlending(false);
 		OpenglUtils.depthTest(true);
-	}
-	
-	public void cleanup() {
-		shader.cleanUp();
-	}
+    }
 
+    public void cleanup() {
+        shader.cleanUp();
+    }
 }

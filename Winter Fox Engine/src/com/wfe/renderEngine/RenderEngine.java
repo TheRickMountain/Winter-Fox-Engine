@@ -40,7 +40,7 @@ public class RenderEngine {
 		GUIManager.render();
 		guiRenderer.finish();
 		
-		fontRenderer.prepare();
+		fontRenderer.prebare();
 		GUIManager.renderText();
 		fontRenderer.finish();
 		
@@ -48,7 +48,7 @@ public class RenderEngine {
 		GUIManager.renderPopUp();
 		guiRenderer.finish();
 		
-		fontRenderer.prepare();
+		fontRenderer.prebare();
 		GUIManager.renderPopUpText();
 		fontRenderer.finish();
 	}
@@ -63,7 +63,7 @@ public class RenderEngine {
 	public void cleanup() {
 		staticEntityRenderer.cleanup();
 		guiRenderer.cleanup();
-		fontRenderer.cleanup();
+		//fontRenderer.cleanup();
 	}
 	
 }

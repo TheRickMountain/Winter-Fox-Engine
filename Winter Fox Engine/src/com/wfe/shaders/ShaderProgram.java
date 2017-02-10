@@ -24,7 +24,7 @@ public abstract class ShaderProgram {
 		GL20.glDeleteShader(vertexShaderID);
 		GL20.glDeleteShader(fragmentShaderID);
 	}
-	
+
 	protected void storeAllUniformLocations(Uniform... uniforms){
 		for(Uniform uniform : uniforms){
 			uniform.storeUniformLocation(programID);

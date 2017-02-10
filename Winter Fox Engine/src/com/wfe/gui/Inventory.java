@@ -8,7 +8,6 @@ import com.wfe.core.Display;
 import com.wfe.ecs.ComponentType;
 import com.wfe.game.Game;
 import com.wfe.input.Mouse;
-import com.wfe.renderEngine.FontRenderer;
 import com.wfe.renderEngine.GUIRenderer;
 import com.wfe.utils.Rect;
 
@@ -20,12 +19,12 @@ public class Inventory implements GUIComponent {
 	private float offset = 5;
 	
 	private Item selectedItem;
-	private GUIText name;
-	private GUIText description;
+	//private GUIText name;
+	//private GUIText description;
 	
 	private Item draggedItem;
 	private int draggedItemCount;
-	private GUIText draggedItemCountText;
+	//private GUIText draggedItemCountText;
 	
 	public Inventory() {	
 		for(int i = 0; i < 6; i++) {
@@ -38,14 +37,14 @@ public class Inventory implements GUIComponent {
 			allSlots.add(inventorySlots.get(i));
 		}
 		
-		name = new GUIText("", 1.4f, FontRenderer.font, 0.0f, 0.0f, GUIManager.inspectFrame.rect.width, true);
+		/*name = new GUIText("", 1.4f, FontRenderer.font, 0.0f, 0.0f, GUIManager.inspectFrame.rect.width, true);
 		name.setColor(1.0f, 1.0f, 1.0f);
 		description = new GUIText("", 1.1f, FontRenderer.font, 0.0f, 0.0f, 
 				GUIManager.inspectFrame.rect.width - 20, false);
 		description.setColor(0.9f, 0.9f, 0.9f);
 		
 		draggedItemCountText = new GUIText("", 1.2f, FontRenderer.font, 0.0f, 0.0f, Slot.SLOT_SIZE, true);
-		draggedItemCountText.setColor(1.0f, 1.0f, 1.0f);
+		draggedItemCountText.setColor(1.0f, 1.0f, 1.0f);*/
 	}
 	
 	@Override
@@ -55,8 +54,8 @@ public class Inventory implements GUIComponent {
 				if(slot.rect.isMouseOvered()) {
 					if(slot.isHasItem()) {
 						selectedItem = slot.getItem();
-						name.setText(selectedItem.name);
-						description.setText(selectedItem.description);
+						//name.setText(selectedItem.name);
+						//description.setText(selectedItem.description);
 					}
 				}
 			}
@@ -72,7 +71,7 @@ public class Inventory implements GUIComponent {
 						if(draggedItem == null) {
 							draggedItem = slot.getItem();
 							draggedItemCount = slot.getItemCount();
-							draggedItemCountText.setText("" + draggedItemCount);
+							//draggedItemCountText.setText("" + draggedItemCount);
 							inv.removeItemFromSlot(count);
 						} else {
 							if(inv.slots[count] == draggedItem.id) {
@@ -82,7 +81,7 @@ public class Inventory implements GUIComponent {
 									inv.counts[count] = draggedItemCount;
 									
 									draggedItemCount = tempCount;
-									draggedItemCountText.setText("" + draggedItemCount);
+									//draggedItemCountText.setText("" + draggedItemCount);
 								} else {
 									int totalCount = inv.counts[count] + draggedItemCount;
 									if(totalCount <= draggedItem.stackSize) {
@@ -93,7 +92,7 @@ public class Inventory implements GUIComponent {
 										totalCount -= draggedItem.stackSize;
 										
 										draggedItemCount = totalCount;
-										draggedItemCountText.setText("" + draggedItemCount);
+										//draggedItemCountText.setText("" + draggedItemCount);
 									}
 								}
 							} else {
@@ -105,7 +104,7 @@ public class Inventory implements GUIComponent {
 								
 								draggedItem = temp;
 								draggedItemCount = tempCount;
-								draggedItemCountText.setText("" + draggedItemCount);
+								//draggedItemCountText.setText("" + draggedItemCount);
 							}
 						}
 					} else {
@@ -148,11 +147,11 @@ public class Inventory implements GUIComponent {
 		}
 		
 		if(selectedItem != null) {
-			FontRenderer.render(name, GUIManager.inspectFrame.getX(), 
+			/*FontRenderer.render(name, GUIManager.inspectFrame.getX(), 
 					GUIManager.mainFrame.getY() + offset + 120);
 			
 			FontRenderer.render(description, GUIManager.inspectFrame.getX() + offset, 
-					GUIManager.mainFrame.getY() + offset + 120 + 25);
+					GUIManager.mainFrame.getY() + offset + 120 + 25);*/
 		}
 	}
 	
@@ -173,9 +172,9 @@ public class Inventory implements GUIComponent {
 	public void renderPopUpText() {
 		if(draggedItem != null) {
 			if(draggedItemCount > 1) {
-				FontRenderer.render(draggedItemCountText, 
+				/*FontRenderer.render(draggedItemCountText, 
 						Mouse.getX() - Slot.SLOT_SIZE / 2, 
-						Mouse.getY() - Slot.SLOT_SIZE / 2);
+						Mouse.getY() - Slot.SLOT_SIZE / 2);*/
 			}
 		}
 	}
