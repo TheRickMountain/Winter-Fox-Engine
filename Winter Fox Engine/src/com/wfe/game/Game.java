@@ -221,6 +221,17 @@ public class Game implements IGameLogic {
 		ResourceManager.loadMesh("stick", OBJLoader.loadMesh("/entity/stick/model.obj"));
 		/*** *** ***/
 		
+		/*** Well ***/
+		ResourceManager.loadTexture("well_ui", Texture.newTexture(new MyFile("entity/well/icon.png"))
+				.normalMipMap()
+				.create());
+		ResourceManager.loadTexture("well", Texture.newTexture(new MyFile("entity/well/diffuse.png"))
+				.normalMipMap(-0.4f)
+				.create());
+		
+		ResourceManager.loadMesh("well", OBJLoader.loadMesh("/entity/well/model.obj"));
+		/*** *** ***/
+		
 		/*** Wheat ***/
 		ResourceManager.loadTexture("wheat_ui", Texture.newTexture(new MyFile("entity/wheat/icon.png"))
 				.normalMipMap()
@@ -306,6 +317,16 @@ public class Game implements IGameLogic {
 			}
 		}
 		
+		World.getWorld().setTile(80, 80, 0);
+		World.getWorld().setTile(81, 80, 1);
+		World.getWorld().setTile(80, 81, 4);
+		World.getWorld().setTile(81, 81, 5);
+		
+		World.getWorld().setTile(82, 80, 0);
+		World.getWorld().setTile(83, 80, 1);
+		World.getWorld().setTile(82, 81, 4);
+		World.getWorld().setTile(83, 81, 5);
+		
 		AudioMaster.ambientSource.play(ResourceManager.getSound("hills"));
 	}
 	
@@ -314,6 +335,7 @@ public class Game implements IGameLogic {
 		if(Keyboard.isKeyDown(Key.KEY_H)) {
 			InventoryComponent inventory = (InventoryComponent) player.getComponent(ComponentType.INVENTORY);
 			inventory.addItem(Item.APPLE, 32);
+			inventory.addItem(Item.WELL, 1);
 		}
 		
 		World.getWorld().update(dt, player);

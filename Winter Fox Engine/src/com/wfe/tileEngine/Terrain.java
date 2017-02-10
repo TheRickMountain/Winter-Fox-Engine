@@ -61,6 +61,7 @@ public class Terrain {
 	
 	public void render() {
 		shader.start();
+		
 		if(Display.isResized()) {
 			shader.projectionMatrix.loadMatrix(camera.getProjectionMatrix());
 		}

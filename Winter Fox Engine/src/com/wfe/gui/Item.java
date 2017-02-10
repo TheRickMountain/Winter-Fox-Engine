@@ -19,6 +19,7 @@ public class Item {
 	public static final int WINDOW_WALL = 11;
 	public static final int DOOR_WALL = 12;
 	public static final int ROPE = 13;
+	public static final int WELL = 14;
 	
 	public final int id;
 	public final String name;

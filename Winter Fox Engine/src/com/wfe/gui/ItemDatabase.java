@@ -9,6 +9,7 @@ import com.wfe.blueprints.DoorWallBlueprint;
 import com.wfe.blueprints.HoeBlueprint;
 import com.wfe.blueprints.PickaxeBlueprint;
 import com.wfe.blueprints.WallBlueprint;
+import com.wfe.blueprints.WellBlueprint;
 import com.wfe.blueprints.WindowWallBlueprint;
 import com.wfe.core.ResourceManager;
 
@@ -63,6 +64,9 @@ public class ItemDatabase {
 		
 		addItem(new Item(Item.ROPE, "Rope", "Common useful resource", ResourceManager.getTexture("rope_ui"), 
 				null, ItemType.RESOURCE, 40, new int[] {Item.FIBER, 5}));
+		
+		addItem(new Item(Item.WELL, "Well", "Common useful resource", ResourceManager.getTexture("well_ui"), 
+				new WellBlueprint(), ItemType.BUILDING, 1, new int[] {Item.LOG, 4, Item.FLINT, 10, Item.ROPE, 2}));
 	}
 	
 	public static void create() {
