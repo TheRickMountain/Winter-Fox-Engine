@@ -300,7 +300,7 @@ public class Game implements IGameLogic {
 				int send = MyRandom.nextInt(5);
 				if(send == 1) {
 					Grass grass = new Grass(player, new Transformation(i, 0, j));
-					grass.setTextureIndex(MyRandom.nextInt(0, 1, 2));		
+					grass.setTextureIndex(MyRandom.nextInt(3, 4, 5, 6));		
 					World.getWorld().addEntityToTile(grass);
 				}
 			}

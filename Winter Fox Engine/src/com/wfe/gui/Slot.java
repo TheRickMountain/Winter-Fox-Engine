@@ -52,7 +52,7 @@ public class Slot implements GUIComponent {
 	@Override
 	public void renderText() {
 		if(hasItem && (itemCount > 1)) {
-			text.setPosition(rect.x + rect.width - (text.getWidth()), 
+			text.setPosition(rect.x + rect.width - (text.getWidth() + 5), 
 					rect.y + rect.height - (text.getHeight()));
 			FontRenderer.render(text);
 		}

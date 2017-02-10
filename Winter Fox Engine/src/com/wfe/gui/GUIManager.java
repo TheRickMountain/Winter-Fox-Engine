@@ -7,6 +7,7 @@ import com.wfe.input.Key;
 import com.wfe.input.Keyboard;
 import com.wfe.input.Mouse;
 import com.wfe.renderEngine.GUIRenderer;
+import com.wfe.utils.Color;
 import com.wfe.utils.Rect;
 
 public class GUIManager  {
@@ -17,6 +18,11 @@ public class GUIManager  {
 	
 	public static GUIFrame mainFrame;
 	public static GUIFrame inspectFrame;
+	
+	private static Color background = new Color(0.1f, 0.1f, 0.1f, 0.9f);
+	
+	public static GUITexture mainF;
+	public static GUITexture inspectF;
 	
 	public static Inventory inventory;
 	public static Crafting crafting;
@@ -37,6 +43,9 @@ public class GUIManager  {
 		
 		mainFrame = new GUIFrame(new Rect(0, 0, 275, 345));
 		inspectFrame = new GUIFrame(new Rect(0, 0, 275, 345));
+		
+		mainF = new GUITexture(background, mainFrame.rect, false);
+		inspectF = new GUITexture(background, inspectFrame.rect, false);
 		
 		craftingButton = new GUITexture(ResourceManager.getTexture("crafting_ui"), new Rect(0, 0, 50, 50), true);
 		inventoryButton = new GUITexture(ResourceManager.getTexture("inventory_ui"), new Rect(0, 0, 50, 50), true);
@@ -115,8 +124,8 @@ public class GUIManager  {
 			GUIRenderer.render(inventoryButton);
 			GUIRenderer.render(equipmentButton);
 		
-			GUIRenderer.render(mainFrame.getFrameTextures());
-			GUIRenderer.render(inspectFrame.getFrameTextures());
+			GUIRenderer.render(mainF);
+			GUIRenderer.render(inspectF);
 			
 			switch(state) {
 			case CRAFTING:
