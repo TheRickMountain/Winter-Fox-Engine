@@ -70,7 +70,7 @@ public class PlayerControllerComponent extends Component {
 							
 							GatherableComponent gc = (GatherableComponent)entity.getComponent(ComponentType.GATHERABLE);
 							
-							if(GUIManager.addItem(gc.getItem(), gc.getCount()) == 0) {
+							if(GUIManager.inventory.addItem(gc.getItem(), gc.getCount()) == 0) {
 								tile.removeEntity();
 								source.play(gc.getSound());
 							}
@@ -86,7 +86,7 @@ public class PlayerControllerComponent extends Component {
 							if(Mouse.isButtonDown(1)) {
 								turnTo((int)tp.x, (int)tp.z);
 							
-								if(GUIManager.addItem(hive.getItem(), 
+								if(GUIManager.inventory.addItem(hive.getItem(), 
 										MyRandom.nextInt(hive.getCountMax()) + 1) == 0) {
 									hive.setReady(false);
 									source.play(hive.getSound());

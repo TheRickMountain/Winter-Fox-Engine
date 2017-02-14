@@ -83,6 +83,11 @@ public class Slot implements GUIComponent {
 		return count;
 	}
 	
+	public void setCount(int count) {
+		this.count = count;
+		this.countText.setText("" + count);
+	}
+	
 	public boolean isSelected() {
 		return selected;
 	}

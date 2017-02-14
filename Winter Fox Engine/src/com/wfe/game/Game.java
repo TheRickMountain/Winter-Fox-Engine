@@ -322,11 +322,13 @@ public class Game implements IGameLogic {
 		
 		World.getWorld().addEntityToTile(new Hive(new Transformation(82.5f, 0, 80.5f)));
 		
-		GUIManager.addItem(ItemDatabase.getItem(Item.HOE), 1);
-		GUIManager.addItem(ItemDatabase.getItem(Item.AXE), 1);
-		GUIManager.addItem(ItemDatabase.getItem(Item.PICKAXE), 1);
-		GUIManager.addItem(ItemDatabase.getItem(Item.LAVENDER), 5);
-		GUIManager.addItem(ItemDatabase.getItem(Item.APPLE), 4);
+		GUIManager.inventory.addItem(ItemDatabase.getItem(Item.HOE), 1);
+		GUIManager.inventory.addItem(ItemDatabase.getItem(Item.AXE), 1);
+		GUIManager.inventory.addItem(ItemDatabase.getItem(Item.PICKAXE), 1);
+		GUIManager.inventory.addItem(ItemDatabase.getItem(Item.LAVENDER), 5);
+		GUIManager.inventory.addItem(ItemDatabase.getItem(Item.APPLE), 4);
+		GUIManager.inventory.addItem(ItemDatabase.getItem(Item.HONEY), 5);
+		GUIManager.inventory.addItem(ItemDatabase.getItem(Item.MUSHROOM), 2);
 		
 		AudioMaster.ambientSource.play(ResourceManager.getSound("hills"));
 	}
