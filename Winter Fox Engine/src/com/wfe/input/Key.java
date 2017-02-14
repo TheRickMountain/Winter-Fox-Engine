@@ -1,6 +1,6 @@
 package com.wfe.input;
 
-import static org.lwjgl.glfw.GLFW.*;
+import static org.lwjgl.glfw.GLFW.GLFW_KEY_MENU;
 
 /**
  * Created by Rick on 06.10.2016.

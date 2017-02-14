@@ -23,7 +23,7 @@ public class WellBlueprint extends Blueprint {
 	public Entity createInstanceWithComponents(Transformation transform) {
 		Entity entity = new Entity(mesh, material, new Transformation(transform));
 		entity.getTransform().setScale(0.75f);
-		entity.addComponent(new ColliderComponent(0.75f, 0.75f, 0.75f, entity.getTransform()));
+		entity.addComponent(new ColliderComponent(1f, 1f, 1f, entity.getTransform()));
 		return entity;
 	}
 

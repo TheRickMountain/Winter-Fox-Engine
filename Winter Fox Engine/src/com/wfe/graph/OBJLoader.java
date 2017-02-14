@@ -6,7 +6,6 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.wfe.graph.Mesh;
 import com.wfe.math.Vector2f;
 import com.wfe.math.Vector3f;
 import com.wfe.utils.Utils;

@@ -1,11 +1,13 @@
 package com.wfe.input;
 
-import org.lwjgl.glfw.GLFWKeyCallback;
+import static org.lwjgl.glfw.GLFW.GLFW_KEY_ESCAPE;
+import static org.lwjgl.glfw.GLFW.GLFW_RELEASE;
+import static org.lwjgl.glfw.GLFW.glfwSetWindowShouldClose;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.lwjgl.glfw.GLFW.*;
+import org.lwjgl.glfw.GLFWKeyCallback;
 
 /**
  * Created by Rick on 06.10.2016.

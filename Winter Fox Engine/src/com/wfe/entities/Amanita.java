@@ -7,7 +7,7 @@ import com.wfe.graph.Material;
 
 public class Amanita extends Entity {
 
-	public Amanita(Entity player, Transformation transform) {
+	public Amanita(Transformation transform) {
 		super(ResourceManager.getMesh("amanita"), 
 				new Material(ResourceManager.getTexture("amanita")), transform);
 		transform.setScale(0.5f);

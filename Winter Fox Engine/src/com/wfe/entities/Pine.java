@@ -11,7 +11,7 @@ import com.wfe.gui.Item;
 
 public class Pine extends Entity {
 
-	public Pine(Player player, Transformation transform) {
+	public Pine(Transformation transform) {
 		super(ResourceManager.getMesh("pine_bark"),
 				new Material(ResourceManager.getTexture("pine_bark")), transform);
 		setTag("tree");

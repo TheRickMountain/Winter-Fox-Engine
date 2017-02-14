@@ -1,6 +1,5 @@
 package com.wfe.entities;
 
-import com.wfe.components.InventoryComponent;
 import com.wfe.components.PlayerAnimationComponent;
 import com.wfe.components.PlayerControllerComponent;
 import com.wfe.core.Camera;
@@ -11,6 +10,8 @@ import com.wfe.game.World;
 import com.wfe.graph.Material;
 
 public class Player extends Entity {
+	
+	public PlayerControllerComponent playerController;
 	
 	public Entity leftArm;
 	public Entity rightArm;
@@ -108,10 +109,9 @@ public class Player extends Entity {
 		}
 		
 		PlayerAnimationComponent animation = new PlayerAnimationComponent(this);
+		playerController = new PlayerControllerComponent(camera, transform, animation, rightForearm);
 		addComponent(animation);
-		InventoryComponent inventory = new InventoryComponent(this);
-		addComponent(inventory);
-		addComponent(new PlayerControllerComponent(camera, transform, animation, inventory));
+		addComponent(playerController);
 	}
 
 }

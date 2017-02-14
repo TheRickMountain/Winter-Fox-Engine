@@ -6,15 +6,16 @@ import com.wfe.ecs.Entity;
 import com.wfe.ecs.Transformation;
 import com.wfe.graph.Material;
 import com.wfe.gui.Item;
+import com.wfe.gui.ItemDatabase;
 
 public class Mushroom extends Entity {
 
-	public Mushroom(Entity player, Transformation transform) {
+	public Mushroom(Transformation transform) {
 		super(ResourceManager.getMesh("mushroom"), 
 				new Material(ResourceManager.getTexture("mushroom")), transform);
 		setTag("consumable");
 		transform.setScale(0.5f);
-		addComponent(new GatherableComponent(Item.MUSHROOM, 1,
+		addComponent(new GatherableComponent(ItemDatabase.getItem(Item.MUSHROOM), 1,
 				ResourceManager.getSound("taking")));
 	}
 

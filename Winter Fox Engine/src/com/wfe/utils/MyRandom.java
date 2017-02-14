@@ -18,7 +18,11 @@ public class MyRandom {
 		return rand.nextFloat() * range;
 	}
 	
-	public static int nextInt(int... numbers) {
+	public static int nextInt(int min, int max) {
+		return (nextInt(max - min) + min) + 1;
+	}
+	
+	public static int nextInt(int[] numbers) {
 		return numbers[nextInt(numbers.length)];
 	}
 	

@@ -2,7 +2,7 @@ package com.wfe.components;
 
 import java.util.List;
 
-import com.wfe.audio.AudioMaster;
+import com.wfe.audio.Source;
 import com.wfe.core.Camera;
 import com.wfe.core.Display;
 import com.wfe.core.ResourceManager;
@@ -11,9 +11,7 @@ import com.wfe.ecs.ComponentType;
 import com.wfe.ecs.Entity;
 import com.wfe.ecs.Transformation;
 import com.wfe.game.World;
-import com.wfe.gui.Item;
-import com.wfe.gui.ItemDatabase;
-import com.wfe.gui.ItemType;
+import com.wfe.gui.GUIManager;
 import com.wfe.input.Key;
 import com.wfe.input.Keyboard;
 import com.wfe.input.Mouse;
@@ -22,6 +20,7 @@ import com.wfe.physics.AABB;
 import com.wfe.tileEngine.Tile;
 import com.wfe.utils.MathUtils;
 import com.wfe.utils.MousePicker;
+import com.wfe.utils.MyRandom;
 
 public class PlayerControllerComponent extends Component {
 
@@ -34,116 +33,84 @@ public class PlayerControllerComponent extends Component {
 	private AABB bb;
 	
 	private PlayerAnimationComponent animation;
-	private InventoryComponent inventory;
 	
-	private MineableComponent mineableComponent;
-	private Tile currentTile;
-	private boolean mining = false;
+	private Source source;
 	
-	public PlayerControllerComponent(Camera camera, Transformation transform, PlayerAnimationComponent playerAnim,
-			InventoryComponent inventory) {		
+	private Entity hand;
+	private Entity equipment;
+	
+	public PlayerControllerComponent(Camera camera, Transformation transform, PlayerAnimationComponent playerAnim, Entity hand) {		
 		this.camera = camera;
 		this.transform = transform;
 		this.animation = playerAnim;
-		this.inventory = inventory;
 		this.bb = new AABB(transform.x - 0.4f, 0, transform.z - 0.4f, transform.x + 0.4f, 0 + 1, transform.z + 0.4f);
 		this.speed = 2.0f;
+		this.hand = hand;
+		this.source = new Source();
 	}
 	
 	@Override
 	public void update(float dt) {	
-		iteractWithWorld(dt);
+		if(!Mouse.isActiveInGUI())
+			iteractWithWorld(dt);
 		move(dt);
 	}
 	
-	private void iteractWithWorld(float dt) {
-		if(mining) {
-			if(animation.hitAnim(dt)) {
-				mineableComponent.decreasetHealth();
-				animation.idleAnim();
-				AudioMaster.defaultSource.play(mineableComponent.getSound());
-				
-				/* Если добыча окончена, проверяем здоровье добываемого предмета */
-				/* В случае если здоровье равно 0, удаляем объект */
-				if(mineableComponent.getHealth() == 0) {
-					inventory.addItem(mineableComponent.getItem(), mineableComponent.getCount());
-					currentTile.removeEntity();
-				}
-				
-				mining = false;
-				mineableComponent = null;
-			}
-		}
-		
-		/*** Получение Entity по расположению курсора на Terrain ***/
-		/* Пока идет добыча чего-либо данный код бездействует в ожидании окончания добычи */
-		if(!mining) {
-			Vector3f tp = MousePicker.getCurrentTerrainPoint();
-			if(tp != null) {
-				currentTile = World.getWorld().getTile((int)tp.x, (int)tp.z);
-				if(currentTile.isHasEntity()) {
-					Entity entity = currentTile.getEntity();
-					if(entity.hasComponent(ComponentType.GATHERABLE)) {
+	public void iteractWithWorld(float dt) {
+		Vector3f tp = MousePicker.getCurrentTerrainPoint();
+		if(tp != null) {
+			Tile tile = World.getWorld().getTile((int)tp.x, (int)tp.z);
+			if(tile.isHasEntity()) {
+				Entity entity = tile.getEntity();
+				if(entity.hasComponent(ComponentType.GATHERABLE)) {
+					if(checkDistance(tp.x, tp.z)) {
 						Display.setCursor(Display.takeCursor);
 						if(Mouse.isButtonDown(1)) {
-							if(checkDistance(tp.x, tp.z)) {
-								turnTo((int)tp.x, (int)tp.z);
-								
-								GatherableComponent gc = (GatherableComponent)entity.getComponent(ComponentType.GATHERABLE);
-								
-								InventoryComponent inv = (InventoryComponent) getParent().getComponent(ComponentType.INVENTORY);
-								if(inv.addItem(gc.getItem(), gc.getCount())) {
-									currentTile.removeEntity();
-								
-									AudioMaster.defaultSource.play(gc.getSound());
-								}
-							}
-						}
-					} else if(entity.hasComponent(ComponentType.MINEABLE)) {
-						Display.setCursor(Display.takeCursor);
-						if(Mouse.isButton(0)) {
-							if(checkDistance(tp.x, tp.z)) {
-								mineableComponent = (MineableComponent)entity.getComponent(ComponentType.MINEABLE);	
-								
-								if(inventory.getSelectedItem() == mineableComponent.getRequiredItem()) {
-									turnTo((int)tp.x, (int)tp.z);
-									mining = true;
-								}
-							}
-						}
-					}
-				} else {
-					if(Mouse.isButtonDown(0)) {
-						if(inventory.getSelectedItem() >= 0) {
-							Item item = ItemDatabase.getItem(inventory.getSelectedItem());
-					
-							if(item.id == Item.HOE) {
-								if(checkDistance(tp.x, tp.z)) {
-									turnTo((int)tp.x, (int)tp.z);
-									World.getWorld().setTile((int)tp.x, (int)tp.z, 10);
-									AudioMaster.defaultSource.play(ResourceManager.getSound("hoe"));
-								}
-							}
+							turnTo((int)tp.x, (int)tp.z);
 							
-							if(item.type.equals(ItemType.BUILDING)) {
-								if(checkDistance(tp.x, tp.z)) {
-									turnTo((int)tp.x, (int)tp.z);
-									World.getWorld().addEntityToTile(item.blueprint
-											.createInstanceWithComponents(
-													new Transformation(((int)tp.x) + 0.5f, 0, ((int)tp.z) + 0.5f,
-															0, inventory.buildingRotation, 0)));
-									AudioMaster.defaultSource.play(ResourceManager.getSound("taking"));
-									inventory.removeItem(item.id, 1, inventory.getSelectedSlot());
+							GatherableComponent gc = (GatherableComponent)entity.getComponent(ComponentType.GATHERABLE);
+							
+							if(GUIManager.addItem(gc.getItem(), gc.getCount()) == 0) {
+								tile.removeEntity();
+								source.play(gc.getSound());
+							}
+						}
+					} else {
+						Display.setCursor(Display.takeNonactiveCursor);
+					}
+				} else if(entity.hasComponent(ComponentType.HIVE)) {
+					HiveComponent hive = (HiveComponent) entity.getComponent(ComponentType.HIVE);
+					if(hive.isReady()) {
+						if(checkDistance(tp.x, tp.z)) {
+							Display.setCursor(Display.takeCursor);
+							if(Mouse.isButtonDown(1)) {
+								turnTo((int)tp.x, (int)tp.z);
+							
+								if(GUIManager.addItem(hive.getItem(), 
+										MyRandom.nextInt(hive.getCountMax()) + 1) == 0) {
+									hive.setReady(false);
+									source.play(hive.getSound());
 								}
+							}
+						} else {
+							Display.setCursor(Display.takeNonactiveCursor);
+						}
+					}
+				}
+			} else {
+				if(Mouse.isButtonDown(1)) {
+					if(equipment != null) {
+						if(equipment.getTag().equals("hoe")) {
+							if(tile.getId() != 10) {
+								World.getWorld().setTile((int)tp.x, (int)tp.z, 10);
+								source.play(ResourceManager.getSound("hoe"));
 							}
 						}
 					}
-					
-					Display.setCursor(Display.defaultCursor);
 				}
+				Display.setCursor(Display.defaultCursor);
 			}
 		}
-		/*** *** ***/
 	}
 	
 	private boolean checkDistance(float x, float z) {
@@ -167,18 +134,16 @@ public class PlayerControllerComponent extends Component {
 		float xa = 0.0f;
 		float za = 0.0f;
 		
-		if(!mining) {
-			if(Keyboard.isKey(Key.KEY_A) || Keyboard.isKey(Key.KEY_LEFT)) {
-				xa = -1.0f;
-			} else if(Keyboard.isKey(Key.KEY_D) || Keyboard.isKey(Key.KEY_RIGHT)) {
-				xa = 1.0f;
-			}
-			
-			if(Keyboard.isKey(Key.KEY_W) || Keyboard.isKey(Key.KEY_UP)) {
-				za = -1.0f;
-			} else if(Keyboard.isKey(Key.KEY_S) || Keyboard.isKey(Key.KEY_DOWN)) {
-				za = 1.0f;
-			}
+		if(Keyboard.isKey(Key.KEY_A) || Keyboard.isKey(Key.KEY_LEFT)) {
+			xa = -1.0f;
+		} else if(Keyboard.isKey(Key.KEY_D) || Keyboard.isKey(Key.KEY_RIGHT)) {
+			xa = 1.0f;
+		}
+		
+		if(Keyboard.isKey(Key.KEY_W) || Keyboard.isKey(Key.KEY_UP)) {
+			za = -1.0f;
+		} else if(Keyboard.isKey(Key.KEY_S) || Keyboard.isKey(Key.KEY_DOWN)) {
+			za = 1.0f;
 		}
 		
 		yRot = camera.getYaw();
@@ -205,13 +170,11 @@ public class PlayerControllerComponent extends Component {
 			transform.rotY = (-yRot) - 135;
 		}
 		
-		if(!mining) {
-			if(xa != 0 || za != 0) {
-				transform.isMoving = true;
-				animation.walkAnim(dt);
-			} else {
-				animation.idleAnim();
-			}
+		if(xa != 0 || za != 0) {
+			transform.isMoving = true;
+			animation.walkAnim(dt);
+		} else {
+			animation.idleAnim();
 		}
 		
 		moveRelative(xa, za, speed, dt);
@@ -272,6 +235,22 @@ public class PlayerControllerComponent extends Component {
 	@Override
 	public ComponentType getType() {
 		return ComponentType.PLAYER_CONTROLLER;
+	}
+	
+	public void addEquipment(Entity eqpm) {
+		removeEquipment();
+		
+		equipment = eqpm;
+		hand.addChild(equipment);
+		World.getWorld().addEntity(equipment);
+	}
+	
+	public void removeEquipment() {
+		if(equipment != null) {
+			hand.removeChild(equipment);
+			equipment.remove();
+			equipment = null;
+		}
 	}
 	
 }

@@ -8,7 +8,7 @@ public class GUITexture {
 	
 	public final Rect rect;
 	private Texture texture;
-	private Color color;
+	private Color color = Color.WHITE;
 	
 	private boolean centered = false;
 	private boolean isSolidColor = false;

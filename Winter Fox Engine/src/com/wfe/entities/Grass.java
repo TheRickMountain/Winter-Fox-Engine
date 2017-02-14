@@ -6,11 +6,12 @@ import com.wfe.ecs.Entity;
 import com.wfe.ecs.Transformation;
 import com.wfe.graph.Material;
 import com.wfe.gui.Item;
+import com.wfe.gui.ItemDatabase;
 import com.wfe.utils.MyRandom;
 
 public class Grass extends Entity {
 
-	public Grass(Player player, Transformation transform) {
+	public Grass(Transformation transform) {
 		super(ResourceManager.getMesh("grass"),
 				new Material(ResourceManager.getTexture("grass"))
 				.setHasTransparency(true)
@@ -21,7 +22,7 @@ public class Grass extends Entity {
 				getTransform().getX() + MyRandom.nextFloat(0.2f, 0.8f), 
 				getTransform().getY(), 
 				getTransform().getZ() + MyRandom.nextFloat(0.2f, 0.8f));
-		addComponent(new GatherableComponent(Item.FIBER, 1, ResourceManager.getSound("taking")));
+		addComponent(new GatherableComponent(ItemDatabase.getItem(Item.FIBER), 1, ResourceManager.getSound("taking")));
 	}
 
 }

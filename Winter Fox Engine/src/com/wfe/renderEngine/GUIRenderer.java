@@ -48,8 +48,8 @@ public class GUIRenderer {
 						texture.rect.rotation, texture.rect.width, texture.rect.height));
 			}
 			
+			shader.color.loadColor(texture.getColor());
 			if(texture.isSolidColor()) {
-				shader.color.loadColor(texture.getColor());
 				shader.solidColor.loadBoolean(true);
 			} else {
 				shader.solidColor.loadBoolean(false);
@@ -60,7 +60,7 @@ public class GUIRenderer {
 		}
 	}
 	
-	public static void render(Texture texture, float x, float y, float rot, float scaleX, float scaleY, boolean centered) {
+	public static void render(Texture texture, Color color, float x, float y, float rot, float scaleX, float scaleY, boolean centered) {
 		if(!centered) {
 			shader.modelMatrix.loadMatrix(MathUtils.getModelMatrix(modelMatrix, 
 					x, y, rot, scaleX, scaleY));
@@ -70,6 +70,7 @@ public class GUIRenderer {
 					rot, scaleX, scaleY));
 		}
 		
+		shader.color.loadColor(color);
 		shader.solidColor.loadBoolean(false);
 		texture.bind(0);
 		

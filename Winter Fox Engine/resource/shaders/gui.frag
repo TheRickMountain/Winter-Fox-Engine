@@ -11,7 +11,7 @@ uniform float solidColor;
 void main()
 {
 	if(solidColor == 0){
-		out_Color = texture(image, TextureCoords);
+		out_Color = texture(image, TextureCoords) * color;
 	} else {
 		out_Color = color;
 	}

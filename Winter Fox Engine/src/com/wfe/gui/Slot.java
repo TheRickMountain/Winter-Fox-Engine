@@ -5,94 +5,90 @@ import com.wfe.font.GUIText;
 import com.wfe.renderEngine.FontRenderer;
 import com.wfe.renderEngine.GUIRenderer;
 import com.wfe.textures.Texture;
+import com.wfe.utils.Color;
 import com.wfe.utils.Rect;
 
 public class Slot implements GUIComponent {
-
-	private static final Texture SLOT_TEXTURE = ResourceManager.getTexture("slot_ui");
-	private static final Texture SELECTED_SLOT_TEXTURE = ResourceManager.getTexture("selected_slot_ui");
-	public static final int SLOT_SIZE = 60;
 	
 	public Rect rect;
+	private static final Texture DEFAULT = ResourceManager.getTexture("slot_ui");
+	private static final Texture SELECTED = ResourceManager.getTexture("selected_slot_ui");
+	public static int SIZE = 60;
+	
 	private Item item;
-	private GUIText text;
+	private boolean hasItem = false;
 	
-	private int itemCount;
-	private boolean hasItem;
+	private GUIText countText;
+	private int count = 0;
 	
-	public boolean selected = false;
+	private boolean selected = false;
 	
 	public Slot(Rect rect) {
 		this.rect = rect;
-		this.text = new GUIText("", FontRenderer.ARIAL);
-		this.text.setScale(0.9f);
+		this.countText = new GUIText("", FontRenderer.ARIAL);
+		this.countText.setScale(0.8f);
+		addItem(ItemDatabase.getItem(Item.NULL), 0);
 	}
 	
 	@Override
-	public void update() {
-		
-	}
-
-	@Override
 	public void render() {
-		if(selected) {
-			GUIRenderer.render(SELECTED_SLOT_TEXTURE, rect.x + rect.width / 2, rect.y + rect.height / 2, 
-					rect.rotation, SLOT_SIZE, SLOT_SIZE, true);
+		if(!selected) {
+			GUIRenderer.render(DEFAULT, Color.WHITE, rect.x, rect.y, 0, rect.width, rect.height, false);
 		} else {
-			GUIRenderer.render(SLOT_TEXTURE, rect.x + rect.width / 2, rect.y + rect.height / 2, 
-					rect.rotation, SLOT_SIZE, SLOT_SIZE, true);
+			GUIRenderer.render(SELECTED, Color.WHITE, rect.x, rect.y, 0, rect.width, rect.height, false);
 		}
-		
-		if(hasItem) {
-			GUIRenderer.render(item.icon, rect.x + rect.width / 2, rect.y + rect.height / 2, 
-					rect.rotation, SLOT_SIZE - 10, SLOT_SIZE - 10, true);
+		if(item.id != Item.NULL) {
+			GUIRenderer.render(item.icon, Color.WHITE, rect.x, rect.y, 0, rect.width, rect.height, false);
 		}
 	}
 
 	@Override
 	public void renderText() {
-		if(hasItem && (itemCount > 1)) {
-			text.setPosition(rect.x + rect.width - (text.getWidth() + 5), 
-					rect.y + rect.height - (text.getHeight()));
-			FontRenderer.render(text);
+		if(item.id != Item.NULL) {
+			countText.setPosition(
+					rect.x + rect.width - countText.getWidth(), 
+					rect.y + rect.height - (countText.getHeight() / 2));
+			FontRenderer.render(countText);
 		}
-	}
-
-	@Override
-	public void renderPopUp() {
-		
-	}
-
-	@Override
-	public void renderPopUpText() {
-		
 	}
 	
 	public void addItem(Item item, int count) {
 		this.item = item;
-		if(this.item != null) {
+		if(this.item.id != Item.NULL) {
 			hasItem = true;
-			this.itemCount = count;
-			text.setText("" + count);
+		} else {
+			hasItem = false;
 		}
-	}
-	
-	public void removeItem() {
-		this.item = null;
-		this.itemCount = 0;
-		this.hasItem = false;
-	}
-	
-	public boolean isHasItem() {
-		return hasItem;
+		
+		if(count < 0)
+			count = 0;
+		
+		if(count > 1)
+			this.countText.setText("" + count);
+		else
+			this.countText.setText("");
+		
+		this.count = count;
 	}
 	
 	public Item getItem() {
 		return item;
 	}
 	
-	public int getItemCount() {
-		return itemCount;
+	public boolean isHasItem() {
+		return hasItem;
 	}
 
+	public int getCount() {
+		return count;
+	}
+	
+	public boolean isSelected() {
+		return selected;
+	}
+	
+	public void setSelected(boolean selected) {
+		this.selected = selected;
+	}
+	
 }

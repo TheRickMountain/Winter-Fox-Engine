@@ -7,9 +7,9 @@ import com.wfe.graph.Material;
 
 public class Wheat extends Entity {
 
-	public Wheat(Player player, Transformation transform) {
+	public Wheat(Transformation transform) {
 		super(ResourceManager.getMesh("wheat"),
-				new Material(ResourceManager.getTexture("wheat"))
+				new Material(ResourceManager.getTexture("four"))
 				.setHasTransparency(true)
 				.setHasFakeLighting(true), transform);
 		getTransform().setScale(0.5f);

@@ -24,6 +24,7 @@ public class AxeBlueprint extends Blueprint {
 		transform.localY = -0.5f;
 		transform.localX = 0.5f;
 		Entity entity = new Entity(mesh, material, new Transformation(transform));
+		entity.setTag("axe");
 		return entity;
 	}
 

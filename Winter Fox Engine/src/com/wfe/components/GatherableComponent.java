@@ -2,14 +2,15 @@ package com.wfe.components;
 
 import com.wfe.ecs.Component;
 import com.wfe.ecs.ComponentType;
+import com.wfe.gui.Item;
 
 public class GatherableComponent extends Component {
 
-	private int item;
+	private Item item;
 	private int count;
 	private int sound;
 	
-	public GatherableComponent(int item, int count, int sound) {
+	public GatherableComponent(Item item, int count, int sound) {
 		this.item = item;
 		this.count = count;
 		this.sound = sound;
@@ -20,7 +21,7 @@ public class GatherableComponent extends Component {
 		
 	}
 
-	public int getItem() {
+	public Item getItem() {
 		return item;
 	}
 

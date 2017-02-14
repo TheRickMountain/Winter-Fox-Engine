@@ -2,7 +2,7 @@ package com.wfe.utils;
 
 public class Color {
 	
-	public static final Color WHITE = new Color(1.0f, 1.0f, 1.0f);
+	public static final Color WHITE = new Color(1.0f, 1.0f, 1.0f, 1.0f);
 	
 	public float r = 1.0f;
 	public float g = 1.0f;
@@ -21,17 +21,19 @@ public class Color {
 		set(r, g, b, a);
 	}
 	
-	public void set(float r, float g, float b) {
+	public Color set(float r, float g, float b) {
 		this.r = r;
 		this.g = g;
 		this.b = b;
+		return this;
 	}
 	
-	public void set(float r, float g, float b, float a) {
+	public Color set(float r, float g, float b, float a) {
 		this.r = r;
 		this.g = g;
 		this.b = b;
 		this.a = a;
+		return this;
 	}
 
 	public float getR() {

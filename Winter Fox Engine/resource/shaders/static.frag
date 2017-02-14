@@ -13,7 +13,7 @@ uniform float hasFakeLighting;
 
 void main()
 {
-	vec4 diffuseColor = texture(diffuseMap, TextureCoords);
+	vec4 diffuseColor = texture(diffuseMap, TextureCoords) * color;
 	if(diffuseColor.a <= 0.5f){
 		discard;
 	}

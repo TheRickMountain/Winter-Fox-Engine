@@ -18,7 +18,7 @@ public class Tile {
 		this.id = id;
 	}
 
-	public void setId(int id) {
+	protected void setId(int id) {
 		this.id = id;
 	}
 

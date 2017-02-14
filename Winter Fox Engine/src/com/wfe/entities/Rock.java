@@ -11,7 +11,7 @@ import com.wfe.utils.MyRandom;
 
 public class Rock extends Entity {
 
-	public Rock(Entity player, Transformation transform) {
+	public Rock(Transformation transform) {
 		super(ResourceManager.getMesh("rock"), 
 				new Material(ResourceManager.getTexture("rock")), transform);
 		setTag("stone");

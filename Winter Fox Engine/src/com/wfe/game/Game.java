@@ -1,16 +1,15 @@
 package com.wfe.game;
 
 import com.wfe.audio.AudioMaster;
-import com.wfe.components.InventoryComponent;
 import com.wfe.core.Camera;
 import com.wfe.core.Display;
 import com.wfe.core.IGameLogic;
 import com.wfe.core.ResourceManager;
-import com.wfe.ecs.ComponentType;
 import com.wfe.ecs.Transformation;
 import com.wfe.entities.Fern;
 import com.wfe.entities.Flint;
 import com.wfe.entities.Grass;
+import com.wfe.entities.Hive;
 import com.wfe.entities.Mushroom;
 import com.wfe.entities.Pine;
 import com.wfe.entities.Player;
@@ -18,9 +17,9 @@ import com.wfe.entities.Rock;
 import com.wfe.entities.Stick;
 import com.wfe.entities.Wheat;
 import com.wfe.graph.OBJLoader;
+import com.wfe.gui.GUIManager;
 import com.wfe.gui.Item;
-import com.wfe.input.Key;
-import com.wfe.input.Keyboard;
+import com.wfe.gui.ItemDatabase;
 import com.wfe.math.Vector3f;
 import com.wfe.textures.Texture;
 import com.wfe.utils.MyFile;
@@ -65,20 +64,6 @@ public class Game implements IGameLogic {
 		ResourceManager.loadTexture("selected_slot_ui", Texture.newTexture(new MyFile("gui/elements/selected_slot.png"))
 				.normalMipMap().create());
 		
-		ResourceManager.loadTexture("crafting_ui", Texture.newTexture(new MyFile("gui/elements/crafting.png"))
-				.normalMipMap().create());
-		ResourceManager.loadTexture("inventory_ui", Texture.newTexture(new MyFile("gui/elements/inventory.png"))
-				.normalMipMap().create());
-		ResourceManager.loadTexture("equipment_ui", Texture.newTexture(new MyFile("gui/elements/equipment.png"))
-				.normalMipMap().create());
-		
-		ResourceManager.loadTexture("selected_crafting_ui", Texture.newTexture(new MyFile("gui/elements/selected_crafting.png"))
-				.normalMipMap().create());
-		ResourceManager.loadTexture("selected_inventory_ui", Texture.newTexture(new MyFile("gui/elements/selected_inventory.png"))
-				.normalMipMap().create());
-		ResourceManager.loadTexture("selected_equipment_ui", Texture.newTexture(new MyFile("gui/elements/selected_equipment.png"))
-				.normalMipMap().create());
-		
 		ResourceManager.loadTexture("background_frame_ui", Texture.newTexture(new MyFile("gui/background_frame.png"))
 				.normalMipMap().create());
 		ResourceManager.loadTexture("corner_frame_ui", Texture.newTexture(new MyFile("gui/corner_frame.png"))
@@ -92,6 +77,12 @@ public class Game implements IGameLogic {
 		ResourceManager.loadTexture("apple_ui", Texture.newTexture(new MyFile("gui/items/apple.png"))
 				.normalMipMap().create());
 		
+		ResourceManager.loadTexture("waterskin_ui", Texture.newTexture(new MyFile("gui/items/waterskin.png"))
+				.normalMipMap().create());
+		
+		ResourceManager.loadTexture("leather_ui", Texture.newTexture(new MyFile("gui/items/leather.png"))
+				.normalMipMap().create());
+		
 		ResourceManager.loadTexture("fiber_ui", Texture.newTexture(new MyFile("gui/items/fiber.png"))
 				.normalMipMap().create());
 		
@@ -100,8 +91,21 @@ public class Game implements IGameLogic {
 		
 		ResourceManager.loadTexture("rope_ui", Texture.newTexture(new MyFile("gui/items/rope.png"))
 				.normalMipMap().create());
+		
+		ResourceManager.loadTexture("lavender_ui", Texture.newTexture(new MyFile("gui/items/lavender.png"))
+				.normalMipMap().create());
+		
+		ResourceManager.loadTexture("honey_ui", Texture.newTexture(new MyFile("gui/items/honey.png"))
+				.normalMipMap().create());
 		/* * */
 		
+		/*** *** ***/
+		
+		/*** Hive ***/
+		ResourceManager.loadTexture("hive", Texture.newTexture(new MyFile("entity/hive/diffuse.png"))
+				.normalMipMap(-0.4f)
+				.create());
+		ResourceManager.loadMesh("hive", OBJLoader.loadMesh("/entity/hive/model.obj"));
 		/*** *** ***/
 		
 		/*** Fern ***/
@@ -236,7 +240,13 @@ public class Game implements IGameLogic {
 		ResourceManager.loadTexture("wheat_ui", Texture.newTexture(new MyFile("entity/wheat/icon.png"))
 				.normalMipMap()
 				.create());
-		ResourceManager.loadTexture("wheat", Texture.newTexture(new MyFile("entity/wheat/diffuse.png"))
+		ResourceManager.loadTexture("four", Texture.newTexture(new MyFile("entity/wheat/lavender.png"))
+				.normalMipMap(-0.4f)
+				.create());
+		ResourceManager.loadTexture("two", Texture.newTexture(new MyFile("entity/wheat/two.png"))
+				.normalMipMap(-0.4f)
+				.create());
+		ResourceManager.loadTexture("one", Texture.newTexture(new MyFile("entity/wheat/one.png"))
 				.normalMipMap(-0.4f)
 				.create());
 		
@@ -273,71 +283,56 @@ public class Game implements IGameLogic {
 		player = new Player(camera, new Transformation(80, 0.65f, 80));
 		World.getWorld().addEntity(player);
 		
-		World.getWorld().addEntityToTile(new Rock(player, new Transformation(81.5f, 0, 84.5f)));
-		World.getWorld().addEntityToTile(new Rock(player, new Transformation(82.5f, 0, 84.5f)));
-		World.getWorld().addEntityToTile(new Rock(player, new Transformation(83.5f, 0, 85.5f)));
-		World.getWorld().addEntityToTile(new Rock(player, new Transformation(84.5f, 0, 86.5f)));
-		
-		World.getWorld().addEntityToTile(new Stick(player, new Transformation(81 + 0.5f, 0, 82 + 0.5f)));
-		World.getWorld().addEntityToTile(new Stick(player, new Transformation(82 + 0.5f, 0, 82 + 0.5f)));
-		World.getWorld().addEntityToTile(new Stick(player, new Transformation(83 + 0.5f, 0, 82 + 0.5f)));
-		World.getWorld().addEntityToTile(new Stick(player, new Transformation(84 + 0.5f, 0, 82 + 0.5f)));
-		World.getWorld().addEntityToTile(new Stick(player, new Transformation(85 + 0.5f, 0, 82 + 0.5f)));
-		World.getWorld().addEntityToTile(new Stick(player, new Transformation(86 + 0.5f, 0, 82 + 0.5f)));
-		
-		World.getWorld().addEntityToTile(new Wheat(player, new Transformation(80 + 0.5f, 0, 83 + 0.5f)));
-		World.getWorld().addEntityToTile(new Wheat(player, new Transformation(81 + 0.5f, 0, 83 + 0.5f)));
-		World.getWorld().addEntityToTile(new Wheat(player, new Transformation(82 + 0.5f, 0, 83 + 0.5f)));
-		World.getWorld().addEntityToTile(new Wheat(player, new Transformation(83 + 0.5f, 0, 83 + 0.5f)));
-		World.getWorld().addEntityToTile(new Wheat(player, new Transformation(84 + 0.5f, 0, 83 + 0.5f)));
-		
-		World.getWorld().addEntityToTile(new Pine(player, new Transformation(90.5f, 0, 88.5f)));
-		World.getWorld().addEntityToTile(new Pine(player, new Transformation(93.5f, 0, 88.5f)));
+		World.getWorld().addEntityToTile(new Wheat(new Transformation(83.5f, 0, 83.5f)));
+		World.getWorld().addEntityToTile(new Wheat(new Transformation(90.5f, 0, 85.5f)));
+		World.getWorld().addEntityToTile(new Wheat(new Transformation(72.5f, 0, 94.5f)));
+		World.getWorld().addEntityToTile(new Wheat(new Transformation(80.5f, 0, 75.5f)));
 		
 		for(int i = 0; i < 100; i++) {		
-			Mushroom shroom = new Mushroom(player, new Transformation(MyRandom.nextInt(160) + 0.5f, 0, MyRandom.nextInt(160) + 0.5f));
+			Mushroom shroom = new Mushroom(new Transformation(MyRandom.nextInt(160) + 0.5f, 0, MyRandom.nextInt(160) + 0.5f));
 			World.getWorld().addEntityToTile(shroom);
 			
 			Fern fern = new Fern(new Transformation(MyRandom.nextInt(160) + 0.5f, 0, MyRandom.nextInt(160) + 0.5f));
 			fern.setTextureIndex(MyRandom.nextInt(4));
 			World.getWorld().addEntityToTile(fern);
 		
-			World.getWorld().addEntityToTile(new Flint(player, new Transformation(MyRandom.nextInt(160) + 0.5f, 0, 
+			World.getWorld().addEntityToTile(new Flint(new Transformation(MyRandom.nextInt(160) + 0.5f, 0, 
+					MyRandom.nextInt(160) + 0.5f)));
+			
+			World.getWorld().addEntityToTile(new Stick(new Transformation(MyRandom.nextInt(160) + 0.5f, 0, 
+					MyRandom.nextInt(160) + 0.5f)));
+			
+			World.getWorld().addEntityToTile(new Pine(new Transformation(MyRandom.nextInt(160) + 0.5f, 0, 
+					MyRandom.nextInt(160) + 0.5f)));
+			
+			World.getWorld().addEntityToTile(new Rock(new Transformation(MyRandom.nextInt(160) + 0.5f, 0, 
 					MyRandom.nextInt(160) + 0.5f)));
 		}
 		
-		for(int i = 60; i < 120; i++) {
-			for(int j = 60; j < 120; j++) {
-				int send = MyRandom.nextInt(5);
-				if(send == 1) {
-					Grass grass = new Grass(player, new Transformation(i, 0, j));
-					grass.setTextureIndex(MyRandom.nextInt(3, 4, 5, 6));		
+		for(int i = 40; i < 120; i++) {
+			for(int j = 40; j < 120; j++) {
+				int num = MyRandom.nextInt(5);
+				if(num == 4) {
+					Grass grass = new Grass(new Transformation(i, 0, j));
+					grass.setTextureIndex(MyRandom.nextInt(3, 7));		
 					World.getWorld().addEntityToTile(grass);
 				}
 			}
 		}
 		
-		World.getWorld().setTile(80, 80, 0);
-		World.getWorld().setTile(81, 80, 1);
-		World.getWorld().setTile(80, 81, 4);
-		World.getWorld().setTile(81, 81, 5);
+		World.getWorld().addEntityToTile(new Hive(new Transformation(82.5f, 0, 80.5f)));
 		
-		World.getWorld().setTile(82, 80, 0);
-		World.getWorld().setTile(83, 80, 1);
-		World.getWorld().setTile(82, 81, 4);
-		World.getWorld().setTile(83, 81, 5);
+		GUIManager.addItem(ItemDatabase.getItem(Item.HOE), 1);
+		GUIManager.addItem(ItemDatabase.getItem(Item.AXE), 1);
+		GUIManager.addItem(ItemDatabase.getItem(Item.PICKAXE), 1);
+		GUIManager.addItem(ItemDatabase.getItem(Item.LAVENDER), 5);
+		GUIManager.addItem(ItemDatabase.getItem(Item.APPLE), 4);
 		
 		AudioMaster.ambientSource.play(ResourceManager.getSound("hills"));
 	}
 	
 	@Override
 	public void update(float dt) {	
-		if(Keyboard.isKeyDown(Key.KEY_H)) {
-			InventoryComponent inventory = (InventoryComponent) player.getComponent(ComponentType.INVENTORY);
-			inventory.addItem(Item.APPLE, 32);
-			inventory.addItem(Item.WELL, 1);
-		}
-		
 		World.getWorld().update(dt, player);
 	}
 

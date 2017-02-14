@@ -1,10 +1,5 @@
 package com.wfe.audio;
 
-import org.lwjgl.openal.AL10;
-
-import javax.sound.sampled.AudioFormat;
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
 import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -15,6 +10,12 @@ import java.nio.ByteOrder;
 import java.nio.ShortBuffer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import javax.sound.sampled.AudioFormat;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+
+import org.lwjgl.openal.AL10;
 
 public class WaveData
 {

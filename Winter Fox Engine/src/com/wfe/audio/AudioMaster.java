@@ -1,6 +1,10 @@
 package com.wfe.audio;
 
-import static org.lwjgl.openal.ALC10.*;
+import static org.lwjgl.openal.ALC10.alcCloseDevice;
+import static org.lwjgl.openal.ALC10.alcCreateContext;
+import static org.lwjgl.openal.ALC10.alcDestroyContext;
+import static org.lwjgl.openal.ALC10.alcMakeContextCurrent;
+import static org.lwjgl.openal.ALC10.alcOpenDevice;
 
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
