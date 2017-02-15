@@ -309,10 +309,10 @@ public class Game implements IGameLogic {
 					MyRandom.nextInt(160) + 0.5f)));
 		}
 		
-		for(int i = 40; i < 120; i++) {
-			for(int j = 40; j < 120; j++) {
-				int num = MyRandom.nextInt(5);
-				if(num == 4) {
+		for(int i = 0; i < 160; i++) {
+			for(int j = 0; j < 160; j++) {
+				int num = MyRandom.nextInt(20);
+				if(num == 5) {
 					Grass grass = new Grass(new Transformation(i, 0, j));
 					grass.setTextureIndex(MyRandom.nextInt(3, 7));		
 					World.getWorld().addEntityToTile(grass);
