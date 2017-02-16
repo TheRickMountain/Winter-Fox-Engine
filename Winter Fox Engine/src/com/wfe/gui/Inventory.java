@@ -23,10 +23,13 @@ public class Inventory {
 	
 	private Source source;
 	
+	private int rows = 3;
+	private int columns = 6;
+	
 	private Rect hotbarRect;
 	private List<Slot> hotbarSlots = new ArrayList<>();
 	
-	private Rect inventoryRect;
+	protected Rect inventoryRect;
 	private List<Slot> inventorySlots = new ArrayList<>();
 	
 	private List<Slot> allSlots = new ArrayList<>();
@@ -46,15 +49,15 @@ public class Inventory {
 		// Hotbar
 		hotbarRect = new Rect(0, 0, 385, 70);
 
-		for(int i = 0; i < 6; i++) {
+		for(int i = 0; i < columns; i++) {
 			hotbarSlots.add(new Slot(new Rect(0, 0, Slot.SIZE, Slot.SIZE)));
 			allSlots.add(hotbarSlots.get(i));
 		}
 		
 		// Inventory
-		inventoryRect = new Rect(0, 0, 255, 320);
+		inventoryRect = new Rect(0, 0, 385, 190);
 		
-		for(int i = 0; i < 20; i++) {
+		for(int i = 0; i < rows * columns; i++) {
 			inventorySlots.add(new Slot(new Rect(0, 0, Slot.SIZE, Slot.SIZE)));
 			allSlots.add(inventorySlots.get(i));
 		}
@@ -249,22 +252,22 @@ public class Inventory {
 		hotbarRect.x = Display.getWidth() / 2 - hotbarRect.width / 2;
 		hotbarRect.y = Display.getHeight() - hotbarRect.height;
 		
-		for(int i = 0; i < 6; i++) {
+		for(int i = 0; i < columns; i++) {
 			hotbarSlots.get(i).rect.setPosition(hotbarRect.x + (i * (Slot.SIZE + 5)), hotbarRect.y);
 		}
 		
-		inventoryRect.x = Display.getWidth() / 2 - inventoryRect.width;
-		inventoryRect.y = Display.getHeight() / 2 - inventoryRect.height / 2;
+		inventoryRect.x = Display.getWidth() / 2 - inventoryRect.width / 2;
+		inventoryRect.y = hotbarRect.y - inventoryRect.height - Slot.SIZE / 2;
 		
 		int countX = 0;
 		int countY = 0;
-		for(int i = 0; i < 20; i++) {
+		for(int i = 0; i < rows * columns; i++) {
 			inventorySlots.get(i).rect.setPosition(
 					inventoryRect.x + (countX * (Slot.SIZE + 5)),
 					inventoryRect.y + (countY * (Slot.SIZE + 5)));
 			
 			countX++;
-			if(countX == 4) {
+			if(countX == columns) {
 				countX = 0;
 				countY++;
 			}
@@ -278,6 +281,18 @@ public class Inventory {
 			draggedItemText.setText("" + count);
 		else
 			draggedItemText.setText("");
+	}
+	
+	public int hasItem(Item item) {
+		int count = 0;
+		for(Slot slot : allSlots) {
+			if(slot.isHasItem()) {
+				if(slot.getItem() == item) {
+					count += slot.getCount();
+				}
+			}
+		}
+		return count;
 	}
 
 	public int addItem(Item item, int count) {
@@ -320,6 +335,26 @@ public class Inventory {
 		}
 		
 		return count;
+	}
+	
+	public void removeItem(Item item, int count) {
+		for(Slot slot : allSlots) {
+			if(slot.isHasItem()) {
+				if(slot.getItem() == item) {
+					if(slot.getCount() > count) {
+						slot.addItem(item, slot.getCount() - count);
+						return;
+					} else if(slot.getCount() == count) {
+						slot.addItem(ItemDatabase.getItem(Item.NULL), 0);
+						return;
+					} else if(slot.getCount() < count) {
+						count -= slot.getCount();
+						slot.addItem(ItemDatabase.getItem(Item.NULL), 0);
+						removeItem(item, count);
+					}
+				}
+			}
+		}
 	}
 	
 }

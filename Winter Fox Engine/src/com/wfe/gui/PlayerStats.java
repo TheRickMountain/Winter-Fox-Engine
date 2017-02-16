@@ -22,9 +22,9 @@ public class PlayerStats {
 		healthBar = new ProgressBar(new Rect(10, 20, 100, 15), new Color(251, 53, 54, 255).convert());
 		healthBar.setCurrentValue(100);
 		hungerBar = new ProgressBar(new Rect(10, 50, 100, 15), new Color(255, 128, 21, 255).convert());
-		hungerBar.setCurrentValue(10);
+		hungerBar.setCurrentValue(100);
 		thirstBar = new ProgressBar(new Rect(10, 80, 100, 15), new Color(49, 51, 255, 255).convert());
-		thirstBar.setCurrentValue(20);
+		thirstBar.setCurrentValue(100);
 		
 		healthTimer = new TimeUtil();
 		hungerTimer = new TimeUtil();

@@ -38,7 +38,7 @@ public class Slot implements GUIComponent {
 			GUIRenderer.render(SELECTED, Color.WHITE, rect.x, rect.y, 0, rect.width, rect.height, false);
 		}
 		if(item.id != Item.NULL) {
-			GUIRenderer.render(item.icon, Color.WHITE, rect.x, rect.y, 0, rect.width, rect.height, false);
+			GUIRenderer.render(item.icon, Color.WHITE, rect.x , rect.y, 0, rect.width, rect.height, false);
 		}
 	}
 
@@ -46,8 +46,8 @@ public class Slot implements GUIComponent {
 	public void renderText() {
 		if(item.id != Item.NULL) {
 			countText.setPosition(
-					rect.x + rect.width - countText.getWidth(), 
-					rect.y + rect.height - (countText.getHeight() / 2));
+					rect.x + 4f, 
+					rect.y + 3f);
 			FontRenderer.render(countText);
 		}
 	}
