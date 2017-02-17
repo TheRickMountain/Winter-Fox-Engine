@@ -8,6 +8,7 @@ import com.wfe.ecs.Transformation;
 import com.wfe.game.World;
 import com.wfe.graph.Material;
 import com.wfe.gui.Item;
+import com.wfe.gui.ItemDatabase;
 
 public class Pine extends Entity {
 
@@ -24,8 +25,8 @@ public class Pine extends Entity {
 		
 		transform.setScale(0.4f);
 		
-		addComponent(new MineableComponent(Item.LOG, 20, 
-				ResourceManager.getSound("chop"), Item.AXE, 10));
+		addComponent(new MineableComponent(ItemDatabase.getItem(Item.LOG), 20, 
+				ResourceManager.getSound("chop"), ItemDatabase.getItem(Item.AXE), 5));
 	}
 
 }

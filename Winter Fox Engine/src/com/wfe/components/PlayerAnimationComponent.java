@@ -29,7 +29,7 @@ public class PlayerAnimationComponent extends Component {
     private boolean extremitiesState = false;
 
     private int walkAnimSpeed = 180;
-    private int hitAnimSpeed = 180;
+    private int hitAnimSpeed = 250;
 	
 	public PlayerAnimationComponent(Player player) {
 		rightArm = player.rightArm.getTransform();
@@ -77,16 +77,14 @@ public class PlayerAnimationComponent extends Component {
         rightShin.localRotX = 20;
     }
 	
-	public boolean hitAnim(float dt) {
-		if(rightArm.localRotX == 0)
-			rightArm.localRotX = -165;
-		
+	public boolean hitAnim(float dt) {		
 		if(rightArm.localRotX >= -45) {
+			rightArm.localRotX = -165;
 			return true;
-		} else {
-			rightArm.localRotX += hitAnimSpeed * dt; 
-			return false;
 		}
+		
+		rightArm.localRotX += hitAnimSpeed * dt;
+		return false;
 	}
 	
 	public void idleAnim() {

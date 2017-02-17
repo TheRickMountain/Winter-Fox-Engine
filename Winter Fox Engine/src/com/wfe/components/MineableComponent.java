@@ -2,19 +2,20 @@ package com.wfe.components;
 
 import com.wfe.ecs.Component;
 import com.wfe.ecs.ComponentType;
+import com.wfe.gui.Item;
 
 public class MineableComponent extends Component {
 
-	private int item;
+	private Item item;
 	private int count;
 	private int sound;
 	
-	private int requiredItem;
+	private Item requiredItem;
 	private int miningTime;
 	
 	private int health;
 	
-	public MineableComponent(int item, int count, int sound, int requiredItem, int miningTime) {
+	public MineableComponent(Item item, int count, int sound, Item requiredItem, int miningTime) {
 		super();
 		this.item = item;
 		this.count = count;
@@ -29,7 +30,7 @@ public class MineableComponent extends Component {
 		
 	}
 	
-	public int getItem() {
+	public Item getItem() {
 		return item;
 	}
 
@@ -41,7 +42,7 @@ public class MineableComponent extends Component {
 		return sound;
 	}
 
-	public int getRequiredItem() {
+	public Item getRequiredItem() {
 		return requiredItem;
 	}
 	

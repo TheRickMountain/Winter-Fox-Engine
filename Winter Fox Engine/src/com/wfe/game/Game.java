@@ -17,9 +17,6 @@ import com.wfe.entities.Rock;
 import com.wfe.entities.Stick;
 import com.wfe.entities.Wheat;
 import com.wfe.graph.OBJLoader;
-import com.wfe.gui.GUIManager;
-import com.wfe.gui.Item;
-import com.wfe.gui.ItemDatabase;
 import com.wfe.math.Vector3f;
 import com.wfe.textures.Texture;
 import com.wfe.utils.MyFile;
@@ -205,6 +202,16 @@ public class Game implements IGameLogic {
 				.create());
 		
 		ResourceManager.loadMesh("axe", OBJLoader.loadMesh("/entity/axe/model.obj"));
+		/*** *** ***/
+		
+		/*** Sharp Flint ***/
+		ResourceManager.loadTexture("sharp_flint_ui", Texture.newTexture(new MyFile("entity/sharpFlint/icon.png"))
+				.normalMipMap().create());
+		ResourceManager.loadTexture("sharp_flint", Texture.newTexture(new MyFile("entity/sharpFlint/diffuse.png"))
+				.normalMipMap(-0.4f)
+				.create());
+		
+		ResourceManager.loadMesh("sharp_flint", OBJLoader.loadMesh("/entity/sharpFlint/model.obj"));
 		/*** *** ***/
 		
 		/*** Flint ***/

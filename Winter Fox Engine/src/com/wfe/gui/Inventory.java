@@ -26,7 +26,7 @@ public class Inventory {
 	private int rows = 3;
 	private int columns = 6;
 	
-	private Rect hotbarRect;
+	protected Rect hotbarRect;
 	private List<Slot> hotbarSlots = new ArrayList<>();
 	
 	protected Rect inventoryRect;
@@ -40,6 +40,7 @@ public class Inventory {
 	private GUIText draggedItemText;
 	private int draggedItemCount;
 	
+	private Item selectedItem;
 	private int selected = 0;
 	private int lastSelected = 0;
 
@@ -73,6 +74,12 @@ public class Inventory {
 	}
 	
 	public void update() {
+		if(Keyboard.isKeyDown(Key.KEY_G)) {
+			addItem(ItemDatabase.getItem(Item.AXE), 1);
+			addItem(ItemDatabase.getItem(Item.PICKAXE), 1);
+			addItem(ItemDatabase.getItem(Item.HOE), 1);
+		}
+		
 		if(Keyboard.isKeyDown(Key.KEY_1)) selected = 0;
 		else if(Keyboard.isKeyDown(Key.KEY_2)) selected = 1;
 		else if(Keyboard.isKeyDown(Key.KEY_3)) selected = 2;
@@ -93,6 +100,7 @@ public class Inventory {
 			lastSelected = selected;
 			
 			hotbarSlots.get(selected).setSelected(true);
+			selectedItem = hotbarSlots.get(selected).getItem();
 			
 			AudioMaster.defaultSource.play(ResourceManager.getSound("tick"));
 			
@@ -169,7 +177,7 @@ public class Inventory {
 									slot.addItem(draggedItem, draggedItemCount);
 									setDraggedItem(item, count);
 									
-									checkSlotToEquipment(slot);
+									checkActiveSlot();
 								}
 							}
 						} else {
@@ -177,7 +185,7 @@ public class Inventory {
 								slot.addItem(draggedItem, draggedItemCount);
 								setDraggedItem(ItemDatabase.getItem(Item.NULL), 0);
 								
-								checkSlotToEquipment(slot);
+								checkActiveSlot();
 							}
 						}
 					}
@@ -190,7 +198,8 @@ public class Inventory {
 		}
 	}
 	
-	public void checkSlotToEquipment(Slot slot) {
+	public void checkActiveSlot() {
+		Slot slot = hotbarSlots.get(selected);
 		if(slot.isSelected()) {
 			if(slot.isHasItem()) {
 				Item item = slot.getItem();
@@ -204,6 +213,8 @@ public class Inventory {
 					break;
 				}
 			}
+			
+			selectedItem = slot.getItem();
 		}
 	}
 	
@@ -334,6 +345,8 @@ public class Inventory {
 			}
 		}
 		
+		checkActiveSlot();
+		
 		return count;
 	}
 	
@@ -355,6 +368,10 @@ public class Inventory {
 				}
 			}
 		}
+	}
+	
+	public Item getSelectedItem() {
+		return selectedItem;
 	}
 	
 }

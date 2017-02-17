@@ -30,7 +30,7 @@ public class ItemDatabase {
 		
 		addItem(new Item(Item.AXE, "Axe" , "Can chop trees and protect from enemies", ResourceManager.getTexture("axe_ui"),
 				new AxeBlueprint(), ItemType.TOOL, 0, 0, 0, 1, 
-				new int[] {Item.FLINT, 1, Item.STICK, 1, Item.ROPE, 1}));
+				new int[] {Item.SHARP_FLINT, 1, Item.STICK, 1, Item.ROPE, 1}));
 		
 		addItem(new Item(Item.STICK, "Stick", "Common useful resource", ResourceManager.getTexture("stick_ui"),
 				null, ItemType.RESOURCE, 0, 0, 0, 40, null));
@@ -43,11 +43,11 @@ public class ItemDatabase {
 		
 		addItem(new Item(Item.PICKAXE, "Pickaxe", "Common useful resource", ResourceManager.getTexture("pickaxe_ui"),
 				new PickaxeBlueprint(), ItemType.TOOL, 0, 0, 0, 1, 
-				new int[] {Item.FLINT, 1, Item.STICK, 1, Item.ROPE, 1}));
+				new int[] {Item.SHARP_FLINT, 2, Item.STICK, 1, Item.ROPE, 1}));
 		
 		addItem(new Item(Item.HOE, "Hoe", "Common useful resource", ResourceManager.getTexture("hoe_ui"),
 				new HoeBlueprint(), ItemType.TOOL, 0, 0, 0, 1, 
-				new int[] {Item.FLINT, 1, Item.STICK, 1, Item.ROPE, 1}));
+				new int[] {Item.SHARP_FLINT, 1, Item.STICK, 1, Item.ROPE, 1}));
 		
 		addItem(new Item(Item.FIBER, "Fiber", "Common useful resource", ResourceManager.getTexture("fiber_ui"), 
 				null, ItemType.RESOURCE, 0, 0, 0, 40, null));
@@ -81,6 +81,9 @@ public class ItemDatabase {
 		
 		addItem(new Item(Item.HONEY, "Honey", "Common useful resource", ResourceManager.getTexture("honey_ui"), 
 				null, ItemType.CONSUMABLE, 20, -5, 0, 40, null));
+		
+		addItem(new Item(Item.SHARP_FLINT, "Sharp flint", "Common useful resource", ResourceManager.getTexture("sharp_flint_ui"), 
+				null, ItemType.RESOURCE, 0, 0, 0, 1, new int[] {Item.FLINT, 2}));
 	}
 	
 	public static void create() {

@@ -12,6 +12,7 @@ import com.wfe.ecs.Entity;
 import com.wfe.ecs.Transformation;
 import com.wfe.game.World;
 import com.wfe.gui.GUIManager;
+import com.wfe.gui.Item;
 import com.wfe.input.Key;
 import com.wfe.input.Keyboard;
 import com.wfe.input.Mouse;
@@ -21,6 +22,7 @@ import com.wfe.tileEngine.Tile;
 import com.wfe.utils.MathUtils;
 import com.wfe.utils.MousePicker;
 import com.wfe.utils.MyRandom;
+import com.wfe.utils.TimeUtil;
 
 public class PlayerControllerComponent extends Component {
 
@@ -39,6 +41,10 @@ public class PlayerControllerComponent extends Component {
 	private Entity hand;
 	private Entity equipment;
 	
+	private TimeUtil timer;
+	private boolean mining = false;
+	private MineableComponent mc;
+	
 	public PlayerControllerComponent(Camera camera, Transformation transform, PlayerAnimationComponent playerAnim, Entity hand) {		
 		this.camera = camera;
 		this.transform = transform;
@@ -47,6 +53,8 @@ public class PlayerControllerComponent extends Component {
 		this.speed = 2.0f;
 		this.hand = hand;
 		this.source = new Source();
+		
+		this.timer = new TimeUtil();
 	}
 	
 	@Override
@@ -97,20 +105,55 @@ public class PlayerControllerComponent extends Component {
 						}
 					}
 				}
+				
+				if(entity.hasComponent(ComponentType.MINEABLE)) {
+					if(Mouse.isButtonDown(0)) {
+						mc = (MineableComponent)entity.getComponent(ComponentType.MINEABLE);
+						System.out.println(GUIManager.inventory.getSelectedItem());
+						if(GUIManager.inventory.getSelectedItem().equals(mc.getRequiredItem())) {
+							mining = true;	
+						}
+					}
+				}
+				
+				if(mining) {
+					float time = (float) timer.getTime();
+					if(time >= mc.getMiningTime()) {
+						GUIManager.inventory.addItem(mc.getItem(), mc.getCount());
+						mc.getParent().remove();
+						mc = null;
+						
+						resetMiningProgress();
+					} else {
+						if(animation.hitAnim(dt)) {
+							source.play(mc.getSound());
+						}
+						GUIManager.progressBar.setCurrentValue((int)((time * 100) / mc.getMiningTime()));
+					}
+				}
+				
+				if(Mouse.isButtonUp(0)) {
+					resetMiningProgress();
+				}
+				
 			} else {
-				if(Mouse.isButtonDown(1)) {
-					if(equipment != null) {
-						if(equipment.getTag().equals("hoe")) {
-							if(tile.getId() != 10) {
-								World.getWorld().setTile((int)tp.x, (int)tp.z, 10);
-								source.play(ResourceManager.getSound("hoe"));
-							}
+				if(Mouse.isButtonDown(0)) {
+					if(GUIManager.inventory.getSelectedItem().id == Item.HOE) {
+						if(tile.getId() != 10) {
+							World.getWorld().setTile((int)tp.x, (int)tp.z, 10);
+							source.play(ResourceManager.getSound("hoe"));
 						}
 					}
 				}
 				Display.setCursor(Display.defaultCursor);
 			}
 		}
+	}
+	
+	private void resetMiningProgress() {
+		mining = false;
+		timer.reset();
+		GUIManager.progressBar.setCurrentValue(0);
 	}
 	
 	private boolean checkDistance(float x, float z) {
@@ -134,16 +177,18 @@ public class PlayerControllerComponent extends Component {
 		float xa = 0.0f;
 		float za = 0.0f;
 		
-		if(Keyboard.isKey(Key.KEY_A) || Keyboard.isKey(Key.KEY_LEFT)) {
-			xa = -1.0f;
-		} else if(Keyboard.isKey(Key.KEY_D) || Keyboard.isKey(Key.KEY_RIGHT)) {
-			xa = 1.0f;
-		}
-		
-		if(Keyboard.isKey(Key.KEY_W) || Keyboard.isKey(Key.KEY_UP)) {
-			za = -1.0f;
-		} else if(Keyboard.isKey(Key.KEY_S) || Keyboard.isKey(Key.KEY_DOWN)) {
-			za = 1.0f;
+		if(!mining) {
+			if(Keyboard.isKey(Key.KEY_A) || Keyboard.isKey(Key.KEY_LEFT)) {
+				xa = -1.0f;
+			} else if(Keyboard.isKey(Key.KEY_D) || Keyboard.isKey(Key.KEY_RIGHT)) {
+				xa = 1.0f;
+			}
+			
+			if(Keyboard.isKey(Key.KEY_W) || Keyboard.isKey(Key.KEY_UP)) {
+				za = -1.0f;
+			} else if(Keyboard.isKey(Key.KEY_S) || Keyboard.isKey(Key.KEY_DOWN)) {
+				za = 1.0f;
+			}
 		}
 		
 		yRot = camera.getYaw();
@@ -170,11 +215,13 @@ public class PlayerControllerComponent extends Component {
 			transform.rotY = (-yRot) - 135;
 		}
 		
-		if(xa != 0 || za != 0) {
-			transform.isMoving = true;
-			animation.walkAnim(dt);
-		} else {
-			animation.idleAnim();
+		if(!mining) {
+			if(xa != 0 || za != 0) {
+				transform.isMoving = true;
+				animation.walkAnim(dt);
+			} else {
+				animation.idleAnim();
+			}
 		}
 		
 		moveRelative(xa, za, speed, dt);
