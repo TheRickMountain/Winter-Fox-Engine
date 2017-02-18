@@ -64,6 +64,7 @@ public class Inventory {
 		}
 		
 		hotbarSlots.get(selected).setSelected(true);
+		selectedItem = ItemDatabase.getItem(Item.NULL);
 		
 		updatePositions();
 		
@@ -78,6 +79,7 @@ public class Inventory {
 			addItem(ItemDatabase.getItem(Item.AXE), 1);
 			addItem(ItemDatabase.getItem(Item.PICKAXE), 1);
 			addItem(ItemDatabase.getItem(Item.HOE), 1);
+			addItem(ItemDatabase.getItem(Item.CLUB), 1);
 		}
 		
 		if(Keyboard.isKeyDown(Key.KEY_1)) selected = 0;
@@ -104,22 +106,7 @@ public class Inventory {
 			
 			AudioMaster.defaultSource.play(ResourceManager.getSound("tick"));
 			
-			
-			Slot selectedSlot = hotbarSlots.get(selected);
-			if(selectedSlot.isHasItem()) {
-				Item item = selectedSlot.getItem();
-				switch(item.type) {
-				case TOOL:
-					Game.player.playerController.addEquipment(
-							item.blueprint.createInstanceWithComponents(new Transformation()));
-					break;
-				default:
-					Game.player.playerController.removeEquipment();
-					break;
-				}
-			} else {
-				Game.player.playerController.removeEquipment();
-			}
+			checkActiveSlot();
 		}
 		
 		if(Keyboard.isKeyDown(Key.KEY_E)) {
@@ -205,6 +192,7 @@ public class Inventory {
 				Item item = slot.getItem();
 				switch(item.type) {
 				case TOOL:
+				case WEAPON:
 					Game.player.playerController.addEquipment(
 							item.blueprint.createInstanceWithComponents(new Transformation()));
 					break;
@@ -212,6 +200,8 @@ public class Inventory {
 					Game.player.playerController.removeEquipment();
 					break;
 				}
+			} else {
+				Game.player.playerController.removeEquipment();
 			}
 			
 			selectedItem = slot.getItem();

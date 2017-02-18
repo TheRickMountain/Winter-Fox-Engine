@@ -13,6 +13,7 @@ import com.wfe.ecs.Transformation;
 import com.wfe.game.World;
 import com.wfe.gui.GUIManager;
 import com.wfe.gui.Item;
+import com.wfe.gui.ItemType;
 import com.wfe.input.Key;
 import com.wfe.input.Keyboard;
 import com.wfe.input.Mouse;
@@ -45,6 +46,8 @@ public class PlayerControllerComponent extends Component {
 	private boolean mining = false;
 	private MineableComponent mc;
 	
+	private boolean fighting = false;
+	
 	public PlayerControllerComponent(Camera camera, Transformation transform, PlayerAnimationComponent playerAnim, Entity hand) {		
 		this.camera = camera;
 		this.transform = transform;
@@ -65,6 +68,21 @@ public class PlayerControllerComponent extends Component {
 	}
 	
 	public void iteractWithWorld(float dt) {
+		if(!fighting) {
+			if(Mouse.isButtonDown(0)) {
+				if(GUIManager.inventory.getSelectedItem().type.equals(ItemType.WEAPON)) {
+					animation.idleAnim();
+					animation.prepareFightAnim();
+					fighting = true;
+				}
+			}
+		} else {
+			if(animation.fightAnim(dt)) {
+				fighting = false;
+				animation.idleAnim();
+			}
+		}
+		
 		Vector3f tp = MousePicker.getCurrentTerrainPoint();
 		if(tp != null) {
 			Tile tile = World.getWorld().getTile((int)tp.x, (int)tp.z);
@@ -108,10 +126,13 @@ public class PlayerControllerComponent extends Component {
 				
 				if(entity.hasComponent(ComponentType.MINEABLE)) {
 					if(Mouse.isButtonDown(0)) {
-						mc = (MineableComponent)entity.getComponent(ComponentType.MINEABLE);
-						System.out.println(GUIManager.inventory.getSelectedItem());
-						if(GUIManager.inventory.getSelectedItem().equals(mc.getRequiredItem())) {
-							mining = true;	
+						if(checkDistance(tp.x, tp.z)) {
+							animation.idleAnim();
+							turnTo((int)tp.x, (int)tp.z);
+							mc = (MineableComponent)entity.getComponent(ComponentType.MINEABLE);
+							if(GUIManager.inventory.getSelectedItem().equals(mc.getRequiredItem())) {
+								mining = true;	
+							}
 						}
 					}
 				}
@@ -139,9 +160,12 @@ public class PlayerControllerComponent extends Component {
 			} else {
 				if(Mouse.isButtonDown(0)) {
 					if(GUIManager.inventory.getSelectedItem().id == Item.HOE) {
-						if(tile.getId() != 10) {
-							World.getWorld().setTile((int)tp.x, (int)tp.z, 10);
-							source.play(ResourceManager.getSound("hoe"));
+						if(checkDistance(tp.x, tp.z)) {
+							turnTo((int)tp.x, (int)tp.z);
+							if(tile.getId() != 10) {
+								World.getWorld().setTile((int)tp.x, (int)tp.z, 10);
+								source.play(ResourceManager.getSound("hoe"));
+							}
 						}
 					}
 				}
@@ -154,6 +178,7 @@ public class PlayerControllerComponent extends Component {
 		mining = false;
 		timer.reset();
 		GUIManager.progressBar.setCurrentValue(0);
+		animation.idleAnim();
 	}
 	
 	private boolean checkDistance(float x, float z) {
@@ -177,7 +202,7 @@ public class PlayerControllerComponent extends Component {
 		float xa = 0.0f;
 		float za = 0.0f;
 		
-		if(!mining) {
+		if(!mining && !fighting) {
 			if(Keyboard.isKey(Key.KEY_A) || Keyboard.isKey(Key.KEY_LEFT)) {
 				xa = -1.0f;
 			} else if(Keyboard.isKey(Key.KEY_D) || Keyboard.isKey(Key.KEY_RIGHT)) {
@@ -215,7 +240,7 @@ public class PlayerControllerComponent extends Component {
 			transform.rotY = (-yRot) - 135;
 		}
 		
-		if(!mining) {
+		if(!mining && !fighting) {
 			if(xa != 0 || za != 0) {
 				transform.isMoving = true;
 				animation.walkAnim(dt);

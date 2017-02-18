@@ -184,6 +184,16 @@ public class Game implements IGameLogic {
 		ResourceManager.loadMesh("hoe", OBJLoader.loadMesh("/entity/hoe/model.obj"));
 		/*** *** ***/
 		
+		/*** Club ***/
+		ResourceManager.loadTexture("club_ui", Texture.newTexture(new MyFile("entity/club/icon.png"))
+				.normalMipMap().create());
+		ResourceManager.loadTexture("club", Texture.newTexture(new MyFile("entity/club/diffuse.png"))
+				.normalMipMap(-0.4f)
+				.create());
+		
+		ResourceManager.loadMesh("club", OBJLoader.loadMesh("/entity/club/model.obj"));
+		/*** *** ***/
+		
 		/*** Pickaxe ***/
 		ResourceManager.loadTexture("pickaxe_ui", Texture.newTexture(new MyFile("entity/pickaxe/icon.png"))
 				.normalMipMap().create());

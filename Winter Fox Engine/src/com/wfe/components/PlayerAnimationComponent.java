@@ -12,7 +12,8 @@ public class PlayerAnimationComponent extends Component {
 	private enum AnimationType {
 		WALK,
 		HIT,
-		IDLE
+		IDLE,
+		FIGHT
 	};
 	
 	private Transformation rightArm;
@@ -30,6 +31,7 @@ public class PlayerAnimationComponent extends Component {
 
     private int walkAnimSpeed = 180;
     private int hitAnimSpeed = 250;
+    private int fightAnimSpeed = 450;
 	
 	public PlayerAnimationComponent(Player player) {
 		rightArm = player.rightArm.getTransform();
@@ -87,6 +89,20 @@ public class PlayerAnimationComponent extends Component {
 		return false;
 	}
 	
+	public void prepareFightAnim() {
+		rightArm.localRotY = 100;
+		rightArm.localRotX = -40;
+	}
+	
+	public boolean fightAnim(float dt) {
+		if(rightArm.localRotY <= -50) {
+			return true;
+		}
+	
+		rightArm.localRotY -= fightAnimSpeed * dt;
+		return false;
+	}
+	
 	public void idleAnim() {
 		leftArm.localRotX = 0;
         rightArm.localRotX = 0;
@@ -99,6 +115,18 @@ public class PlayerAnimationComponent extends Component {
 
         leftShin.localRotX = 0;
         rightShin.localRotX = 0;
+        
+        leftArm.localRotY = 0;
+        rightArm.localRotY = 0;
+
+        leftHip.localRotY = 0;
+        rightHip.localRotY = 0;
+
+        leftForearm.localRotY = 0;
+        rightForearm.localRotY = 0;
+
+        leftShin.localRotY = 0;
+        rightShin.localRotY = 0;
 	}
 
 	@Override

@@ -26,6 +26,7 @@ public class Item {
 	public static final int LAVENDER = 18;
 	public static final int HONEY = 19;
 	public static final int SHARP_FLINT = 20;
+	public static final int CLUB = 21;
 	
 	public final int id;
 	public final String name;

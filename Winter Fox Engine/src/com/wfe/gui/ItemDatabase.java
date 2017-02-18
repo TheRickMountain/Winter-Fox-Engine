@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.wfe.blueprints.AxeBlueprint;
+import com.wfe.blueprints.ClubBlueprint;
 import com.wfe.blueprints.CrossWallBlueprint;
 import com.wfe.blueprints.DoorWallBlueprint;
 import com.wfe.blueprints.HoeBlueprint;
@@ -20,7 +21,7 @@ public class ItemDatabase {
 	private static ItemDatabase instance;
 	
 	private ItemDatabase() {
-		addItem(new Item(Item.NULL, "", "", null, null, null, 0, 0, 0, 0, null));
+		addItem(new Item(Item.NULL, "", "", null, null, ItemType.NULL, 0, 0, 0, 0, null));
 		
 		addItem(new Item(Item.APPLE, "Apple", "Sweet apple is so sweet", ResourceManager.getTexture("apple_ui"),
 				null, ItemType.CONSUMABLE, 10, 5, 0, 40, null));
@@ -84,6 +85,9 @@ public class ItemDatabase {
 		
 		addItem(new Item(Item.SHARP_FLINT, "Sharp flint", "Common useful resource", ResourceManager.getTexture("sharp_flint_ui"), 
 				null, ItemType.RESOURCE, 0, 0, 0, 1, new int[] {Item.FLINT, 2}));
+		
+		addItem(new Item(Item.CLUB, "Club", "Common useful resource", ResourceManager.getTexture("club_ui"), 
+				new ClubBlueprint(), ItemType.WEAPON, 0, 0, 0, 1, new int[] {Item.LOG, 1}));
 	}
 	
 	public static void create() {
