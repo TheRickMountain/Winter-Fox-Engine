@@ -75,6 +75,11 @@ public class PlayerControllerComponent extends Component {
 					animation.idleAnim();
 					animation.prepareFightAnim();
 					fighting = true;
+					
+					for(Entity entity : World.getWorld().getMobs()) {
+						MobComponent mc = (MobComponent) entity.getComponent(ComponentType.MOB);
+						mc.hurt(getParent(), 10);
+					}
 				}
 			}
 		} else {

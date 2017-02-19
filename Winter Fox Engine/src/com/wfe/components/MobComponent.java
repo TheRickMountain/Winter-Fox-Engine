@@ -8,10 +8,6 @@ import com.wfe.ecs.Entity;
 import com.wfe.ecs.Transformation;
 import com.wfe.game.Game;
 import com.wfe.game.World;
-import com.wfe.input.Key;
-import com.wfe.input.Keyboard;
-import com.wfe.input.Mouse;
-import com.wfe.math.Vector3f;
 import com.wfe.physics.AABB;
 import com.wfe.utils.MathUtils;
 
@@ -33,41 +29,36 @@ public class MobComponent extends Component {
 	@Override
 	public void update(float dt) {
 		move(dt);
-		
-		if(Mouse.isButtonDown(0)) {
-			float f2 = Game.player.getTransform().x - transform.x;
-			float f3 = Game.player.getTransform().z - transform.z;
-			
-			float distance = MathUtils.getDistance(Game.player.getTransform().x, Game.player.getTransform().z, 
-					transform.x, transform.z);
-			
-			float px = Game.player.getTransform().x;
-			float pz = Game.player.getTransform().z;
-			
-			float mx = transform.x;
-			float mz = transform.z;
-			
-			float tx = px - mx;
-			float tz = pz - mz;
-			
-			float a = (float) Math.abs(Math.sqrt((tx * tx) + (tz * tz)));
-			
-			float dirX = tx / a;
-			float dirZ = tz / a;
-			
-			PlayerControllerComponent pcc = (PlayerControllerComponent)Game.player.getComponent(ComponentType.PLAYER_CONTROLLER);
-			float direction = dirX * pcc.getXF() + dirZ * pcc.getZF();
-			
-			System.out.println(direction);
-			
-			if(distance < 2 && direction > 0) {
-				knockback(f2, f3);
-			}
-		}
 	}
 	
 	public void hurt(Entity entity, int damage) {
+		float f2 = entity.getTransform().x - transform.x;
+		float f3 = entity.getTransform().z - transform.z;
 		
+		float distance = MathUtils.getDistance(entity.getTransform().x, entity.getTransform().z, 
+				transform.x, transform.z);
+		
+		float px = entity.getTransform().x;
+		float pz = entity.getTransform().z;
+		
+		float mx = transform.x;
+		float mz = transform.z;
+		
+		float tx = px - mx;
+		float tz = pz - mz;
+		
+		float a = (float) Math.abs(Math.sqrt((tx * tx) + (tz * tz)));
+		
+		float dirX = tx / a;
+		float dirZ = tz / a;
+		
+		PlayerControllerComponent pcc = (PlayerControllerComponent)entity.getComponent(ComponentType.PLAYER_CONTROLLER);
+		float direction = dirX * pcc.getXF() + dirZ * pcc.getZF();
+		
+		if(distance < 2 && direction > 0) {
+			knockback(f2, f3);
+			System.out.println(damage);
+		}
 	}
 	
 	private void knockback(float f2, float f3) {
