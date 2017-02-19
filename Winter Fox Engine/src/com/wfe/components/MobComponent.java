@@ -6,10 +6,14 @@ import com.wfe.ecs.Component;
 import com.wfe.ecs.ComponentType;
 import com.wfe.ecs.Entity;
 import com.wfe.ecs.Transformation;
+import com.wfe.game.Game;
 import com.wfe.game.World;
 import com.wfe.input.Key;
 import com.wfe.input.Keyboard;
+import com.wfe.input.Mouse;
+import com.wfe.math.Vector3f;
 import com.wfe.physics.AABB;
+import com.wfe.utils.MathUtils;
 
 public class MobComponent extends Component {
 	
@@ -30,10 +34,35 @@ public class MobComponent extends Component {
 	public void update(float dt) {
 		move(dt);
 		
-		if(Keyboard.isKeyDown(Key.KEY_H)) {
-			float f2 = 80 - transform.x;
-			float f3 = 80 - transform.z;
-			knockback(f2, f3);
+		if(Mouse.isButtonDown(0)) {
+			float f2 = Game.player.getTransform().x - transform.x;
+			float f3 = Game.player.getTransform().z - transform.z;
+			
+			float distance = MathUtils.getDistance(Game.player.getTransform().x, Game.player.getTransform().z, 
+					transform.x, transform.z);
+			
+			float px = Game.player.getTransform().x;
+			float pz = Game.player.getTransform().z;
+			
+			float mx = transform.x;
+			float mz = transform.z;
+			
+			float tx = px - mx;
+			float tz = pz - mz;
+			
+			float a = (float) Math.abs(Math.sqrt((tx * tx) + (tz * tz)));
+			
+			float dirX = tx / a;
+			float dirZ = tz / a;
+			
+			PlayerControllerComponent pcc = (PlayerControllerComponent)Game.player.getComponent(ComponentType.PLAYER_CONTROLLER);
+			float direction = dirX * pcc.getXF() + dirZ * pcc.getZF();
+			
+			System.out.println(direction);
+			
+			if(distance < 2 && direction > 0) {
+				knockback(f2, f3);
+			}
 		}
 	}
 	
@@ -42,12 +71,13 @@ public class MobComponent extends Component {
 	}
 	
 	private void knockback(float f2, float f3) {
-		float f4 = f2 * f2 + f3 * f3;
+		float f4 = MathUtils.getDistance(Game.player.getTransform().x, Game.player.getTransform().z, 
+				transform.x, transform.z);
 		float f5 = 0.4f;
 		this.xd /= 2.0f;
 		this.zd /= 2.0f;
 		this.xd -= f2 / f4 * f5;
-		this.zd -= f3 / f3 * f5;
+		this.zd -= f3 / f4 * f5;
 	}
 	
 	private void move(float dt) {

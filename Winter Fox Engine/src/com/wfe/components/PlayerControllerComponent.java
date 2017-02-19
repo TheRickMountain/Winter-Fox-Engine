@@ -31,6 +31,7 @@ public class PlayerControllerComponent extends Component {
 	private Transformation transform;
 	private float yRot;
 	private float xd, zd;
+	private float xf, zf;
 	private float speed;
 
 	private AABB bb;
@@ -242,6 +243,8 @@ public class PlayerControllerComponent extends Component {
 		
 		if(!mining && !fighting) {
 			if(xa != 0 || za != 0) {
+				xf = xa;
+				zf = za;
 				transform.isMoving = true;
 				animation.walkAnim(dt);
 			} else {
@@ -323,6 +326,14 @@ public class PlayerControllerComponent extends Component {
 			equipment.remove();
 			equipment = null;
 		}
+	}
+	
+	public float getXF() {
+		return xf;
+	}
+	
+	public float getZF() {
+		return zf;
 	}
 	
 }

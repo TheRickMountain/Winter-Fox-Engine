@@ -95,6 +95,10 @@ public class Transformation {
 		rotY = localRotY + pp.transform.rotY;
 		rotZ = localRotZ + pp.transform.rotZ;
 		
+		if(rotY < 0) {
+			rotY += 360;
+		}
+		
 		scaleX = localScaleX * pp.transform.scaleX;
 		scaleY = localScaleY * pp.transform.scaleY;
 		scaleZ = localScaleZ * pp.transform.scaleZ;
