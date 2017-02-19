@@ -10,6 +10,7 @@ public enum ComponentType {
 	GATHERABLE,
 	MINEABLE,
 	HIVE,
+	MOB,
 	NONE
 	
 }

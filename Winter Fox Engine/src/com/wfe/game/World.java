@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.wfe.components.ColliderComponent;
+import com.wfe.components.MobComponent;
 import com.wfe.core.Camera;
 import com.wfe.ecs.ComponentType;
 import com.wfe.ecs.Entity;
@@ -92,6 +93,9 @@ public class World {
 	public void addEntity(Entity entity) {
 		if(entity.hasComponent(ComponentType.COLLIDER)) {
 			colliders.add(((ColliderComponent)entity.getComponent(ComponentType.COLLIDER)).getAABB());
+		}
+		if(entity.hasComponent(ComponentType.MOB)) {
+			colliders.add(((MobComponent)entity.getComponent(ComponentType.MOB)).getAABB());
 		}
 		this.entitiesToAdd.add(entity);
 		

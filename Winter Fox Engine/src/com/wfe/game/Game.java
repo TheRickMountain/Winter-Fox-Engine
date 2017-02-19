@@ -8,6 +8,7 @@ import com.wfe.core.ResourceManager;
 import com.wfe.ecs.Transformation;
 import com.wfe.entities.Fern;
 import com.wfe.entities.Flint;
+import com.wfe.entities.Goat;
 import com.wfe.entities.Grass;
 import com.wfe.entities.Hive;
 import com.wfe.entities.Mushroom;
@@ -142,6 +143,13 @@ public class Game implements IGameLogic {
 				.normalMipMap(-0.4f)
 				.create());
 		ResourceManager.loadMesh("rock", OBJLoader.loadMesh("/entity/rock/model.obj"));
+		/*** *** ***/
+		
+		/*** Goat ***/
+		ResourceManager.loadTexture("goat", Texture.newTexture(new MyFile("entity/goat/diffuse.png"))
+				.normalMipMap(-0.4f)
+				.create());
+		ResourceManager.loadMesh("goat", OBJLoader.loadMesh("/entity/goat/model.obj"));
 		/*** *** ***/
 		
 		/*** Grass ***/
@@ -341,6 +349,8 @@ public class Game implements IGameLogic {
 		}
 		
 		World.getWorld().addEntityToTile(new Hive(new Transformation(82.5f, 0, 80.5f)));
+		
+		World.getWorld().addEntity(new Goat(new Transformation(80, 0, 85)));
 		
 		AudioMaster.ambientSource.play(ResourceManager.getSound("hills"));
 	}
