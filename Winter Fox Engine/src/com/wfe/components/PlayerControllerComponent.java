@@ -248,8 +248,8 @@ public class PlayerControllerComponent extends Component {
 		
 		if(!mining && !fighting) {
 			if(xa != 0 || za != 0) {
-				xf = xa;
-				zf = za;
+				/*xf = xa;
+				zf = za;*/
 				transform.isMoving = true;
 				animation.walkAnim(dt);
 			} else {
@@ -278,8 +278,10 @@ public class PlayerControllerComponent extends Component {
         dist = speed / (float)Math.sqrt(dist);
         float sin = (float)Math.sin((double)this.yRot * 3.141592653589793 / 180.0);
         float cos = (float)Math.cos((double)this.yRot * 3.141592653589793 / 180.0);
-        this.xd += ((xa *= dist) * cos - (za *= dist) * sin) * dt;
-        this.zd += (za * cos + xa * sin) * dt;
+        xf = ((xa *= dist) * cos - (za *= dist) * sin) * dt;
+        zf = (za * cos + xa * sin) * dt;
+        this.xd += xf;
+        this.zd += zf;
     }
 	
 	private void move(float xa, float za) {
@@ -334,11 +336,11 @@ public class PlayerControllerComponent extends Component {
 	}
 	
 	public float getXF() {
-		return xf;
+		return -xf;
 	}
 	
 	public float getZF() {
-		return zf;
+		return -zf;
 	}
 	
 }
