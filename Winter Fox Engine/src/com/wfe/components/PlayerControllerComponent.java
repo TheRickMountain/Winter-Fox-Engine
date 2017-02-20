@@ -76,6 +76,8 @@ public class PlayerControllerComponent extends Component {
 					animation.prepareFightAnim();
 					fighting = true;
 					
+					source.play(ResourceManager.getSound("swing" + MyRandom.nextInt(1, 3)));
+					
 					for(Entity entity : World.getWorld().getMobs()) {
 						MobComponent mc = (MobComponent) entity.getComponent(ComponentType.MOB);
 						mc.hurt(getParent(), 10);

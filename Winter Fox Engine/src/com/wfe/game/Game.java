@@ -44,6 +44,9 @@ public class Game implements IGameLogic {
 		ResourceManager.loadSound("inventory", AudioMaster.loadSound("audio/inventory.wav"));
 		ResourceManager.loadSound("footstep1", AudioMaster.loadSound("audio/footstep1.wav"));
 		ResourceManager.loadSound("footstep2", AudioMaster.loadSound("audio/footstep2.wav"));
+		ResourceManager.loadSound("swing1", AudioMaster.loadSound("audio/swing1.wav"));
+		ResourceManager.loadSound("swing2", AudioMaster.loadSound("audio/swing2.wav"));
+		ResourceManager.loadSound("swing3", AudioMaster.loadSound("audio/swing3.wav"));
 		
 		ResourceManager.loadSound("hills", AudioMaster.loadSound("audio/hills.wav"));
 		/*** *** ***/
