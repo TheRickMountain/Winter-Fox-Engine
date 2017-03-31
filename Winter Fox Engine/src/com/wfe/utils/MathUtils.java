@@ -164,4 +164,8 @@ public class MathUtils {
 		}
 	}
 	
+	public static float getLerp(float p1, float p2, float alpha) {
+		return p1 + alpha * (p2 - p1);
+	}
+	
 }

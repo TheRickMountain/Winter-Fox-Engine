@@ -15,10 +15,10 @@ import com.wfe.entities.Mushroom;
 import com.wfe.entities.Pine;
 import com.wfe.entities.Player;
 import com.wfe.entities.Rock;
+import com.wfe.entities.Settler;
 import com.wfe.entities.Stick;
 import com.wfe.entities.Wheat;
 import com.wfe.graph.OBJLoader;
-import com.wfe.gui.Settler;
 import com.wfe.math.Vector3f;
 import com.wfe.textures.Texture;
 import com.wfe.utils.MyFile;
@@ -27,6 +27,7 @@ import com.wfe.utils.MyRandom;
 public class Game implements IGameLogic {
 	
 	public static Player player;
+	private World world;
 	
 	@Override
 	public void loadResources() throws Exception {
@@ -309,35 +310,35 @@ public class Game implements IGameLogic {
 	public void onEnter(Display display) throws Exception {
 		Camera camera = new Camera(new Vector3f(16, 0, 16));	
 		
-		World.createWorld(camera);
-		World.getWorld().init();
+		world = World.createWorld(camera);
+		world.init();
 		
 		player = new Player(camera, new Transformation(80, 0.65f, 80));
-		World.getWorld().addEntity(player);
+		world.addEntity(player);
 		
-		World.getWorld().addEntityToTile(new Wheat(new Transformation(83.5f, 0, 83.5f)));
-		World.getWorld().addEntityToTile(new Wheat(new Transformation(90.5f, 0, 85.5f)));
-		World.getWorld().addEntityToTile(new Wheat(new Transformation(72.5f, 0, 94.5f)));
-		World.getWorld().addEntityToTile(new Wheat(new Transformation(80.5f, 0, 75.5f)));
+		world.addEntityToTile(new Wheat(new Transformation(83.5f, 0, 83.5f)));
+		world.addEntityToTile(new Wheat(new Transformation(90.5f, 0, 85.5f)));
+		world.addEntityToTile(new Wheat(new Transformation(72.5f, 0, 94.5f)));
+		world.addEntityToTile(new Wheat(new Transformation(80.5f, 0, 75.5f)));
 		
 		for(int i = 0; i < 100; i++) {		
 			Mushroom shroom = new Mushroom(new Transformation(MyRandom.nextInt(160) + 0.5f, 0, MyRandom.nextInt(160) + 0.5f));
-			World.getWorld().addEntityToTile(shroom);
+			world.addEntityToTile(shroom);
 			
 			Fern fern = new Fern(new Transformation(MyRandom.nextInt(160) + 0.5f, 0, MyRandom.nextInt(160) + 0.5f));
 			fern.setTextureIndex(MyRandom.nextInt(4));
-			World.getWorld().addEntityToTile(fern);
+			world.addEntityToTile(fern);
 		
-			World.getWorld().addEntityToTile(new Flint(new Transformation(MyRandom.nextInt(160) + 0.5f, 0, 
+			world.addEntityToTile(new Flint(new Transformation(MyRandom.nextInt(160) + 0.5f, 0, 
 					MyRandom.nextInt(160) + 0.5f)));
 			
-			World.getWorld().addEntityToTile(new Stick(new Transformation(MyRandom.nextInt(160) + 0.5f, 0, 
+			world.addEntityToTile(new Stick(new Transformation(MyRandom.nextInt(160) + 0.5f, 0, 
 					MyRandom.nextInt(160) + 0.5f)));
 			
-			World.getWorld().addEntityToTile(new Pine(new Transformation(MyRandom.nextInt(160) + 0.5f, 0, 
+			world.addEntityToTile(new Pine(new Transformation(MyRandom.nextInt(160) + 0.5f, 0, 
 					MyRandom.nextInt(160) + 0.5f)));
 			
-			World.getWorld().addEntityToTile(new Rock(new Transformation(MyRandom.nextInt(160) + 0.5f, 0, 
+			world.addEntityToTile(new Rock(new Transformation(MyRandom.nextInt(160) + 0.5f, 0, 
 					MyRandom.nextInt(160) + 0.5f)));
 		}
 		
@@ -347,33 +348,33 @@ public class Game implements IGameLogic {
 				if(num == 5) {
 					Grass grass = new Grass(new Transformation(i, 0, j));
 					grass.setTextureIndex(MyRandom.nextInt(3, 7));		
-					World.getWorld().addEntityToTile(grass);
+					world.addEntityToTile(grass);
 				}
 			}
 		}
 		
-		World.getWorld().addEntity(new Settler(new Transformation(85, 0.65f, 85)));
+		world.addEntity(new Settler(World.getWorld().getTile(85, 85), new Transformation(85.5f, 0.65f, 85.5f)));
 		
-		World.getWorld().addEntityToTile(new Hive(new Transformation(82.5f, 0, 80.5f)));
+		world.addEntityToTile(new Hive(new Transformation(82.5f, 0, 80.5f)));
 		
-		World.getWorld().addEntity(new Goat(new Transformation(80, 0, 85)));
+		world.addEntity(new Goat(new Transformation(80, 0, 85)));
 		
 		AudioMaster.ambientSource.play(ResourceManager.getSound("hills"));
 	}
 	
 	@Override
 	public void update(float dt) {	
-		World.getWorld().update(dt, player);
+		world.update(dt, player);
 	}
 
 	@Override
 	public void render() {
-		World.getWorld().render();
+		world.render();
 	}
 
 	@Override
 	public void onExit() {
-		World.getWorld().cleanup();
+		world.cleanup();
 		AudioMaster.cleanup();
 	}
 

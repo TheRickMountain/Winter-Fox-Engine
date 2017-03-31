@@ -1,4 +1,4 @@
-package com.wfe.gui;
+package com.wfe.entities;
 
 import com.wfe.components.SettlerControllerComponent;
 import com.wfe.core.ResourceManager;
@@ -6,6 +6,7 @@ import com.wfe.ecs.Entity;
 import com.wfe.ecs.Transformation;
 import com.wfe.game.World;
 import com.wfe.graph.Material;
+import com.wfe.tileEngine.Tile;
 
 public class Settler extends Entity {
 
@@ -21,7 +22,7 @@ public class Settler extends Entity {
 	public Entity rightShin;
 	public Entity leftShin;
 	
-	public Settler(Transformation transform) {
+	public Settler(Tile tile, Transformation transform) {
 		super(null, null, transform);
 		
 		transform.setScale(0.3f);
@@ -105,7 +106,7 @@ public class Settler extends Entity {
 			World.getWorld().addEntity(rightShin);
 		}
 		
-		addComponent(new SettlerControllerComponent());
+		addComponent(new SettlerControllerComponent(tile));
 	}
 
 }
