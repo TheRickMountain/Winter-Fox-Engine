@@ -35,9 +35,11 @@ public class SettlerControllerComponent extends Component {
 			Vector3f tp = MousePicker.getCurrentTerrainPoint();
 			if(tp != null) {
 				Tile tile = world.getTile((int)tp.getX(), (int)tp.getZ());
-				pathAStar = new PathAStar(world, currTile, tile);
-				if(pathAStar.getLength() != -1) {
-					destTile = tile;
+				if(tile != null) {
+					pathAStar = new PathAStar(world, currTile, tile);
+					if(pathAStar.getLength() != -1) {
+						destTile = tile;
+					}
 				}
 			}
 		}

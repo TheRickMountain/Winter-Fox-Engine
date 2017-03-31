@@ -148,10 +148,20 @@ public class World {
 	}
 	
 	public void setTile(int x, int y, int id) {
+		if(x < 0 || x >= getWidth() || y < 0 || y >= getHeight()) {
+			System.err.println("World:setTile(...)Выход за пределы массива");
+			return;
+		}
+		
 		tiles[x][y].setId(id);
 	}
 	
 	public Tile getTile(int x, int y) {
+		if(x < 0 || x >= getWidth() || y < 0 || y >= getHeight()) {
+			System.err.println("World:getTile(...)Выход за пределы массива");
+			return null;
+		}
+		
 		return tiles[x][y];
 	}
 	
