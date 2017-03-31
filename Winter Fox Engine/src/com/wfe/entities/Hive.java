@@ -15,6 +15,8 @@ public class Hive extends Entity {
 		super(ResourceManager.getMesh("hive"), 
 				new Material(ResourceManager.getTexture("hive")), transform);
 		setTag("hive");
+		setWalkable(false);
+		
 		transform.setScale(0.65f);
 		
 		addComponent(new ColliderComponent(0.5f, 1, 0.5f, transform));

@@ -19,6 +19,7 @@ public class Entity {
 	private Entity parent;
 
 	private boolean isVisible = true;
+	private boolean walkable = true;
 	
 	protected boolean remove = false;
 	
@@ -98,6 +99,14 @@ public class Entity {
 		this.isVisible = isVisible;
 	}
 	
+	public boolean isWalkable() {
+		return walkable;
+	}
+
+	public void setWalkable(boolean walkable) {
+		this.walkable = walkable;
+	}
+
 	public void remove() {
 		this.remove = true;
 	}

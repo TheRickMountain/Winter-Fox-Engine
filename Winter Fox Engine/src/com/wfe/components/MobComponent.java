@@ -13,6 +13,8 @@ import com.wfe.utils.MathUtils;
 
 public class MobComponent extends Component {
 	
+	private int health;
+	
 	private Transformation transform;
 	private float yRot;
 	private float xd, zd;
@@ -24,6 +26,7 @@ public class MobComponent extends Component {
 		this.transform = transform;
 		this.bb = new AABB(transform.x - 0.4f, 0, transform.z - 0.4f, transform.x + 0.4f, 0 + 1, transform.z + 0.4f);
 		this.speed = 2.0f;
+		health = 50;
 	}
 	
 	@Override
@@ -57,7 +60,10 @@ public class MobComponent extends Component {
 		
 		if(distance < 2 && direction > 0) {
 			knockback(f2, f3);
-			System.out.println(damage);
+			health -= damage;
+			if(health <= 0) {
+				die();
+			}
 		}
 	}
 	
@@ -136,4 +142,9 @@ public class MobComponent extends Component {
 		return bb;
 	}
 
+	private void die() {
+		System.out.println("I'm dead!");
+		getParent().remove();
+	}
+	
 }

@@ -12,8 +12,10 @@ import com.wfe.ecs.ComponentType;
 import com.wfe.ecs.Entity;
 import com.wfe.graph.Mesh;
 import com.wfe.gui.GUIManager;
+import com.wfe.pathfinding.PathTileGraph;
 import com.wfe.physics.AABB;
 import com.wfe.renderEngine.RenderEngine;
+import com.wfe.tileEngine.Chunk;
 import com.wfe.tileEngine.Terrain;
 import com.wfe.tileEngine.Tile;
 import com.wfe.utils.MousePicker;
@@ -26,6 +28,9 @@ public class World {
 	private Camera camera;
 	private Terrain terrain;
 	private RenderEngine renderEngine;
+	
+	private PathTileGraph tileGraph;
+	private Tile[][] tiles;
 	
 	private List<Entity> entities = new ArrayList<Entity>();
 	private List<Entity> entitiesToRemove = new ArrayList<Entity>();
@@ -46,8 +51,16 @@ public class World {
 	
 	public void init() throws Exception {
 		this.terrain = new Terrain(10, 10, camera);
+		this.tiles = new Tile[10 * Chunk.SIZE][10 * Chunk.SIZE];
+		for(int i = 0; i < tiles.length; i++) {
+			for(int j = 0; j < tiles.length; j++) {
+				tiles[i][j] = terrain.getTile(i, j);
+			}
+		}
+		
 		this.renderEngine = RenderEngine.create(camera);
 		this.weather = new Weather();
+		
 		MousePicker.setUpMousePicker(camera);
 		GUIManager.init();
 	}
@@ -135,25 +148,26 @@ public class World {
 	}
 	
 	public void setTile(int x, int y, int id) {
-		terrain.setTile(x, y, id);
+		tiles[x][y].setId(id);
 	}
 	
 	public Tile getTile(int x, int y) {
-		return terrain.getTile(x, y);
+		return tiles[x][y];
 	}
 	
 	public boolean addEntityToTile(Entity entity) {
-		if(terrain.setTileEntity(
-				(int)entity.getTransform().getX(),
-				(int)entity.getTransform().getZ(), entity)) {
+		Tile tile = tiles[(int)entity.getTransform().getX()] [(int)entity.getTransform().getZ()];
+		if(!tile.isHasEntity()) {
+			tile.setEntity(entity);
 			addEntity(entity);
 			return true;
 		}
+		
 		return false;
 	}
 	
 	public void removeEntityFromTile(int x, int y) {
-		terrain.removeTileEntity(x, y);
+		tiles[x][y].removeEntity();
 	}
 	
 	public void updateWeather(float dt) {
@@ -163,6 +177,22 @@ public class World {
 		}
 		
 		weather.updateWeather(time, dt);
+	}
+	
+	public int getWidth() {
+		return terrain.getWidth();
+	}
+	
+	public int getHeight() {
+		return terrain.getHeight();
+	}
+	
+	public PathTileGraph getTileGraph() {
+		return tileGraph;
+	}
+	
+	public void setTileGraph(PathTileGraph tileGraph) {
+		this.tileGraph = tileGraph;
 	}
 	
 	public void cleanup() {

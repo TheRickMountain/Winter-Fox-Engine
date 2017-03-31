@@ -10,7 +10,6 @@ import org.lwjgl.opengl.GL15;
 import org.lwjgl.opengl.GL20;
 import org.lwjgl.opengl.GL30;
 
-import com.wfe.ecs.Entity;
 import com.wfe.math.Vector2f;
 
 public class Chunk {
@@ -29,8 +28,8 @@ public class Chunk {
 	public static final float SPRITE_SHEET = 4;
 	private boolean rebuild = false;
 	
-	public Chunk(int x, int z, HeightGenerator heightGenerator) {
-		position = new Vector2f(x * 16, z * 16);
+	public Chunk(int x, int y, HeightGenerator heightGenerator) {
+		position = new Vector2f(x * SIZE, y * SIZE);		
 		
 		init(heightGenerator, (int)position.x, (int)position.y);
 		initGL();
@@ -39,9 +38,9 @@ public class Chunk {
 	int currentTile = 6;
 	
 	public void init(HeightGenerator heightGenerator, int iterX, int iterY) {
-		tiles = new Tile[16][16];
-		for(int x = 0; x < 16; x++) {
-			for(int y = 0; y < 16; y++) {
+		tiles = new Tile[SIZE][SIZE];
+		for(int x = 0; x < SIZE; x++) {
+			for(int y = 0; y < SIZE; y++) {
 				float height = heightGenerator.generateHeight(x + iterX, y + iterY);
 				if((y % 2 == 0)) {
 					if(x % 2 == 0) {
@@ -57,10 +56,11 @@ public class Chunk {
 					}
 				}
 				
-				if(height > -0.1f)
-					tiles[x][y] = new Tile(currentTile);
-				else
-					tiles[x][y] = new Tile(currentTile);
+				if(height > -0.1f) {
+					tiles[x][y] = new Tile(iterX + x, iterY + y, currentTile);
+				} else {
+					tiles[x][y] = new Tile(iterX + x, iterY + y, currentTile);
+				}
 			}
 		}
 		
@@ -184,28 +184,9 @@ public class Chunk {
 		GL20.glDisableVertexAttribArray(1);
 		GL30.glBindVertexArray(0);
 	}
-	
-	public void setTile(int x, int y, int id){
-		tiles[x][y].setId(id);
-		rebuild = true;
-	}
-	
+
 	public Tile getTile(int x, int y) {
 		return tiles[x][y];
-	}
-	
-	public boolean setEntity(int x, int y, Entity entity) {
-		if(!tiles[x][y].isHasEntity()){
-			tiles[x][y].setEntity(entity);
-			return true;
-		}
-		return false;
-	}
-	
-	public void removeEntity(int x, int y) {
-		if(tiles[x][y].isHasEntity()){
-			tiles[x][y].removeEntity();
-		}
 	}
 	
 	public void cleanup() {

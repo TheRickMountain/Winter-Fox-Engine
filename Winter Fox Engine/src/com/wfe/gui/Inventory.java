@@ -80,6 +80,9 @@ public class Inventory {
 			addItem(ItemDatabase.getItem(Item.PICKAXE), 1);
 			addItem(ItemDatabase.getItem(Item.HOE), 1);
 			addItem(ItemDatabase.getItem(Item.CLUB), 1);
+			addItem(ItemDatabase.getItem(Item.APPLE), 5);
+			addItem(ItemDatabase.getItem(Item.HONEY), 5);
+			addItem(ItemDatabase.getItem(Item.LAVENDER), 2);
 		}
 		
 		if(Keyboard.isKeyDown(Key.KEY_1)) selected = 0;

@@ -5,7 +5,6 @@ import java.util.List;
 
 import com.wfe.core.Camera;
 import com.wfe.core.Display;
-import com.wfe.ecs.Entity;
 import com.wfe.textures.Texture;
 import com.wfe.utils.MathUtils;
 import com.wfe.utils.MyFile;
@@ -15,7 +14,8 @@ public class Terrain {
 
 	private List<Chunk> chunks = new ArrayList<Chunk>();
 	
-	private int sizeX, sizeZ;
+	private int width, height;
+	private int sizex, sizez;
 	private Camera camera;
 	private Texture spriteSheet;
 	
@@ -23,9 +23,11 @@ public class Terrain {
 	
 	private HeightGenerator heightGenerator;
 	
-	public Terrain(int sizeX, int sizeZ, Camera camera) throws Exception {
-		this.sizeX = sizeX;
-		this.sizeZ = sizeZ;
+	public Terrain(int sizex, int sizez, Camera camera) throws Exception {
+		this.sizex = sizex;
+		this.sizez = sizez;
+		this.width = sizex * Chunk.SIZE;
+		this.height = sizez * Chunk.SIZE;
 		this.camera = camera;
 		shader = new TerrainShader();
 		heightGenerator = new HeightGenerator();
@@ -36,8 +38,8 @@ public class Terrain {
 		spriteSheet = Texture.newTexture(new MyFile("textures/terrain.png"))
 				.normalMipMap(-0.4f).clampEdges().anisotropic().create();
 		
-		for(int x = 0; x < sizeX; x++) {
-			for(int y = 0; y < sizeZ; y++) {
+		for(int x = 0; x < sizex; x++) {
+			for(int y = 0; y < sizez; y++) {
 				chunks.add(new Chunk(x, y, heightGenerator));
 			}
 		}
@@ -79,50 +81,22 @@ public class Terrain {
 		shader.start();
 	}
 	
-	public void setTile(int x, int y, int id) {
-		int tX = (x / 16) * 16;
-		int tY = (y / 16) * 16;
-		
-		for(Chunk chunk : chunks) {
-			if(chunk.getPosX() == tX && chunk.getPosY() == tY) {
-				chunk.setTile(x - tX, y - tY, id);
-				return;
-			}
-		}
-	}
-	
 	public Tile getTile(int x, int y) {
-		int terrainX = x / 16;
-		int terrainY = y / 16;
+		int terrainX = x / Chunk.SIZE;
+		int terrainY = y / Chunk.SIZE;
 		
-		int tileX = x - terrainX * 16;
-		int tileY = y - terrainY * 16;
+		int tileX = x - terrainX * Chunk.SIZE;
+		int tileY = y - terrainY * Chunk.SIZE;
 		
-		return chunks.get(terrainX * sizeZ + terrainY).getTile(tileX, tileY);
+		return chunks.get(terrainX * sizez + terrainY).getTile(tileX, tileY);
 	}
 	
-	public boolean setTileEntity(int x, int y, Entity entity) {
-		int tX = (x / 16) * 16;
-		int tY = (y / 16) * 16;
-		
-		for(Chunk chunk : chunks) {
-			if(chunk.getPosX() == tX && chunk.getPosY() == tY) {
-				return chunk.setEntity(x - tX, y - tY, entity);
-			}
-		}
-		return false;
+	public int getWidth() {
+		return width;
 	}
 	
-	public void removeTileEntity(int x, int y) {
-		int tX = (x / 16) * 16;
-		int tY = (y / 16) * 16;
-		
-		for(Chunk chunk : chunks) {
-			if(chunk.getPosX() == tX && chunk.getPosY() == tY) {
-				chunk.removeEntity(x - tX, y - tY);
-				return;
-			}
-		}
+	public int getHeight() {
+		return height;
 	}
 	
 	public void cleanup() {

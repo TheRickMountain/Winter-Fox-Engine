@@ -17,6 +17,7 @@ public class Grass extends Entity {
 				.setHasTransparency(true)
 				.setHasFakeLighting(true)
 				.setNumberOfRows(4), transform);
+		setTag("Grass");
 		getTransform().setScale(0.5f);
 		getTransform().setPosition(
 				getTransform().getX() + MyRandom.nextFloat(0.2f, 0.8f), 

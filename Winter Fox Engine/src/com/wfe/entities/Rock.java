@@ -16,6 +16,8 @@ public class Rock extends Entity {
 		super(ResourceManager.getMesh("rock"), 
 				new Material(ResourceManager.getTexture("rock")), transform);
 		setTag("stone");
+		setWalkable(false);
+		
 		transform.setScale(0.5f);
 		
 		addComponent(new ColliderComponent(0.5f, 1, 0.5f, transform));

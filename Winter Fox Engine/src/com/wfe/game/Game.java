@@ -18,6 +18,7 @@ import com.wfe.entities.Rock;
 import com.wfe.entities.Stick;
 import com.wfe.entities.Wheat;
 import com.wfe.graph.OBJLoader;
+import com.wfe.gui.Settler;
 import com.wfe.math.Vector3f;
 import com.wfe.textures.Texture;
 import com.wfe.utils.MyFile;
@@ -342,7 +343,7 @@ public class Game implements IGameLogic {
 		
 		for(int i = 0; i < 160; i++) {
 			for(int j = 0; j < 160; j++) {
-				int num = MyRandom.nextInt(20);
+				int num = MyRandom.nextInt(10);
 				if(num == 5) {
 					Grass grass = new Grass(new Transformation(i, 0, j));
 					grass.setTextureIndex(MyRandom.nextInt(3, 7));		
@@ -350,6 +351,8 @@ public class Game implements IGameLogic {
 				}
 			}
 		}
+		
+		World.getWorld().addEntity(new Settler(new Transformation(85, 0.65f, 85)));
 		
 		World.getWorld().addEntityToTile(new Hive(new Transformation(82.5f, 0, 80.5f)));
 		
