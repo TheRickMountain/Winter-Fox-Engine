@@ -25,8 +25,8 @@ public class SettlerControllerComponent extends Component {
 				if(tile.isHasEntity()) {
 					System.out.println(tile.getEntity().getTag());
 				}
-				System.out.println("Mouse Piker: " + tp.getX() + " " + tp.getZ());
-				System.out.println("Tile:" + tile.getX() + " " + tile.getY());
+				/*System.out.println("Mouse Piker: " + tp.getX() + " " + tp.getZ());
+				System.out.println("Tile:" + tile.getX() + " " + tile.getY());*/
 			}
 		}
 	}
