@@ -6,6 +6,7 @@ import com.wfe.ecs.Component;
 import com.wfe.ecs.ComponentType;
 import com.wfe.ecs.Transformation;
 import com.wfe.entities.Player;
+import com.wfe.entities.Settler;
 
 public class PlayerAnimationComponent extends Component {
 
@@ -34,6 +35,17 @@ public class PlayerAnimationComponent extends Component {
     private int fightAnimSpeed = 450;
 	
 	public PlayerAnimationComponent(Player player) {
+		rightArm = player.rightArm.getTransform();
+		leftArm = player.leftArm.getTransform();
+		rightHip = player.rightHip.getTransform();
+		leftHip = player.leftHip.getTransform();
+		leftForearm = player.leftForearm.getTransform();
+		rightForearm = player.rightForearm.getTransform();
+		leftShin = player.leftShin.getTransform();
+		rightShin = player.rightShin.getTransform();
+	}
+	
+	public PlayerAnimationComponent(Settler player) {
 		rightArm = player.rightArm.getTransform();
 		leftArm = player.leftArm.getTransform();
 		rightHip = player.rightHip.getTransform();

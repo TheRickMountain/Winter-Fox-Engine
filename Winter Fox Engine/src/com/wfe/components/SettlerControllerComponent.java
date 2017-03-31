@@ -14,6 +14,8 @@ public class SettlerControllerComponent extends Component {
 	
 	private World world;
 	
+	private PlayerAnimationComponent animation;
+	
 	private Tile currTile;
 	private Tile nextTile;
 	private Tile destTile;
@@ -23,10 +25,11 @@ public class SettlerControllerComponent extends Component {
 	private float movementPerc;	
 	private float speed = 2f;
 	
-	public SettlerControllerComponent(Tile tile) {
+	public SettlerControllerComponent(Tile tile, PlayerAnimationComponent animation) {
 		world = World.getWorld();
 		
 		currTile = destTile = nextTile = tile;
+		this.animation = animation;
 	}
 	
 	@Override
@@ -45,18 +48,27 @@ public class SettlerControllerComponent extends Component {
 		}
 		
 		if(pathAStar != null) {
+			// While character is moving, iterate animation
+			animation.walkAnim(dt);
 			move(dt);
 		}
 	}
 	
-	private boolean move(float dt) {
+	private boolean move(float dt) {		
 		if(currTile.equals(destTile)) {
 			pathAStar = null;
+			// Set animation to the idle
+			animation.idleAnim();
 			return true;
 		}
 		
 		if(nextTile.equals(currTile)) {
 			nextTile = pathAStar.getNextTile();
+			
+			// Rotate character to the destination tile
+			float rotation = MathUtils.getRotation(currTile.getX() + 0.5f, currTile.getY() + 0.5f, 
+					nextTile.getX() + 0.5f, nextTile.getY() + 0.5f);
+			getParent().getTransform().setRotY(-(rotation) + 90);
 		}
 		
 		float distToTravel = MathUtils.getDistance(

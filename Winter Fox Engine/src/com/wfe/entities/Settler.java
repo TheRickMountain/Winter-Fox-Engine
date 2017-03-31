@@ -1,5 +1,6 @@
 package com.wfe.entities;
 
+import com.wfe.components.PlayerAnimationComponent;
 import com.wfe.components.SettlerControllerComponent;
 import com.wfe.core.ResourceManager;
 import com.wfe.ecs.Entity;
@@ -106,7 +107,8 @@ public class Settler extends Entity {
 			World.getWorld().addEntity(rightShin);
 		}
 		
-		addComponent(new SettlerControllerComponent(tile));
+		PlayerAnimationComponent animation = new PlayerAnimationComponent(this);
+		addComponent(new SettlerControllerComponent(tile, animation));
 	}
 
 }
