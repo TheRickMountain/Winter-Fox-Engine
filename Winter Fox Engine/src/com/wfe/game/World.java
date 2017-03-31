@@ -12,6 +12,9 @@ import com.wfe.ecs.ComponentType;
 import com.wfe.ecs.Entity;
 import com.wfe.graph.Mesh;
 import com.wfe.gui.GUIManager;
+import com.wfe.input.Mouse;
+import com.wfe.jobSystem.Job;
+import com.wfe.math.Vector3f;
 import com.wfe.pathfinding.PathTileGraph;
 import com.wfe.physics.AABB;
 import com.wfe.renderEngine.RenderEngine;
@@ -44,6 +47,8 @@ public class World {
 	
 	private float time = 12000;
 	private Weather weather;
+	
+	private List<Job> jobList = new ArrayList<Job>();
 	
 	private World(Camera camera) {
 		this.camera = camera;
@@ -82,13 +87,15 @@ public class World {
 		updateWeather(dt);
 		terrain.update(player.getTransform().x, player.getTransform().z);
 		
-		for(Entity entity : entities) {
-			entity.update(dt);
-		}
+		updateController();
 		
 		if(!entitiesToAdd.isEmpty()) {
 			entities.addAll(entitiesToAdd);
 			entitiesToAdd.clear();
+		}
+		
+		for(Entity entity : entities) {
+			entity.update(dt);
 		}
 		
 		if(!entitiesToRemove.isEmpty()) {
@@ -97,6 +104,23 @@ public class World {
 		}
 		
 		GUIManager.update();
+	}
+	
+	private void updateController() {
+		if(Mouse.isButtonDown(0)) {
+			if(!Mouse.isActiveInGUI()) {
+				Vector3f tp = MousePicker.getCurrentTerrainPoint();
+				if(tp != null) {
+					Tile tile = getTile((int)tp.getX(), (int)tp.getZ());
+					if(tile != null) {
+						// If tile has any entity (development, gatherable, etc...)
+						if(tile.isHasEntity()) {
+							jobList.add(new Job(tile, 1));
+						}
+					}
+				}
+			}
+		}
 	}
 	
 	public void render() {
@@ -203,6 +227,10 @@ public class World {
 	
 	public void setTileGraph(PathTileGraph tileGraph) {
 		this.tileGraph = tileGraph;
+	}
+	
+	public List<Job> getJobList() {
+		return jobList;
 	}
 	
 	public void cleanup() {

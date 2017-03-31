@@ -357,7 +357,7 @@ public class Game implements IGameLogic {
 		
 		world.addEntityToTile(new Hive(new Transformation(82.5f, 0, 80.5f)));
 		
-		world.addEntity(new Goat(new Transformation(80, 0, 85)));
+		//world.addEntity(new Goat(new Transformation(80, 0, 85)));
 		
 		AudioMaster.ambientSource.play(ResourceManager.getSound("hills"));
 	}

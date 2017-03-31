@@ -57,9 +57,9 @@ public class Chunk {
 				}
 				
 				if(height > -0.1f) {
-					tiles[x][y] = new Tile(iterX + x, iterY + y, currentTile);
+					tiles[x][y] = new Tile(this, iterX + x, iterY + y, currentTile);
 				} else {
-					tiles[x][y] = new Tile(iterX + x, iterY + y, currentTile);
+					tiles[x][y] = new Tile(this, iterX + x, iterY + y, currentTile);
 				}
 			}
 		}
@@ -216,6 +216,10 @@ public class Chunk {
 			}
 		}
 		this.isVisible = isVisible;
+	}
+	
+	protected void setRebuild(boolean value) {
+		rebuild = value;
 	}
 	
 }

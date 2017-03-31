@@ -1,14 +1,16 @@
 package com.wfe.components;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.wfe.ecs.Component;
 import com.wfe.ecs.ComponentType;
 import com.wfe.game.World;
-import com.wfe.input.Mouse;
-import com.wfe.math.Vector3f;
+import com.wfe.jobSystem.Job;
 import com.wfe.pathfinding.PathAStar;
 import com.wfe.tileEngine.Tile;
 import com.wfe.utils.MathUtils;
-import com.wfe.utils.MousePicker;
+import com.wfe.utils.TimeUtil;
 
 public class SettlerControllerComponent extends Component {
 	
@@ -25,32 +27,33 @@ public class SettlerControllerComponent extends Component {
 	private float movementPerc;	
 	private float speed = 2f;
 	
+	private Job currentJob;
+	private TimeUtil time;
+	
 	public SettlerControllerComponent(Tile tile, PlayerAnimationComponent animation) {
 		world = World.getWorld();
 		
 		currTile = destTile = nextTile = tile;
 		this.animation = animation;
+		
+		time = new TimeUtil(); 
 	}
 	
 	@Override
 	public void update(float dt) {
-		if(Mouse.isButtonDown(0)) {
-			Vector3f tp = MousePicker.getCurrentTerrainPoint();
-			if(tp != null) {
-				Tile tile = world.getTile((int)tp.getX(), (int)tp.getZ());
-				if(tile != null) {
-					pathAStar = new PathAStar(world, currTile, tile);
-					if(pathAStar.getLength() != -1) {
-						destTile = tile;
-					}
+		if(currentJob == null) {
+			chooseJob();
+		} else {
+			if(move(dt)) {
+				if(time.getTime() >= currentJob.getTime()) {
+					currentJob.getTile().removeEntity();
+					currentJob = null;
+				
+					time.reset();
 				}
+			} else {
+				animation.walkAnim(dt);
 			}
-		}
-		
-		if(pathAStar != null) {
-			// While character is moving, iterate animation
-			animation.walkAnim(dt);
-			move(dt);
 		}
 	}
 	
@@ -91,6 +94,61 @@ public class SettlerControllerComponent extends Component {
 						MathUtils.getLerp(currTile.getY(), nextTile.getY(), movementPerc) + 0.5f);
 		
 		return false;
+	}
+	
+	private void chooseJob() {
+		for(Job job : world.getJobList()) {
+			Tile tile = job.getTile();
+			if(tile.getMovementCost() == 1.0f) {
+				pathAStar = new PathAStar(world, currTile, tile);
+				if(pathAStar.getLength() != -1) {
+					destTile = tile;
+					currentJob = job;
+					break;
+				}
+			} else {
+				tile = findNearestTile(tile.getNeighbours(false));
+				if(tile != null) {
+					destTile = tile;
+					currentJob = job;
+					break;
+				}
+			}
+		}
+		
+		if(currentJob != null) {
+			world.getJobList().remove(currentJob);
+		}
+	}
+	
+	private Tile findNearestTile(List<Tile> tiles) {
+		Tile tile = null;
+		
+		List<Tile> openTiles = new ArrayList<>();
+		
+		for(Tile t : tiles) {
+			if(t.getMovementCost() == 1.0f) {
+				openTiles.add(t);
+			}
+		}
+		
+		if(openTiles.size() > 0) {
+			tile = null;
+			float distance = Float.MAX_VALUE;
+			
+			for(int i = 0; i < openTiles.size(); i++) {
+				PathAStar tempPathAStar = new PathAStar(world, currTile, openTiles.get(i));
+				float tempDistance = tempPathAStar.getLength();
+				
+				if(tempDistance != -1 && tempDistance < distance) {
+					tile = openTiles.get(i);
+					distance = tempDistance;
+					pathAStar = tempPathAStar;
+				}
+			}
+		}
+		
+		return tile;
 	}
 
 	@Override

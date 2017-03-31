@@ -8,13 +8,15 @@ import com.wfe.game.World;
 
 public class Tile {
 	
+	private Chunk chunk;
 	private int x, y;
 	private int id;
 	private Entity entity;
 	private boolean hasEntity = false;
 	private float movementCost = 1.0f;
 	
-	public Tile(int x, int y, int id) {
+	public Tile(Chunk chunk, int x, int y, int id) {
+		this.chunk = chunk;
 		this.x = x;
 		this.y = y;
 		this.id = id;
@@ -22,6 +24,7 @@ public class Tile {
 
 	public void setId(int id) {
 		this.id = id;
+		chunk.setRebuild(true);
 	}
 
 	public Entity getEntity() {
