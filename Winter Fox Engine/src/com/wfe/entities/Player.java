@@ -11,7 +11,7 @@ import com.wfe.graph.Material;
 
 public class Player extends Entity {
 	
-	public PlayerControllerComponent playerController;
+	//public PlayerControllerComponent playerController;
 	
 	public Entity leftArm;
 	public Entity rightArm;
@@ -109,9 +109,9 @@ public class Player extends Entity {
 		}
 		
 		PlayerAnimationComponent animation = new PlayerAnimationComponent(this);
-		playerController = new PlayerControllerComponent(camera, transform, animation, rightForearm);
+		//playerController = new PlayerControllerComponent(camera, transform, animation, rightForearm);
 		addComponent(animation);
-		addComponent(playerController);
+		//addComponent(playerController);
 	}
 
 }

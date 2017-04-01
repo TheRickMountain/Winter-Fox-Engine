@@ -314,7 +314,7 @@ public class Game implements IGameLogic {
 	
 	@Override
 	public void onEnter(Display display) throws Exception {
-		Camera camera = new Camera(new Vector3f(16, 0, 16));	
+		Camera camera = new Camera(new Vector3f(80, 0, 80));	
 		
 		world = World.createWorld(camera);
 		world.init();
@@ -360,6 +360,7 @@ public class Game implements IGameLogic {
 		}
 		
 		world.addEntity(new Settler(world.getTile(85, 85), new Transformation(85.5f, 0.65f, 85.5f)));
+		world.addEntity(new Settler(world.getTile(87, 85), new Transformation(87.5f, 0.65f, 85.5f)));
 		
 		world.addEntityToTile(new Firewood(new Transformation(81.5f, 0, 82.5f)));
 		world.addEntityToTile(new Firewood(new Transformation(80.5f, 0, 82.5f)));

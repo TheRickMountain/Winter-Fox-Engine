@@ -87,7 +87,8 @@ public class World {
 		camera.update(dt);
 		MousePicker.update();
 		updateWeather(dt);
-		terrain.update(player.getTransform().x, player.getTransform().z);
+		//TODO:
+		terrain.update(camera.getPosition().x, camera.getPosition().z);
 		
 		updateController();
 		

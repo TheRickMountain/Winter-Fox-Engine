@@ -168,11 +168,15 @@ public class Entity {
 	}
 	
 	public Entity getInstanceNoComponents() {
-		return new Entity(mesh, material, new Transformation(transform));
+		Entity entity = new Entity(mesh, material, new Transformation(transform));
+		entity.setTag(getTag());
+		entity.setWalkable(isWalkable());
+		entity.setTextureIndex(getTextureIndex());
+		return entity;
 	}
 	
 	public Entity getInstance() {
-		Entity entity = new Entity(mesh, material, new Transformation(transform));
+		Entity entity = getInstanceNoComponents();
 		for(Component c : components) {
 			entity.addComponent(c.getInstance());
 		}

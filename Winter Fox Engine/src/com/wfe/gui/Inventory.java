@@ -148,7 +148,8 @@ public class Inventory {
 								setDraggedItem(slot.getItem(), slot.getCount());
 								slot.addItem(ItemDatabase.getItem(Item.NULL), 0);
 								if(slot.isSelected()) {
-									Game.player.playerController.removeEquipment();
+									//TODO:
+									//Game.player.playerController.removeEquipment();
 								}
 							} else {
 								Item item = slot.getItem();
@@ -196,15 +197,16 @@ public class Inventory {
 				switch(item.type) {
 				case TOOL:
 				case WEAPON:
-					Game.player.playerController.addEquipment(
-							item.blueprint.createInstanceWithComponents(new Transformation()));
+					//TODO:
+					/*Game.player.playerController.addEquipment(
+							item.blueprint.createInstanceWithComponents(new Transformation()));*/
 					break;
 				default:
-					Game.player.playerController.removeEquipment();
+					//Game.player.playerController.removeEquipment();
 					break;
 				}
 			} else {
-				Game.player.playerController.removeEquipment();
+				//Game.player.playerController.removeEquipment();
 			}
 			
 			selectedItem = slot.getItem();

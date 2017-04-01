@@ -1,5 +1,7 @@
 	package com.wfe.core;
 
+import com.wfe.input.Key;
+import com.wfe.input.Keyboard;
 import com.wfe.input.Mouse;
 import com.wfe.math.Matrix4f;
 import com.wfe.math.Vector3f;
@@ -19,7 +21,7 @@ public class Camera {
 
     private float distanceFromPlayer = 15;
     private float angleAroundPlayer = 0;
-    private float zoomSpeed = 0;
+    private float zoomSpeed = 50;
 
     private static final float MAX_PITCH = 55;
     private static final float MIN_PITCH = 45;
@@ -34,8 +36,8 @@ public class Camera {
     
     private Matrix4f projectionMatrix, viewMatrix, projectionViewMatrix;
     
-    //private float horizontal, vertical;
-    //private float speed = 4.6f;
+    private float horizontal, vertical;
+    private float speed = 4.6f;
 
     public Camera(Vector3f playerPosition) {
         this.playerPosition = playerPosition;
@@ -57,7 +59,7 @@ public class Camera {
     
     public void update(float dt) {
     	rotate(dt);
-    	//move(dt);
+    	move(dt);
     	updateViewMatrix();
     	
     	if(Display.isResized()) {
@@ -78,7 +80,7 @@ public class Camera {
             calculateAngleAroundPlayer(dt);
             calculatePitch(dt);
     	} 
-        //calculateZoom(dt);
+        calculateZoom(dt);
 
         float horizontalDistance = calculateHorizontalDistance();
         float verticalDistance = calculateVerticalDistance();
@@ -86,22 +88,21 @@ public class Camera {
         this.yaw = 180 - angleAroundPlayer;
     }
 
-    /*private void move(float dt) {
+    private void move(float dt) {
     	// Movement
-    	if(Keyboard.isKey(Keys.KEY_W)) {
+    	vertical = 0.0f;
+    	horizontal = 0.0f;
+    	
+    	if(Keyboard.isKey(Key.KEY_W)) {
             vertical = -1.0f;
-        } else if(Keyboard.isKey(Keys.KEY_S)) {
+        } else if(Keyboard.isKey(Key.KEY_S)) {
             vertical = 1.0f;
-        } else {
-        	vertical = 0.0f;
         }
 
-        if(Keyboard.isKey(Keys.KEY_A)) {
+        if(Keyboard.isKey(Key.KEY_A)) {
             horizontal = -1.0f;
-        } else if(Keyboard.isKey(Keys.KEY_D)) {
+        } else if(Keyboard.isKey(Key.KEY_D)) {
             horizontal = 1.0f;
-        } else {
-        	horizontal = 0.0f;
         }
     	
     	float offsetX = 0;
@@ -118,7 +119,7 @@ public class Camera {
     		playerPosition.x += (float)Math.sin(Math.toRadians(yaw)) * -1.0f * offsetZ;
             playerPosition.z += (float)Math.cos(Math.toRadians(yaw))* offsetZ;
     	}
-    }*/
+    }
     
     public float getPitch() {
         return pitch;
@@ -160,7 +161,7 @@ public class Camera {
         return (float) (distanceFromPlayer * Math.sin(Math.toRadians(pitch)));
     }
 
-   /* private void calculateZoom(float dt){
+    private void calculateZoom(float dt){
         float zoomLevel = Mouse.getScroll() * dt * zoomSpeed;
         float temp = distanceFromPlayer;
         temp -= zoomLevel;
@@ -170,7 +171,7 @@ public class Camera {
             temp = MIN_DISTANCE;
         }
         distanceFromPlayer = temp;
-    }*/
+    }
 
     public void updateProjectionMatrix() {
     	MathUtils.getProjectionMatrix(projectionMatrix, FOV, Display.getWidth(), Display.getHeight(), 
