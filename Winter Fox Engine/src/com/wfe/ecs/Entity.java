@@ -166,6 +166,18 @@ public class Entity {
 		
 		return this;
 	}
+	
+	public Entity getInstanceNoComponents() {
+		return new Entity(mesh, material, new Transformation(transform));
+	}
+	
+	public Entity getInstance() {
+		Entity entity = new Entity(mesh, material, new Transformation(transform));
+		for(Component c : components) {
+			entity.addComponent(c.getInstance());
+		}
+		return entity;
+	}
 
 	public void delete() {
 		mesh.delete();

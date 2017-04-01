@@ -10,6 +10,8 @@ import com.wfe.components.MobComponent;
 import com.wfe.core.Camera;
 import com.wfe.ecs.ComponentType;
 import com.wfe.ecs.Entity;
+import com.wfe.ecs.Transformation;
+import com.wfe.entities.Firewood;
 import com.wfe.graph.Mesh;
 import com.wfe.gui.GUIManager;
 import com.wfe.input.Mouse;
@@ -115,7 +117,7 @@ public class World {
 					if(tile != null) {
 						// If tile has any entity (development, gatherable, etc...)
 						if(tile.isHasEntity()) {
-							jobList.add(new Job(tile, 1));
+							jobList.add(new Job(tile, 10, new Firewood(new Transformation())));
 						}
 					}
 				}

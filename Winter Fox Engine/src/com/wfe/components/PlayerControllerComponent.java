@@ -344,5 +344,10 @@ public class PlayerControllerComponent extends Component {
 	public float getZF() {
 		return -zf;
 	}
+
+	@Override
+	public Component getInstance() {
+		return null;
+	}
 	
 }

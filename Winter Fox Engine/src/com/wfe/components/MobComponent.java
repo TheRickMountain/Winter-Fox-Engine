@@ -133,11 +133,6 @@ public class MobComponent extends Component {
 	     this.transform.z = (this.bb.z0 + this.bb.z1) / 2.0f;
 	}
 
-	@Override
-	public ComponentType getType() {
-		return ComponentType.MOB;
-	}
-	
 	public AABB getAABB() {
 		return bb;
 	}
@@ -145,6 +140,16 @@ public class MobComponent extends Component {
 	private void die() {
 		System.out.println("I'm dead!");
 		getParent().remove();
+	}
+	
+	@Override
+	public Component getInstance() {
+		return new MobComponent(new Transformation(transform));
+	}
+	
+	@Override
+	public ComponentType getType() {
+		return ComponentType.MOB;
 	}
 	
 }

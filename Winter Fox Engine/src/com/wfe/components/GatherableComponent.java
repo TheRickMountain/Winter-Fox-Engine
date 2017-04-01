@@ -34,6 +34,11 @@ public class GatherableComponent extends Component {
 	}
 
 	@Override
+	public GatherableComponent getInstance() {
+		return new GatherableComponent(item, count, sound);
+	}
+	
+	@Override
 	public ComponentType getType() {
 		return ComponentType.GATHERABLE;
 	}

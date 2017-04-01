@@ -14,4 +14,6 @@ public abstract class Component {
 		return parent;
 	}
 	
+	public abstract Component getInstance();
+	
 }

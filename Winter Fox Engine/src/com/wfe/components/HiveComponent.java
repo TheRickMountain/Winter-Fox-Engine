@@ -63,5 +63,10 @@ public class HiveComponent extends Component {
 	public boolean isReady() {
 		return ready;
 	}
+
+	@Override
+	public HiveComponent getInstance() {
+		return new HiveComponent(reproductionTime, item, countMin, countMax, sound);
+	}
 	
 }

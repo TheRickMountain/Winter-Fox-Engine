@@ -6,10 +6,14 @@ import com.wfe.gui.ItemDatabase;
 
 public class ChestComponent extends Component {
 
+	private int column, row;
+	
 	private int[] slots;
 	private int[] counts;
 	
 	public ChestComponent(int column, int row) {
+		this.column = column;
+		this.row = row;
 		slots = new int[column * row];
 		counts = new int[slots.length];
 		
@@ -86,6 +90,11 @@ public class ChestComponent extends Component {
 	
 	public boolean removeItem(int item) {
 		return true;
+	}
+	
+	@Override
+	public ChestComponent getInstance() {
+		return new ChestComponent(column, row);
 	}
 	
 	@Override

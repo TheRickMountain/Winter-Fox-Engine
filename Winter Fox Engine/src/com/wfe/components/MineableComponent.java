@@ -59,6 +59,11 @@ public class MineableComponent extends Component {
 	}
 
 	@Override
+	public Component getInstance() {
+		return new MineableComponent(item, count, sound, requiredItem, miningTime);
+	}
+	
+	@Override
 	public ComponentType getType() {
 		return ComponentType.MINEABLE;
 	}

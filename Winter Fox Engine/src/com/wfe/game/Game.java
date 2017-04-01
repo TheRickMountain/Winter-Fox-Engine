@@ -7,10 +7,9 @@ import com.wfe.core.IGameLogic;
 import com.wfe.core.ResourceManager;
 import com.wfe.ecs.Transformation;
 import com.wfe.entities.Fern;
+import com.wfe.entities.Firewood;
 import com.wfe.entities.Flint;
-import com.wfe.entities.Goat;
 import com.wfe.entities.Grass;
-import com.wfe.entities.Hive;
 import com.wfe.entities.Mushroom;
 import com.wfe.entities.Pine;
 import com.wfe.entities.Player;
@@ -148,6 +147,13 @@ public class Game implements IGameLogic {
 				.normalMipMap(-0.4f)
 				.create());
 		ResourceManager.loadMesh("rock", OBJLoader.loadMesh("/entity/rock/model.obj"));
+		/*** *** ***/
+		
+		/*** Firewood ***/
+		ResourceManager.loadTexture("firewood", Texture.newTexture(new MyFile("entity/firewood/diffuse.png"))
+				.normalMipMap(-0.4f)
+				.create());
+		ResourceManager.loadMesh("firewood", OBJLoader.loadMesh("/entity/firewood/model.obj"));
 		/*** *** ***/
 		
 		/*** Goat ***/
@@ -353,11 +359,10 @@ public class Game implements IGameLogic {
 			}
 		}
 		
-		world.addEntity(new Settler(World.getWorld().getTile(85, 85), new Transformation(85.5f, 0.65f, 85.5f)));
+		world.addEntity(new Settler(world.getTile(85, 85), new Transformation(85.5f, 0.65f, 85.5f)));
 		
-		world.addEntityToTile(new Hive(new Transformation(82.5f, 0, 80.5f)));
-		
-		//world.addEntity(new Goat(new Transformation(80, 0, 85)));
+		world.addEntityToTile(new Firewood(new Transformation(81.5f, 0, 82.5f)));
+		world.addEntityToTile(new Firewood(new Transformation(80.5f, 0, 82.5f)));
 		
 		AudioMaster.ambientSource.play(ResourceManager.getSound("hills"));
 	}

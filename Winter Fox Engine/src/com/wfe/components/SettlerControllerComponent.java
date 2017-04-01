@@ -3,6 +3,8 @@ package com.wfe.components;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.wfe.audio.AudioMaster;
+import com.wfe.core.ResourceManager;
 import com.wfe.ecs.Component;
 import com.wfe.ecs.ComponentType;
 import com.wfe.game.World;
@@ -30,6 +32,8 @@ public class SettlerControllerComponent extends Component {
 	private Job currentJob;
 	private TimeUtil time;
 	
+	private boolean moving = false;
+	
 	public SettlerControllerComponent(Tile tile, PlayerAnimationComponent animation) {
 		world = World.getWorld();
 		
@@ -44,15 +48,28 @@ public class SettlerControllerComponent extends Component {
 		if(currentJob == null) {
 			chooseJob();
 		} else {
-			if(move(dt)) {
-				if(time.getTime() >= currentJob.getTime()) {
-					currentJob.getTile().removeEntity();
-					currentJob = null;
-				
-					time.reset();
+			
+			if(moving) {
+				animation.walkAnim(dt);
+				if(move(dt)) {
+					animation.idleAnim();
+					moving = false;
 				}
 			} else {
-				animation.walkAnim(dt);
+				if(animation.hitAnim(dt)) {
+					AudioMaster.defaultSource.play(ResourceManager.getSound("chop"));
+				}
+				
+				if(time.getTime() >= currentJob.getTime()) {
+					Tile tile = currentJob.getTile();
+					tile.removeEntity();
+					tile.setEntity(currentJob.getEntity(tile.getX() + 0.5f, 0, tile.getY() + 0.5f));
+					world.addEntity(tile.getEntity());
+					
+					animation.idleAnim();
+					currentJob = null;
+					time.reset();
+				}
 			}
 		}
 	}
@@ -60,8 +77,6 @@ public class SettlerControllerComponent extends Component {
 	private boolean move(float dt) {		
 		if(currTile.equals(destTile)) {
 			pathAStar = null;
-			// Set animation to the idle
-			animation.idleAnim();
 			return true;
 		}
 		
@@ -104,6 +119,7 @@ public class SettlerControllerComponent extends Component {
 				if(pathAStar.getLength() != -1) {
 					destTile = tile;
 					currentJob = job;
+					moving = true;
 					break;
 				}
 			} else {
@@ -111,6 +127,7 @@ public class SettlerControllerComponent extends Component {
 				if(tile != null) {
 					destTile = tile;
 					currentJob = job;
+					moving = true;
 					break;
 				}
 			}
@@ -154,6 +171,11 @@ public class SettlerControllerComponent extends Component {
 	@Override
 	public ComponentType getType() {
 		return ComponentType.SETTLER_CONTROLLER;
+	}
+
+	@Override
+	public Component getInstance() {
+		return null;
 	}
 
 }

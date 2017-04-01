@@ -142,6 +142,11 @@ public class PlayerAnimationComponent extends Component {
 	}
 
 	@Override
+	public Component getInstance() {
+		return null;
+	}
+	
+	@Override
 	public ComponentType getType() {
 		return ComponentType.PLAYER_ANIMATION;
 	}
