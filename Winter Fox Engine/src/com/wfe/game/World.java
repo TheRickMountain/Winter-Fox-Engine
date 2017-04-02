@@ -7,16 +7,19 @@ import java.util.Map;
 
 import com.wfe.components.ColliderComponent;
 import com.wfe.core.Camera;
+import com.wfe.core.ResourceManager;
 import com.wfe.ecs.ComponentType;
 import com.wfe.ecs.Entity;
 import com.wfe.ecs.Transformation;
 import com.wfe.entities.Firewood;
+import com.wfe.entities.Stone;
 import com.wfe.graph.Mesh;
 import com.wfe.gui.GUIManager;
 import com.wfe.input.Key;
 import com.wfe.input.Keyboard;
 import com.wfe.input.Mouse;
 import com.wfe.jobSystem.Job;
+import com.wfe.jobSystem.JobType;
 import com.wfe.math.Vector3f;
 import com.wfe.pathfinding.PathTileGraph;
 import com.wfe.physics.AABB;
@@ -26,7 +29,6 @@ import com.wfe.tileEngine.Terrain;
 import com.wfe.tileEngine.Tile;
 import com.wfe.utils.MousePicker;
 import com.wfe.weather.Weather;
-import com.wfe.jobSystem.JobType;
 
 
 public class World {
@@ -137,7 +139,21 @@ public class World {
 						switch(jobType) {
 						case DEVELOPMENT:
 							if(tile.isHasEntity()) {
-								jobList.add(new Job(jobType, tile, 10, new Firewood(new Transformation()), null));
+								Entity resource = null;
+								int sound = -1;
+								
+								switch(tile.getEntity().getTag()) {
+								case "tree":
+									resource = new Firewood(new Transformation());
+									sound = ResourceManager.getSound("chop");
+									break;
+								case "rock":
+									resource = new Stone(new Transformation());
+									sound = ResourceManager.getSound("mine");
+								}
+								
+								jobList.add(new Job(jobType, tile, 10, resource, null,
+										sound));
 							}
 							break;
 						case GATHERING:
@@ -145,7 +161,7 @@ public class World {
 								Tile stockpileTile = getEmptyStockpile();
 								if(stockpileTile != null) {
 									stockpile.put(stockpileTile, 0);
-									jobList.add(new Job(jobType, tile, 0.0f, null, stockpileTile));
+									jobList.add(new Job(jobType, tile, 0.0f, null, stockpileTile, 0));
 								}
 							}
 							break;

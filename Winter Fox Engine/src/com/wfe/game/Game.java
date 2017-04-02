@@ -14,6 +14,7 @@ import com.wfe.entities.Pine;
 import com.wfe.entities.Rock;
 import com.wfe.entities.Settler;
 import com.wfe.entities.Stick;
+import com.wfe.entities.Stone;
 import com.wfe.entities.Wheat;
 import com.wfe.graph.OBJLoader;
 import com.wfe.math.Vector3f;
@@ -108,6 +109,13 @@ public class Game implements IGameLogic {
 				.normalMipMap(-0.4f)
 				.create());
 		ResourceManager.loadMesh("hive", OBJLoader.loadMesh("/entity/hive/model.obj"));
+		/*** *** ***/
+		
+		/*** Stone ***/
+		ResourceManager.loadTexture("stone", Texture.newTexture(new MyFile("entity/stone/diffuse.png"))
+				.normalMipMap(-0.4f)
+				.create());
+		ResourceManager.loadMesh("stone", OBJLoader.loadMesh("/entity/stone/model.obj"));
 		/*** *** ***/
 		
 		/*** Fern ***/

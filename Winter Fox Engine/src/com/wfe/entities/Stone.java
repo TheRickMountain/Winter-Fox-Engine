@@ -5,12 +5,12 @@ import com.wfe.ecs.Entity;
 import com.wfe.ecs.Transformation;
 import com.wfe.graph.Material;
 
-public class Firewood extends Entity {
+public class Stone extends Entity {
 
-	public Firewood(Transformation transform) {
-		super(ResourceManager.getMesh("firewood"), new Material(ResourceManager.getTexture("firewood")), 
+	public Stone(Transformation transform) {
+		super(ResourceManager.getMesh("stone"), new Material(ResourceManager.getTexture("stone")), 
 				transform);
 		getTransform().setScale(0.6f);
 	}
-	
+
 }

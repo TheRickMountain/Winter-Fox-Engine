@@ -68,7 +68,11 @@ public class SettlerControllerComponent extends Component {
 				case DEVELOPMENT:
 					// If animation has reached a target number than play "development" sound
 					if(animation.hitAnim(dt)) {
-						AudioMaster.defaultSource.play(ResourceManager.getSound("chop"));
+						if(currentJob.getTile().getEntity().getTag().equals("tree")) {
+							AudioMaster.defaultSource.play(ResourceManager.getSound("chop"));
+						} else {
+							AudioMaster.defaultSource.play(ResourceManager.getSound("mine"));
+						}
 					}
 					
 					if(time.getTime() >= currentJob.getTime()) {
