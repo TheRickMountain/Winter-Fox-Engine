@@ -78,12 +78,20 @@ public class StaticRenderer {
 					entity.getTransform()));
 		}
 		
-		material.getTexture().bind(0);
-
-		shader.numberOfRows.loadInt(material.getNumberOfRows());
-		shader.offset.loadVec2(entity.getTextureXOffset(), entity.getTextureYOffset());
+		shader.hasTexture.loadBoolean(material.isHasTexture());
+		
+		if(material.isHasTexture()) {
+			OpenglUtils.alphaBlending(false);
+			
+			material.getTexture().bind(0);
+			shader.numberOfRows.loadInt(material.getNumberOfRows());
+			shader.offset.loadVec2(entity.getTextureXOffset(), entity.getTextureYOffset());
+			shader.hasFakeLighting.loadBoolean(material.isHasFakeLighting());
+		} else {
+			OpenglUtils.alphaBlending(true);
+		}
+		
 		shader.color.loadVec4(material.getColor());
-		shader.hasFakeLighting.loadBoolean(material.isHasFakeLighting());
 		
 		if(material.isHasTransparency()) {
 			OpenglUtils.cullBackFaces(false);

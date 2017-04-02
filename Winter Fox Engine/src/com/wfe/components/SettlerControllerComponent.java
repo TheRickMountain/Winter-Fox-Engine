@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.wfe.audio.AudioMaster;
-import com.wfe.core.ResourceManager;
 import com.wfe.ecs.Component;
 import com.wfe.ecs.ComponentType;
 import com.wfe.ecs.Entity;
@@ -68,11 +67,7 @@ public class SettlerControllerComponent extends Component {
 				case DEVELOPMENT:
 					// If animation has reached a target number than play "development" sound
 					if(animation.hitAnim(dt)) {
-						if(currentJob.getTile().getEntity().getTag().equals("tree")) {
-							AudioMaster.defaultSource.play(ResourceManager.getSound("chop"));
-						} else {
-							AudioMaster.defaultSource.play(ResourceManager.getSound("mine"));
-						}
+						AudioMaster.defaultSource.play(currentJob.getSound());
 					}
 					
 					if(time.getTime() >= currentJob.getTime()) {
@@ -100,6 +95,19 @@ public class SettlerControllerComponent extends Component {
 						}
 					}
 					break;
+				case PLOWING:
+					if(animation.hitAnim(dt)) {
+						AudioMaster.defaultSource.play(currentJob.getSound());
+					}
+					
+					if(time.getTime() >= currentJob.getTime()) {
+						Tile tile = currentJob.getTile();
+						tile.setId(11);
+						
+						animation.idleAnim();
+						currentJob = null;
+						time.reset();
+					}
 				}
 			}
 		}

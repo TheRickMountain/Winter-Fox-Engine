@@ -59,6 +59,7 @@ public class World {
 	private List<Job> jobList = new ArrayList<Job>();
 	
 	private Map<Tile, Integer> stockpile = new HashMap<>();
+	private Map<Tile, Integer> garden = new HashMap<>();
 	
 	private World(Camera camera) {
 		this.camera = camera;
@@ -127,6 +128,9 @@ public class World {
 		} else if(Keyboard.isKeyDown(Key.KEY_3)) {
 			jobType = JobType.STOCKPILE;
 			System.out.println(jobType.toString());
+		} else if(Keyboard.isKeyDown(Key.KEY_4)) {
+			jobType = JobType.PLOWING;
+			System.out.println(jobType.toString());
 		}
 		
 		if(Mouse.isButtonDown(0)) {
@@ -173,6 +177,15 @@ public class World {
 								}
 							}
 							break;
+						case PLOWING:
+							if(!tile.isHasEntity()) {
+								if(tile.getId() != 11) {
+									jobList.add(new Job(jobType, tile, 0.5f, null, null, 
+											ResourceManager.getSound("hoe")));
+									garden.put(tile, -1);
+								}
+
+							}
 						}
 					}
 				}
@@ -309,6 +322,10 @@ public class World {
 		}
 		
 		return null;
+	}
+	
+	public Map<Tile, Integer> getGarden() {
+		return garden;
 	}
 	
 }

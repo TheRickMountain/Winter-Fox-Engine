@@ -5,6 +5,7 @@ import com.wfe.core.Camera;
 import com.wfe.core.Display;
 import com.wfe.core.IGameLogic;
 import com.wfe.core.ResourceManager;
+import com.wfe.ecs.Entity;
 import com.wfe.ecs.Transformation;
 import com.wfe.entities.Fern;
 import com.wfe.entities.Flint;
@@ -14,8 +15,9 @@ import com.wfe.entities.Pine;
 import com.wfe.entities.Rock;
 import com.wfe.entities.Settler;
 import com.wfe.entities.Stick;
-import com.wfe.entities.Stone;
 import com.wfe.entities.Wheat;
+import com.wfe.graph.Material;
+import com.wfe.graph.Mesh;
 import com.wfe.graph.OBJLoader;
 import com.wfe.math.Vector3f;
 import com.wfe.textures.Texture;
@@ -360,6 +362,40 @@ public class Game implements IGameLogic {
 				}
 			}
 		}
+		
+		float[] vertices = {
+			-0.5f, 0.0f, -0.5f, 
+			-0.5f, 0.0f, 0.5f,
+			0.5f, 0.0f, 0.5f,
+			0.5f, 0.0f, -0.5f
+		};
+		
+		float[] textureCoords = {
+			0.0f, 0.0f,
+			0.0f, 0.0f,
+			0.0f, 0.0f,
+			0.0f, 0.0f
+		};
+		
+		float[] normals = {
+			0.0f, 1.0f, 0.0f,
+			0.0f, 1.0f, 0.0f,
+			0.0f, 1.0f, 0.0f,
+			0.0f, 1.0f, 0.0f
+		};
+		
+		int[] indices = {
+				0, 1, 2,
+				0, 2, 3
+		};
+		
+		
+		Mesh mesh = new Mesh(vertices, textureCoords, normals, indices);
+		
+		Entity entity = new Entity(mesh, new Material(null), 
+				new Transformation(85.5f, 0.05f, 86.5f));
+		entity.getMaterial().getColor().set(0.5f, 1.0f, 0.5f, 0.5f);
+		world.addEntity(entity);
 		
 		world.addEntity(new Settler(world.getTile(85, 85), new Transformation(85.5f, 0.65f, 85.5f)));
 		world.addEntity(new Settler(world.getTile(87, 85), new Transformation(87.5f, 0.65f, 85.5f)));

@@ -10,6 +10,7 @@ public class Material {
 	private int numberOfRows = 1;
 	private boolean hasTransparency = false;
 	private boolean hasFakeLighting = false;
+	private boolean hasTexture = false;
 	
 	public Material(Texture texture) {
 		this(texture, new Vector4f(1, 1, 1, 1));
@@ -18,6 +19,8 @@ public class Material {
 	public Material(Texture texture, Vector4f color) {
 		this.texture = texture;
 		this.color = color;
+		
+		hasTexture = this.texture != null;
 	}
 	
 	public Texture getTexture(){
@@ -61,6 +64,10 @@ public class Material {
 	public Material setHasFakeLighting(boolean hasFakeLighting) {
 		this.hasFakeLighting = hasFakeLighting;
 		return this;
+	}
+	
+	public boolean isHasTexture() {
+		return hasTexture;
 	}
 
 }

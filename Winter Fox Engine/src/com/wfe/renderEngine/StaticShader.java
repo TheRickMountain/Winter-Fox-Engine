@@ -26,11 +26,12 @@ public class StaticShader extends ShaderProgram {
 	protected UniformVec3 lightPosition = new UniformVec3("lightPosition");
 	protected UniformVec3 lightColor = new UniformVec3("lightColor");
 	protected UniformBoolean hasFakeLighting = new UniformBoolean("hasFakeLighting");
+	protected UniformBoolean hasTexture = new UniformBoolean("hasTexture");
 	
 	public StaticShader() {
 		super(VERTEX_SHADER, FRAGMENT_SHADER, "in_position", "in_textureCoords", "in_normal");
 		super.storeAllUniformLocations(projectionMatrix, viewMatrix, modelMatrix, numberOfRows,
-				offset, diffuseMap, color, lightPosition, lightColor, hasFakeLighting);
+				offset, diffuseMap, color, lightPosition, lightColor, hasFakeLighting, hasTexture);
 		connectTextureUnits();
 	}
 
