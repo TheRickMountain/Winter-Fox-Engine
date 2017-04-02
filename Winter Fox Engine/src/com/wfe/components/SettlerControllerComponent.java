@@ -7,6 +7,8 @@ import com.wfe.audio.AudioMaster;
 import com.wfe.core.ResourceManager;
 import com.wfe.ecs.Component;
 import com.wfe.ecs.ComponentType;
+import com.wfe.ecs.Entity;
+import com.wfe.ecs.Transformation;
 import com.wfe.game.World;
 import com.wfe.jobSystem.Job;
 import com.wfe.pathfinding.PathAStar;
@@ -34,6 +36,8 @@ public class SettlerControllerComponent extends Component {
 	
 	private boolean moving = false;
 	
+	private Entity cargo = null;
+	
 	public SettlerControllerComponent(Tile tile, PlayerAnimationComponent animation) {
 		world = World.getWorld();
 		
@@ -48,27 +52,50 @@ public class SettlerControllerComponent extends Component {
 		if(currentJob == null) {
 			chooseJob();
 		} else {
-			
 			if(moving) {
+				if(cargo != null) {
+					Transformation transform = getParent().getTransform();
+					cargo.getTransform().setPosition(transform.getX(), 0.65f, transform.getZ());
+				}
+				
 				animation.walkAnim(dt);
 				if(move(dt)) {
 					animation.idleAnim();
 					moving = false;
 				}
 			} else {
-				if(animation.hitAnim(dt)) {
-					AudioMaster.defaultSource.play(ResourceManager.getSound("chop"));
-				}
-				
-				if(time.getTime() >= currentJob.getTime()) {
-					Tile tile = currentJob.getTile();
-					tile.removeEntity();
-					tile.setEntity(currentJob.getEntity(tile.getX() + 0.5f, 0, tile.getY() + 0.5f));
-					world.addEntity(tile.getEntity());
+				switch(currentJob.getJobMode()) {
+				case DEVELOPMENT:
+					// If animation has reached a target number than play "development" sound
+					if(animation.hitAnim(dt)) {
+						AudioMaster.defaultSource.play(ResourceManager.getSound("chop"));
+					}
 					
-					animation.idleAnim();
-					currentJob = null;
-					time.reset();
+					if(time.getTime() >= currentJob.getTime()) {
+						Tile tile = currentJob.getTile();
+						tile.removeEntityPermanently();
+						tile.addEntity(currentJob.getEntity(tile.getX() + 0.5f, 0, tile.getY() + 0.5f));
+						world.addEntity(tile.getEntity());
+						
+						animation.idleAnim();
+						currentJob = null;
+						time.reset();
+					}
+					break;
+				case GATHERING:
+					if(cargo != null) {
+						currentJob.getStockpile().addEntity(cargo);
+						currentJob = null;
+						cargo = null;
+					} else {
+						cargo = currentJob.getTile().removeEntity();
+						Tile tile = choosePath(currentJob.getStockpile());
+						if(tile != null) {
+							destTile = tile;
+							moving = true;
+						}
+					}
+					break;
 				}
 			}
 		}
@@ -113,29 +140,30 @@ public class SettlerControllerComponent extends Component {
 	
 	private void chooseJob() {
 		for(Job job : world.getJobList()) {
-			Tile tile = job.getTile();
-			if(tile.getMovementCost() == 1.0f) {
-				pathAStar = new PathAStar(world, currTile, tile);
-				if(pathAStar.getLength() != -1) {
-					destTile = tile;
-					currentJob = job;
-					moving = true;
-					break;
-				}
-			} else {
-				tile = findNearestTile(tile.getNeighbours(false));
-				if(tile != null) {
-					destTile = tile;
-					currentJob = job;
-					moving = true;
-					break;
-				}
+			Tile tile = choosePath(job.getTile());
+			if(tile != null) {
+				currentJob = job;
+				destTile = tile;
+				moving = true;
 			}
 		}
 		
 		if(currentJob != null) {
 			world.getJobList().remove(currentJob);
 		}
+	}
+	
+	private Tile choosePath(Tile tile) {
+		if(tile.getMovementCost() == 1.0f) {
+			pathAStar = new PathAStar(world, currTile, tile);
+			if(pathAStar.getLength() != -1) {
+				return tile;
+			}
+		} else {
+			return findNearestTile(tile.getNeighbours(false));
+		}
+		
+		return null;
 	}
 	
 	private Tile findNearestTile(List<Tile> tiles) {

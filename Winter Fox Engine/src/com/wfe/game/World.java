@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 import com.wfe.components.ColliderComponent;
-import com.wfe.components.MobComponent;
 import com.wfe.core.Camera;
 import com.wfe.ecs.ComponentType;
 import com.wfe.ecs.Entity;
@@ -14,6 +13,8 @@ import com.wfe.ecs.Transformation;
 import com.wfe.entities.Firewood;
 import com.wfe.graph.Mesh;
 import com.wfe.gui.GUIManager;
+import com.wfe.input.Key;
+import com.wfe.input.Keyboard;
 import com.wfe.input.Mouse;
 import com.wfe.jobSystem.Job;
 import com.wfe.math.Vector3f;
@@ -25,6 +26,8 @@ import com.wfe.tileEngine.Terrain;
 import com.wfe.tileEngine.Tile;
 import com.wfe.utils.MousePicker;
 import com.wfe.weather.Weather;
+import com.wfe.jobSystem.JobType;
+
 
 public class World {
 	
@@ -50,7 +53,10 @@ public class World {
 	private float time = 12000;
 	private Weather weather;
 	
+	private JobType jobType = JobType.DEVELOPMENT;
 	private List<Job> jobList = new ArrayList<Job>();
+	
+	private Map<Tile, Integer> stockpile = new HashMap<>();
 	
 	private World(Camera camera) {
 		this.camera = camera;
@@ -83,7 +89,7 @@ public class World {
 		return WORLD;
 	}
 	
-	public void update(float dt, Entity player) {
+	public void update(float dt) {
 		camera.update(dt);
 		MousePicker.update();
 		updateWeather(dt);
@@ -110,15 +116,47 @@ public class World {
 	}
 	
 	private void updateController() {
+		if(Keyboard.isKeyDown(Key.KEY_1)) {
+			jobType = JobType.DEVELOPMENT;
+			System.out.println(jobType.toString());
+		} else if(Keyboard.isKeyDown(Key.KEY_2)) {
+			jobType = JobType.GATHERING;
+			System.out.println(jobType.toString());
+		} else if(Keyboard.isKeyDown(Key.KEY_3)) {
+			jobType = JobType.STOCKPILE;
+			System.out.println(jobType.toString());
+		}
+		
 		if(Mouse.isButtonDown(0)) {
 			if(!Mouse.isActiveInGUI()) {
 				Vector3f tp = MousePicker.getCurrentTerrainPoint();
 				if(tp != null) {
 					Tile tile = getTile((int)tp.getX(), (int)tp.getZ());
+					// If tile has any entity (development, gatherable, etc...)
 					if(tile != null) {
-						// If tile has any entity (development, gatherable, etc...)
-						if(tile.isHasEntity()) {
-							jobList.add(new Job(tile, 10, new Firewood(new Transformation())));
+						switch(jobType) {
+						case DEVELOPMENT:
+							if(tile.isHasEntity()) {
+								jobList.add(new Job(jobType, tile, 10, new Firewood(new Transformation()), null));
+							}
+							break;
+						case GATHERING:
+							if(tile.isHasEntity()) {
+								Tile stockpileTile = getEmptyStockpile();
+								if(stockpileTile != null) {
+									stockpile.put(stockpileTile, 0);
+									jobList.add(new Job(jobType, tile, 0.0f, null, stockpileTile));
+								}
+							}
+							break;
+						case STOCKPILE:
+							if(!tile.isHasEntity()) {
+								if(tile.getId() != 8) {
+									tile.setId(8);
+									stockpile.put(tile, -1);
+								}
+							}
+							break;
 						}
 					}
 				}
@@ -136,10 +174,10 @@ public class World {
 		if(entity.hasComponent(ComponentType.COLLIDER)) {
 			colliders.add(((ColliderComponent)entity.getComponent(ComponentType.COLLIDER)).getAABB());
 		}
-		if(entity.hasComponent(ComponentType.MOB)) {
+		/*if(entity.hasComponent(ComponentType.MOB)) {
 			colliders.add(((MobComponent)entity.getComponent(ComponentType.MOB)).getAABB());
 			mobs.add(entity);
-		}
+		}*/
 		this.entitiesToAdd.add(entity);
 		
 		if(entity.getMesh() != null) {
@@ -156,10 +194,10 @@ public class World {
 		if(entity.hasComponent(ComponentType.COLLIDER)) {
 			colliders.remove(((ColliderComponent)entity.getComponent(ComponentType.COLLIDER)).getAABB());
 		}
-		if(entity.hasComponent(ComponentType.MOB)) {
+		/*if(entity.hasComponent(ComponentType.MOB)) {
 			colliders.remove(((MobComponent)entity.getComponent(ComponentType.MOB)).getAABB());
 			mobs.remove(entity);
-		}
+		}*/
 		this.entitiesToRemove.add(entity);
 		
 		List<Entity> batch = entitiesToRender.get(entity.getMesh());
@@ -195,7 +233,7 @@ public class World {
 	public boolean addEntityToTile(Entity entity) {
 		Tile tile = tiles[(int)entity.getTransform().getX()] [(int)entity.getTransform().getZ()];
 		if(!tile.isHasEntity()) {
-			tile.setEntity(entity);
+			tile.addEntity(entity);
 			addEntity(entity);
 			return true;
 		}
@@ -204,7 +242,7 @@ public class World {
 	}
 	
 	public void removeEntityFromTile(int x, int y) {
-		tiles[x][y].removeEntity();
+		tiles[x][y].removeEntityPermanently();
 	}
 	
 	public void updateWeather(float dt) {
@@ -236,13 +274,25 @@ public class World {
 		return jobList;
 	}
 	
+	public List<Entity> getMobs() {
+		return mobs;
+	}
+	
 	public void cleanup() {
 		terrain.cleanup();
 		renderEngine.cleanup();
 	}
 	
-	public List<Entity> getMobs() {
-		return mobs;
+	private Tile getEmptyStockpile() {
+		for(Tile tile : stockpile.keySet()) {
+			// "-1" hasn't entity
+			// ">=0" has entity
+			if(stockpile.get(tile) == -1) {
+				return tile;
+			}
+		}
+		
+		return null;
 	}
 	
 }

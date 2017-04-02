@@ -31,19 +31,30 @@ public class Tile {
 		return entity;
 	}
 
-	public void setEntity(Entity entity) {
+	public void addEntity(Entity entity) {
 		this.entity = entity;
+		this.entity.getTransform().setPosition(x + 0.5f, 0, y + 0.5f);
 		this.hasEntity = true;
 		
 		this.movementCost = entity.isWalkable() ? 1.0f : 0.0f;
 	}
 	
-	public void removeEntity() {
-		this.entity.remove();
-		this.entity = null;
-		this.hasEntity = false;
+	public Entity removeEntity() {
+		Entity temp = entity;
 		
-		this.movementCost = 1.0f;
+		entity = null;
+		hasEntity = false;
+		movementCost = 1.0f;
+		
+		return temp;
+	}
+	
+	public void removeEntityPermanently() {
+		entity.remove();
+		entity = null;
+		hasEntity = false;
+		
+		movementCost = 1.0f;
 	}
 	
 	public int getX() {

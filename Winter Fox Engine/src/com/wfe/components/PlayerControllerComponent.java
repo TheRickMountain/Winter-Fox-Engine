@@ -78,10 +78,10 @@ public class PlayerControllerComponent extends Component {
 					
 					source.play(ResourceManager.getSound("swing" + MyRandom.nextInt(1, 3)));
 					
-					for(Entity entity : World.getWorld().getMobs()) {
+					/*for(Entity entity : World.getWorld().getMobs()) {
 						MobComponent mc = (MobComponent) entity.getComponent(ComponentType.MOB);
 						mc.hurt(getParent(), 10);
-					}
+					}*/
 				}
 			}
 		} else {
@@ -105,7 +105,7 @@ public class PlayerControllerComponent extends Component {
 							GatherableComponent gc = (GatherableComponent)entity.getComponent(ComponentType.GATHERABLE);
 							
 							if(GUIManager.inventory.addItem(gc.getItem(), gc.getCount()) == 0) {
-								tile.removeEntity();
+								tile.removeEntityPermanently();
 								source.play(gc.getSound());
 							}
 						}

@@ -7,12 +7,10 @@ import com.wfe.core.IGameLogic;
 import com.wfe.core.ResourceManager;
 import com.wfe.ecs.Transformation;
 import com.wfe.entities.Fern;
-import com.wfe.entities.Firewood;
 import com.wfe.entities.Flint;
 import com.wfe.entities.Grass;
 import com.wfe.entities.Mushroom;
 import com.wfe.entities.Pine;
-import com.wfe.entities.Player;
 import com.wfe.entities.Rock;
 import com.wfe.entities.Settler;
 import com.wfe.entities.Stick;
@@ -25,7 +23,6 @@ import com.wfe.utils.MyRandom;
 
 public class Game implements IGameLogic {
 	
-	public static Player player;
 	private World world;
 	
 	@Override
@@ -319,9 +316,6 @@ public class Game implements IGameLogic {
 		world = World.createWorld(camera);
 		world.init();
 		
-		player = new Player(camera, new Transformation(80, 0.65f, 80));
-		world.addEntity(player);
-		
 		world.addEntityToTile(new Wheat(new Transformation(83.5f, 0, 83.5f)));
 		world.addEntityToTile(new Wheat(new Transformation(90.5f, 0, 85.5f)));
 		world.addEntityToTile(new Wheat(new Transformation(72.5f, 0, 94.5f)));
@@ -362,15 +356,12 @@ public class Game implements IGameLogic {
 		world.addEntity(new Settler(world.getTile(85, 85), new Transformation(85.5f, 0.65f, 85.5f)));
 		world.addEntity(new Settler(world.getTile(87, 85), new Transformation(87.5f, 0.65f, 85.5f)));
 		
-		world.addEntityToTile(new Firewood(new Transformation(81.5f, 0, 82.5f)));
-		world.addEntityToTile(new Firewood(new Transformation(80.5f, 0, 82.5f)));
-		
 		AudioMaster.ambientSource.play(ResourceManager.getSound("hills"));
 	}
 	
 	@Override
 	public void update(float dt) {	
-		world.update(dt, player);
+		world.update(dt);
 	}
 
 	@Override

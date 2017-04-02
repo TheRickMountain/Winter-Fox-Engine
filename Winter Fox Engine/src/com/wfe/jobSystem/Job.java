@@ -5,14 +5,22 @@ import com.wfe.tileEngine.Tile;
 
 public class Job {
 	
+	private JobType jobType;
 	private Tile tile;
 	private float time;
 	private Entity entity;
+	private Tile stockpile;
 	
-	public Job(Tile tile, float time, Entity entity) {
+	public Job(JobType jobType, Tile tile, float time, Entity entity, Tile stockpile) {
+		this.jobType = jobType;
 		this.tile = tile;
 		this.time = time;
 		this.entity = entity;
+		this.stockpile = stockpile;
+	}
+	
+	public JobType getJobMode() {
+		return jobType;
 	}
 	
 	public Tile getTile() {
@@ -21,6 +29,10 @@ public class Job {
 	
 	public float getTime() {
 		return time;
+	}
+	
+	public Tile getStockpile() {
+		return stockpile;
 	}
 
 	public Entity getEntity(float x, float y, float z) {
