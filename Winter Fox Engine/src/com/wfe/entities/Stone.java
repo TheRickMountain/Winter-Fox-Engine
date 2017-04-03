@@ -10,6 +10,7 @@ public class Stone extends Entity {
 	public Stone(Transformation transform) {
 		super(ResourceManager.getMesh("stone"), new Material(ResourceManager.getTexture("stone")), 
 				transform);
+		setTag("stone");
 		getTransform().setScale(0.6f);
 	}
 

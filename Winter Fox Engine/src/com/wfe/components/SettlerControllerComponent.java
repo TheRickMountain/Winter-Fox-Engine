@@ -63,7 +63,7 @@ public class SettlerControllerComponent extends Component {
 					moving = false;
 				}
 			} else {
-				switch(currentJob.getJobMode()) {
+				switch(currentJob.getJobType()) {
 				case DEVELOPMENT:
 					// If animation has reached a target number than play "development" sound
 					if(animation.hitAnim(dt)) {
@@ -163,6 +163,7 @@ public class SettlerControllerComponent extends Component {
 				currentJob = job;
 				destTile = tile;
 				moving = true;
+				break;
 			}
 		}
 		

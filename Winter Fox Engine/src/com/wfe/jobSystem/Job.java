@@ -21,7 +21,7 @@ public class Job {
 		this.sound = sound;
 	}
 	
-	public JobType getJobMode() {
+	public JobType getJobType() {
 		return jobType;
 	}
 	

@@ -178,14 +178,15 @@ public class World {
 					case "tree":
 						resource = new Firewood(new Transformation());
 						sound = ResourceManager.getSound("chop");
+						jobList.add(new Job(jobType, tile, 10, resource, null,
+								sound));
 						break;
 					case "rock":
 						resource = new Stone(new Transformation());
 						sound = ResourceManager.getSound("mine");
+						jobList.add(new Job(jobType, tile, 10, resource, null,
+								sound));
 					}
-
-					jobList.add(new Job(jobType, tile, 10, resource, null,
-							sound));
 				}
 			}
 		}
@@ -195,10 +196,15 @@ public class World {
 		if(Mouse.isButtonDown(0)) {
 			Tile tile = getTile(MousePicker.getX(), MousePicker.getY());
 			if(tile.isHasEntity()) {
-				Tile stockpileTile = getEmptyStockpile();
-				if(stockpileTile != null) {
-					stockpile.put(stockpileTile, 0);
-					jobList.add(new Job(jobType, tile, 0.0f, null, stockpileTile, 0));
+				switch(tile.getEntity().getTag()) {
+				case "firewood":
+				case "stone":
+					Tile stockpileTile = getEmptyStockpile();
+					if(stockpileTile != null) {
+						stockpile.put(stockpileTile, 0);
+						jobList.add(new Job(jobType, tile, 0.0f, null, stockpileTile, 0));
+					}
+					break;
 				}
 			}
 		}

@@ -14,7 +14,7 @@ public class Entity {
 	protected List<Component> components = new ArrayList<Component>();
 	protected List<Entity> childs = new ArrayList<Entity>();
 	protected boolean hasParent;
-	protected String tag;
+	protected String tag = "";
 	
 	private Entity parent;
 
