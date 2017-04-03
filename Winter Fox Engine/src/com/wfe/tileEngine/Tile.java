@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.wfe.ecs.Entity;
+import com.wfe.entities.Selection;
 import com.wfe.game.World;
 
 public class Tile {
@@ -14,6 +15,9 @@ public class Tile {
 	private Entity entity;
 	private boolean hasEntity = false;
 	private float movementCost = 1.0f;
+	
+	private Selection selection;
+	private boolean selected = false;
 	
 	public Tile(Chunk chunk, int x, int y, int id) {
 		this.chunk = chunk;
@@ -75,6 +79,19 @@ public class Tile {
 	
 	public float getMovementCost() {
 		return movementCost;
+	}
+	
+	public void setSelected(boolean value) {
+		selected = value;
+		if(selected) {
+			selection = new Selection();
+			selection.getTransform().setPosition(x + 0.5f, 0.05f, y + 0.5f);
+			selection.getMaterial().setColor(82, 22, 180, 64);
+			World.getWorld().addEntity(selection);
+		} else {
+			World.getWorld().removeEntity(selection);
+			selection = null;
+		}
 	}
 
 	public List<Tile> getNeighbours(boolean diags) {

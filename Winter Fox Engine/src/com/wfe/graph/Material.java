@@ -31,6 +31,16 @@ public class Material {
 		return color;
 	}
 	
+	public Vector4f setColor(float r, float g, float b, float a) {
+		color.set(r, g, b, a);
+		return color;
+	}
+	
+	public Vector4f setColor(int r, int g, int b, int a) {
+		color.set(r / 255f, g / 255f, b / 255f, a / 255f);
+		return color;
+	}
+	
 	public int getNumberOfRows() {
 		return numberOfRows;
 	}

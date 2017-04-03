@@ -84,6 +84,10 @@ public class SettlerControllerComponent extends Component {
 				case GATHERING:
 					if(cargo != null) {
 						currentJob.getStockpile().addEntity(cargo);
+						// Point to tile that it's has a resource
+						world.getStockpile().put(currentJob.getStockpile(), 0);
+						
+						animation.idleAnim();
 						currentJob = null;
 						cargo = null;
 					} else {
@@ -103,6 +107,8 @@ public class SettlerControllerComponent extends Component {
 					if(time.getTime() >= currentJob.getTime()) {
 						Tile tile = currentJob.getTile();
 						tile.setId(11);
+						// Point to tile that it's has a resource
+						world.getGarden().put(tile, 0);
 						
 						animation.idleAnim();
 						currentJob = null;

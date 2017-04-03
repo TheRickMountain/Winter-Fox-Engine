@@ -52,6 +52,35 @@ public class Game implements IGameLogic {
 		ResourceManager.loadSound("hills", AudioMaster.loadSound("audio/hills.wav"));
 		/*** *** ***/
 		
+		/*** Plane ***/
+		float[] vertices = {
+				-0.5f, 0.0f, -0.5f, 
+				-0.5f, 0.0f, 0.5f,
+				0.5f, 0.0f, 0.5f,
+				0.5f, 0.0f, -0.5f
+		};
+
+		float[] textureCoords = {
+				0.0f, 0.0f,
+				0.0f, 0.0f,
+				0.0f, 0.0f,
+				0.0f, 0.0f
+		};
+
+		float[] normals = {
+				0.0f, 1.0f, 0.0f,
+				0.0f, 1.0f, 0.0f,
+				0.0f, 1.0f, 0.0f,
+				0.0f, 1.0f, 0.0f
+		};
+
+		int[] indices = {
+				0, 1, 2,
+				0, 2, 3
+		};
+		ResourceManager.loadMesh("plane", new Mesh(vertices, textureCoords, normals, indices));
+		/*** *** ***/
+		
 		/*** Font ***/
 		ResourceManager.loadTexture("primitiveFont", Texture.newTexture(new MyFile("font/primitiveFont.png"))
 				.normalMipMap().create());
@@ -362,40 +391,6 @@ public class Game implements IGameLogic {
 				}
 			}
 		}
-		
-		float[] vertices = {
-			-0.5f, 0.0f, -0.5f, 
-			-0.5f, 0.0f, 0.5f,
-			0.5f, 0.0f, 0.5f,
-			0.5f, 0.0f, -0.5f
-		};
-		
-		float[] textureCoords = {
-			0.0f, 0.0f,
-			0.0f, 0.0f,
-			0.0f, 0.0f,
-			0.0f, 0.0f
-		};
-		
-		float[] normals = {
-			0.0f, 1.0f, 0.0f,
-			0.0f, 1.0f, 0.0f,
-			0.0f, 1.0f, 0.0f,
-			0.0f, 1.0f, 0.0f
-		};
-		
-		int[] indices = {
-				0, 1, 2,
-				0, 2, 3
-		};
-		
-		
-		Mesh mesh = new Mesh(vertices, textureCoords, normals, indices);
-		
-		Entity entity = new Entity(mesh, new Material(null), 
-				new Transformation(85.5f, 0.05f, 86.5f));
-		entity.getMaterial().getColor().set(0.5f, 1.0f, 0.5f, 0.5f);
-		world.addEntity(entity);
 		
 		world.addEntity(new Settler(world.getTile(85, 85), new Transformation(85.5f, 0.65f, 85.5f)));
 		world.addEntity(new Settler(world.getTile(87, 85), new Transformation(87.5f, 0.65f, 85.5f)));
