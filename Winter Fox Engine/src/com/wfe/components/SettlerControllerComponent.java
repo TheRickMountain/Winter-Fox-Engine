@@ -121,6 +121,10 @@ public class SettlerControllerComponent extends Component {
 	
 	private boolean move(float dt) {		
 		if(currTile.equals(destTile)) {
+			float rotation = MathUtils.getRotation(currTile.getX() + 0.5f, currTile.getY() + 0.5f, 
+					currentJob.getTile().getX() + 0.5f, currentJob.getTile().getY() + 0.5f);
+			getParent().getTransform().setRotY(-(rotation) + 90);
+			
 			pathAStar = null;
 			return true;
 		}
