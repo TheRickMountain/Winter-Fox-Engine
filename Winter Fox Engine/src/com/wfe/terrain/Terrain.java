@@ -23,7 +23,7 @@ public class Terrain {
 	
 	private HeightGenerator heightGenerator;
 	
-	public Terrain(int sizex, int sizez, Camera camera) {
+	public Terrain(int sizex, int sizez, Camera camera, int[][] tilesHeight) {
 		this.sizex = sizex;
 		this.sizez = sizez;
 		this.width = sizex * Chunk.SIZE;
@@ -31,16 +31,16 @@ public class Terrain {
 		this.camera = camera;
 		shader = new TerrainShader();
 		heightGenerator = new HeightGenerator();
-		init();
+		init(tilesHeight);
 	}
 	
-	public void init() {
+	public void init(int[][] tilesHeight) {
 		spriteSheet = Texture.newTexture(new MyFile("textures/terrain.png"))
 				.normalMipMap(-0.4f).clampEdges().anisotropic().create();
 		
 		for(int x = 0; x < sizex; x++) {
 			for(int y = 0; y < sizez; y++) {
-				chunks.add(new Chunk(x, y, heightGenerator));
+				chunks.add(new Chunk(x, y, heightGenerator, tilesHeight));
 			}
 		}
 		

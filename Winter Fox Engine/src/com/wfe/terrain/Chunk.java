@@ -28,16 +28,16 @@ public class Chunk {
 	public static final float SPRITE_SHEET = 4;
 	private boolean rebuild = false;
 	
-	public Chunk(int x, int y, HeightGenerator heightGenerator) {
+	public Chunk(int x, int y, HeightGenerator heightGenerator, int[][] tilesHeight) {
 		position = new Vector2f(x * SIZE, y * SIZE);		
 		
-		init(heightGenerator, (int)position.x, (int)position.y);
+		init(heightGenerator, tilesHeight, (int)position.x, (int)position.y);
 		initGL();
 	}
 	
 	int currentTile = 6;
 	
-	public void init(HeightGenerator heightGenerator, int iterX, int iterY) {
+	public void init(HeightGenerator heightGenerator, int[][] tilesHeight, int iterX, int iterY) {
 		tiles = new Tile[SIZE][SIZE];
 		for(int x = 0; x < SIZE; x++) {
 			for(int y = 0; y < SIZE; y++) {
@@ -64,7 +64,7 @@ public class Chunk {
 			}
 		}
 		
-		create();
+		create(tilesHeight);
 	}
 	
 	private void initGL() {
@@ -88,22 +88,18 @@ public class Chunk {
 		GL30.glBindVertexArray(0);
 	}
 	
-	private void create() {
+	private void create(int[][] tilesHeight) {
 		List<Float> vList = new ArrayList<Float>();
 		List<Float> vtList = new ArrayList<Float>();
 		
-		// Vertices
-		for(int x = (int)position.x; x < (int)position.x + SIZE; x++) {
-			for(int y = (int)position.y; y < (int)position.y + SIZE; y++) {	
-				float x0 = (float)x + 0.0f;
-		        float x1 = (float)x + 1.0f;
-		        float y0 = (float)y + 0.0f;
-		        float y1 = (float)y + 1.0f;
-				
-				vList.add((float) x0); vList.add(0.0f); vList.add((float) y0);
-				vList.add((float) x0); vList.add(0.0f); vList.add((float) y1);
-				vList.add((float) x1); vList.add(0.0f); vList.add((float) y0); 		
-				vList.add((float) x1); vList.add(0.0f); vList.add((float) y1); 
+		for(int x = 0; x < SIZE; x++) {
+			for(int y = 0; y < SIZE; y++) {
+				float height = tilesHeight[x + (int)position.x][y + (int)position.y];
+				top(x, y, height, vList, vtList);
+				if(height != 0) {
+					left(x, y, height, vList, vtList);
+					right(x, y, height, vList, vtList);
+				}
 			}
 		}
 		
@@ -114,21 +110,6 @@ public class Chunk {
 			vertices[i++] = (f != null ? f : Float.NaN);
 		}
 		
-		// Texture Coords
-		for(int x = 0; x < SIZE; x++) {
-			for(int y = 0; y < SIZE; y++) {
-				float u0 = ((tiles[x][y].getId() % (int)SPRITE_SHEET) / SPRITE_SHEET) + 0.005f;
-		        float u1 = (u0 + (1.0f / SPRITE_SHEET)) - 0.01f;
-		        float v0 = ((tiles[x][y].getId() / (int)SPRITE_SHEET) / SPRITE_SHEET) + 0.005f;
-		        float v1 = (v0 + (1.0f / SPRITE_SHEET)) - 0.01f;
-		        
-				vtList.add(u0); vtList.add(v0);
-				vtList.add(u0); vtList.add(v1);
-				vtList.add(u1); vtList.add(v0);
-				vtList.add(u1); vtList.add(v1);
-			}
-		}
-		
 		texCoords = new float[vtList.size()];
 		i = 0;
 		
@@ -137,25 +118,200 @@ public class Chunk {
 		}
 	}
 	
+	private void top(float x, float y, float height, List<Float> vList, List<Float> vtList) {
+		float u0 = ((tiles[(int) x][(int) y].getId() % (int)SPRITE_SHEET) / SPRITE_SHEET);
+        float u1 = (u0 + (1.0f / SPRITE_SHEET));
+        float v0 = ((tiles[(int) x][(int) y].getId() / (int)SPRITE_SHEET) / SPRITE_SHEET);
+        float v1 = (v0 + (1.0f / SPRITE_SHEET));
+		
+		// Left Top vertex
+		vList.add(x + position.x); // x
+		vList.add(height);
+        vList.add(y + position.y); // y
+        vtList.add(u0);
+        vtList.add(v0);
+        
+        // Left Bottom vertex
+        vList.add(x + position.x); // x
+        vList.add(height);
+        vList.add(y + 1.0f + position.y); // y
+        vtList.add(u0);
+        vtList.add(v1);
+        
+        // Right Bottom vertex
+        vList.add(x + 1.0f + position.x); // x
+        vList.add(height);
+        vList.add(y + 1.0f + position.y); // y
+        vtList.add(u1);
+        vtList.add(v1);
+        
+        // Right Top vertex
+        vList.add(x + 1.0f + position.x); // x
+        vList.add(height);
+        vList.add(y + position.y); // y
+        vtList.add(u1);
+        vtList.add(v0);
+        
+        // Left Top vertex
+        vList.add(x + position.x); // x
+        vList.add(height);
+        vList.add(y + position.y); // y
+        vtList.add(u0);
+        vtList.add(v0);
+        
+        // Right Bottom vertex
+        vList.add(x + 1.0f + position.x); // x
+        vList.add(height);
+        vList.add(y + 1.0f + position.y); // y
+        vtList.add(u1);
+        vtList.add(v1);
+	}
+	
+	private void left(float x, float y, float height, List<Float> vList, List<Float> vtList) {
+		float u0 = ((tiles[(int) x][(int) y].getId() % (int)SPRITE_SHEET) / SPRITE_SHEET);
+        float u1 = (u0 + (1.0f / SPRITE_SHEET));
+        float v0 = ((tiles[(int) x][(int) y].getId() / (int)SPRITE_SHEET) / SPRITE_SHEET);
+        float v1 = (v0 + (1.0f / SPRITE_SHEET));
+		
+		// Left Top vertex
+		vList.add(x + 1.0f + position.x); // x
+		vList.add(0f);
+        vList.add(y + position.y); // y
+        vtList.add(u0);
+        vtList.add(v0);
+        
+        // Left Bottom vertex
+        vList.add(x + 1.0f + position.x); // x
+        vList.add(height);
+        vList.add(y + position.y); // y
+        vtList.add(u0);
+        vtList.add(v1);
+        
+        // Right Bottom vertex
+        vList.add(x + 1.0f + position.x); // x
+        vList.add(height);
+        vList.add(y + 1.0f + position.y); // y
+        vtList.add(u1);
+        vtList.add(v1);
+        
+        // Right Top vertex
+        vList.add(x + 1.0f + position.x); // x
+        vList.add(0f);
+        vList.add(y + 1.0f + position.y); // y
+        vtList.add(u1);
+        vtList.add(v0);
+        
+        // Left Top vertex
+        vList.add(x + 1.0f + position.x); // x
+        vList.add(0f);
+        vList.add(y + position.y); // y
+        vtList.add(u0);
+        vtList.add(v0);
+        
+        // Right Bottom vertex
+        vList.add(x + 1.0f + position.x); // x
+        vList.add(height);
+        vList.add(y + 1.0f + position.y); // y
+        vtList.add(u1);
+        vtList.add(v1);
+	}
+	
+	private void right(float x, float y, float height, List<Float> vList, List<Float> vtList) {
+		float u0 = ((tiles[(int) x][(int) y].getId() % (int)SPRITE_SHEET) / SPRITE_SHEET);
+        float u1 = (u0 + (1.0f / SPRITE_SHEET));
+        float v0 = ((tiles[(int) x][(int) y].getId() / (int)SPRITE_SHEET) / SPRITE_SHEET);
+        float v1 = (v0 + (1.0f / SPRITE_SHEET));
+		
+		// Left Top vertex
+		vList.add(x + position.x); // x
+		vList.add(0f);
+        vList.add(y + position.y); // y
+        vtList.add(u0);
+        vtList.add(v0);
+        
+        // Left Bottom vertex
+        vList.add(x + position.x); // x
+        vList.add(height);
+        vList.add(y + position.y); // y
+        vtList.add(u0);
+        vtList.add(v1);
+        
+        // Right Bottom vertex
+        vList.add(x + position.x); // x
+        vList.add(height);
+        vList.add(y + 1.0f + position.y); // y
+        vtList.add(u1);
+        vtList.add(v1);
+        
+        // Right Top vertex
+        vList.add(x + position.x); // x
+        vList.add(0f);
+        vList.add(y + 1.0f + position.y); // y
+        vtList.add(u1);
+        vtList.add(v0);
+        
+        // Left Top vertex
+        vList.add(x + position.x); // x
+        vList.add(0f);
+        vList.add(y + position.y); // y
+        vtList.add(u0);
+        vtList.add(v0);
+        
+        // Right Bottom vertex
+        vList.add(x + position.x); // x
+        vList.add(height);
+        vList.add(y + 1.0f + position.y); // y
+        vtList.add(u1);
+        vtList.add(v1);
+	}
+	
+	private void back(float x, float y, float height, List<Float> vList, List<Float> vtList) {
+		
+	}
+	
+	private void front(float x, float y, float height, List<Float> vList, List<Float> vtList) {
+		
+	}
+	
 	private void rebuild() {
 		List<Float> vtList = new ArrayList<Float>();
-		// Texture Coords
+		
 		for(int x = 0; x < SIZE; x++) {
 			for(int y = 0; y < SIZE; y++) {
-				float u0 = ((tiles[x][y].getId() % (int)SPRITE_SHEET) / SPRITE_SHEET) + 0.005f;
-		        float u1 = (u0 + (1.0f / SPRITE_SHEET)) - 0.01f;
-		        float v0 = ((tiles[x][y].getId() / (int)SPRITE_SHEET) / SPRITE_SHEET) + 0.005f;
-		        float v1 = (v0 + (1.0f / SPRITE_SHEET)) - 0.01f;
-
-				vtList.add(u0); vtList.add(v0);
-				vtList.add(u0); vtList.add(v1);
-				vtList.add(u1); vtList.add(v0);
-				vtList.add(u1); vtList.add(v1);
+				float u0 = ((tiles[(int) x][(int) y].getId() % (int)SPRITE_SHEET) / SPRITE_SHEET);
+		        float u1 = (u0 + (1.0f / SPRITE_SHEET));
+		        float v0 = ((tiles[(int) x][(int) y].getId() / (int)SPRITE_SHEET) / SPRITE_SHEET);
+		        float v1 = (v0 + (1.0f / SPRITE_SHEET));
+				
+				// Left Top vertex
+		        vtList.add(u0);
+		        vtList.add(v0);
+		        
+		        // Left Bottom vertex
+		        vtList.add(u0);
+		        vtList.add(v1);
+		        
+		        // Right Bottom vertex
+		        vtList.add(u1);
+		        vtList.add(v1);
+		        
+		        // Right Top vertex
+		        vtList.add(u1);
+		        vtList.add(v0);
+		        
+		        // Left Top vertex
+		        vtList.add(u0);
+		        vtList.add(v0);
+		        
+		        // Right Bottom vertex
+		        vtList.add(u1);
+		        vtList.add(v1);
 			}
 		}
-
+		
+		texCoords = new float[vtList.size()];
 		int i = 0;
-
+		
 		for(Float f : vtList) {
 			texCoords[i++] = (f != null ? f : Float.NaN);
 		}
@@ -179,7 +335,7 @@ public class Chunk {
 		GL30.glBindVertexArray(VAO);
 		GL20.glEnableVertexAttribArray(0);
 		GL20.glEnableVertexAttribArray(1);
-		GL11.glDrawArrays(GL11.GL_TRIANGLE_STRIP, 0, SIZE * SIZE * 4);
+		GL11.glDrawArrays(GL11.GL_TRIANGLES, 0, vertices.length / 3);
 		GL20.glDisableVertexAttribArray(0);
 		GL20.glDisableVertexAttribArray(1);
 		GL30.glBindVertexArray(0);

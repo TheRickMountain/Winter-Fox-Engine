@@ -36,6 +36,7 @@ public class World {
 	
 	private PathTileGraph tileGraph;
 	private Tile[][] tiles;
+	private int[][] tilesHeight;
 	
 	private List<Entity> entities = new ArrayList<Entity>();
 	private List<Entity> entitiesToRemove = new ArrayList<Entity>();
@@ -69,8 +70,16 @@ public class World {
 	}
 	
 	private void init() {
-		this.terrain = new Terrain(10, 10, camera);
-		this.tiles = new Tile[10 * Chunk.SIZE][10 * Chunk.SIZE];
+		tilesHeight = new int[10 * Chunk.SIZE][10 * Chunk.SIZE];
+		for(int x = 0; x < tilesHeight.length; x++) {
+			for(int y = 0; y < tilesHeight.length; y++) {
+				tilesHeight[x][y] = 0;
+			}
+		}
+		tilesHeight[86][86] = 1;
+		tilesHeight[88][88] = -1;
+		terrain = new Terrain(10, 10, camera, tilesHeight);
+		tiles = new Tile[10 * Chunk.SIZE][10 * Chunk.SIZE];
 		for(int i = 0; i < tiles.length; i++) {
 			for(int j = 0; j < tiles.length; j++) {
 				tiles[i][j] = terrain.getTile(i, j);
@@ -189,10 +198,10 @@ public class World {
 		if(Mouse.isButtonDown(0)) {
 			Tile tile = getTile(MousePicker.getX(), MousePicker.getY());
 			if(tile.isHasEntity()) {
-				tile.setSelected(true, 255, 255, 128, 128);
 				switch(tile.getEntity().getTag()) {
 				case "firewood":
 				case "stone":
+					tile.setSelected(true, 255, 255, 128, 128);
 					Tile stockpileTile = getEmptyStockpile();
 					if(stockpileTile != null) {
 						stockpile.put(stockpileTile, 0);
@@ -389,7 +398,7 @@ public class World {
 	}
 	
 	public void updateWeather(float dt) {
-		time += 500 * dt;
+		time += 100 * dt;
 		if(time >= 24000) {
 			time = 0;
 		}
