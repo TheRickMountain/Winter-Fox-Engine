@@ -24,13 +24,9 @@ public class MainApp {
 
 	public static void main(String[] args) throws Exception {
 		Display display = new Display("Paleon", 1152, 648, false);
-		display.init();
-
 		Camera camera = new Camera(new Vector3f(80, 0, 80));
-		
-		SoundManager.init();
-		
 		RenderEngine renderEngine = RenderEngine.create(camera);
+		SoundManager.init();
 		
 		Resources.loadResources();
 		

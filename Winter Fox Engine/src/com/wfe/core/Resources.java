@@ -11,6 +11,8 @@ public class Resources {
 	private Resources() {}
 	
 	public static void loadResources() {
+		System.out.println("Loading sounds...");
+		
 		/*** Audio Initialization ***/
 		ResourceManager.loadSound("hoe", SoundManager.loadSound("audio/hoe.wav"));
 		ResourceManager.loadSound("chop", SoundManager.loadSound("audio/chop.wav"));
@@ -29,34 +31,7 @@ public class Resources {
 		ResourceManager.loadSound("hills", SoundManager.loadSound("audio/hills.wav"));
 		/*** *** ***/
 		
-		/*** Plane ***/
-		float[] vertices = {
-				-0.5f, 0.0f, -0.5f, 
-				-0.5f, 0.0f, 0.5f,
-				0.5f, 0.0f, 0.5f,
-				0.5f, 0.0f, -0.5f
-		};
-
-		float[] textureCoords = {
-				0.0f, 0.0f,
-				0.0f, 0.0f,
-				0.0f, 0.0f,
-				0.0f, 0.0f
-		};
-
-		float[] normals = {
-				0.0f, 1.0f, 0.0f,
-				0.0f, 1.0f, 0.0f,
-				0.0f, 1.0f, 0.0f,
-				0.0f, 1.0f, 0.0f
-		};
-
-		int[] indices = {
-				0, 1, 2,
-				0, 2, 3
-		};
-		ResourceManager.loadMesh("plane", new Mesh(vertices, textureCoords, normals, indices));
-		/*** *** ***/
+		System.out.println("Loading fonts...");
 		
 		/*** Font ***/
 		ResourceManager.loadTexture("primitiveFont", Texture.newTexture(new MyFile("font/primitiveFont.png"))
@@ -65,6 +40,8 @@ public class Resources {
 		ResourceManager.loadTexture("myFont", Texture.newTexture(new MyFile("font/myFont.png"))
 				.normalMipMap().create());
 		/*** *** ***/
+		
+		System.out.println("Loading GUI textures...");
 		
 		/*** GUI Elements ***/							
 		ResourceManager.loadTexture("slot_ui", Texture.newTexture(new MyFile("gui/elements/slot.png"))
@@ -110,6 +87,37 @@ public class Resources {
 				.normalMipMap().create());
 		/* * */
 		
+		/*** *** ***/
+		
+		System.out.println("Loading models...");
+		
+		/*** Plane ***/
+		float[] vertices = {
+				-0.5f, 0.0f, -0.5f, 
+				-0.5f, 0.0f, 0.5f,
+				0.5f, 0.0f, 0.5f,
+				0.5f, 0.0f, -0.5f
+		};
+
+		float[] textureCoords = {
+				0.0f, 0.0f,
+				0.0f, 0.0f,
+				0.0f, 0.0f,
+				0.0f, 0.0f
+		};
+
+		float[] normals = {
+				0.0f, 1.0f, 0.0f,
+				0.0f, 1.0f, 0.0f,
+				0.0f, 1.0f, 0.0f,
+				0.0f, 1.0f, 0.0f
+		};
+
+		int[] indices = {
+				0, 1, 2,
+				0, 2, 3
+		};
+		ResourceManager.loadMesh("plane", new Mesh(vertices, textureCoords, normals, indices));
 		/*** *** ***/
 		
 		/*** Hive ***/

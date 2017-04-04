@@ -86,9 +86,11 @@ public class Display {
     	Display.width = width;
         Display.height = height;
         this.fullscreen = fullscreen;
+        
+        init();
     }
         
-    public void init() {
+    private void init() {
         if(!glfwInit())
             throw new IllegalStateException("Unable to initialize GLFW");
 
