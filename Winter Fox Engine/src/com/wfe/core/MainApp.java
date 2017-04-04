@@ -13,6 +13,7 @@ import com.wfe.entities.Rock;
 import com.wfe.entities.Settler;
 import com.wfe.entities.Stick;
 import com.wfe.entities.Wheat;
+import com.wfe.gui.GUIManager;
 import com.wfe.input.Keyboard;
 import com.wfe.input.Mouse;
 import com.wfe.math.Vector3f;
@@ -29,9 +30,8 @@ public class MainApp {
 		SoundManager.init();
 		
 		Resources.loadResources();
-		
 		World world = World.create(camera, renderEngine);
-		world.init();
+		GUIManager.init();
 		
 		/*** TODO: replace this section ***/
 		world.addEntityToTile(new Wheat(new Transformation(83.5f, 0, 83.5f)));
@@ -80,7 +80,11 @@ public class MainApp {
 			
 			Keyboard.startEventFrame();
 			Mouse.startEventFrame();
-			world.update(Display.getDeltaInSeconds());
+			
+			float dt = Display.getDeltaInSeconds();
+			world.update(dt);
+			GUIManager.update(dt);
+			
 			Keyboard.clearEventFrame();
 			Mouse.clearEventFrame();
 			

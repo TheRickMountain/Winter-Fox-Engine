@@ -66,6 +66,14 @@ public class Rect {
 	public void setRotation(float rotation) {
 		this.rotation = rotation;
 	}
+	
+	public float getXPlusWidthHalf() {
+		return x + (width / 2);
+	}
+	
+	public float getYPlusHeightHalf() {
+		return y + (height / 2);
+	}
 
 	public boolean isMouseOvered() {
 		if(centered) {

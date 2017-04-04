@@ -23,7 +23,7 @@ public class Terrain {
 	
 	private HeightGenerator heightGenerator;
 	
-	public Terrain(int sizex, int sizez, Camera camera) throws Exception {
+	public Terrain(int sizex, int sizez, Camera camera) {
 		this.sizex = sizex;
 		this.sizez = sizez;
 		this.width = sizex * Chunk.SIZE;
@@ -34,7 +34,7 @@ public class Terrain {
 		init();
 	}
 	
-	public void init() throws Exception {
+	public void init() {
 		spriteSheet = Texture.newTexture(new MyFile("textures/terrain.png"))
 				.normalMipMap(-0.4f).clampEdges().anisotropic().create();
 		

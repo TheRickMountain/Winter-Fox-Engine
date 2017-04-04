@@ -184,6 +184,9 @@ public class Display {
     }
     
     public static float getDeltaInSeconds() {
+    	if(delta >= 0.1f) {
+    		delta = 0;
+    	}
     	return delta;
     }
 

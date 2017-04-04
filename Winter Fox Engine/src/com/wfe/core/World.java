@@ -6,22 +6,18 @@ import java.util.List;
 import java.util.Map;
 
 import com.wfe.audio.SoundManager;
-import com.wfe.components.ColliderComponent;
-import com.wfe.ecs.ComponentType;
 import com.wfe.ecs.Entity;
 import com.wfe.ecs.Transformation;
 import com.wfe.entities.Firewood;
 import com.wfe.entities.Selection;
 import com.wfe.entities.Stone;
 import com.wfe.graph.Mesh;
-import com.wfe.gui.GUIManager;
 import com.wfe.input.Key;
 import com.wfe.input.Keyboard;
 import com.wfe.input.Mouse;
 import com.wfe.jobSystem.Job;
 import com.wfe.jobSystem.JobType;
 import com.wfe.pathfinding.PathTileGraph;
-import com.wfe.physics.AABB;
 import com.wfe.renderEngine.RenderEngine;
 import com.wfe.terrain.Chunk;
 import com.wfe.terrain.Terrain;
@@ -47,8 +43,6 @@ public class World {
 	
 	private Map<Mesh, List<Entity>> entitiesToRender = new HashMap<Mesh, List<Entity>>();
 	
-	private List<AABB> colliders = new ArrayList<AABB>();
-	
 	private float time = 12000;
 	private Weather weather;
 	
@@ -70,9 +64,11 @@ public class World {
 	private World(Camera camera, RenderEngine renderEngine) {
 		this.camera = camera;
 		this.renderEngine = renderEngine;
+		
+		init();
 	}
 	
-	public void init() throws Exception {
+	private void init() {
 		this.terrain = new Terrain(10, 10, camera);
 		this.tiles = new Tile[10 * Chunk.SIZE][10 * Chunk.SIZE];
 		for(int i = 0; i < tiles.length; i++) {
@@ -84,7 +80,6 @@ public class World {
 		this.weather = new Weather();
 		
 		MousePicker.setUpMousePicker(camera);
-		GUIManager.init();
 		
 		selection = new Selection();
 		selection.getTransform().setPosition(85.5f, 0.05f, 86.5f);
@@ -125,8 +120,6 @@ public class World {
 			entities.removeAll(entitiesToRemove);
 			entitiesToRemove.clear();
 		}
-		
-		GUIManager.update();
 	}
 	
 	private void jobModeSelection() {
@@ -339,9 +332,6 @@ public class World {
 	}
 	
 	public void addEntity(Entity entity) {
-		if(entity.hasComponent(ComponentType.COLLIDER)) {
-			colliders.add(((ColliderComponent)entity.getComponent(ComponentType.COLLIDER)).getAABB());
-		}
 		this.entitiesToAdd.add(entity);
 		
 		if(entity.getMesh() != null) {
@@ -355,9 +345,6 @@ public class World {
 	}
 	
 	public void removeEntity(Entity entity) {
-		if(entity.hasComponent(ComponentType.COLLIDER)) {
-			colliders.remove(((ColliderComponent)entity.getComponent(ComponentType.COLLIDER)).getAABB());
-		}
 		this.entitiesToRemove.add(entity);
 		
 		List<Entity> batch = entitiesToRender.get(entity.getMesh());
@@ -366,10 +353,6 @@ public class World {
 		if(batch.isEmpty()) {
 			entitiesToRender.remove(entity.getMesh());
 		}
-	}
-	
-	public List<AABB> getColliders() {
-		return colliders;
 	}
 	
 	public void setTile(int x, int y, int id) {
@@ -406,7 +389,7 @@ public class World {
 	}
 	
 	public void updateWeather(float dt) {
-		time += 15 * dt;
+		time += 500 * dt;
 		if(time >= 24000) {
 			time = 0;
 		}
@@ -457,6 +440,10 @@ public class World {
 	
 	public Map<Tile, Integer> getGarden() {
 		return garden;
+	}
+	
+	public float getTime() {
+		return time;
 	}
 	
 }

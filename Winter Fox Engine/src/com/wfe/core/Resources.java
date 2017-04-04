@@ -43,7 +43,11 @@ public class Resources {
 		
 		System.out.println("Loading GUI textures...");
 		
-		/*** GUI Elements ***/							
+		/*** GUI Elements ***/		
+		ResourceManager.loadTexture("arrow", Texture.newTexture(new MyFile("gui/arrow.png"))
+				.normalMipMap().create());
+		ResourceManager.loadTexture("day_wheel", Texture.newTexture(new MyFile("gui/day_wheel.png"))
+				.normalMipMap().create());
 		ResourceManager.loadTexture("slot_ui", Texture.newTexture(new MyFile("gui/elements/slot.png"))
 				.normalMipMap().create());
 		ResourceManager.loadTexture("selected_slot_ui", Texture.newTexture(new MyFile("gui/elements/selected_slot.png"))
