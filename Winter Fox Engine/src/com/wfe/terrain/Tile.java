@@ -1,11 +1,11 @@
-package com.wfe.tileEngine;
+package com.wfe.terrain;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import com.wfe.core.World;
 import com.wfe.ecs.Entity;
 import com.wfe.entities.Selection;
-import com.wfe.game.World;
 
 public class Tile {
 	
@@ -81,12 +81,12 @@ public class Tile {
 		return movementCost;
 	}
 	
-	public void setSelected(boolean value) {
+	public void setSelected(boolean value, int r, int g, int b, int a) {
 		selected = value;
 		if(selected) {
 			selection = new Selection();
 			selection.getTransform().setPosition(x + 0.5f, 0.05f, y + 0.5f);
-			selection.getMaterial().setColor(82, 22, 180, 64);
+			selection.getMaterial().setColor(r, g, b, a);
 			World.getWorld().addEntity(selection);
 		} else {
 			World.getWorld().removeEntity(selection);

@@ -168,7 +168,7 @@ public class Display {
     	glfwPollEvents();
     }
 
-    public void swapBuffers() {
+    public void update() {
     	glfwSwapBuffers(window);
     	calculateDelta();
     }

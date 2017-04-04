@@ -1,7 +1,5 @@
 package com.wfe.components;
 
-import com.wfe.audio.AudioMaster;
-import com.wfe.core.ResourceManager;
 import com.wfe.ecs.Component;
 import com.wfe.ecs.ComponentType;
 import com.wfe.ecs.Transformation;
@@ -64,10 +62,10 @@ public class PlayerAnimationComponent extends Component {
 	public void walkAnim(float dt) {
 		if(leftArm.localRotX >= 40) {
             extremitiesState = true;
-            AudioMaster.defaultSource.play(ResourceManager.getSound("footstep1"));
+            //AudioMaster.defaultSource.play(ResourceManager.getSound("footstep1"));
         } else if(leftArm.localRotX <= -40){
             extremitiesState = false;
-            AudioMaster.defaultSource.play(ResourceManager.getSound("footstep2"));
+            //AudioMaster.defaultSource.play(ResourceManager.getSound("footstep2"));
         }
 
         if(extremitiesState) {

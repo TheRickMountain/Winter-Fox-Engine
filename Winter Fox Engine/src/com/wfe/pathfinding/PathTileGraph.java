@@ -3,8 +3,8 @@ package com.wfe.pathfinding;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.wfe.game.World;
-import com.wfe.tileEngine.Tile;
+import com.wfe.core.World;
+import com.wfe.terrain.Tile;
 
 public class PathTileGraph {
 

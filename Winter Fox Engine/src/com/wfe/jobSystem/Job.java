@@ -1,7 +1,7 @@
 package com.wfe.jobSystem;
 
 import com.wfe.ecs.Entity;
-import com.wfe.tileEngine.Tile;
+import com.wfe.terrain.Tile;
 
 public class Job {
 	

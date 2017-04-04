@@ -1,4 +1,4 @@
-package com.wfe.tileEngine;
+package com.wfe.terrain;
 
 import java.nio.FloatBuffer;
 import java.util.ArrayList;

@@ -3,13 +3,8 @@ package com.wfe.gui;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.wfe.audio.AudioMaster;
-import com.wfe.audio.Source;
 import com.wfe.core.Display;
-import com.wfe.core.ResourceManager;
-import com.wfe.ecs.Transformation;
 import com.wfe.font.GUIText;
-import com.wfe.game.Game;
 import com.wfe.input.Key;
 import com.wfe.input.Keyboard;
 import com.wfe.input.Mouse;
@@ -21,7 +16,7 @@ import com.wfe.utils.Rect;
 
 public class Inventory {
 	
-	private Source source;
+	//private Source source;
 	
 	private int rows = 3;
 	private int columns = 6;
@@ -45,7 +40,7 @@ public class Inventory {
 	private int lastSelected = 0;
 
 	public Inventory() {
-		source = new Source();
+		//source = new Source();
 		
 		// Hotbar
 		hotbarRect = new Rect(0, 0, 385, 70);
@@ -107,14 +102,14 @@ public class Inventory {
 			hotbarSlots.get(selected).setSelected(true);
 			selectedItem = hotbarSlots.get(selected).getItem();
 			
-			AudioMaster.defaultSource.play(ResourceManager.getSound("tick"));
+			//AudioMaster.defaultSource.play(ResourceManager.getSound("tick"));
 			
 			checkActiveSlot();
 		}
 		
 		if(Keyboard.isKeyDown(Key.KEY_E)) {
 			open = !open;
-			source.play(ResourceManager.getSound("inventory"));
+			//source.play(ResourceManager.getSound("inventory"));
 			
 			Display.setCursor(Display.defaultCursor);
 			Mouse.setActiveInGUI(open);
@@ -133,7 +128,7 @@ public class Inventory {
 								if(slot.getCount() == 0) {
 									slot.addItem(ItemDatabase.getItem(Item.NULL), 0);
 								}
-								source.play(ResourceManager.getSound("eating"));
+								//source.play(ResourceManager.getSound("eating"));
 							}
 						}
 					}

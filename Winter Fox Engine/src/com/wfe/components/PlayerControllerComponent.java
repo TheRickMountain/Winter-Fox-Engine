@@ -2,15 +2,13 @@ package com.wfe.components;
 
 import java.util.List;
 
-import com.wfe.audio.Source;
 import com.wfe.core.Camera;
 import com.wfe.core.Display;
-import com.wfe.core.ResourceManager;
+import com.wfe.core.World;
 import com.wfe.ecs.Component;
 import com.wfe.ecs.ComponentType;
 import com.wfe.ecs.Entity;
 import com.wfe.ecs.Transformation;
-import com.wfe.game.World;
 import com.wfe.gui.GUIManager;
 import com.wfe.gui.Item;
 import com.wfe.gui.ItemType;
@@ -19,7 +17,7 @@ import com.wfe.input.Keyboard;
 import com.wfe.input.Mouse;
 import com.wfe.math.Vector3f;
 import com.wfe.physics.AABB;
-import com.wfe.tileEngine.Tile;
+import com.wfe.terrain.Tile;
 import com.wfe.utils.MathUtils;
 import com.wfe.utils.MousePicker;
 import com.wfe.utils.MyRandom;
@@ -38,7 +36,7 @@ public class PlayerControllerComponent extends Component {
 	
 	private PlayerAnimationComponent animation;
 	
-	private Source source;
+	//private Source source;
 	
 	private Entity hand;
 	private Entity equipment;
@@ -56,7 +54,7 @@ public class PlayerControllerComponent extends Component {
 		this.bb = new AABB(transform.x - 0.4f, 0, transform.z - 0.4f, transform.x + 0.4f, 0 + 1, transform.z + 0.4f);
 		this.speed = 2.0f;
 		this.hand = hand;
-		this.source = new Source();
+		//this.source = new Source();
 		
 		this.timer = new TimeUtil();
 	}
@@ -76,7 +74,7 @@ public class PlayerControllerComponent extends Component {
 					animation.prepareFightAnim();
 					fighting = true;
 					
-					source.play(ResourceManager.getSound("swing" + MyRandom.nextInt(1, 3)));
+					//source.play(ResourceManager.getSound("swing" + MyRandom.nextInt(1, 3)));
 					
 					/*for(Entity entity : World.getWorld().getMobs()) {
 						MobComponent mc = (MobComponent) entity.getComponent(ComponentType.MOB);
@@ -106,7 +104,7 @@ public class PlayerControllerComponent extends Component {
 							
 							if(GUIManager.inventory.addItem(gc.getItem(), gc.getCount()) == 0) {
 								tile.removeEntityPermanently();
-								source.play(gc.getSound());
+								//source.play(gc.getSound());
 							}
 						}
 					} else {
@@ -123,7 +121,7 @@ public class PlayerControllerComponent extends Component {
 								if(GUIManager.inventory.addItem(hive.getItem(), 
 										MyRandom.nextInt(hive.getCountMax()) + 1) == 0) {
 									hive.setReady(false);
-									source.play(hive.getSound());
+									//source.play(hive.getSound());
 								}
 							}
 						} else {
@@ -155,7 +153,7 @@ public class PlayerControllerComponent extends Component {
 						resetMiningProgress();
 					} else {
 						if(animation.hitAnim(dt)) {
-							source.play(mc.getSound());
+							//source.play(mc.getSound());
 						}
 						GUIManager.progressBar.setCurrentValue((int)((time * 100) / mc.getMiningTime()));
 					}
@@ -172,7 +170,7 @@ public class PlayerControllerComponent extends Component {
 							turnTo((int)tp.x, (int)tp.z);
 							if(tile.getId() != 10) {
 								World.getWorld().setTile((int)tp.x, (int)tp.z, 10);
-								source.play(ResourceManager.getSound("hoe"));
+								//source.play(ResourceManager.getSound("hoe"));
 							}
 						}
 					}

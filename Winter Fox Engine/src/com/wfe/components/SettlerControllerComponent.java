@@ -3,15 +3,15 @@ package com.wfe.components;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.wfe.audio.AudioMaster;
+import com.wfe.audio.SoundSource;
+import com.wfe.core.World;
 import com.wfe.ecs.Component;
 import com.wfe.ecs.ComponentType;
 import com.wfe.ecs.Entity;
 import com.wfe.ecs.Transformation;
-import com.wfe.game.World;
 import com.wfe.jobSystem.Job;
 import com.wfe.pathfinding.PathAStar;
-import com.wfe.tileEngine.Tile;
+import com.wfe.terrain.Tile;
 import com.wfe.utils.MathUtils;
 import com.wfe.utils.TimeUtil;
 
@@ -20,6 +20,8 @@ public class SettlerControllerComponent extends Component {
 	private World world;
 	
 	private PlayerAnimationComponent animation;
+	
+	private SoundSource sound;
 	
 	private Tile currTile;
 	private Tile nextTile;
@@ -40,6 +42,9 @@ public class SettlerControllerComponent extends Component {
 	public SettlerControllerComponent(Tile tile, PlayerAnimationComponent animation) {
 		world = World.getWorld();
 		
+		sound = new SoundSource();
+		sound.setRadius(30);
+		
 		currTile = destTile = nextTile = tile;
 		this.animation = animation;
 		
@@ -48,12 +53,14 @@ public class SettlerControllerComponent extends Component {
 	
 	@Override
 	public void update(float dt) {
+		Transformation transform = getParent().getTransform();
+		
 		if(currentJob == null) {
 			chooseJob();
 		} else {
 			if(moving) {
+				sound.setPosition(transform.getX(), transform.getY(), transform.getZ());
 				if(cargo != null) {
-					Transformation transform = getParent().getTransform();
 					cargo.getTransform().setPosition(transform.getX(), 0.65f, transform.getZ());
 				}
 				
@@ -67,11 +74,12 @@ public class SettlerControllerComponent extends Component {
 				case DEVELOPMENT:
 					// If animation has reached a target number than play "development" sound
 					if(animation.hitAnim(dt)) {
-						AudioMaster.defaultSource.play(currentJob.getSound());
+						sound.play(currentJob.getSound());
 					}
 					
 					if(time.getTime() >= currentJob.getTime()) {
 						Tile tile = currentJob.getTile();
+						tile.setSelected(false, 0, 0, 0, 0);
 						tile.removeEntityPermanently();
 						tile.addEntity(currentJob.getEntity(tile.getX() + 0.5f, 0, tile.getY() + 0.5f));
 						world.addEntity(tile.getEntity());
@@ -92,6 +100,7 @@ public class SettlerControllerComponent extends Component {
 						cargo = null;
 					} else {
 						cargo = currentJob.getTile().removeEntity();
+						currentJob.getTile().setSelected(false, 0, 0, 0, 0);
 						Tile tile = choosePath(currentJob.getStockpile());
 						if(tile != null) {
 							destTile = tile;
@@ -101,7 +110,7 @@ public class SettlerControllerComponent extends Component {
 					break;
 				case PLOWING:
 					if(animation.hitAnim(dt)) {
-						AudioMaster.defaultSource.play(currentJob.getSound());
+						sound.play(currentJob.getSound());
 					}
 					
 					if(time.getTime() >= currentJob.getTime()) {

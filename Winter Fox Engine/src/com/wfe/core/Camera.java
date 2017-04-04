@@ -52,6 +52,18 @@ public class Camera {
     public Vector3f getPosition() {
         return position;
     }
+    
+    public float getX() {
+    	return position.x;
+    }
+    
+    public float getY() {
+    	return position.y;
+    }
+    
+    public float getZ() {
+    	return position.z;
+    }
 
     public void invertPitch() {
     	this.pitch = -pitch;

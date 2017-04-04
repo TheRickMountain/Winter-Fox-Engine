@@ -3,7 +3,7 @@ package com.wfe.ecs;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.wfe.game.World;
+import com.wfe.core.World;
 import com.wfe.graph.Material;
 import com.wfe.graph.Mesh;
 

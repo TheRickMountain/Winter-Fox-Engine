@@ -1,55 +1,32 @@
-package com.wfe.game;
+package com.wfe.core;
 
-import com.wfe.audio.AudioMaster;
-import com.wfe.core.Camera;
-import com.wfe.core.Display;
-import com.wfe.core.IGameLogic;
-import com.wfe.core.ResourceManager;
-import com.wfe.ecs.Entity;
-import com.wfe.ecs.Transformation;
-import com.wfe.entities.Fern;
-import com.wfe.entities.Flint;
-import com.wfe.entities.Grass;
-import com.wfe.entities.Mushroom;
-import com.wfe.entities.Pine;
-import com.wfe.entities.Rock;
-import com.wfe.entities.Settler;
-import com.wfe.entities.Stick;
-import com.wfe.entities.Wheat;
-import com.wfe.graph.Material;
+import com.wfe.audio.SoundManager;
 import com.wfe.graph.Mesh;
 import com.wfe.graph.OBJLoader;
-import com.wfe.math.Vector3f;
 import com.wfe.textures.Texture;
 import com.wfe.utils.MyFile;
-import com.wfe.utils.MyRandom;
 
-public class Game implements IGameLogic {
+public class Resources {
+
+	private Resources() {}
 	
-	private World world;
-	
-	@Override
-	public void loadResources() throws Exception {
+	public static void loadResources() {
 		/*** Audio Initialization ***/
-		AudioMaster.init();
-		AudioMaster.setListenerData(0, 0, 0);
-		
-		ResourceManager.loadSound("hoe", AudioMaster.loadSound("audio/hoe.wav"));
-		ResourceManager.loadSound("chop", AudioMaster.loadSound("audio/chop.wav"));
-		ResourceManager.loadSound("mine", AudioMaster.loadSound("audio/mine.wav"));
-		ResourceManager.loadSound("eating", AudioMaster.loadSound("audio/eat.wav"));
-		ResourceManager.loadSound("tick", AudioMaster.loadSound("audio/tick.wav"));
-		ResourceManager.loadSound("taking", AudioMaster.loadSound("audio/take.wav"));
-		ResourceManager.loadSound("chopping", AudioMaster.loadSound("audio/chop.wav"));
-		ResourceManager.loadSound("equip", AudioMaster.loadSound("audio/equip.wav"));
-		ResourceManager.loadSound("inventory", AudioMaster.loadSound("audio/inventory.wav"));
-		ResourceManager.loadSound("footstep1", AudioMaster.loadSound("audio/footstep1.wav"));
-		ResourceManager.loadSound("footstep2", AudioMaster.loadSound("audio/footstep2.wav"));
-		ResourceManager.loadSound("swing1", AudioMaster.loadSound("audio/swing1.wav"));
-		ResourceManager.loadSound("swing2", AudioMaster.loadSound("audio/swing2.wav"));
-		ResourceManager.loadSound("swing3", AudioMaster.loadSound("audio/swing3.wav"));
-		
-		ResourceManager.loadSound("hills", AudioMaster.loadSound("audio/hills.wav"));
+		ResourceManager.loadSound("hoe", SoundManager.loadSound("audio/hoe.wav"));
+		ResourceManager.loadSound("chop", SoundManager.loadSound("audio/chop.wav"));
+		ResourceManager.loadSound("mine", SoundManager.loadSound("audio/mine.wav"));
+		ResourceManager.loadSound("eating", SoundManager.loadSound("audio/eat.wav"));
+		ResourceManager.loadSound("tick", SoundManager.loadSound("audio/tick.wav"));
+		ResourceManager.loadSound("taking", SoundManager.loadSound("audio/take.wav"));
+		ResourceManager.loadSound("chopping", SoundManager.loadSound("audio/chop.wav"));
+		ResourceManager.loadSound("equip", SoundManager.loadSound("audio/equip.wav"));
+		ResourceManager.loadSound("inventory", SoundManager.loadSound("audio/inventory.wav"));
+		ResourceManager.loadSound("footstep1", SoundManager.loadSound("audio/footstep1.wav"));
+		ResourceManager.loadSound("footstep2", SoundManager.loadSound("audio/footstep2.wav"));
+		ResourceManager.loadSound("swing1", SoundManager.loadSound("audio/swing1.wav"));
+		ResourceManager.loadSound("swing2", SoundManager.loadSound("audio/swing2.wav"));
+		ResourceManager.loadSound("swing3", SoundManager.loadSound("audio/swing3.wav"));
+		ResourceManager.loadSound("hills", SoundManager.loadSound("audio/hills.wav"));
 		/*** *** ***/
 		
 		/*** Plane ***/
@@ -348,70 +325,4 @@ public class Game implements IGameLogic {
 		/*** *** ***/
 	}
 	
-	@Override
-	public void onEnter(Display display) throws Exception {
-		Camera camera = new Camera(new Vector3f(80, 0, 80));	
-		
-		world = World.createWorld(camera);
-		world.init();
-		
-		world.addEntityToTile(new Wheat(new Transformation(83.5f, 0, 83.5f)));
-		world.addEntityToTile(new Wheat(new Transformation(90.5f, 0, 85.5f)));
-		world.addEntityToTile(new Wheat(new Transformation(72.5f, 0, 94.5f)));
-		world.addEntityToTile(new Wheat(new Transformation(80.5f, 0, 75.5f)));
-		
-		for(int i = 0; i < 100; i++) {		
-			Mushroom shroom = new Mushroom(new Transformation(MyRandom.nextInt(160) + 0.5f, 0, MyRandom.nextInt(160) + 0.5f));
-			world.addEntityToTile(shroom);
-			
-			Fern fern = new Fern(new Transformation(MyRandom.nextInt(160) + 0.5f, 0, MyRandom.nextInt(160) + 0.5f));
-			fern.setTextureIndex(MyRandom.nextInt(4));
-			world.addEntityToTile(fern);
-		
-			world.addEntityToTile(new Flint(new Transformation(MyRandom.nextInt(160) + 0.5f, 0, 
-					MyRandom.nextInt(160) + 0.5f)));
-			
-			world.addEntityToTile(new Stick(new Transformation(MyRandom.nextInt(160) + 0.5f, 0, 
-					MyRandom.nextInt(160) + 0.5f)));
-			
-			world.addEntityToTile(new Pine(new Transformation(MyRandom.nextInt(160) + 0.5f, 0, 
-					MyRandom.nextInt(160) + 0.5f)));
-			
-			world.addEntityToTile(new Rock(new Transformation(MyRandom.nextInt(160) + 0.5f, 0, 
-					MyRandom.nextInt(160) + 0.5f)));
-		}
-		
-		for(int i = 0; i < 160; i++) {
-			for(int j = 0; j < 160; j++) {
-				int num = MyRandom.nextInt(10);
-				if(num == 5) {
-					Grass grass = new Grass(new Transformation(i, 0, j));
-					grass.setTextureIndex(MyRandom.nextInt(3, 7));		
-					world.addEntityToTile(grass);
-				}
-			}
-		}
-		
-		world.addEntity(new Settler(world.getTile(85, 85), new Transformation(85.5f, 0.65f, 85.5f)));
-		world.addEntity(new Settler(world.getTile(87, 85), new Transformation(87.5f, 0.65f, 85.5f)));
-		
-		AudioMaster.ambientSource.play(ResourceManager.getSound("hills"));
-	}
-	
-	@Override
-	public void update(float dt) {	
-		world.update(dt);
-	}
-
-	@Override
-	public void render() {
-		world.render();
-	}
-
-	@Override
-	public void onExit() {
-		world.cleanup();
-		AudioMaster.cleanup();
-	}
-
 }

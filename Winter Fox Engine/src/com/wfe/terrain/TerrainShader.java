@@ -1,4 +1,4 @@
-package com.wfe.tileEngine;
+package com.wfe.terrain;
 
 import com.wfe.shaders.ShaderProgram;
 import com.wfe.shaders.UniformMatrix;

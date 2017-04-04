@@ -1,13 +1,12 @@
-package com.wfe.game;
+package com.wfe.core;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.wfe.audio.SoundManager;
 import com.wfe.components.ColliderComponent;
-import com.wfe.core.Camera;
-import com.wfe.core.ResourceManager;
 import com.wfe.ecs.ComponentType;
 import com.wfe.ecs.Entity;
 import com.wfe.ecs.Transformation;
@@ -24,9 +23,9 @@ import com.wfe.jobSystem.JobType;
 import com.wfe.pathfinding.PathTileGraph;
 import com.wfe.physics.AABB;
 import com.wfe.renderEngine.RenderEngine;
-import com.wfe.tileEngine.Chunk;
-import com.wfe.tileEngine.Terrain;
-import com.wfe.tileEngine.Tile;
+import com.wfe.terrain.Chunk;
+import com.wfe.terrain.Terrain;
+import com.wfe.terrain.Tile;
 import com.wfe.utils.MousePicker;
 import com.wfe.weather.Weather;
 
@@ -45,8 +44,6 @@ public class World {
 	private List<Entity> entities = new ArrayList<Entity>();
 	private List<Entity> entitiesToRemove = new ArrayList<Entity>();
 	private List<Entity> entitiesToAdd = new ArrayList<Entity>();
-	
-	private List<Entity> mobs = new ArrayList<Entity>();
 	
 	private Map<Mesh, List<Entity>> entitiesToRender = new HashMap<Mesh, List<Entity>>();
 	
@@ -70,8 +67,9 @@ public class World {
 	private Tile secondTile;
 	private Tile lastTile;
 	
-	private World(Camera camera) {
+	private World(Camera camera, RenderEngine renderEngine) {
 		this.camera = camera;
+		this.renderEngine = renderEngine;
 	}
 	
 	public void init() throws Exception {
@@ -83,7 +81,6 @@ public class World {
 			}
 		}
 		
-		this.renderEngine = RenderEngine.create(camera);
 		this.weather = new Weather();
 		
 		MousePicker.setUpMousePicker(camera);
@@ -95,9 +92,9 @@ public class World {
 		addEntity(selection);
 	}
 	
-	public static World createWorld(Camera camera) throws Exception {
+	public static World create(Camera camera, RenderEngine renderEngine) throws Exception {
 		if(WORLD == null)
-			WORLD = new World(camera);
+			WORLD = new World(camera, renderEngine);
 		
 		return WORLD;
 	}
@@ -108,6 +105,7 @@ public class World {
 	
 	public void update(float dt) {
 		camera.update(dt);
+		SoundManager.setListenerData(camera.getX(), camera.getY(), camera.getZ());
 		MousePicker.update();
 		updateWeather(dt);
 		terrain.update(camera.getPosition().x, camera.getPosition().z);
@@ -176,12 +174,14 @@ public class World {
 
 					switch(tile.getEntity().getTag()) {
 					case "tree":
+						tile.setSelected(true, 255, 255, 128, 128);
 						resource = new Firewood(new Transformation());
 						sound = ResourceManager.getSound("chop");
 						jobList.add(new Job(jobType, tile, 10, resource, null,
 								sound));
 						break;
 					case "rock":
+						tile.setSelected(true, 255, 255, 128, 128);
 						resource = new Stone(new Transformation());
 						sound = ResourceManager.getSound("mine");
 						jobList.add(new Job(jobType, tile, 10, resource, null,
@@ -196,6 +196,7 @@ public class World {
 		if(Mouse.isButtonDown(0)) {
 			Tile tile = getTile(MousePicker.getX(), MousePicker.getY());
 			if(tile.isHasEntity()) {
+				tile.setSelected(true, 255, 255, 128, 128);
 				switch(tile.getEntity().getTag()) {
 				case "firewood":
 				case "stone":
@@ -223,7 +224,7 @@ public class World {
 					// Unselect early area
 					if(lastTile != null) {
 						for(Tile tile : selectedTiles) {
-							tile.setSelected(false);
+							tile.setSelected(false, 0, 0, 0, 0);
 						}
 						selectedTiles.clear();
 					}
@@ -237,7 +238,7 @@ public class World {
 					for(int x = minX; x <= maxX; x++) {
 						for(int y = minY; y <= maxY; y++) {
 							Tile tile = getTile(x, y);
-							tile.setSelected(true);
+							tile.setSelected(true, 82, 22, 180, 64);
 							selectedTiles.add(tile);
 						}
 					}
@@ -251,7 +252,7 @@ public class World {
 			if(firstTile != null) {
 				for(Tile tile : selectedTiles) {
 					tile.setId(8);
-					tile.setSelected(false);
+					tile.setSelected(false, 0, 0, 0, 0);
 					stockpile.put(tile, -1);
 				}
 				
@@ -277,7 +278,7 @@ public class World {
 					// Unselect early area
 					if(lastTile != null) {
 						for(Tile tile : selectedTiles) {
-							tile.setSelected(false);
+							tile.setSelected(false, 0, 0, 0, 0);
 						}
 						selectedTiles.clear();
 					}
@@ -291,7 +292,7 @@ public class World {
 					for(int x = minX; x <= maxX; x++) {
 						for(int y = minY; y <= maxY; y++) {
 							Tile tile = getTile(x, y);
-							tile.setSelected(true);
+							tile.setSelected(true, 82, 22, 180, 64);
 							selectedTiles.add(tile);
 						}
 					}
@@ -304,7 +305,7 @@ public class World {
 		if(Mouse.isButtonUp(0)) {
 			if(firstTile != null) {
 				for(Tile tile : selectedTiles) {
-					tile.setSelected(false);
+					tile.setSelected(false, 0, 0, 0, 0);
 					jobList.add(new Job(jobType, tile, 1, null, null, 
 							ResourceManager.getSound("hoe")));
 					garden.put(tile, -1);
@@ -320,6 +321,8 @@ public class World {
 	}
 	
 	private void updateController() {
+		//AudioMaster.setListenerData(camera.getX(), camera.getY(), camera.getZ());
+		
 		jobModeSelection();
 		
 		if(!Mouse.isActiveInGUI()) {
@@ -339,10 +342,6 @@ public class World {
 		if(entity.hasComponent(ComponentType.COLLIDER)) {
 			colliders.add(((ColliderComponent)entity.getComponent(ComponentType.COLLIDER)).getAABB());
 		}
-		/*if(entity.hasComponent(ComponentType.MOB)) {
-			colliders.add(((MobComponent)entity.getComponent(ComponentType.MOB)).getAABB());
-			mobs.add(entity);
-		}*/
 		this.entitiesToAdd.add(entity);
 		
 		if(entity.getMesh() != null) {
@@ -359,10 +358,6 @@ public class World {
 		if(entity.hasComponent(ComponentType.COLLIDER)) {
 			colliders.remove(((ColliderComponent)entity.getComponent(ComponentType.COLLIDER)).getAABB());
 		}
-		/*if(entity.hasComponent(ComponentType.MOB)) {
-			colliders.remove(((MobComponent)entity.getComponent(ComponentType.MOB)).getAABB());
-			mobs.remove(entity);
-		}*/
 		this.entitiesToRemove.add(entity);
 		
 		List<Entity> batch = entitiesToRender.get(entity.getMesh());
@@ -437,10 +432,6 @@ public class World {
 	
 	public List<Job> getJobList() {
 		return jobList;
-	}
-	
-	public List<Entity> getMobs() {
-		return mobs;
 	}
 	
 	public void cleanup() {
