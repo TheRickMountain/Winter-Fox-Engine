@@ -36,7 +36,7 @@ public class World {
 	
 	private PathTileGraph tileGraph;
 	private Tile[][] tiles;
-	private int[][] tilesHeight;
+	private float[][] tilesHeight;
 	
 	private List<Entity> entities = new ArrayList<Entity>();
 	private List<Entity> entitiesToRemove = new ArrayList<Entity>();
@@ -70,14 +70,15 @@ public class World {
 	}
 	
 	private void init() {
-		tilesHeight = new int[10 * Chunk.SIZE][10 * Chunk.SIZE];
+		tilesHeight = new float[10 * Chunk.SIZE][10 * Chunk.SIZE];
 		for(int x = 0; x < tilesHeight.length; x++) {
 			for(int y = 0; y < tilesHeight.length; y++) {
 				tilesHeight[x][y] = 0;
 			}
 		}
-		tilesHeight[86][86] = 1;
-		tilesHeight[88][88] = -1;
+		tilesHeight[86][86] = 1.75f;
+		tilesHeight[87][87] = 1.75f;
+		tilesHeight[86][87] = 1.75f;
 		terrain = new Terrain(10, 10, camera, tilesHeight);
 		tiles = new Tile[10 * Chunk.SIZE][10 * Chunk.SIZE];
 		for(int i = 0; i < tiles.length; i++) {
@@ -85,6 +86,9 @@ public class World {
 				tiles[i][j] = terrain.getTile(i, j);
 			}
 		}
+		tiles[86][86].setId(0);
+		tiles[87][87].setId(0);
+		tiles[86][87].setId(0);
 		
 		this.weather = new Weather();
 		
