@@ -34,6 +34,9 @@ public class MainApp {
 		world.init();
 		GUIManager.init();
 		
+		world.addEntity(new Settler(world.getTile(85, 85), new Transformation(85.5f, 0.65f, 85.5f)));
+		world.addEntity(new Settler(world.getTile(87, 85), new Transformation(87.5f, 0.65f, 85.5f)));
+		
 		/*** TODO: replace this section ***/
 		world.addEntityToTile(new Wheat(new Transformation(83.5f, 0, 83.5f)));
 		world.addEntityToTile(new Wheat(new Transformation(90.5f, 0, 85.5f)));
@@ -71,9 +74,6 @@ public class MainApp {
 				}
 			}
 		}
-		
-		world.addEntity(new Settler(world.getTile(85, 85), new Transformation(85.5f, 0.65f, 85.5f)));
-		world.addEntity(new Settler(world.getTile(87, 85), new Transformation(87.5f, 0.65f, 85.5f)));
 		/*** *** ***/
 		
 		while(!display.isCloseRequested()) {

@@ -81,21 +81,39 @@ public class World {
 		
 		HeightGenerator generator = new HeightGenerator();
 		
+		int texId = 6;
+		
 		tiles = new Tile[terrW][terrH];
 		for(int i = 0; i < terrW; i++) {
 			for(int j = 0; j < terrH; j++) {
 				float height = generator.generateHeight(i, j);
-				if(height > 0) {
-					tiles[i][j] = new Tile(i, j, 0, 1.75f);
+				if(height >= 0.1f) {
+					height = 1.75f;
 				} else {
-					tiles[i][j] = new Tile(i, j, 3, 0);
+					height = 0;
 				}
+				
+				if((j % 2 == 0)) {
+					if(i % 2 == 0) {
+						texId = (height > 0) ? 0 : 2;
+					} else {
+						texId = (height > 0) ? 0 : 3;
+					}
+				} else {
+					if((i + j) % 2 == 0) {
+						texId = (height > 0) ? 5 : 7;
+					} else {
+						texId = (height > 0) ? 4 : 6;
+					}
+				}
+				
+				tiles[i][j] = new Tile(i, j, texId, height);
 			}
 		}
 		
 		terrain = new Terrain(width, height, camera);
 		
-		this.weather = new Weather();
+		weather = new Weather();
 		
 		MousePicker.setUpMousePicker(camera);
 		
@@ -122,18 +140,6 @@ public class World {
 		MousePicker.update();
 		updateWeather(dt);
 		terrain.update(camera.getPosition().x, camera.getPosition().z);
-		
-		if(Mouse.isButtonDown(0)) {
-			Tile tile = getTile(MousePicker.getX(), MousePicker.getY());
-			tile.setId(0);
-			tile.setHeight(1.75f);
-		}
-		
-		if(Mouse.isButtonDown(1)) {
-			Tile tile = getTile(MousePicker.getX(), MousePicker.getY());
-			tile.setHeight(0f);
-			System.out.println(tile.getX() + " " + tile.getY());
-		}
 		
 		updateController();
 		
@@ -191,7 +197,10 @@ public class World {
 		if(Mouse.isButtonDown(0)) {
 			Tile tile = getTile(MousePicker.getX(), MousePicker.getY());
 			if(tile != null) {
-				if(tile.isHasEntity()) {
+				if(tile.getHeight() > 0) {
+					jobList.add(new Job(jobType, tile, 1, new Stone(new Transformation()), null, 
+							ResourceManager.getSound("mine")));
+				} else if(tile.isHasEntity()) {
 					Entity resource = null;
 					int sound = -1;
 
@@ -349,7 +358,8 @@ public class World {
 		jobModeSelection();
 		
 		if(!Mouse.isActiveInGUI()) {
-			selection.getTransform().setPosition(MousePicker.getX() + 0.5f, 0.05f, MousePicker.getY() + 0.5f);
+			selection.getTransform().setPosition(MousePicker.getX() + 0.5f, 
+					getTile(MousePicker.getX(), MousePicker.getY()).getHeight() + 0.05f, MousePicker.getY() + 0.5f);
 		}
 		
 		jobSelection();
@@ -405,6 +415,10 @@ public class World {
 	
 	public boolean addEntityToTile(Entity entity) {
 		Tile tile = tiles[(int)entity.getTransform().getX()] [(int)entity.getTransform().getZ()];
+		if(tile.getHeight() > 0 || tile.getHeight() < 0) {
+			return false;
+		}
+		
 		if(!tile.isHasEntity()) {
 			tile.addEntity(entity);
 			addEntity(entity);

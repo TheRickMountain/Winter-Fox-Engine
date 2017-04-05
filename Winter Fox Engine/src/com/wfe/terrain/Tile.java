@@ -35,14 +35,16 @@ public class Tile {
 		this.chunk = chunk;
 	}
 	
-	public void setId(int id) {
+	public Tile setId(int id) {
 		if(this.id != id) {
 			this.id = id;
 			chunk.setRebuild(true);
 		}
+		
+		return this;
 	}
 	
-	public void setHeight(float height) {
+	public Tile setHeight(float height) {
 		if(this.height != height) {
 			this.height = height;
 			chunk.setRebuild(true);
@@ -65,6 +67,8 @@ public class Tile {
 				world.getTile(x, y + 1).getChunk().setRebuild(true);
 			}
 		}
+		
+		return this;
 	}
 
 	public Entity getEntity() {
@@ -74,9 +78,8 @@ public class Tile {
 	public void addEntity(Entity entity) {
 		this.entity = entity;
 		this.entity.getTransform().setPosition(x + 0.5f, 0, y + 0.5f);
-		this.hasEntity = true;
 		
-		this.movementCost = entity.isWalkable() ? 1.0f : 0.0f;
+		hasEntity = true;
 	}
 	
 	public Entity removeEntity() {
@@ -84,7 +87,6 @@ public class Tile {
 		
 		entity = null;
 		hasEntity = false;
-		movementCost = 1.0f;
 		
 		return temp;
 	}
@@ -93,8 +95,6 @@ public class Tile {
 		entity.remove();
 		entity = null;
 		hasEntity = false;
-		
-		movementCost = 1.0f;
 	}
 	
 	public int getX() {
@@ -118,6 +118,14 @@ public class Tile {
 	}
 	
 	public float getMovementCost() {
+		if(height > 0 || height < 0) {
+			return 0.0f;
+		}
+		
+		if(hasEntity) {
+			return entity.isWalkable() ? 1.0f : 0.0f;
+		}
+		
 		return movementCost;
 	}
 	

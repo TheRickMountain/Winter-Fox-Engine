@@ -79,10 +79,16 @@ public class SettlerControllerComponent extends Component {
 					
 					if(time.getTime() >= currentJob.getTime()) {
 						Tile tile = currentJob.getTile();
-						tile.setSelected(false, 0, 0, 0, 0);
-						tile.removeEntityPermanently();
-						tile.addEntity(currentJob.getEntity(tile.getX() + 0.5f, 0, tile.getY() + 0.5f));
-						world.addEntity(tile.getEntity());
+						if(tile.getHeight() > 0) {
+							tile.setHeight(0);
+							tile.addEntity(currentJob.getEntity(tile.getX() + 0.5f, 0, tile.getY() + 0.5f));
+							world.addEntity(tile.getEntity());
+						} else {
+							tile.setSelected(false, 0, 0, 0, 0);
+							tile.removeEntityPermanently();
+							tile.addEntity(currentJob.getEntity(tile.getX() + 0.5f, 0, tile.getY() + 0.5f));
+							world.addEntity(tile.getEntity());
+						}
 						
 						animation.idleAnim();
 						currentJob = null;
