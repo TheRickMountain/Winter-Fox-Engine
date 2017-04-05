@@ -31,6 +31,7 @@ public class MainApp {
 		
 		Resources.loadResources();
 		World world = World.create(camera, renderEngine);
+		world.init();
 		GUIManager.init();
 		
 		/*** TODO: replace this section ***/

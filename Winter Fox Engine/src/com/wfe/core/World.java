@@ -30,13 +30,18 @@ public class World {
 	
 	private static World WORLD;
 	
+	private int width;
+	private int height;
+	
+	private int terrW;
+	private int terrH;
+	
 	private Camera camera;
 	private Terrain terrain;
 	private RenderEngine renderEngine;
 	
 	private PathTileGraph tileGraph;
 	private Tile[][] tiles;
-	private float[][] tilesHeight;
 	
 	private List<Entity> entities = new ArrayList<Entity>();
 	private List<Entity> entitiesToRemove = new ArrayList<Entity>();
@@ -65,25 +70,22 @@ public class World {
 	private World(Camera camera, RenderEngine renderEngine) {
 		this.camera = camera;
 		this.renderEngine = renderEngine;
-		
-		init();
 	}
 	
-	private void init() {
-		tilesHeight = new float[10 * Chunk.SIZE][10 * Chunk.SIZE];
-		for(int x = 0; x < tilesHeight.length; x++) {
-			for(int y = 0; y < tilesHeight.length; y++) {
-				tilesHeight[x][y] = 0;
+	public void init() {
+		width = 10;
+		height = 10;
+		terrW = width * Chunk.SIZE;
+		terrH = height * Chunk.SIZE;
+		
+		tiles = new Tile[terrW][terrH];
+		for(int i = 0; i < terrW; i++) {
+			for(int j = 0; j < terrH; j++) {
+				tiles[i][j] = new Tile(i, j, 3, 0);
 			}
 		}
 		
-		terrain = new Terrain(10, 10, camera, tilesHeight);
-		tiles = new Tile[10 * Chunk.SIZE][10 * Chunk.SIZE];
-		for(int i = 0; i < tiles.length; i++) {
-			for(int j = 0; j < tiles.length; j++) {
-				tiles[i][j] = terrain.getTile(i, j);
-			}
-		}
+		terrain = new Terrain(width, height, camera);
 		
 		this.weather = new Weather();
 		
@@ -112,12 +114,6 @@ public class World {
 		MousePicker.update();
 		updateWeather(dt);
 		terrain.update(camera.getPosition().x, camera.getPosition().z);
-		
-		if(Mouse.isButtonDown(0)) {
-			Tile tile = getTile(MousePicker.getX(), MousePicker.getY());
-			tilesHeight[MousePicker.getX()][MousePicker.getY()] = 1.75f;
-			tile.setId(0);
-		}
 		
 		updateController();
 		
@@ -412,11 +408,11 @@ public class World {
 	}
 	
 	public int getWidth() {
-		return terrain.getWidth();
+		return terrW;
 	}
 	
 	public int getHeight() {
-		return terrain.getHeight();
+		return terrH;
 	}
 	
 	public PathTileGraph getTileGraph() {

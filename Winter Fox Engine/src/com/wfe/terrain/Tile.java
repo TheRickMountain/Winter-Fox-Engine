@@ -12,6 +12,7 @@ public class Tile {
 	private Chunk chunk;
 	private int x, y;
 	private int id;
+	private float height;
 	private Entity entity;
 	private boolean hasEntity = false;
 	private float movementCost = 1.0f;
@@ -19,15 +20,24 @@ public class Tile {
 	private Selection selection;
 	private boolean selected = false;
 	
-	public Tile(Chunk chunk, int x, int y, int id) {
-		this.chunk = chunk;
+	public Tile(int x, int y, int id, int height) {
 		this.x = x;
 		this.y = y;
 		this.id = id;
+		this.height = height;
 	}
 
+	public void setChunk(Chunk chunk) {
+		this.chunk = chunk;
+	}
+	
 	public void setId(int id) {
 		this.id = id;
+		chunk.setRebuild(true);
+	}
+	
+	public void setHeight(float height) {
+		this.height = height;
 		chunk.setRebuild(true);
 	}
 
@@ -71,6 +81,10 @@ public class Tile {
 	
 	public int getId() {
 		return id;
+	}
+	
+	public float getHeight() {
+		return height;
 	}
 	
 	public boolean isHasEntity() {
