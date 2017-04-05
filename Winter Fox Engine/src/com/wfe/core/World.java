@@ -20,6 +20,7 @@ import com.wfe.jobSystem.JobType;
 import com.wfe.pathfinding.PathTileGraph;
 import com.wfe.renderEngine.RenderEngine;
 import com.wfe.terrain.Chunk;
+import com.wfe.terrain.HeightGenerator;
 import com.wfe.terrain.Terrain;
 import com.wfe.terrain.Tile;
 import com.wfe.utils.MousePicker;
@@ -78,10 +79,17 @@ public class World {
 		terrW = width * Chunk.SIZE;
 		terrH = height * Chunk.SIZE;
 		
+		HeightGenerator generator = new HeightGenerator();
+		
 		tiles = new Tile[terrW][terrH];
 		for(int i = 0; i < terrW; i++) {
 			for(int j = 0; j < terrH; j++) {
-				tiles[i][j] = new Tile(i, j, 3, 0);
+				float height = generator.generateHeight(i, j);
+				if(height > 0) {
+					tiles[i][j] = new Tile(i, j, 0, 1.75f);
+				} else {
+					tiles[i][j] = new Tile(i, j, 3, 0);
+				}
 			}
 		}
 		
@@ -114,6 +122,18 @@ public class World {
 		MousePicker.update();
 		updateWeather(dt);
 		terrain.update(camera.getPosition().x, camera.getPosition().z);
+		
+		if(Mouse.isButtonDown(0)) {
+			Tile tile = getTile(MousePicker.getX(), MousePicker.getY());
+			tile.setId(0);
+			tile.setHeight(1.75f);
+		}
+		
+		if(Mouse.isButtonDown(1)) {
+			Tile tile = getTile(MousePicker.getX(), MousePicker.getY());
+			tile.setHeight(0f);
+			System.out.println(tile.getX() + " " + tile.getY());
+		}
 		
 		updateController();
 		

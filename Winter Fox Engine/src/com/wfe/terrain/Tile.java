@@ -20,25 +20,51 @@ public class Tile {
 	private Selection selection;
 	private boolean selected = false;
 	
-	public Tile(int x, int y, int id, int height) {
+	public Tile(int x, int y, int id, float height) {
 		this.x = x;
 		this.y = y;
 		this.id = id;
 		this.height = height;
 	}
 
+	protected Chunk getChunk() {
+		return chunk;
+	}
+	
 	public void setChunk(Chunk chunk) {
 		this.chunk = chunk;
 	}
 	
 	public void setId(int id) {
-		this.id = id;
-		chunk.setRebuild(true);
+		if(this.id != id) {
+			this.id = id;
+			chunk.setRebuild(true);
+		}
 	}
 	
 	public void setHeight(float height) {
-		this.height = height;
-		chunk.setRebuild(true);
+		if(this.height != height) {
+			this.height = height;
+			chunk.setRebuild(true);
+			
+			World world = World.getWorld();
+			
+			if((x - 1) >= 0) {
+				world.getTile(x - 1, y).getChunk().setRebuild(true);
+			}
+			
+			if((x + 1) <= 159) {
+				world.getTile(x + 1, y).getChunk().setRebuild(true);
+			}
+			
+			if((y - 1) >= 0) {
+				world.getTile(x, y - 1).getChunk().setRebuild(true);
+			}
+			
+			if((y + 1) <= 159) {
+				world.getTile(x, y + 1).getChunk().setRebuild(true);
+			}
+		}
 	}
 
 	public Entity getEntity() {
