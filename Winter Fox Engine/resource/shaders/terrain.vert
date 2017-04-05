@@ -5,6 +5,7 @@ in vec2 in_textureCoords;
 in vec3 in_normal;
 
 out vec2 TextureCoords;
+out vec3 Normal;
 out vec3 ToLightVector;
 
 uniform mat4 projectionMatrix;
@@ -16,5 +17,6 @@ void main()
 {
 	gl_Position = projectionMatrix * viewMatrix * vec4(in_position, 1.0f);
 	TextureCoords = in_textureCoords;
-	ToLightVector = lightPosition - in_position;
+	Normal = in_normal;
+	ToLightVector = lightPosition - in_position.xyz;
 }

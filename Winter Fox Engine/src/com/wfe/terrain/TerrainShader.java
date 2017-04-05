@@ -18,7 +18,7 @@ public class TerrainShader extends ShaderProgram {
 	protected UniformVec3 lightColor = new UniformVec3("lightColor");
 	
 	public TerrainShader() {
-		super(VERTEX_SHADER, FRAGMENT_SHADER, "in_position", "in_textureCoords");
+		super(VERTEX_SHADER, FRAGMENT_SHADER, "in_position", "in_textureCoords", "in_normal");
 		super.storeAllUniformLocations(projectionMatrix, viewMatrix, diffuseMap, lightPosition, lightColor);
 		connectTextureUnits();
 	}

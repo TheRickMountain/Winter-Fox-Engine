@@ -76,9 +76,7 @@ public class World {
 				tilesHeight[x][y] = 0;
 			}
 		}
-		tilesHeight[86][86] = 1.75f;
-		tilesHeight[87][87] = 1.75f;
-		tilesHeight[86][87] = 1.75f;
+		
 		terrain = new Terrain(10, 10, camera, tilesHeight);
 		tiles = new Tile[10 * Chunk.SIZE][10 * Chunk.SIZE];
 		for(int i = 0; i < tiles.length; i++) {
@@ -86,9 +84,6 @@ public class World {
 				tiles[i][j] = terrain.getTile(i, j);
 			}
 		}
-		tiles[86][86].setId(0);
-		tiles[87][87].setId(0);
-		tiles[86][87].setId(0);
 		
 		this.weather = new Weather();
 		
@@ -117,6 +112,12 @@ public class World {
 		MousePicker.update();
 		updateWeather(dt);
 		terrain.update(camera.getPosition().x, camera.getPosition().z);
+		
+		if(Mouse.isButtonDown(0)) {
+			Tile tile = getTile(MousePicker.getX(), MousePicker.getY());
+			tilesHeight[MousePicker.getX()][MousePicker.getY()] = 1.75f;
+			tile.setId(0);
+		}
 		
 		updateController();
 		
