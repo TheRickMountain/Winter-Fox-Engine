@@ -149,13 +149,17 @@ public class Tile {
 		selected = value;
 		if(selected) {
 			selection = new Selection();
-			selection.getTransform().setPosition(x + 0.5f, 0.05f, y + 0.5f);
+			selection.getTransform().setPosition(x + 0.5f, height + 0.05f, y + 0.5f);
 			selection.getMaterial().setColor(r, g, b, a);
 			World.getWorld().addEntity(selection);
 		} else {
 			selection.remove();
 			selection = null;
 		}
+	}
+	
+	public boolean isSelected() {
+		return selected;
 	}
 
 	public List<Tile> getNeighbours(boolean diags) {

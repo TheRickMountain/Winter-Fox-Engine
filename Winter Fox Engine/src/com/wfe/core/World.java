@@ -64,6 +64,7 @@ public class World {
 	
 	private Selection selection;
 	
+	private Tile currTile;
 	private Tile firstTile;
 	
 	private Tile secondTile;
@@ -181,6 +182,7 @@ public class World {
 			}
 			
 			if(tiles.isEmpty()) {
+				currTile = tile;
 				selection.getTransform().setPosition(x + 0.5f, tile.getHeight() + 0.05f, y + 0.5f);
 			} else {
 				Tile currTile = null;
@@ -193,6 +195,7 @@ public class World {
 					}
 				}
 				
+				this.currTile = currTile;
 				selection.getTransform().setPosition(currTile.getX() + 0.5f, currTile.getHeight() + 0.05f, 
 						currTile.getY() + 0.5f);
 			}
@@ -238,28 +241,28 @@ public class World {
 	
 	private void developmentSelection() {
 		if(Mouse.isButtonDown(0)) {
-			Tile tile = getTile(MousePicker.getX(), MousePicker.getY());
-			if(tile != null) {
-				if(tile.getHeight() > 0) {
-					jobList.add(new Job(jobType, tile, 1, new Stone(new Transformation()), null, 
+			if(currTile != null) {
+				if(!currTile.isSelected() && currTile.getHeight() > 0) {
+					currTile.setSelected(true, 255, 255, 128, 128);
+					jobList.add(new Job(jobType, currTile, 1, new Stone(new Transformation()), null, 
 							ResourceManager.getSound("mine")));
-				} else if(tile.isHasEntity()) {
+				} else if(!currTile.isSelected() && currTile.isHasEntity()) {
 					Entity resource = null;
 					int sound = -1;
 
-					switch(tile.getEntity().getTag()) {
+					switch(currTile.getEntity().getTag()) {
 					case "tree":
-						tile.setSelected(true, 255, 255, 128, 128);
+						currTile.setSelected(true, 255, 255, 128, 128);
 						resource = new Firewood(new Transformation());
 						sound = ResourceManager.getSound("chop");
-						jobList.add(new Job(jobType, tile, 10, resource, null,
+						jobList.add(new Job(jobType, currTile, 10, resource, null,
 								sound));
 						break;
 					case "rock":
-						tile.setSelected(true, 255, 255, 128, 128);
+						currTile.setSelected(true, 255, 255, 128, 128);
 						resource = new Stone(new Transformation());
 						sound = ResourceManager.getSound("mine");
-						jobList.add(new Job(jobType, tile, 10, resource, null,
+						jobList.add(new Job(jobType, currTile, 10, resource, null,
 								sound));
 					}
 				}
@@ -270,7 +273,7 @@ public class World {
 	private void gatheringSelection() {
 		if(Mouse.isButtonDown(0)) {
 			Tile tile = getTile(MousePicker.getX(), MousePicker.getY());
-			if(tile.isHasEntity()) {
+			if(!tile.isSelected() && tile.isHasEntity()) {
 				switch(tile.getEntity().getTag()) {
 				case "firewood":
 				case "stone":

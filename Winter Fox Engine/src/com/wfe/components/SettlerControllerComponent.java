@@ -80,6 +80,7 @@ public class SettlerControllerComponent extends Component {
 					if(time.getTime() >= currentJob.getTime()) {
 						Tile tile = currentJob.getTile();
 						if(tile.getHeight() > 0) {
+							tile.setSelected(false, 0, 0, 0, 0);
 							tile.setHeight(0);
 							tile.addEntity(currentJob.getEntity(tile.getX() + 0.5f, 0, tile.getY() + 0.5f));
 							world.addEntity(tile.getEntity());

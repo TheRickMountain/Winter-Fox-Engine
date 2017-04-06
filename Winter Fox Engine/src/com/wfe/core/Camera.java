@@ -24,7 +24,7 @@ public class Camera {
     private float zoomSpeed = 50;
 
     private static final float MAX_PITCH = 90;
-    private static final float MIN_PITCH = 45;
+    private static final float MIN_PITCH = 60;
 
     private final Vector3f position;
 
