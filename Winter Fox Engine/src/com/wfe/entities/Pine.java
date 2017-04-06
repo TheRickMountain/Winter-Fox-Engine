@@ -17,7 +17,6 @@ public class Pine extends Entity {
 		Entity pineLeaves = new Entity(ResourceManager.getMesh("pine_leaves"),
 				new Material(ResourceManager.getTexture("pine_leaves")).setHasTransparency(true), transform);
 		addChild(pineLeaves);
-		World.getWorld().addEntity(pineLeaves);
 		
 		transform.setScale(0.4f);
 	}

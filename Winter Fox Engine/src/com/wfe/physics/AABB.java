@@ -1,5 +1,8 @@
 package com.wfe.physics;
 
+import com.wfe.math.Vector3f;
+import com.wfe.utils.MousePicker;
+
 public class AABB {
 	
 	 private float epsilon = 0.0f;
@@ -128,6 +131,56 @@ public class AABB {
 		 this.x1 += xa;
 		 this.y1 += ya;
 		 this.z1 += za;
+	 }
+	 
+	 public boolean intersects() {
+		 float txmin, txmax, tymin, tymax, tzmin, tzmax;
+		 Vector3f rayOrigin = MousePicker.getRayOrigin();
+		 Vector3f rayDirection = MousePicker.getCurrentRay();
+
+		 if (rayDirection.x >= 0) {
+			 txmin = (x0 - rayOrigin.x) / rayDirection.x;
+			 txmax = (x1 - rayOrigin.x) / rayDirection.x;
+		 } else {
+			 txmin = (x1 - rayOrigin.x) / rayDirection.x;
+			 txmax = (x0 - rayOrigin.x) / rayDirection.x;
+		 }
+
+		 if (rayDirection.y >= 0) {
+			 tymin = (y0 - rayOrigin.y) / rayDirection.y;
+			 tymax = (y1 - rayOrigin.y) / rayDirection.y;
+		 } else {
+			 tymin = (y1 - rayOrigin.y) / rayDirection.y;
+			 tymax = (y0 - rayOrigin.y) / rayDirection.y;
+		 }
+
+		 if ( (txmin > tymax) || (tymin > txmax) )
+			 return false;
+
+		 if (tymin > txmin)
+			 txmin = tymin;
+
+		 if (tymax < txmax)
+			 txmax = tymax;
+
+		 if (rayDirection.z >= 0) {
+			 tzmin = (z0 - rayOrigin.z) / rayDirection.z;
+			 tzmax = (z1 - rayOrigin.z) / rayDirection.z;
+		 } else {
+			 tzmin = (z1 - rayOrigin.z) / rayDirection.z;
+			 tzmax = (z0 - rayOrigin.z) / rayDirection.z;
+		 }
+
+		 if ( (txmin > tzmax) || (tzmin > txmax) )
+			 return false;
+
+		 if (tzmin > txmin)
+			 txmin = tzmin;
+
+		 if (tzmax < txmax)
+			 txmax = tzmax;
+
+		 return ( (txmin < 1000) && (txmax > 1) );
 	 }
 
 }

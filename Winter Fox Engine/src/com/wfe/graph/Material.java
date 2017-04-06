@@ -75,7 +75,7 @@ public class Material {
 		this.hasFakeLighting = hasFakeLighting;
 		return this;
 	}
-	
+
 	public boolean isHasTexture() {
 		return hasTexture;
 	}

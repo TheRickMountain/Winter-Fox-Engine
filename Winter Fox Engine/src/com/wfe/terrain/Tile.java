@@ -6,6 +6,7 @@ import java.util.List;
 import com.wfe.core.World;
 import com.wfe.ecs.Entity;
 import com.wfe.entities.Selection;
+import com.wfe.physics.AABB;
 
 public class Tile {
 	
@@ -15,6 +16,7 @@ public class Tile {
 	private float height;
 	private Entity entity;
 	private boolean hasEntity = false;
+	private AABB bb;
 	private float movementCost = 1.0f;
 	
 	private Selection selection;
@@ -25,6 +27,12 @@ public class Tile {
 		this.y = y;
 		this.id = id;
 		this.height = height;
+		
+		if(height > 0) {
+			bb = new AABB(x, 0, y, x + 1.0f, height, y + 1.0f);
+		} else {
+			bb = null;
+		}
 	}
 
 	protected Chunk getChunk() {
@@ -46,11 +54,19 @@ public class Tile {
 	
 	public Tile setHeight(float height) {
 		if(this.height != height) {
+			
+			if(height > 0) {
+				bb = new AABB(x, 0, y, x + 1.0f, height, y + 1.0f);
+			} else {
+				bb = null;
+			}
+			
 			this.height = height;
 			chunk.setRebuild(true);
 			
 			World world = World.getWorld();
 			
+			// Updating of neighbour tiles
 			if((x - 1) >= 0) {
 				world.getTile(x - 1, y).getChunk().setRebuild(true);
 			}
@@ -137,7 +153,7 @@ public class Tile {
 			selection.getMaterial().setColor(r, g, b, a);
 			World.getWorld().addEntity(selection);
 		} else {
-			World.getWorld().removeEntity(selection);
+			selection.remove();
 			selection = null;
 		}
 	}
@@ -159,6 +175,10 @@ public class Tile {
 		}
 		
 		return neighbours;
+	}
+	
+	public AABB getAABB() {
+		return bb;
 	}
 	
 }

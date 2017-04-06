@@ -23,6 +23,7 @@ import com.wfe.terrain.Chunk;
 import com.wfe.terrain.HeightGenerator;
 import com.wfe.terrain.Terrain;
 import com.wfe.terrain.Tile;
+import com.wfe.utils.MathUtils;
 import com.wfe.utils.MousePicker;
 import com.wfe.weather.Weather;
 
@@ -156,6 +157,48 @@ public class World {
 			entities.removeAll(entitiesToRemove);
 			entitiesToRemove.clear();
 		}
+	}
+	
+	private void updateController() {
+		jobModeSelection();
+		
+		if(!Mouse.isActiveInGUI()) {
+			int x = MousePicker.getX();
+			int y = MousePicker.getY();
+			List<Tile> tiles = new ArrayList<Tile>();
+			Tile tile = getTile(x, y);
+			if(tile.getHeight() > 0) {
+				if(tile.getAABB().intersects()) {
+					tiles.add(tile);
+				}
+			}
+			for(Tile t : tile.getNeighbours(true)) {
+				if(t.getHeight() > 0) {
+					if(t.getAABB().intersects()) {
+						tiles.add(t);
+					}
+				}
+			}
+			
+			if(tiles.isEmpty()) {
+				selection.getTransform().setPosition(x + 0.5f, tile.getHeight() + 0.05f, y + 0.5f);
+			} else {
+				Tile currTile = null;
+				float distance = Float.MAX_VALUE;
+				for(Tile t : tiles) {
+					float temp = MathUtils.getDistance(t.getX(), t.getY(), camera.getX(), camera.getZ());
+					if(temp < distance) {
+						currTile = t;
+						distance = temp;
+					}
+				}
+				
+				selection.getTransform().setPosition(currTile.getX() + 0.5f, currTile.getHeight() + 0.05f, 
+						currTile.getY() + 0.5f);
+			}
+		}
+		
+		jobSelection();
 	}
 	
 	private void jobModeSelection() {
@@ -352,19 +395,6 @@ public class World {
 		}
 	}
 	
-	private void updateController() {
-		//AudioMaster.setListenerData(camera.getX(), camera.getY(), camera.getZ());
-		
-		jobModeSelection();
-		
-		if(!Mouse.isActiveInGUI()) {
-			selection.getTransform().setPosition(MousePicker.getX() + 0.5f, 
-					getTile(MousePicker.getX(), MousePicker.getY()).getHeight() + 0.05f, MousePicker.getY() + 0.5f);
-		}
-		
-		jobSelection();
-	}
-	
 	public void render() {
 		renderEngine.clear();
 		terrain.render();
@@ -422,6 +452,11 @@ public class World {
 		if(!tile.isHasEntity()) {
 			tile.addEntity(entity);
 			addEntity(entity);
+			
+			for(Entity child : entity.getChilds()) {
+				addEntity(child);
+			}
+			
 			return true;
 		}
 		

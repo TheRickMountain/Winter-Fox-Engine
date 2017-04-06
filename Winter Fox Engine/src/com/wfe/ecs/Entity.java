@@ -38,11 +38,6 @@ public class Entity {
 	
 	public void update(float dt) {		
 		if(remove) {
-			if(!childs.isEmpty()) {
-				for(Entity child : childs)
-					child.remove();
-			}
-			
 			World.getWorld().removeEntity(this);
 		}
 		
@@ -109,6 +104,9 @@ public class Entity {
 
 	public void remove() {
 		this.remove = true;
+		for(Entity child : childs) {
+			child.remove();
+		}
 	}
 
 	public Entity getParent() {
@@ -165,6 +163,10 @@ public class Entity {
 		}
 		
 		return this;
+	}
+	
+	public List<Entity> getChilds() {
+		return childs;
 	}
 	
 	public Entity getInstanceNoComponents() {
