@@ -186,7 +186,7 @@ public class World {
 				Tile currTile = null;
 				float distance = Float.MAX_VALUE;
 				for(Tile t : tiles) {
-					float temp = MathUtils.getDistance(t.getX(), t.getY(), camera.getX(), camera.getZ());
+					float temp = MathUtils.getDistance(t.getX() + 0.5f, t.getY() + 0.5f, camera.getX(), camera.getZ());
 					if(temp < distance) {
 						currTile = t;
 						distance = temp;
