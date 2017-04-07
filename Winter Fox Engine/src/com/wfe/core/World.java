@@ -25,6 +25,7 @@ import com.wfe.terrain.Terrain;
 import com.wfe.terrain.Tile;
 import com.wfe.utils.MathUtils;
 import com.wfe.utils.MousePicker;
+import com.wfe.utils.MyRandom;
 import com.wfe.weather.Weather;
 
 
@@ -97,18 +98,36 @@ public class World {
 				
 				if((j % 2 == 0)) {
 					if(i % 2 == 0) {
-						texId = (height > 0) ? 0 : 2;
+						texId = (height > 0) ? 5 : 2;
 					} else {
-						texId = (height > 0) ? 0 : 3;
+						texId = (height > 0) ? 5 : 3;
 					}
 				} else {
 					if((i + j) % 2 == 0) {
 						texId = (height > 0) ? 5 : 7;
 					} else {
-						texId = (height > 0) ? 4 : 6;
+						texId = (height > 0) ? 5 : 6;
 					}
 				}
 				
+				if(height > 0) {
+					if(MyRandom.nextInt(15) == 14) {
+						texId = 10;
+					}
+					
+					if(MyRandom.nextInt(15) == 14) {
+						texId = 0;
+					}
+					
+					if(MyRandom.nextInt(15) == 14) {
+						texId = 1;
+					}
+					
+					if(MyRandom.nextInt(15) == 14) {
+						texId = 4;
+					}
+					
+				}
 				tiles[i][j] = new Tile(i, j, texId, height);
 			}
 		}
@@ -471,7 +490,7 @@ public class World {
 	}
 	
 	public void updateWeather(float dt) {
-		time += 100 * dt;
+		time += 50 * dt;
 		if(time >= 24000) {
 			time = 0;
 		}
