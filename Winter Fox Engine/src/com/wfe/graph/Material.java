@@ -27,6 +27,10 @@ public class Material {
 		return texture;
 	}
 	
+	public void setTexture(Texture texture) {
+		this.texture = texture;
+	}
+	
 	public Vector4f getColor() {
 		return color;
 	}

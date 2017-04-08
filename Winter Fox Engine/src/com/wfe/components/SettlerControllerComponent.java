@@ -123,8 +123,21 @@ public class SettlerControllerComponent extends Component {
 					if(time.getTime() >= currentJob.getTime()) {
 						Tile tile = currentJob.getTile();
 						tile.setId(11);
-						// Point to tile that it's has a resource
-						world.getGarden().put(tile, 0);
+
+						animation.idleAnim();
+						currentJob = null;
+						time.reset();
+					}
+					break;
+				case SOWING:
+					if(animation.hitAnim(dt)) {
+						sound.play(currentJob.getSound());
+					}
+					
+					if(time.getTime() >= currentJob.getTime()) {
+						Tile tile = currentJob.getTile();
+						tile.addEntity(currentJob.getEntity(tile.getX() + 0.5f, 0, tile.getY() + 0.5f));
+						world.addEntity(tile.getEntity());
 						
 						animation.idleAnim();
 						currentJob = null;

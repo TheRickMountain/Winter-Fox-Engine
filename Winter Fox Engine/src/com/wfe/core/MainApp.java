@@ -20,8 +20,7 @@ import com.wfe.math.Vector3f;
 import com.wfe.renderEngine.RenderEngine;
 import com.wfe.utils.MyRandom;
 
-public class MainApp {
-	
+public class MainApp {	
 
 	public static void main(String[] args) throws Exception {
 		Display display = new Display("Paleon", 1152, 648, false);
@@ -39,9 +38,13 @@ public class MainApp {
 		
 		/*** TODO: replace this section ***/
 		world.addEntityToTile(new Wheat(new Transformation(83.5f, 0, 83.5f)));
-		world.addEntityToTile(new Wheat(new Transformation(90.5f, 0, 85.5f)));
-		world.addEntityToTile(new Wheat(new Transformation(72.5f, 0, 94.5f)));
-		world.addEntityToTile(new Wheat(new Transformation(80.5f, 0, 75.5f)));
+		world.getTile(83, 83).setId(11);
+		world.addEntityToTile(new Wheat(new Transformation(84.5f, 0, 83.5f)));
+		world.getTile(84, 83).setId(11);
+		world.addEntityToTile(new Wheat(new Transformation(84.5f, 0, 84.5f)));
+		world.getTile(84, 84).setId(11);
+		world.addEntityToTile(new Wheat(new Transformation(83.5f, 0, 84.5f)));
+		world.getTile(83, 84).setId(11);
 		
 		for(int i = 0; i < 100; i++) {		
 			Mushroom shroom = new Mushroom(new Transformation(MyRandom.nextInt(160) + 0.5f, 0, MyRandom.nextInt(160) + 0.5f));

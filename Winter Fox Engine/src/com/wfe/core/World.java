@@ -11,6 +11,7 @@ import com.wfe.ecs.Transformation;
 import com.wfe.entities.Firewood;
 import com.wfe.entities.Selection;
 import com.wfe.entities.Stone;
+import com.wfe.farming.Garden;
 import com.wfe.graph.Mesh;
 import com.wfe.input.Key;
 import com.wfe.input.Keyboard;
@@ -59,7 +60,7 @@ public class World {
 	private List<Job> jobList = new ArrayList<Job>();
 	
 	private Map<Tile, Integer> stockpile = new HashMap<>();
-	private Map<Tile, Integer> garden = new HashMap<>();
+	private List<Garden> gardens = new ArrayList<>();
 	
 	private List<Tile> selectedTiles = new ArrayList<>();
 	
@@ -90,7 +91,7 @@ public class World {
 		for(int i = 0; i < terrW; i++) {
 			for(int j = 0; j < terrH; j++) {
 				float height = generator.generateHeight(i, j);
-				if(height >= 0.1f) {
+				if(height >= 0.2f) {
 					height = 1.75f;
 				} else {
 					height = 0;
@@ -180,45 +181,13 @@ public class World {
 	}
 	
 	private void updateController() throws Exception {
+		for(Garden garden : gardens) {
+			garden.update();
+		}
+		
 		jobModeSelection();
 		
 		if(!Mouse.isActiveInGUI()) {
-			/*int x = MousePicker.getX();
-			int y = MousePicker.getY();
-			List<Tile> tiles = new ArrayList<Tile>();
-			Tile tile = getTile(x, y);
-			if(tile.getHeight() > 0) {
-				if(tile.getAABB().intersects()) {
-					tiles.add(tile);
-				}
-			}
-			for(Tile t : tile.getNeighbours(true)) {
-				if(t.getHeight() > 0) {
-					if(t.getAABB().intersects()) {
-						tiles.add(t);
-					}
-				}
-			}
-			
-			if(tiles.isEmpty()) {
-				currTile = tile;
-				selection.getTransform().setPosition(x + 0.5f, tile.getHeight() + 0.05f, y + 0.5f);
-			} else {
-				Tile currTile = null;
-				float distance = Float.MAX_VALUE;
-				for(Tile t : tiles) {
-					float temp = MathUtils.getDistance(t.getX() + 0.5f, t.getY() + 0.5f, camera.getX(), camera.getZ());
-					if(temp < distance) {
-						currTile = t;
-						distance = temp;
-					}
-				}
-				
-				this.currTile = currTile;
-				selection.getTransform().setPosition(currTile.getX() + 0.5f, currTile.getHeight() + 0.05f, 
-						currTile.getY() + 0.5f);*/
-			//}
-			
 			Vector3f origin = MousePicker.getRayOrigin();
 			Vector3f direction = MousePicker.getCurrentRay();
 			
@@ -427,8 +396,9 @@ public class World {
 					tile.setSelected(false, 0, 0, 0, 0);
 					jobList.add(new Job(jobType, tile, 1, null, null, 
 							ResourceManager.getSound("hoe")));
-					garden.put(tile, -1);
 				}
+				
+				gardens.add(new Garden(this, selectedTiles, 5));
 				
 				firstTile = null;
 				secondTile = null;
@@ -512,7 +482,7 @@ public class World {
 	}
 	
 	public void updateWeather(float dt) {
-		time += 50 * dt;
+		time += 4 * dt;
 		if(time >= 24000) {
 			time = 0;
 		}
@@ -559,10 +529,6 @@ public class World {
 	
 	public Map<Tile, Integer> getStockpile() {
 		return stockpile;
-	}
-	
-	public Map<Tile, Integer> getGarden() {
-		return garden;
 	}
 	
 	public float getTime() {

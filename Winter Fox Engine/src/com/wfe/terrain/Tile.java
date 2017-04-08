@@ -16,7 +16,6 @@ public class Tile {
 	private float height;
 	private Entity entity;
 	private boolean hasEntity = false;
-	private AABB bb;
 	private float movementCost = 1.0f;
 	
 	private Selection selection;
@@ -27,12 +26,6 @@ public class Tile {
 		this.y = y;
 		this.id = id;
 		this.height = height;
-		
-		if(height > 0) {
-			bb = new AABB(x, 0, y, x + 1.0f, height, y + 1.0f);
-		} else {
-			bb = null;
-		}
 	}
 
 	protected Chunk getChunk() {
@@ -53,14 +46,7 @@ public class Tile {
 	}
 	
 	public Tile setHeight(float height) {
-		if(this.height != height) {
-			
-			if(height > 0) {
-				bb = new AABB(x, 0, y, x + 1.0f, height, y + 1.0f);
-			} else {
-				bb = null;
-			}
-			
+		if(this.height != height) {			
 			this.height = height;
 			chunk.setRebuild(true);
 			
@@ -179,10 +165,6 @@ public class Tile {
 		}
 		
 		return neighbours;
-	}
-	
-	public AABB getAABB() {
-		return bb;
 	}
 	
 }

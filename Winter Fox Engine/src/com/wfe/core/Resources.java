@@ -304,13 +304,22 @@ public class Resources {
 		ResourceManager.loadTexture("wheat_ui", Texture.newTexture(new MyFile("entity/wheat/icon.png"))
 				.normalMipMap()
 				.create());
-		ResourceManager.loadTexture("four", Texture.newTexture(new MyFile("entity/wheat/lavender.png"))
+		ResourceManager.loadTexture("wheat_stage_0", Texture.newTexture(new MyFile("entity/wheat/wheat_stage_2.png"))
 				.normalMipMap(-0.4f)
 				.create());
-		ResourceManager.loadTexture("two", Texture.newTexture(new MyFile("entity/wheat/two.png"))
+		ResourceManager.loadTexture("wheat_stage_1", Texture.newTexture(new MyFile("entity/wheat/wheat_stage_3.png"))
 				.normalMipMap(-0.4f)
 				.create());
-		ResourceManager.loadTexture("one", Texture.newTexture(new MyFile("entity/wheat/one.png"))
+		ResourceManager.loadTexture("wheat_stage_2", Texture.newTexture(new MyFile("entity/wheat/wheat_stage_4.png"))
+				.normalMipMap(-0.4f)
+				.create());
+		ResourceManager.loadTexture("wheat_stage_3", Texture.newTexture(new MyFile("entity/wheat/wheat_stage_5.png"))
+				.normalMipMap(-0.4f)
+				.create());
+		ResourceManager.loadTexture("wheat_stage_4", Texture.newTexture(new MyFile("entity/wheat/wheat_stage_6.png"))
+				.normalMipMap(-0.4f)
+				.create());
+		ResourceManager.loadTexture("wheat_stage_5", Texture.newTexture(new MyFile("entity/wheat/wheat_stage_7.png"))
 				.normalMipMap(-0.4f)
 				.create());
 		

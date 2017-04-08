@@ -4,5 +4,6 @@ public enum JobType {
 		DEVELOPMENT,
 		GATHERING,
 		STOCKPILE,
-		PLOWING
+		PLOWING,
+		SOWING,
 };
