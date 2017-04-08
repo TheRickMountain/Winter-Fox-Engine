@@ -17,13 +17,13 @@ import com.wfe.input.Keyboard;
 import com.wfe.input.Mouse;
 import com.wfe.jobSystem.Job;
 import com.wfe.jobSystem.JobType;
+import com.wfe.math.Vector3f;
 import com.wfe.pathfinding.PathTileGraph;
 import com.wfe.renderEngine.RenderEngine;
 import com.wfe.terrain.Chunk;
 import com.wfe.terrain.HeightGenerator;
 import com.wfe.terrain.Terrain;
 import com.wfe.terrain.Tile;
-import com.wfe.utils.MathUtils;
 import com.wfe.utils.MousePicker;
 import com.wfe.utils.MyRandom;
 import com.wfe.weather.Weather;
@@ -155,7 +155,7 @@ public class World {
 		return WORLD;
 	}
 	
-	public void update(float dt) {
+	public void update(float dt) throws Exception {
 		camera.update(dt);
 		SoundManager.setListenerData(camera.getX(), camera.getY(), camera.getZ());
 		MousePicker.update();
@@ -179,11 +179,11 @@ public class World {
 		}
 	}
 	
-	private void updateController() {
+	private void updateController() throws Exception {
 		jobModeSelection();
 		
 		if(!Mouse.isActiveInGUI()) {
-			int x = MousePicker.getX();
+			/*int x = MousePicker.getX();
 			int y = MousePicker.getY();
 			List<Tile> tiles = new ArrayList<Tile>();
 			Tile tile = getTile(x, y);
@@ -216,9 +216,31 @@ public class World {
 				
 				this.currTile = currTile;
 				selection.getTransform().setPosition(currTile.getX() + 0.5f, currTile.getHeight() + 0.05f, 
-						currTile.getY() + 0.5f);
+						currTile.getY() + 0.5f);*/
+			//}
+			
+			Vector3f origin = MousePicker.getRayOrigin();
+			Vector3f direction = MousePicker.getCurrentRay();
+			
+			float x = origin.x;
+			float y = origin.y;
+			float z = origin.z;
+			
+			while(true) {		
+				x += direction.x * 0.1f;
+				y += direction.y * 0.1f;
+				z += direction.z * 0.1f;
+				
+				Tile tile = getTile((int)x, (int)z);
+				if(y <= tile.getHeight()) {
+					currTile = tile;
+					break;
+				}
 			}
 		}
+		
+		selection.getTransform().setPosition(currTile.getX() + 0.5f, currTile.getHeight() + 0.05f, 
+				currTile.getY() + 0.5f);
 		
 		jobSelection();
 	}
