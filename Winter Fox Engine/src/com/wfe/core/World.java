@@ -287,12 +287,13 @@ public class World {
 				switch(tile.getEntity().getTag()) {
 				case "firewood":
 				case "stone":
+				case "mushroom":
 					tile.setSelected(true, 255, 255, 128, 128);
-					Tile stockpileTile = getEmptyStockpile();
-					if(stockpileTile != null) {
-						stockpile.put(stockpileTile, 0);
-						jobList.add(new Job(jobType, tile, 0.0f, null, stockpileTile, 0));
-					}
+					//Tile stockpileTile = getEmptyStockpile(tile.getEntity().getTag());
+					//if(stockpileTile != null) {
+						//stockpile.put(stockpileTile, 0);
+					jobList.add(new Job(jobType, tile, 0.0f, null, null, 0));
+					//}
 					break;
 				}
 			}
@@ -515,11 +516,25 @@ public class World {
 		renderEngine.cleanup();
 	}
 	
-	private Tile getEmptyStockpile() {
+	public Tile getEmptyStockpile(String name) {
+		// If stockpile has entity with target name and tile have enough free space, then get this tile
+		for(Tile tile : stockpile.keySet()) {
+			if(tile.isHasEntity()) {
+				if(tile.getEntity().getTag().equals(name)) {
+					int amount = stockpile.get(tile);
+					if(amount < 20) {
+						return tile;
+					}
+				}
+			}
+		}
+		
+		// else get empty tile
 		for(Tile tile : stockpile.keySet()) {
 			// "-1" hasn't entity
 			// ">=0" has entity
 			if(stockpile.get(tile) == -1) {
+				System.out.println("Empty tile");
 				return tile;
 			}
 		}

@@ -10,7 +10,7 @@ public class Mushroom extends Entity {
 	public Mushroom(Transformation transform) {
 		super(ResourceManager.getMesh("mushroom"), 
 				new Material(ResourceManager.getTexture("mushroom")), transform);
-		setTag("consumable");
+		setTag("mushroom");
 		transform.setScale(0.5f);
 	}
 

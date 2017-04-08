@@ -24,6 +24,7 @@ public class Garden {
 	
 	private boolean sowing;
 	
+	private float farmingTime = 50;
 	private Wheat wheat;
 	
 	public Garden(World world, List<Tile> tiles, int finalStage) {
@@ -50,7 +51,7 @@ public class Garden {
 		
 		if(isSowed()) {
 			if(stage != finalStage) {
-				if(timer.getTime() >= 5) {
+				if(timer.getTime() >= farmingTime) {
 					stage++;
 					for(Tile tile : tiles) {
 						tile.getEntity().getMaterial().setTexture(ResourceManager.getTexture("wheat_stage_" + stage));

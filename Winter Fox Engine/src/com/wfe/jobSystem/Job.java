@@ -37,6 +37,10 @@ public class Job {
 		return stockpile;
 	}
 	
+	public void setStockpile(Tile tile) {
+		this.stockpile = tile;
+	}
+	
 	public int getSound() {
 		return sound;
 	}

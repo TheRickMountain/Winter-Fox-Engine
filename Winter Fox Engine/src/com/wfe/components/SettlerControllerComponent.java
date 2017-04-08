@@ -10,6 +10,7 @@ import com.wfe.ecs.ComponentType;
 import com.wfe.ecs.Entity;
 import com.wfe.ecs.Transformation;
 import com.wfe.jobSystem.Job;
+import com.wfe.jobSystem.JobType;
 import com.wfe.pathfinding.PathAStar;
 import com.wfe.terrain.Tile;
 import com.wfe.utils.MathUtils;
@@ -98,9 +99,20 @@ public class SettlerControllerComponent extends Component {
 					break;
 				case GATHERING:
 					if(cargo != null) {
-						currentJob.getStockpile().addEntity(cargo);
+						Tile spTile = currentJob.getStockpile();
+						if(world.getStockpile().get(spTile) > 0) {
+							cargo.remove();
+						} else {
+							spTile.addEntity(cargo);
+						}
+						
 						// Point to tile that it's has a resource
-						world.getStockpile().put(currentJob.getStockpile(), 0);
+						int amount = world.getStockpile().get(spTile) + 1;
+						if(amount == 0) {
+							amount++;
+						}
+						System.out.println(cargo.getTag() + ": " + amount);
+						world.getStockpile().put(spTile, amount);
 						
 						animation.idleAnim();
 						currentJob = null;
@@ -108,10 +120,16 @@ public class SettlerControllerComponent extends Component {
 					} else {
 						cargo = currentJob.getTile().removeEntity();
 						currentJob.getTile().setSelected(false, 0, 0, 0, 0);
-						Tile tile = choosePath(currentJob.getStockpile());
+						Tile tile = choosePath(world.getEmptyStockpile(cargo.getTag()));
 						if(tile != null) {
+							world.getStockpile().put(tile, world.getStockpile().get(tile));
+							currentJob.setStockpile(tile);
 							destTile = tile;
 							moving = true;
+						} else {
+							animation.idleAnim();
+							currentJob = null;
+							cargo = null;
 						}
 					}
 					break;
@@ -191,6 +209,12 @@ public class SettlerControllerComponent extends Component {
 	
 	private void chooseJob() {
 		for(Job job : world.getJobList()) {
+			if(job.getJobType().equals(JobType.GATHERING)) {
+				if(world.getStockpile().isEmpty()) {
+					break;
+				}
+			}
+			
 			Tile tile = choosePath(job.getTile());
 			if(tile != null) {
 				currentJob = job;
