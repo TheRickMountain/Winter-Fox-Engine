@@ -542,6 +542,18 @@ public class World {
 		return null;
 	}
 	
+	public Tile getStockpileWith(String name) {
+		for(Tile tile : stockpile.keySet()) {
+			if(tile.isHasEntity()) {
+				if(tile.getEntity().getTag().equals(name)) {
+					return tile;
+				}
+			}
+		}
+		
+		return null;
+	}
+	
 	public Map<Tile, Integer> getStockpile() {
 		return stockpile;
 	}

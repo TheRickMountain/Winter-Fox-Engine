@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.wfe.audio.SoundSource;
+import com.wfe.core.ResourceManager;
 import com.wfe.core.World;
 import com.wfe.ecs.Component;
 import com.wfe.ecs.ComponentType;
@@ -40,6 +41,10 @@ public class SettlerControllerComponent extends Component {
 	
 	private Entity cargo = null;
 	
+	private int hunger;
+	private TimeUtil hungerTime;
+	private boolean hungry = false;
+	
 	public SettlerControllerComponent(Tile tile, PlayerAnimationComponent animation) {
 		world = World.getWorld();
 		
@@ -50,10 +55,45 @@ public class SettlerControllerComponent extends Component {
 		this.animation = animation;
 		
 		time = new TimeUtil(); 
+		
+		hunger = 30;
+		hungerTime = new TimeUtil();
+		
 	}
 	
 	@Override
 	public void update(float dt) {
+		if(hungerTime.getTime() >= 2) {
+			hunger -= 1;
+			
+			System.out.println("Hunger: " + hunger);
+			hungerTime.reset();
+			
+			if(hunger <= 20) {
+				Tile tile = world.getStockpileWith("mushroom");
+				if(tile != null) {
+					destTile = tile;
+					pathAStar = new PathAStar(world, currTile, destTile);
+					hungry = true;
+				}
+			}
+		}
+		
+		if(hungry) {
+			if(move(dt)) {
+				if(time.getTime() >= 2) {
+					animation.idleAnim();
+					sound.play(ResourceManager.getSound("eating"));
+					hungry = false;
+					hunger = 100;
+				}
+			} else {
+				animation.walkAnim(dt);
+			}
+			
+			return;
+		}
+		
 		Transformation transform = getParent().getTransform();
 		
 		if(currentJob == null) {
@@ -111,7 +151,6 @@ public class SettlerControllerComponent extends Component {
 						if(amount == 0) {
 							amount++;
 						}
-						System.out.println(cargo.getTag() + ": " + amount);
 						world.getStockpile().put(spTile, amount);
 						
 						animation.idleAnim();
@@ -168,9 +207,11 @@ public class SettlerControllerComponent extends Component {
 	
 	private boolean move(float dt) {		
 		if(currTile.equals(destTile)) {
-			float rotation = MathUtils.getRotation(currTile.getX() + 0.5f, currTile.getY() + 0.5f, 
-					currentJob.getTile().getX() + 0.5f, currentJob.getTile().getY() + 0.5f);
-			getParent().getTransform().setRotY(-(rotation) + 90);
+			if(currentJob != null) {
+				float rotation = MathUtils.getRotation(currTile.getX() + 0.5f, currTile.getY() + 0.5f, 
+						currentJob.getTile().getX() + 0.5f, currentJob.getTile().getY() + 0.5f);
+				getParent().getTransform().setRotY(-(rotation) + 90);
+			}
 			
 			pathAStar = null;
 			return true;
