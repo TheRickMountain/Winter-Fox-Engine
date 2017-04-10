@@ -7,6 +7,7 @@ import com.wfe.audio.AudioMaster;
 import com.wfe.audio.Source;
 import com.wfe.core.Display;
 import com.wfe.core.ResourceManager;
+import com.wfe.ecs.Entity;
 import com.wfe.font.GUIText;
 import com.wfe.game.Game;
 import com.wfe.input.Key;
@@ -79,9 +80,7 @@ public class Inventory {
 			addItem(ItemDatabase.getItem(Item.PICKAXE), 1);
 			addItem(ItemDatabase.getItem(Item.HOE), 1);
 			addItem(ItemDatabase.getItem(Item.CLUB), 1);
-			addItem(ItemDatabase.getItem(Item.APPLE), 5);
-			addItem(ItemDatabase.getItem(Item.HONEY), 5);
-			addItem(ItemDatabase.getItem(Item.LAVENDER), 2);
+			addItem(ItemDatabase.getItem(Item.WALL), 5);
 		}
 		
 		if(Keyboard.isKeyDown(Key.KEY_1)) selected = 0;
@@ -198,8 +197,14 @@ public class Inventory {
 					Game.player.playerController.addEquipment(
 							item.entity.getInstanceNoComponents());
 					break;
+				case BUILDING:
+					Entity entity = item.entity.getInstanceNoComponents();
+					entity.getMaterial().getColor().set(0.5f, 1.0f, 0.5f);
+					Game.player.playerController.addBuilding(entity);
+					break;
 				default:
 					Game.player.playerController.removeEquipment();
+					Game.player.playerController.removeBuilding();
 					break;
 				}
 			} else {

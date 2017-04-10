@@ -2,10 +2,14 @@ package com.wfe.components;
 
 import com.wfe.ecs.Component;
 import com.wfe.ecs.ComponentType;
+import com.wfe.ecs.Transformation;
 import com.wfe.gui.ItemDatabase;
 
 public class ChestComponent extends Component {
 
+	private int column;
+	private int row;
+	
 	private int[] slots;
 	private int[] counts;
 	
@@ -95,8 +99,12 @@ public class ChestComponent extends Component {
 
 	@Override
 	public Component getInstance() {
-		// TODO Auto-generated method stub
-		return null;
+		return new ChestComponent(column, row);
+	}
+
+	@Override
+	public Component getInstane(Transformation transform) {
+		return new ChestComponent(column, row);
 	}
 
 }

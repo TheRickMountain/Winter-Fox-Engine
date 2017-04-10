@@ -24,6 +24,10 @@ public class Material {
 		return texture;
 	}
 	
+	public void setTexture(Texture texture) {
+		this.texture = texture;
+	}
+	
 	public Vector4f getColor() {
 		return color;
 	}
@@ -63,4 +67,12 @@ public class Material {
 		return this;
 	}
 
+	public Material getInstance() {
+		Material mat = new Material(texture, new Vector4f(color));
+		mat.setHasFakeLighting(isHasFakeLighting());
+		mat.setHasTransparency(isHasTransparency());
+		mat.setNumberOfRows(getNumberOfRows());
+		return mat;
+	}
+	
 }

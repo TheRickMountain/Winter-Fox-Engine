@@ -5,6 +5,8 @@ import com.wfe.core.Camera;
 import com.wfe.core.Display;
 import com.wfe.core.ResourceManager;
 import com.wfe.ecs.Transformation;
+import com.wfe.entities.Bush;
+import com.wfe.entities.Clay;
 import com.wfe.entities.Fern;
 import com.wfe.entities.Flint;
 import com.wfe.entities.Goat;
@@ -48,6 +50,12 @@ public class Game {
 					MyRandom.nextInt(160) + 0.5f)));
 			
 			world.addEntityToTile(new Rock(new Transformation(MyRandom.nextInt(160) + 0.5f, 0, 
+					MyRandom.nextInt(160) + 0.5f)));
+			
+			world.addEntityToTile(new Clay(new Transformation(MyRandom.nextInt(160) + 0.5f, 0, 
+					MyRandom.nextInt(160) + 0.5f)));
+			
+			world.addEntityToTile(new Bush(new Transformation(MyRandom.nextInt(160) + 0.5f, 0, 
 					MyRandom.nextInt(160) + 0.5f)));
 		}
 		

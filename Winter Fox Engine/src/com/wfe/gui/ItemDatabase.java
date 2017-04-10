@@ -151,6 +151,10 @@ public class ItemDatabase {
 				.setDescription("Common useful resource")
 				.setIngredients(Item.WHEAT, 1)
 				.create());
+		
+		addItem(new ItemBuilder(Item.CLAY, "Clay", ResourceManager.getTexture("clay_ui"), ItemType.RESOURCE)
+				.setDescription("Strong and useful resource")
+				.create());
 	}
 	
 	public static void create() {

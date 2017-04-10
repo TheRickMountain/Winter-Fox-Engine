@@ -2,6 +2,7 @@ package com.wfe.components;
 
 import com.wfe.ecs.Component;
 import com.wfe.ecs.ComponentType;
+import com.wfe.ecs.Transformation;
 import com.wfe.gui.Item;
 
 public class GatherableComponent extends Component {
@@ -40,7 +41,12 @@ public class GatherableComponent extends Component {
 
 	@Override
 	public Component getInstance() {
-		return null;
+		return new GatherableComponent(item, count, sound);
+	}
+
+	@Override
+	public Component getInstane(Transformation transform) {
+		return new GatherableComponent(item, count, sound);
 	}
 
 }

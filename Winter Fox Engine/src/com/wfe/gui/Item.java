@@ -29,6 +29,7 @@ public class Item {
 	public static final int CLUB = 21;
 	public static final int WHEAT = 22;
 	public static final int WHEAT_SEEDS = 23;
+	public static final int CLAY = 24;
 	
 	public final int id;
 	public final String name;

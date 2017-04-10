@@ -159,7 +159,7 @@ public class Entity {
 	}
 	
 	public Entity getInstanceNoComponents() {
-		Entity entity = new Entity(mesh, material, new Transformation(transform));
+		Entity entity = new Entity(mesh, material.getInstance(), new Transformation(transform));
 		entity.setTag(getTag());
 		entity.setTextureIndex(getTextureIndex());
 		return entity;
@@ -169,6 +169,15 @@ public class Entity {
 		Entity entity = getInstanceNoComponents();
 		for(Component c : components) {
 			entity.addComponent(c.getInstance());
+		}
+		return entity;
+	}
+	
+	public Entity getInstance(float x, float y, float z) {
+		Entity entity = getInstanceNoComponents();
+		entity.getTransform().setPosition(x, y, z);
+		for(Component c : components) {
+			entity.addComponent(c.getInstane(entity.getTransform()));
 		}
 		return entity;
 	}

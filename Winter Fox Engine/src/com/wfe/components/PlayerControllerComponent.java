@@ -2,6 +2,7 @@ package com.wfe.components;
 
 import java.util.List;
 
+import com.wfe.audio.AudioMaster;
 import com.wfe.audio.Source;
 import com.wfe.core.Camera;
 import com.wfe.core.Display;
@@ -44,6 +45,9 @@ public class PlayerControllerComponent extends Component {
 	
 	private Entity hand;
 	private Entity equipment;
+	
+	private Entity building;
+	private float buildingRotation = 0;
 	
 	private TimeUtil timer;
 	private boolean mining = false;
@@ -93,9 +97,28 @@ public class PlayerControllerComponent extends Component {
 			}
 		}
 		
+		if(Keyboard.isKeyDown(Key.KEY_R)) {
+			buildingRotation += 90;
+			
+			if(buildingRotation == 360) {
+				buildingRotation = 0;
+			}
+		}
+		
 		Vector3f tp = MousePicker.getCurrentTerrainPoint();
 		if(tp != null) {
 			Tile tile = World.getWorld().getTile((int)tp.x, (int)tp.z);
+			
+			if(building != null) {
+				if(tile.isHasEntity()) {
+					building.getMaterial().getColor().set(1.0f, 0.5f, 0.5f);
+				} else {
+					building.getMaterial().getColor().set(0.5f, 1.0f, 0.5f);
+				}
+				building.getTransform().setPosition(((int)tp.x) + 0.5f, 0, ((int)tp.z) + 0.5f);
+				building.getTransform().setRotY(buildingRotation);
+			}
+			
 			if(tile.isHasEntity()) {
 				Entity entity = tile.getEntity();
 				if(entity.hasComponent(ComponentType.GATHERABLE)) {
@@ -169,7 +192,8 @@ public class PlayerControllerComponent extends Component {
 				
 			} else {
 				if(Mouse.isButtonDown(0)) {
-					if(GUIManager.inventory.getSelectedItem().id == Item.HOE) {
+					switch(GUIManager.inventory.getSelectedItem().id) {
+					case Item.HOE:
 						if(checkDistance(tp.x, tp.z)) {
 							turnTo((int)tp.x, (int)tp.z);
 							if(tile.getId() != 10) {
@@ -177,7 +201,8 @@ public class PlayerControllerComponent extends Component {
 								source.play(ResourceManager.getSound("hoe"));
 							}
 						}
-					} else if(GUIManager.inventory.getSelectedItem().id == Item.WHEAT_SEEDS) {
+						break;
+					case Item.WHEAT_SEEDS:
 						if(checkDistance(tp.x, tp.z)) {
 							turnTo((int)tp.x, (int)tp.z);
 							if(tile.getId() == 10) {
@@ -188,7 +213,21 @@ public class PlayerControllerComponent extends Component {
 								}
 							}
 						}
+						break;
+					case Item.WALL:
+						if(checkDistance(tp.x, tp.z)) {
+							turnTo((int)tp.x, (int)tp.z);
+							if(!tile.isHasEntity()) {
+								tile.setEntity(GUIManager.inventory.getSelectedItem().entity.getInstance(
+										((int)tp.x) + 0.5f, 0, ((int)tp.z) + 0.5f));
+								tile.getEntity().getTransform().setRotY(buildingRotation);
+								World.getWorld().addEntity(tile.getEntity());
+								GUIManager.inventory.removeItem(ItemDatabase.getItem(Item.WALL), 1);
+								AudioMaster.defaultSource.play(ResourceManager.getSound("taking"));
+							}
+						}
 					}
+					
 				}
 				Display.setCursor(Display.defaultCursor);
 			}
@@ -336,6 +375,7 @@ public class PlayerControllerComponent extends Component {
 	
 	public void addEquipment(Entity eqpm) {
 		removeEquipment();
+		removeBuilding();
 		
 		equipment = eqpm;
 		hand.addChild(equipment);
@@ -350,6 +390,22 @@ public class PlayerControllerComponent extends Component {
 		}
 	}
 	
+	public void addBuilding(Entity building) {
+		removeBuilding();
+		removeEquipment();
+		
+		this.building = building;
+		World.getWorld().addEntity(building);
+		
+	}
+	
+	public void removeBuilding() {
+		if(building != null) {
+			World.getWorld().removeEntity(building);
+			building = null;
+		}
+	}
+	
 	public float getXF() {
 		return -xf;
 	}
@@ -360,6 +416,11 @@ public class PlayerControllerComponent extends Component {
 
 	@Override
 	public Component getInstance() {
+		return null;
+	}
+
+	@Override
+	public Component getInstane(Transformation transform) {
 		return null;
 	}
 	

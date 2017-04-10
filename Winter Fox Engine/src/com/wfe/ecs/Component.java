@@ -16,4 +16,6 @@ public abstract class Component {
 	
 	public abstract Component getInstance();
 	
+	public abstract Component getInstane(Transformation transform);
+	
 }

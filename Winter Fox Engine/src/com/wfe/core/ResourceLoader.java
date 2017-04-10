@@ -25,7 +25,6 @@ public class ResourceLoader {
 		ResourceManager.loadSound("eating", AudioMaster.loadSound("audio/eat.wav"));
 		ResourceManager.loadSound("tick", AudioMaster.loadSound("audio/tick.wav"));
 		ResourceManager.loadSound("taking", AudioMaster.loadSound("audio/take.wav"));
-		ResourceManager.loadSound("chopping", AudioMaster.loadSound("audio/chop.wav"));
 		ResourceManager.loadSound("equip", AudioMaster.loadSound("audio/equip.wav"));
 		ResourceManager.loadSound("inventory", AudioMaster.loadSound("audio/inventory.wav"));
 		ResourceManager.loadSound("footstep1", AudioMaster.loadSound("audio/footstep1.wav"));
@@ -96,6 +95,13 @@ public class ResourceLoader {
 				.normalMipMap(-0.4f)
 				.create());
 		ResourceManager.loadMesh("hive", OBJLoader.loadMesh("/entity/hive/model.obj"));
+		/*** *** ***/
+		
+		/*** Bush ***/
+		ResourceManager.loadTexture("bush", Texture.newTexture(new MyFile("entity/bush/diffuse.png"))
+				.normalMipMap(-0.4f)
+				.create());
+		ResourceManager.loadMesh("bush", OBJLoader.loadMesh("/entity/bush/model.obj"));
 		/*** *** ***/
 		
 		/*** Fern ***/
@@ -299,6 +305,15 @@ public class ResourceLoader {
 		ResourceManager.loadMesh("leftForearm", OBJLoader.loadMesh("/entity/player/leftForearm.obj"));
 		ResourceManager.loadMesh("rightArm", OBJLoader.loadMesh("/entity/player/rightArm.obj"));
 		ResourceManager.loadMesh("rightForearm", OBJLoader.loadMesh("/entity/player/rightForearm.obj"));
+		/*** *** ***/
+		
+		/*** Clay ***/
+		ResourceManager.loadTexture("clay_ui", Texture.newTexture(new MyFile("entity/clay/icon.png"))
+				.normalMipMap()
+				.create());
+		ResourceManager.loadTexture("clay", Texture.newTexture(new MyFile("entity/clay/diffuse.png"))
+				.normalMipMap(-0.4f)
+				.create());
 		/*** *** ***/
 		
 		loaded = true;

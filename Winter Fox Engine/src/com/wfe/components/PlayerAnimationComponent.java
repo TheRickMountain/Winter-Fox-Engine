@@ -139,4 +139,9 @@ public class PlayerAnimationComponent extends Component {
 		return null;
 	}
 
+	@Override
+	public Component getInstane(Transformation transform) {
+		return null;
+	}
+
 }

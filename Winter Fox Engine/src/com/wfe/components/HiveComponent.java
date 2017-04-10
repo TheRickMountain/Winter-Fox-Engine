@@ -2,6 +2,7 @@ package com.wfe.components;
 
 import com.wfe.ecs.Component;
 import com.wfe.ecs.ComponentType;
+import com.wfe.ecs.Transformation;
 import com.wfe.gui.Item;
 import com.wfe.utils.TimeUtil;
 
@@ -66,7 +67,12 @@ public class HiveComponent extends Component {
 
 	@Override
 	public Component getInstance() {
-		return null;
+		return new HiveComponent(reproductionTime, item, countMin, countMax, sound);
+	}
+
+	@Override
+	public Component getInstane(Transformation transform) {
+		return new HiveComponent(reproductionTime, item, countMin, countMax, sound);
 	}
 	
 }

@@ -17,7 +17,7 @@ public class Camera {
     private float distanceFromPlayer = 15;
     private float angleAroundPlayer = 0;
 
-    private static final float MAX_PITCH = 55;
+    private static final float MAX_PITCH = 85;
     private static final float MIN_PITCH = 45;
 
     private final Vector3f position;

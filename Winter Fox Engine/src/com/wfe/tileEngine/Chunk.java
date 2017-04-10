@@ -16,7 +16,7 @@ import com.wfe.math.Vector2f;
 public class Chunk {
 
 	public static final int SIZE = 16;
-	private Vector2f position;
+	private int posX, posY;
 	private int VAO, vVBO, vtVBO;
 	
 	private float[] vertices;
@@ -30,9 +30,10 @@ public class Chunk {
 	private boolean rebuild = false;
 	
 	public Chunk(int x, int z, HeightGenerator heightGenerator) {
-		position = new Vector2f(x * 16, z * 16);
+		posX = x * 16;
+		posY = z * 16;
 		
-		init(heightGenerator, (int)position.x, (int)position.y);
+		init(heightGenerator, posX, posY);
 		initGL();
 	}
 	
@@ -93,8 +94,8 @@ public class Chunk {
 		List<Float> vtList = new ArrayList<Float>();
 		
 		// Vertices
-		for(int x = (int)position.x; x < (int)position.x + SIZE; x++) {
-			for(int y = (int)position.y; y < (int)position.y + SIZE; y++) {	
+		for(int x = posX; x < posX + SIZE; x++) {
+			for(int y = posY; y < posY + SIZE; y++) {	
 				float x0 = (float)x + 0.0f;
 		        float x1 = (float)x + 1.0f;
 		        float y0 = (float)y + 0.0f;
@@ -215,11 +216,11 @@ public class Chunk {
 	}
 	
 	public int getPosX() {
-		return (int) position.x;
+		return posX;
 	}
 	
 	public int getPosY() {
-		return (int) position.y;
+		return posY;
 	}
 
 	public boolean isVisible() {

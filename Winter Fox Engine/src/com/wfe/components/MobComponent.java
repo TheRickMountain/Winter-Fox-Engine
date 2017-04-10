@@ -151,5 +151,10 @@ public class MobComponent extends Component {
 	public Component getInstance() {
 		return null;
 	}
+
+	@Override
+	public Component getInstane(Transformation transform) {
+		return null;
+	}
 	
 }
