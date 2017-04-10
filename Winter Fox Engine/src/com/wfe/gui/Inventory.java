@@ -7,7 +7,6 @@ import com.wfe.audio.AudioMaster;
 import com.wfe.audio.Source;
 import com.wfe.core.Display;
 import com.wfe.core.ResourceManager;
-import com.wfe.ecs.Transformation;
 import com.wfe.font.GUIText;
 import com.wfe.game.Game;
 import com.wfe.input.Key;
@@ -197,7 +196,7 @@ public class Inventory {
 				case TOOL:
 				case WEAPON:
 					Game.player.playerController.addEquipment(
-							item.blueprint.createInstanceWithComponents(new Transformation()));
+							item.entity.getInstanceNoComponents());
 					break;
 				default:
 					Game.player.playerController.removeEquipment();

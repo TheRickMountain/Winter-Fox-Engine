@@ -3,16 +3,16 @@ package com.wfe.gui;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.wfe.blueprints.AxeBlueprint;
-import com.wfe.blueprints.ClubBlueprint;
-import com.wfe.blueprints.CrossWallBlueprint;
-import com.wfe.blueprints.DoorWallBlueprint;
-import com.wfe.blueprints.HoeBlueprint;
-import com.wfe.blueprints.PickaxeBlueprint;
-import com.wfe.blueprints.WallBlueprint;
-import com.wfe.blueprints.WellBlueprint;
-import com.wfe.blueprints.WindowWallBlueprint;
 import com.wfe.core.ResourceManager;
+import com.wfe.entities.Axe;
+import com.wfe.entities.Club;
+import com.wfe.entities.CrossWall;
+import com.wfe.entities.DoorWall;
+import com.wfe.entities.Hoe;
+import com.wfe.entities.Pickaxe;
+import com.wfe.entities.Wall;
+import com.wfe.entities.Well;
+import com.wfe.entities.WindowWall;
 
 public class ItemDatabase {
 	
@@ -30,7 +30,7 @@ public class ItemDatabase {
 				null, ItemType.RESOURCE, 0, 0, 0, 40, null));
 		
 		addItem(new Item(Item.AXE, "Axe" , "Can chop trees and protect from enemies", ResourceManager.getTexture("axe_ui"),
-				new AxeBlueprint(), ItemType.TOOL, 0, 0, 0, 1, 
+				new Axe(), ItemType.TOOL, 0, 0, 0, 1, 
 				new int[] {Item.SHARP_FLINT, 1, Item.STICK, 1, Item.ROPE, 1}));
 		
 		addItem(new Item(Item.STICK, "Stick", "Common useful resource", ResourceManager.getTexture("stick_ui"),
@@ -43,33 +43,33 @@ public class ItemDatabase {
 				null, ItemType.RESOURCE, 0, 0, 0, 40, null));
 		
 		addItem(new Item(Item.PICKAXE, "Pickaxe", "Common useful resource", ResourceManager.getTexture("pickaxe_ui"),
-				new PickaxeBlueprint(), ItemType.TOOL, 0, 0, 0, 1, 
+				new Pickaxe(), ItemType.TOOL, 0, 0, 0, 1, 
 				new int[] {Item.SHARP_FLINT, 2, Item.STICK, 1, Item.ROPE, 1}));
 		
 		addItem(new Item(Item.HOE, "Hoe", "Common useful resource", ResourceManager.getTexture("hoe_ui"),
-				new HoeBlueprint(), ItemType.TOOL, 0, 0, 0, 1, 
+				new Hoe(), ItemType.TOOL, 0, 0, 0, 1, 
 				new int[] {Item.SHARP_FLINT, 1, Item.STICK, 1, Item.ROPE, 1}));
 		
 		addItem(new Item(Item.FIBER, "Fiber", "Common useful resource", ResourceManager.getTexture("fiber_ui"), 
 				null, ItemType.RESOURCE, 0, 0, 0, 40, null));
 		
 		addItem(new Item(Item.WALL, "Wall", "Common useful resource", ResourceManager.getTexture("wall_ui"), 
-				new WallBlueprint(), ItemType.BUILDING, 0, 0, 0, 40, new int[]{Item.LOG, 5}));
+				new Wall(), ItemType.BUILDING, 0, 0, 0, 40, new int[]{Item.LOG, 5}));
 		
 		addItem(new Item(Item.CROSS_WALL, "Cross wall", "Common useful resource", ResourceManager.getTexture("cross_wall_ui"), 
-				new CrossWallBlueprint(), ItemType.BUILDING, 0, 0, 0, 40, new int[] {Item.LOG, 5}));
+				new CrossWall(), ItemType.BUILDING, 0, 0, 0, 40, new int[] {Item.LOG, 5}));
 		
 		addItem(new Item(Item.WINDOW_WALL, "Window wall", "Common useful resource", ResourceManager.getTexture("window_wall_ui"), 
-				new WindowWallBlueprint(), ItemType.BUILDING, 0, 0, 0, 40, new int[] {Item.LOG, 4}));
+				new WindowWall(), ItemType.BUILDING, 0, 0, 0, 40, new int[] {Item.LOG, 4}));
 		
 		addItem(new Item(Item.DOOR_WALL, "Door wall", "Common useful resource", ResourceManager.getTexture("door_wall_ui"), 
-				new DoorWallBlueprint(), ItemType.BUILDING, 0, 0, 0, 40, new int[] {Item.LOG, 2}));
+				new DoorWall(), ItemType.BUILDING, 0, 0, 0, 40, new int[] {Item.LOG, 2}));
 		
 		addItem(new Item(Item.ROPE, "Rope", "Common useful resource", ResourceManager.getTexture("rope_ui"), 
 				null, ItemType.RESOURCE, 0, 0, 0, 40, new int[] {Item.FIBER, 5}));
 		
 		addItem(new Item(Item.WELL, "Well", "Common useful resource", ResourceManager.getTexture("well_ui"), 
-				new WellBlueprint(), ItemType.BUILDING, 0, 0, 0, 1, new int[] {Item.FLINT, 15}));
+				new Well(), ItemType.BUILDING, 0, 0, 0, 1, new int[] {Item.FLINT, 15}));
 		
 		addItem(new Item(Item.WATERSKIN, "Waterskin", "Common useful resource", ResourceManager.getTexture("waterskin_ui"), 
 				null, ItemType.WATER_STORAGE, 0, 20, 100, 1, new int[] {Item.LEATHER, 1, Item.ROPE, 2}));
@@ -87,7 +87,7 @@ public class ItemDatabase {
 				null, ItemType.RESOURCE, 0, 0, 0, 1, new int[] {Item.FLINT, 2}));
 		
 		addItem(new Item(Item.CLUB, "Club", "Common useful resource", ResourceManager.getTexture("club_ui"), 
-				new ClubBlueprint(), ItemType.WEAPON, 0, 0, 0, 1, new int[] {Item.LOG, 1}));
+				new Club(), ItemType.WEAPON, 0, 0, 0, 1, new int[] {Item.LOG, 1}));
 		
 		addItem(new Item(Item.WHEAT, "Wheat", "Common useful resource", ResourceManager.getTexture("wheat_ui"), 
 				null, ItemType.RESOURCE, 0, 0, 0, 40, null));
