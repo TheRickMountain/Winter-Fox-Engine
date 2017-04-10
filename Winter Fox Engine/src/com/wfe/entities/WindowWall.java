@@ -11,6 +11,7 @@ public class WindowWall extends Entity {
 	public WindowWall() {
 		super(ResourceManager.getMesh("window_wall"),
 				new Material(ResourceManager.getTexture("walls")), new Transformation());	
+		setTag("window wall");
 		transform.setScale(0.5f);
 		addComponent(new ColliderComponent(1, 1, 1, transform));
 	}

@@ -11,6 +11,7 @@ public class Wall extends Entity {
 	public Wall() {
 		super(ResourceManager.getMesh("wall"),
 				new Material(ResourceManager.getTexture("walls")), new Transformation());	
+		setTag("wall");
 		transform.setScale(0.5f);
 		addComponent(new ColliderComponent(1, 1, 1, transform));
 	}

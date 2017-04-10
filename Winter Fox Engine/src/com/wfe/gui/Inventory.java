@@ -194,13 +194,28 @@ public class Inventory {
 				switch(item.type) {
 				case TOOL:
 				case WEAPON:
-					Game.player.playerController.addEquipment(
-							item.entity.getInstanceNoComponents());
+					Entity equipment = Game.player.playerController.getEquipment();
+					if(equipment != null) {
+						if(!equipment.getTag().equals(item.name.toLowerCase())) {
+							Game.player.playerController.addEquipment(
+									item.entity.getInstanceNoComponents());
+						}
+					} else {
+						Game.player.playerController.addEquipment(
+								item.entity.getInstanceNoComponents());
+					}
 					break;
 				case BUILDING:
-					Entity entity = item.entity.getInstanceNoComponents();
-					entity.getMaterial().getColor().set(0.5f, 1.0f, 0.5f);
-					Game.player.playerController.addBuilding(entity);
+					Entity building = Game.player.playerController.getBuilding();
+					if(building != null) {
+						if(!building.getTag().equals(item.name.toLowerCase())) {
+							Game.player.playerController.addBuilding(
+									item.entity.getInstanceNoComponents());
+						}
+					} else {
+						Game.player.playerController.addBuilding(
+								item.entity.getInstanceNoComponents());
+					}
 					break;
 				default:
 					Game.player.playerController.removeEquipment();
@@ -208,6 +223,7 @@ public class Inventory {
 					break;
 				}
 			} else {
+				Game.player.playerController.removeBuilding();
 				Game.player.playerController.removeEquipment();
 			}
 			

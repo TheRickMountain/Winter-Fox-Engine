@@ -10,7 +10,7 @@ public class Club extends Entity {
 	public Club() {
 		super(ResourceManager.getMesh("club"),
 				new Material(ResourceManager.getTexture("club")), new Transformation());
-		setTag("axe");
+		setTag("club");
 		transform.setScale(0.5f);
 		transform.localScaleX = transform.localScaleY = transform.localScaleZ = 2;
 		transform.localY = -0.5f;

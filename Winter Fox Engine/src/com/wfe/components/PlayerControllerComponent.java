@@ -197,8 +197,8 @@ public class PlayerControllerComponent extends Component {
 						if(checkDistance(tp.x, tp.z)) {
 							turnTo((int)tp.x, (int)tp.z);
 							if(tile.getId() != 10) {
+								System.out.println("Here");
 								World.getWorld().setTile((int)tp.x, (int)tp.z, 10);
-								source.play(ResourceManager.getSound("hoe"));
 							}
 						}
 						break;
@@ -214,7 +214,9 @@ public class PlayerControllerComponent extends Component {
 							}
 						}
 						break;
-					case Item.WALL:
+					}
+					
+					if(GUIManager.inventory.getSelectedItem().type.equals(ItemType.BUILDING)) {
 						if(checkDistance(tp.x, tp.z)) {
 							turnTo((int)tp.x, (int)tp.z);
 							if(!tile.isHasEntity()) {
@@ -222,8 +224,12 @@ public class PlayerControllerComponent extends Component {
 										((int)tp.x) + 0.5f, 0, ((int)tp.z) + 0.5f));
 								tile.getEntity().getTransform().setRotY(buildingRotation);
 								World.getWorld().addEntity(tile.getEntity());
-								GUIManager.inventory.removeItem(ItemDatabase.getItem(Item.WALL), 1);
+								GUIManager.inventory.removeItem(GUIManager.inventory.getSelectedItem(), 1);
 								AudioMaster.defaultSource.play(ResourceManager.getSound("taking"));
+								
+								if(GUIManager.inventory.hasItem(GUIManager.inventory.getSelectedItem()) == 0) {
+									removeBuilding();
+								}
 							}
 						}
 					}
@@ -390,6 +396,10 @@ public class PlayerControllerComponent extends Component {
 		}
 	}
 	
+	public Entity getEquipment() {
+		return equipment;
+	}
+	
 	public void addBuilding(Entity building) {
 		removeBuilding();
 		removeEquipment();
@@ -404,6 +414,10 @@ public class PlayerControllerComponent extends Component {
 			World.getWorld().removeEntity(building);
 			building = null;
 		}
+	}
+	
+	public Entity getBuilding() {
+		return building;
 	}
 	
 	public float getXF() {
