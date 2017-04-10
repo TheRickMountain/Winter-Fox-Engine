@@ -3,7 +3,7 @@ package com.wfe.ecs;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.wfe.core.World;
+import com.wfe.game.World;
 import com.wfe.graph.Material;
 import com.wfe.graph.Mesh;
 
@@ -14,12 +14,11 @@ public class Entity {
 	protected List<Component> components = new ArrayList<Component>();
 	protected List<Entity> childs = new ArrayList<Entity>();
 	protected boolean hasParent;
-	protected String tag = "";
+	protected String tag;
 	
 	private Entity parent;
 
 	private boolean isVisible = true;
-	private boolean walkable = true;
 	
 	protected boolean remove = false;
 	
@@ -38,6 +37,11 @@ public class Entity {
 	
 	public void update(float dt) {		
 		if(remove) {
+			if(!childs.isEmpty()) {
+				for(Entity child : childs)
+					child.remove();
+			}
+			
 			World.getWorld().removeEntity(this);
 		}
 		
@@ -94,19 +98,8 @@ public class Entity {
 		this.isVisible = isVisible;
 	}
 	
-	public boolean isWalkable() {
-		return walkable;
-	}
-
-	public void setWalkable(boolean walkable) {
-		this.walkable = walkable;
-	}
-
 	public void remove() {
 		this.remove = true;
-		for(Entity child : childs) {
-			child.remove();
-		}
 	}
 
 	public Entity getParent() {
@@ -165,14 +158,9 @@ public class Entity {
 		return this;
 	}
 	
-	public List<Entity> getChilds() {
-		return childs;
-	}
-	
 	public Entity getInstanceNoComponents() {
 		Entity entity = new Entity(mesh, material, new Transformation(transform));
 		entity.setTag(getTag());
-		entity.setWalkable(isWalkable());
 		entity.setTextureIndex(getTextureIndex());
 		return entity;
 	}

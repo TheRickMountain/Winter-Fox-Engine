@@ -1,9 +1,11 @@
 package com.wfe.components;
 
+import com.wfe.audio.AudioMaster;
+import com.wfe.core.ResourceManager;
 import com.wfe.ecs.Component;
 import com.wfe.ecs.ComponentType;
 import com.wfe.ecs.Transformation;
-import com.wfe.entities.Settler;
+import com.wfe.entities.Player;
 
 public class PlayerAnimationComponent extends Component {
 
@@ -31,7 +33,7 @@ public class PlayerAnimationComponent extends Component {
     private int hitAnimSpeed = 250;
     private int fightAnimSpeed = 450;
 	
-	public PlayerAnimationComponent(Settler player) {
+	public PlayerAnimationComponent(Player player) {
 		rightArm = player.rightArm.getTransform();
 		leftArm = player.leftArm.getTransform();
 		rightHip = player.rightHip.getTransform();
@@ -50,10 +52,10 @@ public class PlayerAnimationComponent extends Component {
 	public void walkAnim(float dt) {
 		if(leftArm.localRotX >= 40) {
             extremitiesState = true;
-            //AudioMaster.defaultSource.play(ResourceManager.getSound("footstep1"));
+            AudioMaster.defaultSource.play(ResourceManager.getSound("footstep1"));
         } else if(leftArm.localRotX <= -40){
             extremitiesState = false;
-            //AudioMaster.defaultSource.play(ResourceManager.getSound("footstep2"));
+            AudioMaster.defaultSource.play(ResourceManager.getSound("footstep2"));
         }
 
         if(extremitiesState) {
@@ -128,13 +130,13 @@ public class PlayerAnimationComponent extends Component {
 	}
 
 	@Override
-	public Component getInstance() {
-		return null;
-	}
-	
-	@Override
 	public ComponentType getType() {
 		return ComponentType.PLAYER_ANIMATION;
+	}
+
+	@Override
+	public Component getInstance() {
+		return null;
 	}
 
 }

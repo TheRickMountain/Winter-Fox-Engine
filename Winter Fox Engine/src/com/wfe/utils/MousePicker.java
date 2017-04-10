@@ -8,8 +8,8 @@ import com.wfe.math.Vector4f;
 
 public class MousePicker {
 
-	private static Vector3f currTerrainPoint;
-	private static Vector3f currRay = new Vector3f();
+	private static Vector3f currentTerrainPoint;
+	private static Vector3f currentRay = new Vector3f();
 
 	private static final int RECURSION_COUNT = 21;
 	private static final float RAY_RANGE = 600;
@@ -28,35 +28,19 @@ public class MousePicker {
 	}
 
 	public static Vector3f getCurrentTerrainPoint() {
-		return currTerrainPoint;
-	}
-	
-	public static int getX() {
-		return (int) currTerrainPoint.x;
-	}
-	
-	public static int getY() {
-		return (int) currTerrainPoint.z;
-	}
-	
-	public static float getXf() {
-		return currTerrainPoint.x;
-	}
-	
-	public static float getYf() {
-		return currTerrainPoint.z;
+		return currentTerrainPoint;
 	}
 
 	public static Vector3f getCurrentRay() {
-		return currRay;
+		return currentRay;
 	}
 
 	public static void update() {
-		currRay = calculateMouseRayCamera();
-		if (intersectionInRange(0, RAY_RANGE, currRay)) {
-			currTerrainPoint = binarySearch(0, 0, RAY_RANGE, currRay);
+		currentRay = calculateMouseRayCamera();
+		if (intersectionInRange(0, RAY_RANGE, currentRay)) {
+			currentTerrainPoint = binarySearch(0, 0, RAY_RANGE, currentRay);
 		} else {
-			currTerrainPoint = null;
+			currentTerrainPoint = null;
 		}
 	}
 

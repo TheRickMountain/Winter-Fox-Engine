@@ -86,11 +86,9 @@ public class Display {
     	Display.width = width;
         Display.height = height;
         this.fullscreen = fullscreen;
-        
-        init();
     }
         
-    private void init() {
+    public void init() {
         if(!glfwInit())
             throw new IllegalStateException("Unable to initialize GLFW");
 
@@ -170,7 +168,7 @@ public class Display {
     	glfwPollEvents();
     }
 
-    public void update() {
+    public void swapBuffers() {
     	glfwSwapBuffers(window);
     	calculateDelta();
     }
@@ -184,9 +182,6 @@ public class Display {
     }
     
     public static float getDeltaInSeconds() {
-    	if(delta >= 0.1f) {
-    		delta = 0;
-    	}
     	return delta;
     }
 

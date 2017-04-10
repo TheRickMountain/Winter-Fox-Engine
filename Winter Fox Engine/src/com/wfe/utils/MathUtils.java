@@ -130,13 +130,6 @@ public class MathUtils {
 		return (float) Math.sqrt((dX * dX) + (dY * dY));
 	}
 	
-	public static float getDistance(float x1, float y1, float z1, float x2, float y2, float z2) {
-		float dX = x1 - x2;
-		float dY = y1 - y2;
-		float dZ = z1 - z2;
-		return (float) Math.sqrt((dX * dX) + (dY * dY) + (dZ * dZ));
-	}
-	
 	public static float getRotation(float x1, float y1, float x2, float y2){
 		return (float) ((Math.atan2(y2 - y1, x2 - x1)) * RADIANS_TO_DEGREES);
 	}
@@ -160,32 +153,5 @@ public class MathUtils {
         }
         return total / numbers.size();
     }
-	
-	public static int compareTo(int a, int b) {
-		if(a > b) {
-			return 1;
-		} else if(a == b) {
-			return 0;
-		} else {
-			return -1;
-		}
-	}
-	
-	public static float getLerp(float p1, float p2, float alpha) {
-		return p1 + alpha * (p2 - p1);
-	}
-	
-	public static float intbound(float s, float ds) {
-		if(ds < 0) {
-			return intbound(-s, -ds);
-		} else {
-			s = mod(s, 1);
-			return (1 - s) / ds;
-		}
-	}
-	
-	public static float mod(float x, float y) {
-		return (float) (x - y * Math.floor(x / y));
-	}
 	
 }
