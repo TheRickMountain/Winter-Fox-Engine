@@ -30,6 +30,8 @@ import com.wfe.utils.TimeUtil;
 
 public class PlayerControllerComponent extends Component {
 
+	private World world;
+	
 	private Camera camera;
 	private Transformation transform;
 	private float yRot;
@@ -56,6 +58,8 @@ public class PlayerControllerComponent extends Component {
 	private boolean fighting = false;
 	
 	public PlayerControllerComponent(Camera camera, Transformation transform, PlayerAnimationComponent playerAnim, Entity hand) {		
+		world = World.getWorld();
+		
 		this.camera = camera;
 		this.transform = transform;
 		this.animation = playerAnim;
@@ -197,8 +201,7 @@ public class PlayerControllerComponent extends Component {
 						if(checkDistance(tp.x, tp.z)) {
 							turnTo((int)tp.x, (int)tp.z);
 							if(tile.getId() != 10) {
-								System.out.println("Here");
-								World.getWorld().setTile((int)tp.x, (int)tp.z, 10);
+								world.setTile((int)tp.x, (int)tp.z, 10);
 							}
 						}
 						break;
@@ -206,7 +209,7 @@ public class PlayerControllerComponent extends Component {
 						if(checkDistance(tp.x, tp.z)) {
 							turnTo((int)tp.x, (int)tp.z);
 							if(tile.getId() == 10) {
-								if(World.getWorld().addEntityToTile(new Wheat(new Transformation(
+								if(world.addEntityToTile(new Wheat(new Transformation(
 										((int)tp.x) + 0.5f, 0, ((int)tp.z) + 0.5f), 0))) {
 									GUIManager.inventory.removeItem(ItemDatabase.getItem(Item.WHEAT_SEEDS), 1);
 									source.play(ResourceManager.getSound("hoe"));
@@ -223,7 +226,7 @@ public class PlayerControllerComponent extends Component {
 								tile.setEntity(GUIManager.inventory.getSelectedItem().entity.getInstance(
 										((int)tp.x) + 0.5f, 0, ((int)tp.z) + 0.5f));
 								tile.getEntity().getTransform().setRotY(buildingRotation);
-								World.getWorld().addEntity(tile.getEntity());
+								world.addEntity(tile.getEntity());
 								GUIManager.inventory.removeItem(GUIManager.inventory.getSelectedItem(), 1);
 								AudioMaster.defaultSource.play(ResourceManager.getSound("taking"));
 								
@@ -348,7 +351,7 @@ public class PlayerControllerComponent extends Component {
 		 float xaOrg = xa;
 	     float zaOrg = za;
 	     
-	     List<AABB> aABBs = World.getWorld().getColliders();
+	     List<AABB> aABBs = world.getColliders();
 	     
 	     int i = 0;
 	     while (i < aABBs.size()) {
@@ -385,7 +388,7 @@ public class PlayerControllerComponent extends Component {
 		
 		equipment = eqpm;
 		hand.addChild(equipment);
-		World.getWorld().addEntity(equipment);
+		world.addEntity(equipment);
 	}
 	
 	public void removeEquipment() {
@@ -405,13 +408,13 @@ public class PlayerControllerComponent extends Component {
 		removeEquipment();
 		
 		this.building = building;
-		World.getWorld().addEntity(building);
+		world.addEntity(building);
 		
 	}
 	
 	public void removeBuilding() {
 		if(building != null) {
-			World.getWorld().removeEntity(building);
+			world.removeEntity(building);
 			building = null;
 		}
 	}

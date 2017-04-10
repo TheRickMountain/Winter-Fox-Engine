@@ -25,9 +25,7 @@ public class ChestComponent extends Component {
 	
 	@Override
 	public void update(float dt) {
-		/*if(Mouse.isButtonDown(1)) {
-			GUIManager.open(this); // Send chest data to the GUIManager
-		}*/
+		
 	}
 	
 	private int hasItem(int item) {

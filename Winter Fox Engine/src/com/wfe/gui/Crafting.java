@@ -16,9 +16,8 @@ import com.wfe.utils.Rect;
 
 public class Crafting {
 	
-	private Color background = new Color(0.1f, 0.1f, 0.1f, 0.9f);
-	
-	private Rect craftingRect;
+	private GUIFrame background;
+	private float edgeOutput = 5;
 	
 	private boolean open = false;
 	
@@ -34,7 +33,7 @@ public class Crafting {
 	private List<Ingredient> ingredients = new ArrayList<Ingredient>();
 	
 	public Crafting() {
-		craftingRect = new Rect(0, 0, 385, 275);
+		background = new GUIFrame(new Rect(0, 0, 385, 275));
 		
 		for(Item item : ItemDatabase.getDatabase()) {
 			if(item.isHasCraft()) {
@@ -127,21 +126,20 @@ public class Crafting {
 	
 	public void render() {
 		if(open) {
-			GUIRenderer.render(background, craftingRect.x - 5, craftingRect.y - 5, 0, 
-					craftingRect.width + 10, craftingRect.height + 10, false);
+			GUIRenderer.render(background.getFrameTextures());
 			
 			if(activeItem == null) {				
 				for(Recipe recipe : recipes) {
 					recipe.render();
 				}
 			} else {
-				GUIRenderer.render(activeItem.icon, Color.WHITE, craftingRect.x, craftingRect.y, 
+				GUIRenderer.render(activeItem.icon, Color.WHITE, background.getX(), background.getY(), 
 						0, 80, 80, false);
-				closeButton.rect.setPosition(craftingRect.x + craftingRect.width - closeButton.rect.width, 
-						craftingRect.y);
+				closeButton.rect.setPosition(background.getX() + background.getWidth() - closeButton.rect.width, 
+						background.getY());
 				GUIRenderer.render(closeButton);
-				craftButton.rect.setPosition(craftingRect.x + craftingRect.width - craftButton.rect.width, 
-						craftingRect.y + craftingRect.height - craftButton.rect.height);
+				craftButton.rect.setPosition(background.getX() + background.getWidth() - craftButton.rect.width, 
+						background.getY() + background.getHeight() - craftButton.rect.height);
 				GUIRenderer.render(craftButton);
 				
 				for(Ingredient ingredient : ingredients) {
@@ -158,9 +156,9 @@ public class Crafting {
 					recipe.renderText();
 				}
 			} else {
-				activeItemName.setPosition(craftingRect.x + 85, craftingRect.y);
+				activeItemName.setPosition(background.getX() + 85, background.getY());
 				FontRenderer.render(activeItemName);
-				activeItemDesc.setPosition(craftingRect.x + 85, craftingRect.y + activeItemName.getHeight() + 5);
+				activeItemDesc.setPosition(background.getX() + 85, background.getY() + activeItemName.getHeight() + 5);
 				FontRenderer.render(activeItemDesc);
 				craftButtonText.setPosition(craftButton.rect.x + craftButton.rect.width / 2 - craftButtonText.getWidth() / 2, 
 						craftButton.rect.y);
@@ -174,14 +172,15 @@ public class Crafting {
 	}
 	
 	private void updatePositions() {
-		craftingRect.x = Display.getWidth() / 2 - craftingRect.width / 2;
-		craftingRect.y = GUIManager.inventory.inventoryRect.y - craftingRect.height - Slot.SIZE / 2;
+		background.setPosition(
+				Display.getWidth() / 2 - background.getWidth() / 2, 
+				GUIManager.inventory.inventoryRect.y - background.getHeight() - Slot.SIZE / 2);
 		
 		int countX = 0;
 		int countY = 0;
 		for(Recipe recipe : recipes) {
-			recipe.rect.setPosition(craftingRect.x + (countX * (recipe.rect.width + 5)), 
-					craftingRect.y + (countY * (recipe.rect.height + 5)));
+			recipe.rect.setPosition(background.getX() + (countX * (recipe.rect.width + 5)), 
+					background.getY() + (countY * (recipe.rect.height + 5)));
 			
 			countX++;
 			if(countX == 2) {
@@ -192,8 +191,8 @@ public class Crafting {
 		
 		countY = 0;
 		for(Ingredient ingredient : ingredients) {
-			ingredient.rect.setPosition(craftingRect.x, 
-					craftingRect.y + 85 + (countY * (ingredient.rect.height + 5)));
+			ingredient.rect.setPosition(background.getX(), 
+					background.getY() + 85 + (countY * (ingredient.rect.height + 5)));
 			countY++;
 		}
 	}

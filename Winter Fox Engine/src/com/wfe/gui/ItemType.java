@@ -7,7 +7,7 @@ public enum ItemType {
 	TOOL,
 	WEAPON,
 	BUILDING,
-	WATER_STORAGE,
+	TANK,
 	RESOURCE
 
 }

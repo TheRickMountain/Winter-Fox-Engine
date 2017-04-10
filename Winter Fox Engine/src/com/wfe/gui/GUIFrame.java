@@ -47,7 +47,7 @@ public class GUIFrame {
 		frameTextures.add(new GUITexture(backgroundTexture));
 	}
 	
-	private void setTexturePositions() {
+	public void setTexturePositions() {
 		float xPlusXScaleXMinusRim = rect.x + (rect.width - RIM_SIZE);
 		float yPlusYScaleYMinusRim = rect.y + (rect.height - RIM_SIZE);
 		float xPlusRim = rect.x + RIM_SIZE;
@@ -113,6 +113,14 @@ public class GUIFrame {
 	
 	public float getY() {
 		return rect.y + RIM_SIZE;
+	}
+	
+	public float getWidth() {
+		return rect.width;
+	}
+	
+	public float getHeight() {
+		return rect.height;
 	}
 	
 	public void setPosition(float x, float y) {

@@ -109,7 +109,7 @@ public class ItemDatabase {
 				.setIngredients(Item.FLINT, 15)
 				.create());
 		
-		addItem(new ItemBuilder(Item.WATERSKIN, "Waterskin", ResourceManager.getTexture("waterskin_ui"), ItemType.WATER_STORAGE)
+		addItem(new ItemBuilder(Item.WATERSKIN, "Waterskin", ResourceManager.getTexture("waterskin_ui"), ItemType.TANK)
 				.setDescription("Common useful resource")
 				.setThirst(20)
 				.setVolume(100)

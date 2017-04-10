@@ -22,7 +22,7 @@ public class ProgressBar {
 	public ProgressBar(Rect rect, Color color) {
 		this.rect = rect;
 		this.frontColor = color;
-		this.backColor = new Color(0.3f, 0.3f, 0.3f, 0.8f);
+		this.backColor = new Color(0.0f, 0.0f, 0.0f, 1.0f);
 		this.text = new GUIText("", FontRenderer.ARIAL);
 		this.text.setScale(0.7f);
 		
@@ -30,7 +30,7 @@ public class ProgressBar {
 	}
 	
 	public void render() {
-		GUIRenderer.render(backColor, rect.x - 3, rect.y - 3, 0, rect.width + 6, rect.height + 6, false);
+		GUIRenderer.render(backColor, rect.x - 2, rect.y - 2, 0, rect.width + 4, rect.height + 4, false);
 		GUIRenderer.render(frontColor, rect.x, rect.y, 0, currentValue * perPixelSize, rect.height, false);
 	}
 	
