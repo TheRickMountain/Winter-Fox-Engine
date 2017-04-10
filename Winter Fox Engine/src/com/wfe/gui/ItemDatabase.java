@@ -21,80 +21,136 @@ public class ItemDatabase {
 	private static ItemDatabase instance;
 	
 	private ItemDatabase() {
-		addItem(new Item(Item.NULL, "", "", null, null, ItemType.NULL, 0, 0, 0, 0, null));
+		addItem(new ItemBuilder(Item.NULL, "", null, ItemType.NULL).create());
 		
-		addItem(new Item(Item.APPLE, "Apple", "Sweet apple is so sweet", ResourceManager.getTexture("apple_ui"),
-				null, ItemType.CONSUMABLE, 10, 5, 0, 40, null));
+		addItem(new ItemBuilder(Item.APPLE, "Apple", ResourceManager.getTexture("apple_ui"), ItemType.CONSUMABLE)
+				.setDescription("Sweet apple is so sweet")
+				.setHunger(10)
+				.setThirst(5)
+				.create());
 		
-		addItem(new Item(Item.FLINT, "Flint", "Common useful resource", ResourceManager.getTexture("flint_ui"), 
-				null, ItemType.RESOURCE, 0, 0, 0, 40, null));
+		addItem(new ItemBuilder(Item.FLINT, "Flint", ResourceManager.getTexture("flint_ui"), ItemType.RESOURCE)
+				.setDescription("Strong and useful resource")
+				.create());
 		
-		addItem(new Item(Item.AXE, "Axe" , "Can chop trees and protect from enemies", ResourceManager.getTexture("axe_ui"),
-				new Axe(), ItemType.TOOL, 0, 0, 0, 1, 
-				new int[] {Item.SHARP_FLINT, 1, Item.STICK, 1, Item.ROPE, 1}));
+		addItem(new ItemBuilder(Item.AXE, "Axe", ResourceManager.getTexture("axe_ui"), ItemType.TOOL)
+				.setDescription("Can chop trees and protect from enemies")
+				.setStackSize(1)
+				.setEntity(new Axe())
+				.setIngredients(Item.SHARP_FLINT, 1, Item.STICK, 1, Item.ROPE, 1)
+				.create());
 		
-		addItem(new Item(Item.STICK, "Stick", "Common useful resource", ResourceManager.getTexture("stick_ui"),
-				null, ItemType.RESOURCE, 0, 0, 0, 40, null));
+		addItem(new ItemBuilder(Item.STICK, "Stick", ResourceManager.getTexture("stick_ui"), ItemType.RESOURCE)
+				.setDescription("Common useful resource")
+				.create());
+
+		addItem(new ItemBuilder(Item.MUSHROOM, "Mushroom", ResourceManager.getTexture("mushroom_ui"), ItemType.CONSUMABLE)
+				.setDescription("Common useful resource")
+				.setHunger(5)
+				.create());
 		
-		addItem(new Item(Item.MUSHROOM, "Mushroom", "Common useful resource", ResourceManager.getTexture("mushroom_ui"),
-				null, ItemType.CONSUMABLE, 5, 0, 0, 40, null));
+		addItem(new ItemBuilder(Item.LOG, "Log", ResourceManager.getTexture("log_ui"), ItemType.RESOURCE)
+				.setDescription("Common useful resource")
+				.create());
 		
-		addItem(new Item(Item.LOG, "Log", "Common useful resource", ResourceManager.getTexture("log_ui"),
-				null, ItemType.RESOURCE, 0, 0, 0, 40, null));
+		addItem(new ItemBuilder(Item.PICKAXE, "Pickaxe", ResourceManager.getTexture("pickaxe_ui"), ItemType.TOOL)
+				.setDescription("Common useful resource")
+				.setEntity(new Pickaxe())
+				.setStackSize(1)
+				.setIngredients(Item.SHARP_FLINT, 2, Item.STICK, 1, Item.ROPE, 1)
+				.create());
 		
-		addItem(new Item(Item.PICKAXE, "Pickaxe", "Common useful resource", ResourceManager.getTexture("pickaxe_ui"),
-				new Pickaxe(), ItemType.TOOL, 0, 0, 0, 1, 
-				new int[] {Item.SHARP_FLINT, 2, Item.STICK, 1, Item.ROPE, 1}));
+		addItem(new ItemBuilder(Item.HOE, "Hoe", ResourceManager.getTexture("hoe_ui"), ItemType.TOOL)
+				.setDescription("Common useful resource")
+				.setEntity(new Hoe())
+				.setStackSize(1)
+				.setIngredients(Item.SHARP_FLINT, 1, Item.STICK, 1, Item.ROPE, 1)
+				.create());
 		
-		addItem(new Item(Item.HOE, "Hoe", "Common useful resource", ResourceManager.getTexture("hoe_ui"),
-				new Hoe(), ItemType.TOOL, 0, 0, 0, 1, 
-				new int[] {Item.SHARP_FLINT, 1, Item.STICK, 1, Item.ROPE, 1}));
+		addItem(new ItemBuilder(Item.FIBER, "Fiber", ResourceManager.getTexture("fiber_ui"), ItemType.RESOURCE)
+				.setDescription("Common useful resource")
+				.create());
+	
+		addItem(new ItemBuilder(Item.WALL, "Wall", ResourceManager.getTexture("wall_ui"), ItemType.BUILDING)
+				.setDescription("Common useful resource")
+				.setEntity(new Wall())
+				.setIngredients(Item.LOG, 5)
+				.create());
 		
-		addItem(new Item(Item.FIBER, "Fiber", "Common useful resource", ResourceManager.getTexture("fiber_ui"), 
-				null, ItemType.RESOURCE, 0, 0, 0, 40, null));
+		addItem(new ItemBuilder(Item.CROSS_WALL, "Cross wall", ResourceManager.getTexture("cross_wall_ui"), 
+				ItemType.BUILDING)
+				.setDescription("Common useful resource")
+				.setEntity(new CrossWall())
+				.setIngredients(Item.LOG, 5)
+				.create());
 		
-		addItem(new Item(Item.WALL, "Wall", "Common useful resource", ResourceManager.getTexture("wall_ui"), 
-				new Wall(), ItemType.BUILDING, 0, 0, 0, 40, new int[]{Item.LOG, 5}));
+		addItem(new ItemBuilder(Item.WINDOW_WALL, "Window wall", ResourceManager.getTexture("window_wall_ui"), 
+				ItemType.BUILDING)
+				.setDescription("Common useful resource")
+				.setEntity(new WindowWall())
+				.setIngredients(Item.LOG, 4)
+				.create());
 		
-		addItem(new Item(Item.CROSS_WALL, "Cross wall", "Common useful resource", ResourceManager.getTexture("cross_wall_ui"), 
-				new CrossWall(), ItemType.BUILDING, 0, 0, 0, 40, new int[] {Item.LOG, 5}));
+		addItem(new ItemBuilder(Item.DOOR_WALL, "Door wall", ResourceManager.getTexture("door_wall_ui"), ItemType.BUILDING)
+				.setDescription("Common useful resource")
+				.setEntity(new DoorWall())
+				.setIngredients(Item.LOG, 2)
+				.create());
 		
-		addItem(new Item(Item.WINDOW_WALL, "Window wall", "Common useful resource", ResourceManager.getTexture("window_wall_ui"), 
-				new WindowWall(), ItemType.BUILDING, 0, 0, 0, 40, new int[] {Item.LOG, 4}));
+		addItem(new ItemBuilder(Item.ROPE, "Rope", ResourceManager.getTexture("rope_ui"), ItemType.RESOURCE)
+				.setDescription("Common useful resource")
+				.setIngredients(Item.FIBER, 5)
+				.create());
 		
-		addItem(new Item(Item.DOOR_WALL, "Door wall", "Common useful resource", ResourceManager.getTexture("door_wall_ui"), 
-				new DoorWall(), ItemType.BUILDING, 0, 0, 0, 40, new int[] {Item.LOG, 2}));
+		addItem(new ItemBuilder(Item.WELL, "Well", ResourceManager.getTexture("well_ui"), ItemType.BUILDING)
+				.setDescription("Common useful resource")
+				.setStackSize(1)
+				.setEntity(new Well())
+				.setIngredients(Item.FLINT, 15)
+				.create());
 		
-		addItem(new Item(Item.ROPE, "Rope", "Common useful resource", ResourceManager.getTexture("rope_ui"), 
-				null, ItemType.RESOURCE, 0, 0, 0, 40, new int[] {Item.FIBER, 5}));
+		addItem(new ItemBuilder(Item.WATERSKIN, "Waterskin", ResourceManager.getTexture("waterskin_ui"), ItemType.WATER_STORAGE)
+				.setDescription("Common useful resource")
+				.setThirst(20)
+				.setVolume(100)
+				.setStackSize(1)
+				.setIngredients(Item.LEATHER, 1, Item.ROPE, 2)
+				.create());
 		
-		addItem(new Item(Item.WELL, "Well", "Common useful resource", ResourceManager.getTexture("well_ui"), 
-				new Well(), ItemType.BUILDING, 0, 0, 0, 1, new int[] {Item.FLINT, 15}));
+		addItem(new ItemBuilder(Item.LEATHER, "Leather", ResourceManager.getTexture("leather_ui"), ItemType.RESOURCE)
+				.setDescription("Common useful resource")
+				.create());
 		
-		addItem(new Item(Item.WATERSKIN, "Waterskin", "Common useful resource", ResourceManager.getTexture("waterskin_ui"), 
-				null, ItemType.WATER_STORAGE, 0, 20, 100, 1, new int[] {Item.LEATHER, 1, Item.ROPE, 2}));
+		addItem(new ItemBuilder(Item.LAVENDER, "Lavender", ResourceManager.getTexture("lavender_ui"), ItemType.RESOURCE)
+				.setDescription("Common useful resource")
+				.create());
 		
-		addItem(new Item(Item.LEATHER, "Leather", "Common useful resource", ResourceManager.getTexture("leather_ui"), 
-				null, ItemType.RESOURCE, 0, 0, 0, 40, null));
+		addItem(new ItemBuilder(Item.HONEY, "Honey", ResourceManager.getTexture("honey_ui"), ItemType.CONSUMABLE)
+				.setDescription("Common useful resource")
+				.setHunger(20)
+				.setThirst(-5)
+				.create());
 		
-		addItem(new Item(Item.LAVENDER, "Lavender", "Common useful resource", ResourceManager.getTexture("lavender_ui"), 
-				null, ItemType.RESOURCE, 0, 0, 0, 40, null));
+		addItem(new ItemBuilder(Item.SHARP_FLINT, "Sharp flint", ResourceManager.getTexture("sharp_flint_ui"), ItemType.RESOURCE)
+				.setDescription("Common useful resource")
+				.setIngredients(Item.FLINT, 2)
+				.create());
 		
-		addItem(new Item(Item.HONEY, "Honey", "Common useful resource", ResourceManager.getTexture("honey_ui"), 
-				null, ItemType.CONSUMABLE, 20, -5, 0, 40, null));
+		addItem(new ItemBuilder(Item.CLUB, "Club", ResourceManager.getTexture("club_ui"), ItemType.WEAPON)
+				.setDescription("Common useful resource")
+				.setStackSize(1)
+				.setEntity(new Club())
+				.setIngredients(Item.LOG, 1)
+				.create());
 		
-		addItem(new Item(Item.SHARP_FLINT, "Sharp flint", "Common useful resource", ResourceManager.getTexture("sharp_flint_ui"), 
-				null, ItemType.RESOURCE, 0, 0, 0, 1, new int[] {Item.FLINT, 2}));
+		addItem(new ItemBuilder(Item.WHEAT, "Wheat", ResourceManager.getTexture("wheat_ui"), ItemType.RESOURCE)
+				.setDescription("Common useful resource")
+				.create());
 		
-		addItem(new Item(Item.CLUB, "Club", "Common useful resource", ResourceManager.getTexture("club_ui"), 
-				new Club(), ItemType.WEAPON, 0, 0, 0, 1, new int[] {Item.LOG, 1}));
-		
-		addItem(new Item(Item.WHEAT, "Wheat", "Common useful resource", ResourceManager.getTexture("wheat_ui"), 
-				null, ItemType.RESOURCE, 0, 0, 0, 40, null));
-		
-		addItem(new Item(Item.WHEAT_SEEDS, "Wheat seeds", "Common useful resource", 
-				ResourceManager.getTexture("wheat_seeds_ui"), null, ItemType.RESOURCE, 0, 0, 0, 40, 
-				new int[]{Item.WHEAT, 1}));
+		addItem(new ItemBuilder(Item.WHEAT_SEEDS, "Wheat seeds", ResourceManager.getTexture("wheat_seeds_ui"), ItemType.RESOURCE)
+				.setDescription("Common useful resource")
+				.setIngredients(Item.WHEAT, 1)
+				.create());
 	}
 	
 	public static void create() {
