@@ -81,6 +81,7 @@ public class Inventory {
 			addItem(ItemDatabase.getItem(Item.HOE), 1);
 			addItem(ItemDatabase.getItem(Item.CLUB), 1);
 			addItem(ItemDatabase.getItem(Item.WALL), 5);
+			addItem(ItemDatabase.getItem(Item.BASKET), 1);
 		}
 		
 		if(Keyboard.isKeyDown(Key.KEY_1)) selected = 0;

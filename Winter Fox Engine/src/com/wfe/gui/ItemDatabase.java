@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.wfe.core.ResourceManager;
 import com.wfe.entities.Axe;
+import com.wfe.entities.Basket;
 import com.wfe.entities.Club;
 import com.wfe.entities.CrossWall;
 import com.wfe.entities.DoorWall;
@@ -162,6 +163,13 @@ public class ItemDatabase {
 				.setDescription("Tank for liquidq keeping")
 				.setStackSize(1)
 				.setIngredients(Item.CLAY, 5)
+				.create());
+		
+		addItem(new ItemBuilder(Item.BASKET, "Basket", ResourceManager.getTexture("basket_ui"), ItemType.BUILDING)
+				.setEntity(new Basket())
+				.setDescription("Storage")
+				.setStackSize(1)
+				.setIngredients(Item.ROPE, 5)
 				.create());
 	}
 	

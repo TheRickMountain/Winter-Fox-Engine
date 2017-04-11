@@ -327,6 +327,17 @@ public class ResourceLoader {
 		ResourceManager.loadMesh("jug", OBJLoader.loadMesh("/entity/jug/model.obj"));
 		/*** *** ***/
 		
+		/*** Basket ***/
+		ResourceManager.loadTexture("basket_ui", Texture.newTexture(new MyFile("entity/basket/icon.png"))
+				.normalMipMap()
+				.create());
+		ResourceManager.loadTexture("basket", Texture.newTexture(new MyFile("entity/basket/diffuse.png"))
+				.normalMipMap(-0.4f)
+				.create());
+		
+		ResourceManager.loadMesh("basket", OBJLoader.loadMesh("/entity/basket/model.obj"));
+		/*** *** ***/
+		
 		loaded = true;
 	}
 	

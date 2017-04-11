@@ -202,6 +202,7 @@ public class PlayerControllerComponent extends Component {
 							turnTo((int)tp.x, (int)tp.z);
 							if(tile.getId() != 10) {
 								world.setTile((int)tp.x, (int)tp.z, 10);
+								source.play(ResourceManager.getSound("hoe"));
 							}
 						}
 						break;

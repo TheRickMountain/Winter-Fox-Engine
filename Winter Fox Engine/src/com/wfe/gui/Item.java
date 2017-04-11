@@ -31,6 +31,7 @@ public class Item {
 	public static final int WHEAT_SEEDS = 23;
 	public static final int CLAY = 24;
 	public static final int JUG = 25;
+	public static final int BASKET = 26;
 	
 	public final int id;
 	public final String name;
