@@ -316,6 +316,17 @@ public class ResourceLoader {
 				.create());
 		/*** *** ***/
 		
+		/*** Stick ***/
+		ResourceManager.loadTexture("jug_ui", Texture.newTexture(new MyFile("entity/jug/icon.png"))
+				.normalMipMap()
+				.create());
+		ResourceManager.loadTexture("jug", Texture.newTexture(new MyFile("entity/jug/diffuse.png"))
+				.normalMipMap(-0.4f)
+				.create());
+		
+		ResourceManager.loadMesh("jug", OBJLoader.loadMesh("/entity/jug/model.obj"));
+		/*** *** ***/
+		
 		loaded = true;
 	}
 	

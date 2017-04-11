@@ -9,6 +9,7 @@ import com.wfe.entities.Club;
 import com.wfe.entities.CrossWall;
 import com.wfe.entities.DoorWall;
 import com.wfe.entities.Hoe;
+import com.wfe.entities.Jug;
 import com.wfe.entities.Pickaxe;
 import com.wfe.entities.Wall;
 import com.wfe.entities.Well;
@@ -154,6 +155,13 @@ public class ItemDatabase {
 		
 		addItem(new ItemBuilder(Item.CLAY, "Clay", ResourceManager.getTexture("clay_ui"), ItemType.RESOURCE)
 				.setDescription("Strong and useful resource")
+				.create());
+		
+		addItem(new ItemBuilder(Item.JUG, "Jug", ResourceManager.getTexture("jug_ui"), ItemType.BUILDING)
+				.setEntity(new Jug())
+				.setDescription("Tank for liquidq keeping")
+				.setStackSize(1)
+				.setIngredients(Item.CLAY, 5)
 				.create());
 	}
 	
