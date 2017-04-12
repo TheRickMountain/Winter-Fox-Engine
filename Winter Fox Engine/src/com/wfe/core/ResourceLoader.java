@@ -16,9 +16,6 @@ public class ResourceLoader {
 			return;
 		
 		/*** Audio Initialization ***/
-		AudioMaster.init();
-		AudioMaster.setListenerData(0, 0, 0);
-		
 		ResourceManager.loadSound("hoe", AudioMaster.loadSound("audio/hoe.wav"));
 		ResourceManager.loadSound("chop", AudioMaster.loadSound("audio/chop.wav"));
 		ResourceManager.loadSound("mine", AudioMaster.loadSound("audio/mine.wav"));

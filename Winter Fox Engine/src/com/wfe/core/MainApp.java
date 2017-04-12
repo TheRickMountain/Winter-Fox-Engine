@@ -15,6 +15,8 @@ public class MainApp {
 		Display display = new Display("Paleon", 1152, 648, false);
 		display.init();
 
+		AudioMaster.init();
+		
 		ResourceLoader.load();
 
 		Camera camera = new Camera(new Vector3f(16, 0, 16));
