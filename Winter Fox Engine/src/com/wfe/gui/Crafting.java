@@ -44,7 +44,25 @@ public class Crafting {
 			if(Mouse.isButtonDown(0)) {
 				 for(Slot recipe : slots) {
 					 if(recipe.rect.isMouseOvered()) {
-						 GUIManager.inventory.addItem(recipe.getItem(), 1);
+						 Item item = recipe.getItem();
+						 
+						 boolean craft = true;
+						 for(int i = 0, n = item.ingredients.length; i < n; i++) {
+							 int count = GUIManager.inventory.hasItem(ItemDatabase.getItem(item.ingredients[i]));
+							 if(count < item.ingredients[++i]) {
+								 craft = false;
+								 break;
+							 }
+						 }
+						 
+						 if(craft) {
+							 GUIManager.inventory.addItem(item, 1);
+							 
+							 for(int i = 0, n = item.ingredients.length; i < n; i++) {
+								 GUIManager.inventory.removeItem(ItemDatabase.getItem(
+										 item.ingredients[i]), item.ingredients[++i]);
+							 }
+						 }
 					 }
 				 }
 			}
