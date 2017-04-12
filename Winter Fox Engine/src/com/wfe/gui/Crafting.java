@@ -38,6 +38,10 @@ public class Crafting {
 		
 		if(Keyboard.isKeyDown(Key.KEY_E)) {
 			open = !open;	
+			
+			if(open) {
+				updateRecipes();
+			}
 		}
 		
 		if(open) {
@@ -62,6 +66,8 @@ public class Crafting {
 								 GUIManager.inventory.removeItem(ItemDatabase.getItem(
 										 item.ingredients[i]), item.ingredients[++i]);
 							 }
+							 
+							 updateRecipes();
 						 }
 					 }
 				 }
@@ -97,6 +103,23 @@ public class Crafting {
 				countX = 0;
 				countY++;
 			}
+		}
+	}
+	
+	private void updateRecipes() {	
+		for(Slot recipe : slots) {
+			 Item item = recipe.getItem();
+			 
+			 boolean craft = true;
+			 for(int i = 0, n = item.ingredients.length; i < n; i++) {
+				 int count = GUIManager.inventory.hasItem(ItemDatabase.getItem(item.ingredients[i]));
+				 if(count < item.ingredients[++i]) {
+					 craft = false;
+					 break;
+				 }
+			 }
+			 
+			 recipe.setActive(craft);
 		}
 	}
 	

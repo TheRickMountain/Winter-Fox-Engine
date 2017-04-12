@@ -3,6 +3,7 @@ package com.wfe.renderEngine;
 import com.wfe.shaders.ShaderProgram;
 import com.wfe.shaders.UniformBoolean;
 import com.wfe.shaders.UniformColor;
+import com.wfe.shaders.UniformInt;
 import com.wfe.shaders.UniformMatrix;
 import com.wfe.shaders.UniformSampler;
 import com.wfe.utils.MyFile;
@@ -17,11 +18,11 @@ public class GUIShader extends ShaderProgram {
 	
 	private UniformSampler image = new UniformSampler("image");
 	protected UniformColor color = new UniformColor("color");
-	protected UniformBoolean solidColor = new UniformBoolean("solidColor");
+	protected UniformInt mode = new UniformInt("mode");
 	
 	public GUIShader() {
 		super(VERTEX_SHADER, FRAGMENT_SHADER, "in_data");
-		storeAllUniformLocations(projectionMatrix, modelMatrix, image, color, solidColor);
+		storeAllUniformLocations(projectionMatrix, modelMatrix, image, color, mode);
 		connectTextureUnits();
 	}
 

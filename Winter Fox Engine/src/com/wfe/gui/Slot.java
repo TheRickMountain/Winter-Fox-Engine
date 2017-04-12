@@ -22,6 +22,7 @@ public class Slot implements GUIComponent {
 	private int count = 0;
 	
 	private boolean selected = false;
+	private boolean active = true;
 	
 	public Slot(Rect rect) {
 		this.rect = rect;
@@ -36,7 +37,11 @@ public class Slot implements GUIComponent {
 			GUIRenderer.render(SELECTED, Color.WHITE, rect.x, rect.y, 0, rect.width, rect.height, false);
 		}
 		if(item.id != Item.NULL) {
-			GUIRenderer.render(item.icon, Color.WHITE, rect.x , rect.y, 0, rect.width, rect.height, false);
+			if(!active) {
+				GUIRenderer.renderGray(item.icon, Color.WHITE, rect.x , rect.y, 0, rect.width, rect.height, false);
+			} else {
+				GUIRenderer.render(item.icon, Color.WHITE, rect.x , rect.y, 0, rect.width, rect.height, false);
+			}
 		}
 	}
 
@@ -92,6 +97,14 @@ public class Slot implements GUIComponent {
 	
 	public void setSelected(boolean selected) {
 		this.selected = selected;
+	}
+	
+	public boolean isActive() {
+		return active;
+	}
+	
+	public void setActive(boolean value) {
+		this.active = value;
 	}
 	
 }
