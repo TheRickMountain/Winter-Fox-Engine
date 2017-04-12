@@ -11,7 +11,6 @@ import com.wfe.utils.Rect;
 public class Slot implements GUIComponent {
 	
 	public Rect rect;
-	private static final Texture DEFAULT = ResourceManager.getTexture("slot_ui");
 	private static final Texture SELECTED = ResourceManager.getTexture("selected_slot_ui");
 	public static int SIZE = 60;
 	

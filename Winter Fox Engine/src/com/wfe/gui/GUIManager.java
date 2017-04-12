@@ -10,6 +10,7 @@ public class GUIManager  {
 	public static Crafting crafting;
 	public static PlayerStats stats;
 	
+	public static boolean showProgressBar;
 	public static ProgressBar progressBar;
 	
 	public static void init() {
@@ -38,12 +39,12 @@ public class GUIManager  {
 		crafting.render();
 		stats.render();
 		
-		progressBar.render();
+		if(showProgressBar)
+			progressBar.render();
 	}
 	
 	public static void renderText() {
 		inventory.renderText();
-		//crafting.renderText();
 		stats.renderText();
 	}
 	

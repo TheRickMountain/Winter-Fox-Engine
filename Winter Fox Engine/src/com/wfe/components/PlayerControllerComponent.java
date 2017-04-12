@@ -177,6 +177,8 @@ public class PlayerControllerComponent extends Component {
 				}
 				
 				if(mining) {
+					GUIManager.showProgressBar = true;
+					
 					float time = (float) timer.getTime();
 					if(time >= mc.getMiningTime()) {
 						GUIManager.inventory.addItem(mc.getItem(), mc.getCount());
@@ -248,6 +250,7 @@ public class PlayerControllerComponent extends Component {
 	
 	private void resetMiningProgress() {
 		mining = false;
+		GUIManager.showProgressBar = false;
 		timer.reset();
 		GUIManager.progressBar.setCurrentValue(0);
 		animation.idleAnim();
