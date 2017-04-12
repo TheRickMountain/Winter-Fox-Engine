@@ -43,7 +43,7 @@ public class GUIManager  {
 	
 	public static void renderText() {
 		inventory.renderText();
-		crafting.renderText();
+		//crafting.renderText();
 		stats.renderText();
 	}
 	
@@ -57,7 +57,7 @@ public class GUIManager  {
 	
 	private static void updatePositions() {
 		progressBar.rect.setPosition(Display.getWidth() / 2 - progressBar.rect.width / 2, 
-				inventory.hotbarRect.y - progressBar.rect.height - 5);
+				inventory.hotbarFrame.rect.y - progressBar.rect.height - 5);
 	}
 	
 }

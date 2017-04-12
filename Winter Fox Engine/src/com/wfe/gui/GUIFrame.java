@@ -108,11 +108,11 @@ public class GUIFrame {
 	}
 	
 	public float getX() {
-		return rect.x + RIM_SIZE;
+		return rect.x + RIM_SIZE * 2;
 	}
 	
 	public float getY() {
-		return rect.y + RIM_SIZE;
+		return rect.y + RIM_SIZE * 2;
 	}
 	
 	public float getWidth() {

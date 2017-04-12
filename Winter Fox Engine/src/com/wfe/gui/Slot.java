@@ -32,9 +32,7 @@ public class Slot implements GUIComponent {
 	
 	@Override
 	public void render() {
-		if(!selected) {
-			GUIRenderer.render(DEFAULT, Color.WHITE, rect.x, rect.y, 0, rect.width, rect.height, false);
-		} else {
+		if(selected) {
 			GUIRenderer.render(SELECTED, Color.WHITE, rect.x, rect.y, 0, rect.width, rect.height, false);
 		}
 		if(item.id != Item.NULL) {

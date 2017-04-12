@@ -26,10 +26,10 @@ public class Inventory {
 	private int rows = 3;
 	private int columns = 6;
 	
-	protected Rect hotbarRect;
+	protected GUIFrame hotbarFrame;
 	private List<Slot> hotbarSlots = new ArrayList<>();
 	
-	protected Rect inventoryRect;
+	public GUIFrame inventoryFrame;
 	private List<Slot> inventorySlots = new ArrayList<>();
 	
 	private List<Slot> allSlots = new ArrayList<>();
@@ -48,15 +48,15 @@ public class Inventory {
 		source = new Source();
 		
 		// Hotbar
-		hotbarRect = new Rect(0, 0, 385, 70);
-
+		hotbarFrame = new GUIFrame(new Rect(0, 0, 405, 70));
+		
 		for(int i = 0; i < columns; i++) {
 			hotbarSlots.add(new Slot(new Rect(0, 0, Slot.SIZE, Slot.SIZE)));
 			allSlots.add(hotbarSlots.get(i));
 		}
 		
 		// Inventory
-		inventoryRect = new Rect(0, 0, 385, 190);
+		inventoryFrame = new GUIFrame(new Rect(0, 0, 405, 210));
 		
 		for(int i = 0; i < rows * columns; i++) {
 			inventorySlots.add(new Slot(new Rect(0, 0, Slot.SIZE, Slot.SIZE)));
@@ -234,10 +234,14 @@ public class Inventory {
 	
 	public void render() {
 		if(open) {
+			GUIRenderer.render(inventoryFrame.getFrameTextures());
+			
 			for(Slot slot : inventorySlots) {
 				slot.render();
 			}
 		}
+		
+		GUIRenderer.render(hotbarFrame.getFrameTextures());
 		
 		for(Slot slot : hotbarSlots) {
 			slot.render();
@@ -274,22 +278,23 @@ public class Inventory {
 	}
 	
 	private void updatePositions() {
-		hotbarRect.x = Display.getWidth() / 2 - hotbarRect.width / 2;
-		hotbarRect.y = Display.getHeight() - hotbarRect.height;
+		hotbarFrame.setPosition(Display.getWidth() / 2 - hotbarFrame.getWidth() / 2, 
+				Display.getHeight() - hotbarFrame.getHeight());
 		
 		for(int i = 0; i < columns; i++) {
-			hotbarSlots.get(i).rect.setPosition(hotbarRect.x + (i * (Slot.SIZE + 5)), hotbarRect.y);
+			hotbarSlots.get(i).rect.setPosition(hotbarFrame.getX() + (i * (Slot.SIZE + 5)), hotbarFrame.getY() - 5);
 		}
 		
-		inventoryRect.x = Display.getWidth() / 2 - inventoryRect.width / 2;
-		inventoryRect.y = hotbarRect.y - inventoryRect.height - Slot.SIZE / 2;
+		inventoryFrame.setPosition(
+				Display.getWidth() / 2 - inventoryFrame.getWidth() / 2, 
+				hotbarFrame.rect.y - inventoryFrame.getHeight() - Slot.SIZE / 2);
 		
 		int countX = 0;
 		int countY = 0;
 		for(int i = 0; i < rows * columns; i++) {
 			inventorySlots.get(i).rect.setPosition(
-					inventoryRect.x + (countX * (Slot.SIZE + 5)),
-					inventoryRect.y + (countY * (Slot.SIZE + 5)));
+					inventoryFrame.getX() + (countX * (Slot.SIZE + 5)),
+					inventoryFrame.getY() + (countY * (Slot.SIZE + 5)));
 			
 			countX++;
 			if(countX == columns) {
