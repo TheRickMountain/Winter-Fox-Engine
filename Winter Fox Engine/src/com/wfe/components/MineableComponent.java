@@ -2,7 +2,6 @@ package com.wfe.components;
 
 import com.wfe.ecs.Component;
 import com.wfe.ecs.ComponentType;
-import com.wfe.ecs.Transformation;
 import com.wfe.gui.Item;
 
 public class MineableComponent extends Component {
@@ -17,7 +16,6 @@ public class MineableComponent extends Component {
 	private int health;
 	
 	public MineableComponent(Item item, int count, int sound, Item requiredItem, int miningTime) {
-		super();
 		this.item = item;
 		this.count = count;
 		this.sound = sound;
@@ -26,6 +24,11 @@ public class MineableComponent extends Component {
 		this.health = miningTime;
 	}
 
+	@Override
+	public void init() {
+		
+	}
+	
 	@Override
 	public void update(float dt) {
 		
@@ -66,11 +69,6 @@ public class MineableComponent extends Component {
 
 	@Override
 	public Component getInstance() {
-		return new MineableComponent(item, count, sound, requiredItem, miningTime);
-	}
-
-	@Override
-	public Component getInstane(Transformation transform) {
 		return new MineableComponent(item, count, sound, requiredItem, miningTime);
 	}
 

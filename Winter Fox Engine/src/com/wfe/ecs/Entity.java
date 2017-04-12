@@ -35,6 +35,16 @@ public class Entity {
 		this.components = new ArrayList<Component>();
 	}
 	
+	public void init() {
+		for(Component component : components) {
+			component.init();
+		}
+		
+		for(Entity entity : childs) {
+			entity.init();
+		}
+	}
+	
 	public void update(float dt) {		
 		if(remove) {
 			if(!childs.isEmpty()) {
@@ -169,15 +179,6 @@ public class Entity {
 		Entity entity = getInstanceNoComponents();
 		for(Component c : components) {
 			entity.addComponent(c.getInstance());
-		}
-		return entity;
-	}
-	
-	public Entity getInstance(float x, float y, float z) {
-		Entity entity = getInstanceNoComponents();
-		entity.getTransform().setPosition(x, y, z);
-		for(Component c : components) {
-			entity.addComponent(c.getInstane(entity.getTransform()));
 		}
 		return entity;
 	}

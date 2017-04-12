@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 import com.wfe.components.ColliderComponent;
-import com.wfe.components.MobComponent;
 import com.wfe.core.Camera;
 import com.wfe.ecs.ComponentType;
 import com.wfe.ecs.Entity;
@@ -30,8 +29,6 @@ public class World {
 	private List<Entity> entities = new ArrayList<Entity>();
 	private List<Entity> entitiesToRemove = new ArrayList<Entity>();
 	private List<Entity> entitiesToAdd = new ArrayList<Entity>();
-	
-	private List<Entity> mobs = new ArrayList<Entity>();
 	
 	private Map<Mesh, List<Entity>> entitiesToRender = new HashMap<Mesh, List<Entity>>();
 	
@@ -93,12 +90,10 @@ public class World {
 	}
 	
 	public void addEntity(Entity entity) {
+		entity.init();
+		
 		if(entity.hasComponent(ComponentType.COLLIDER)) {
 			colliders.add(((ColliderComponent)entity.getComponent(ComponentType.COLLIDER)).getAABB());
-		}
-		if(entity.hasComponent(ComponentType.MOB)) {
-			colliders.add(((MobComponent)entity.getComponent(ComponentType.MOB)).getAABB());
-			mobs.add(entity);
 		}
 		this.entitiesToAdd.add(entity);
 		
@@ -115,10 +110,6 @@ public class World {
 	public void removeEntity(Entity entity) {
 		if(entity.hasComponent(ComponentType.COLLIDER)) {
 			colliders.remove(((ColliderComponent)entity.getComponent(ComponentType.COLLIDER)).getAABB());
-		}
-		if(entity.hasComponent(ComponentType.MOB)) {
-			colliders.remove(((MobComponent)entity.getComponent(ComponentType.MOB)).getAABB());
-			mobs.remove(entity);
 		}
 		this.entitiesToRemove.add(entity);
 		
@@ -171,9 +162,6 @@ public class World {
 		terrain.cleanup();
 		renderEngine.cleanup();
 	}
-	
-	public List<Entity> getMobs() {
-		return mobs;
-	}
+
 	
 }

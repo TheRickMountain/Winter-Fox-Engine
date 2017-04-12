@@ -12,7 +12,7 @@ public class Furnace extends Entity {
 		super(ResourceManager.getMesh("furnace"),
 				new Material(ResourceManager.getTexture("furnace")), transform);	
 		transform.setScale(0.5f);
-		addComponent(new ColliderComponent(1, 1, 1, transform));
+		addComponent(new ColliderComponent(1, 1, 1));
 	}
 
 }

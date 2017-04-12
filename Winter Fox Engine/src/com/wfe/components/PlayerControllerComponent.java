@@ -41,7 +41,7 @@ public class PlayerControllerComponent extends Component {
 
 	private AABB bb;
 	
-	private PlayerAnimationComponent animation;
+	private PlayerAnimation animation;
 	
 	private Source source;
 	
@@ -57,18 +57,20 @@ public class PlayerControllerComponent extends Component {
 	
 	private boolean fighting = false;
 	
-	public PlayerControllerComponent(Camera camera, Transformation transform, PlayerAnimationComponent playerAnim, Entity hand) {		
+	public PlayerControllerComponent(Camera camera, Transformation transform, PlayerAnimation playerAnim, Entity hand) {		
 		world = World.getWorld();
 		
 		this.camera = camera;
 		this.transform = transform;
 		this.animation = playerAnim;
-		this.bb = new AABB(transform.x - 0.4f, 0, transform.z - 0.4f, transform.x + 0.4f, 0 + 1, transform.z + 0.4f);
-		this.speed = 2.0f;
 		this.hand = hand;
 		this.source = new Source();
-		
-		this.timer = new TimeUtil();
+	}
+	
+	public void init() {
+		bb = new AABB(transform.x - 0.4f, 0, transform.z - 0.4f, transform.x + 0.4f, 0 + 1, transform.z + 0.4f);
+		speed = 2.0f;
+		timer = new TimeUtil();
 	}
 	
 	@Override
@@ -88,10 +90,10 @@ public class PlayerControllerComponent extends Component {
 					
 					source.play(ResourceManager.getSound("swing" + MyRandom.nextInt(1, 3)));
 					
-					for(Entity entity : World.getWorld().getMobs()) {
+					/*for(Entity entity : World.getWorld().getMobs()) {
 						MobComponent mc = (MobComponent) entity.getComponent(ComponentType.MOB);
 						mc.hurt(getParent(), 10);
-					}
+					}*/
 				}
 			}
 		} else {
@@ -224,8 +226,8 @@ public class PlayerControllerComponent extends Component {
 						if(checkDistance(tp.x, tp.z)) {
 							turnTo((int)tp.x, (int)tp.z);
 							if(!tile.isHasEntity()) {
-								tile.setEntity(GUIManager.inventory.getSelectedItem().entity.getInstance(
-										((int)tp.x) + 0.5f, 0, ((int)tp.z) + 0.5f));
+								tile.setEntity(GUIManager.inventory.getSelectedItem().entity.getInstance());
+								tile.getEntity().getTransform().setPosition(((int)tp.x) + 0.5f, 0, ((int)tp.z) + 0.5f);
 								tile.getEntity().getTransform().setRotY(buildingRotation);
 								world.addEntity(tile.getEntity());
 								GUIManager.inventory.removeItem(GUIManager.inventory.getSelectedItem(), 1);
@@ -434,11 +436,6 @@ public class PlayerControllerComponent extends Component {
 
 	@Override
 	public Component getInstance() {
-		return null;
-	}
-
-	@Override
-	public Component getInstane(Transformation transform) {
 		return null;
 	}
 	

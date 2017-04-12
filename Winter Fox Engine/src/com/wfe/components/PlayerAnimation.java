@@ -2,12 +2,10 @@ package com.wfe.components;
 
 import com.wfe.audio.AudioMaster;
 import com.wfe.core.ResourceManager;
-import com.wfe.ecs.Component;
-import com.wfe.ecs.ComponentType;
 import com.wfe.ecs.Transformation;
 import com.wfe.entities.Player;
 
-public class PlayerAnimationComponent extends Component {
+public class PlayerAnimation {
 
 	private enum AnimationType {
 		WALK,
@@ -33,7 +31,7 @@ public class PlayerAnimationComponent extends Component {
     private int hitAnimSpeed = 250;
     private int fightAnimSpeed = 450;
 	
-	public PlayerAnimationComponent(Player player) {
+	public PlayerAnimation(Player player) {
 		rightArm = player.rightArm.getTransform();
 		leftArm = player.leftArm.getTransform();
 		rightHip = player.rightHip.getTransform();
@@ -42,11 +40,6 @@ public class PlayerAnimationComponent extends Component {
 		rightForearm = player.rightForearm.getTransform();
 		leftShin = player.leftShin.getTransform();
 		rightShin = player.rightShin.getTransform();
-	}
-	
-	@Override
-	public void update(float dt) {	
-		
 	}
 	
 	public void walkAnim(float dt) {
@@ -127,21 +120,6 @@ public class PlayerAnimationComponent extends Component {
 
         leftShin.localRotY = 0;
         rightShin.localRotY = 0;
-	}
-
-	@Override
-	public ComponentType getType() {
-		return ComponentType.PLAYER_ANIMATION;
-	}
-
-	@Override
-	public Component getInstance() {
-		return null;
-	}
-
-	@Override
-	public Component getInstane(Transformation transform) {
-		return null;
 	}
 
 }

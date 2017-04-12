@@ -1,6 +1,6 @@
 package com.wfe.entities;
 
-import com.wfe.components.PlayerAnimationComponent;
+import com.wfe.components.PlayerAnimation;
 import com.wfe.components.PlayerControllerComponent;
 import com.wfe.core.Camera;
 import com.wfe.core.ResourceManager;
@@ -108,9 +108,8 @@ public class Player extends Entity {
 			World.getWorld().addEntity(rightShin);
 		}
 		
-		PlayerAnimationComponent animation = new PlayerAnimationComponent(this);
-		playerController = new PlayerControllerComponent(camera, transform, animation, rightForearm);
-		addComponent(animation);
+		playerController = new PlayerControllerComponent(camera, transform, 
+				new PlayerAnimation(this), rightForearm);
 		addComponent(playerController);
 	}
 

@@ -3,7 +3,11 @@ package com.wfe.ecs;
 public abstract class Component {
 
 	private Entity parent;
+	
+	public abstract void init();
+	
 	public abstract void update(float dt);
+	
 	public abstract ComponentType getType();
 	
 	protected void setParent(Entity parent) {
@@ -15,7 +19,5 @@ public abstract class Component {
 	}
 	
 	public abstract Component getInstance();
-	
-	public abstract Component getInstane(Transformation transform);
 	
 }

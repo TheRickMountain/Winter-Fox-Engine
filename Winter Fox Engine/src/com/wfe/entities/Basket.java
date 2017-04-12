@@ -13,7 +13,7 @@ public class Basket extends Entity {
 				new Material(ResourceManager.getTexture("basket")), new Transformation());	
 		setTag("basket");
 		getTransform().setScale(0.75f);
-		addComponent(new ColliderComponent(0.5f, 1, 0.5f, transform));
+		addComponent(new ColliderComponent(0.5f, 1, 0.5f));
 	}
 
 }

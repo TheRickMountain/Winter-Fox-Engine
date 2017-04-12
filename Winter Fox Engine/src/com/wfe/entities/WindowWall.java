@@ -13,7 +13,7 @@ public class WindowWall extends Entity {
 				new Material(ResourceManager.getTexture("walls")), new Transformation());	
 		setTag("window wall");
 		transform.setScale(0.5f);
-		addComponent(new ColliderComponent(1, 1, 1, transform));
+		addComponent(new ColliderComponent(1, 1, 1));
 	}
 	
 }

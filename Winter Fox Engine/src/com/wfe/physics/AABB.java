@@ -11,6 +11,10 @@ public class AABB {
 	 public float z1;
 
 	 public AABB(float x0, float y0, float z0, float x1, float y1, float z1) {
+		 set(x0, y0, z0, x1, y1, z1);
+	 }
+	 
+	 public void set(float x0, float y0, float z0, float x1, float y1, float z1) {
 		 this.x0 = x0;
 		 this.y0 = y0;
 		 this.z0 = z0;

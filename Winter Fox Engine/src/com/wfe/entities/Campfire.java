@@ -12,7 +12,7 @@ public class Campfire extends Entity {
 		super(ResourceManager.getMesh("campfire"),
 				new Material(ResourceManager.getTexture("campfire")), transform);	
 		transform.setScale(0.4f);
-		addComponent(new ColliderComponent(0.5f, 0.5f, 0.5f, transform));
+		addComponent(new ColliderComponent(0.5f, 0.5f, 0.5f));
 	}
 	
 }
