@@ -77,7 +77,11 @@ public class PlayerControllerComponent extends Component {
 	public void update(float dt) {	
 		if(!Mouse.isActiveInGUI())
 			iteractWithWorld(dt);
-		move(dt);
+		
+		if(GUIManager.state.equals(GUIManager.GUIState.GAME))
+			move(dt);
+		else
+			animation.idleAnim();
 	}
 	
 	public void iteractWithWorld(float dt) {
@@ -143,22 +147,14 @@ public class PlayerControllerComponent extends Component {
 					} else {
 						Display.setCursor(Display.takeNonactiveCursor);
 					}
-				} else if(entity.hasComponent(ComponentType.HIVE)) {
-					HiveComponent hive = (HiveComponent) entity.getComponent(ComponentType.HIVE);
-					if(hive.isReady()) {
+				}
+				
+				if(entity.hasComponent(ComponentType.CHEST)) {
+					if(Mouse.isButtonDown(1)) {
 						if(checkDistance(tp.x, tp.z)) {
-							Display.setCursor(Display.takeCursor);
-							if(Mouse.isButtonDown(1)) {
-								turnTo((int)tp.x, (int)tp.z);
-							
-								if(GUIManager.inventory.addItem(hive.getItem(), 
-										MyRandom.nextInt(hive.getCountMax()) + 1) == 0) {
-									hive.setReady(false);
-									source.play(hive.getSound());
-								}
-							}
-						} else {
-							Display.setCursor(Display.takeNonactiveCursor);
+							turnTo((int)tp.x, (int)tp.z);
+							GUIManager.openChest((ChestComponent) entity.getComponent(ComponentType.CHEST));
+							Mouse.setActiveInGUI(true);
 						}
 					}
 				}
@@ -200,6 +196,7 @@ public class PlayerControllerComponent extends Component {
 				
 			} else {
 				if(Mouse.isButtonDown(0)) {
+			
 					switch(GUIManager.inventory.getSelectedItem().id) {
 					case Item.HOE:
 						if(checkDistance(tp.x, tp.z)) {

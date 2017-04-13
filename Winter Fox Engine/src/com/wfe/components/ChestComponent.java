@@ -1,30 +1,30 @@
 package com.wfe.components;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.wfe.ecs.Component;
 import com.wfe.ecs.ComponentType;
-import com.wfe.gui.ItemDatabase;
+import com.wfe.gui.Slot;
+import com.wfe.utils.Rect;
 
 public class ChestComponent extends Component {
 
-	private int column;
-	private int row;
+	private int columns;
+	private int rows;
 	
-	private int[] slots;
-	private int[] counts;
+	private List<Slot> slots;
 	
-	public ChestComponent(int column, int row) {
-		this.column = column;
-		this.row = row;
+	public ChestComponent(int columns, int rows) {
+		this.columns = columns;
+		this.rows = rows;
 	}
 	
 	@Override
 	public void init() {
-		slots = new int[column * row];
-		counts = new int[slots.length];
-		
-		for(int i = 0; i < slots.length; i++) {
-			this.slots[i] = -1;
-			this.counts[i] = 0;
+		slots = new ArrayList<>(columns * rows);
+		for(int i = 0, n = columns * rows; i < n; i++) {
+			slots.add(new Slot(new Rect(0, 0, Slot.SIZE, Slot.SIZE)));
 		}
 	}
 	
@@ -33,66 +33,16 @@ public class ChestComponent extends Component {
 		
 	}
 	
-	private int hasItem(int item) {
-		for(int i = 0; i < this.slots.length; i++) {
-			if(item != this.slots[i]) continue;
-			return i;
-		}
-		return -1;
+	public int getColumns() {
+		return columns;
+	}
+
+	public int getRows() {
+		return rows;
 	}
 	
-	private int canStackWithSuchItem(int item) {
-		for(int i = 0; i < this.slots.length; i++) {
-			if(item == this.slots[i]) {
-				if(this.counts[i] < ItemDatabase.getItem(item).stackSize) {
-					return i;
-				}
-			}
-		}
-		return -1;
-	}
-	
-	private void addItem(int slot, int item, int count) {
-		int stack = ItemDatabase.getItem(item).stackSize;
-		if(count <= stack) {
-			counts[slot] = count;
-		} else {
-			counts[slot] = stack;
-			count -= stack;
-			addItem(item, count);
-		}
-	}
-	
-	public boolean addItem(int item, int count) {
-		int slot = hasItem(item);
-		if(slot == -1) {
-			slot = hasItem(slot);
-			if(slot == -1) {
-				return false;
-			}
-			
-			slots[slot] = item;
-			addItem(slot, item, count);
-		} else {
-			slot = canStackWithSuchItem(item);
-			if(slot == -1) {
-				slot = hasItem(slot);
-				if(slot == -1) {
-					return false;
-				}
-				
-				slots[slot] = item;
-				addItem(slot, item, count);
-			} else {
-				count = this.counts[slot] + count;
-				addItem(slot, item, count);
-			}
-		}
-		return true;
-	}
-	
-	public boolean removeItem(int item) {
-		return true;
+	public List<Slot> getSlots() {
+		return slots;
 	}
 	
 	@Override
@@ -102,7 +52,7 @@ public class ChestComponent extends Component {
 
 	@Override
 	public Component getInstance() {
-		return new ChestComponent(column, row);
+		return new ChestComponent(columns, rows);
 	}
 
 }

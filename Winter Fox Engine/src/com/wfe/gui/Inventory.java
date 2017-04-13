@@ -8,23 +8,20 @@ import com.wfe.audio.Source;
 import com.wfe.core.Display;
 import com.wfe.core.ResourceManager;
 import com.wfe.ecs.Entity;
-import com.wfe.font.GUIText;
 import com.wfe.game.Game;
 import com.wfe.input.Key;
 import com.wfe.input.Keyboard;
 import com.wfe.input.Mouse;
 import com.wfe.input.Scroll;
-import com.wfe.renderEngine.FontRenderer;
 import com.wfe.renderEngine.GUIRenderer;
-import com.wfe.utils.Color;
 import com.wfe.utils.Rect;
 
 public class Inventory {
 	
 	private Source source;
 	
-	private int rows = 3;
 	private int columns = 6;
+	private int rows = 3;
 	
 	protected GUIFrame hotbarFrame;
 	private List<Slot> hotbarSlots = new ArrayList<>();
@@ -34,12 +31,6 @@ public class Inventory {
 	
 	private List<Slot> allSlots = new ArrayList<>();
 	
-	private boolean open = false;
-	
-	private Item draggedItem;
-	private GUIText draggedItemText;
-	private int draggedItemCount;
-	
 	private Item selectedItem;
 	private int selected = 0;
 	private int lastSelected = 0;
@@ -48,7 +39,9 @@ public class Inventory {
 		source = new Source();
 		
 		// Hotbar
-		hotbarFrame = new GUIFrame(new Rect(0, 0, 405, 70));
+		hotbarFrame = new GUIFrame(new Rect(0, 0, 
+				20 + (columns - 1) * 5 + columns * Slot.SIZE, 
+				10 + Slot.SIZE));
 		
 		for(int i = 0; i < columns; i++) {
 			hotbarSlots.add(new Slot(new Rect(0, 0, Slot.SIZE, Slot.SIZE)));
@@ -56,7 +49,9 @@ public class Inventory {
 		}
 		
 		// Inventory
-		inventoryFrame = new GUIFrame(new Rect(0, 0, 405, 210));
+		inventoryFrame = new GUIFrame(new Rect(0, 0, 
+				20 + (columns - 1) * 5 + columns * Slot.SIZE, 
+				20 + (rows - 1) * 5 + rows * Slot.SIZE));
 		
 		for(int i = 0; i < rows * columns; i++) {
 			inventorySlots.add(new Slot(new Rect(0, 0, Slot.SIZE, Slot.SIZE)));
@@ -67,23 +62,9 @@ public class Inventory {
 		selectedItem = ItemDatabase.getItem(Item.NULL);
 		
 		updatePositions();
-		
-		draggedItem = ItemDatabase.getItem(Item.NULL);
-		draggedItemText = new GUIText("", FontRenderer.ARIAL);
-		draggedItemText.setScale(0.8f);
-		draggedItemCount = 0;
 	}
 	
-	public void update() {
-		if(Keyboard.isKeyDown(Key.KEY_G)) {
-			addItem(ItemDatabase.getItem(Item.AXE), 1);
-			addItem(ItemDatabase.getItem(Item.PICKAXE), 1);
-			addItem(ItemDatabase.getItem(Item.HOE), 1);
-			addItem(ItemDatabase.getItem(Item.CLUB), 1);
-			addItem(ItemDatabase.getItem(Item.WALL), 5);
-			addItem(ItemDatabase.getItem(Item.BASKET), 1);
-		}
-		
+	public void updateHotbar() {
 		if(Keyboard.isKeyDown(Key.KEY_1)) selected = 0;
 		else if(Keyboard.isKeyDown(Key.KEY_2)) selected = 1;
 		else if(Keyboard.isKeyDown(Key.KEY_3)) selected = 2;
@@ -110,80 +91,68 @@ public class Inventory {
 			
 			checkActiveSlot();
 		}
-		
-		if(Keyboard.isKeyDown(Key.KEY_E)) {
-			open = !open;
-			source.play(ResourceManager.getSound("inventory"));
-			
-			Display.setCursor(Display.defaultCursor);
-			Mouse.setActiveInGUI(open);
-		}
-		
-		if(open) {
-			if(Mouse.isButtonDown(1)) {
-				for(Slot slot : allSlots) {
-					if(slot.rect.isMouseOvered()) {
-						if(slot.isHasItem()) {
-							Item item = slot.getItem();
-							if(item.type.equals(ItemType.CONSUMABLE)) {
-								GUIManager.stats.addHunger(item.hunger);
-								GUIManager.stats.addThirst(item.thirst);
-								slot.setCount(slot.getCount() - 1);
-								if(slot.getCount() == 0) {
-									slot.addItem(ItemDatabase.getItem(Item.NULL), 0);
-								}
-								source.play(ResourceManager.getSound("eating"));
+	}
+	
+	public void update() {
+		if(Mouse.isButtonDown(1)) {
+			for(Slot slot : allSlots) {
+				if(slot.rect.isMouseOvered()) {
+					if(slot.isHasItem()) {
+						Item item = slot.getItem();
+						if(item.type.equals(ItemType.CONSUMABLE)) {
+							GUIManager.stats.addHunger(item.hunger);
+							GUIManager.stats.addThirst(item.thirst);
+							slot.setCount(slot.getCount() - 1);
+							if(slot.getCount() == 0) {
+								slot.addItem(ItemDatabase.getItem(Item.NULL), 0);
 							}
+							source.play(ResourceManager.getSound("eating"));
 						}
 					}
 				}
 			}
-			
-			if(Mouse.isButtonDown(0)) {
-				for(Slot slot : allSlots) {
-					if(slot.rect.isMouseOvered()) {
-						if(slot.isHasItem()) {
-							if(draggedItem.id == Item.NULL) {
-								setDraggedItem(slot.getItem(), slot.getCount());
-								slot.addItem(ItemDatabase.getItem(Item.NULL), 0);
-								if(slot.isSelected()) {
-									Game.player.playerController.removeEquipment();
-								}
-							} else {
-								Item item = slot.getItem();
-								int count = slot.getCount();
-								
-								if(item.id == draggedItem.id) {
-									int totalCount = count + draggedItemCount;
-									if(totalCount <= item.stackSize) {
-										slot.addItem(item, totalCount);
-										setDraggedItem(ItemDatabase.getItem(Item.NULL), 0);
-									} else {
-										slot.addItem(item, item.stackSize);
-										setDraggedItem(item, totalCount - item.stackSize);
-									}
-								} else {
-									slot.addItem(draggedItem, draggedItemCount);
-									setDraggedItem(item, count);
-									
-									checkActiveSlot();
-								}
+		}
+
+		if(Mouse.isButtonDown(0)) {
+			for(Slot slot : allSlots) {
+				if(slot.rect.isMouseOvered()) {
+					if(slot.isHasItem()) {
+						if(GUIManager.draggedItem.id == Item.NULL) {
+							GUIManager.setDraggedItem(slot.getItem(), slot.getCount());
+							slot.addItem(ItemDatabase.getItem(Item.NULL), 0);
+							if(slot.isSelected()) {
+								Game.player.playerController.removeEquipment();
 							}
 						} else {
-							if(draggedItem.id != Item.NULL) {
-								slot.addItem(draggedItem, draggedItemCount);
-								setDraggedItem(ItemDatabase.getItem(Item.NULL), 0);
-								
+							Item item = slot.getItem();
+							int count = slot.getCount();
+
+							if(item.id == GUIManager.draggedItem.id) {
+								int totalCount = count + GUIManager.draggedItemCount;
+								if(totalCount <= item.stackSize) {
+									slot.addItem(item, totalCount);
+									GUIManager.setDraggedItem(ItemDatabase.getItem(Item.NULL), 0);
+								} else {
+									slot.addItem(item, item.stackSize);
+									GUIManager.setDraggedItem(item, totalCount - item.stackSize);
+								}
+							} else {
+								slot.addItem(GUIManager.draggedItem, GUIManager.draggedItemCount);
+								GUIManager.setDraggedItem(item, count);
+
 								checkActiveSlot();
 							}
 						}
+					} else {
+						if(GUIManager.draggedItem.id != Item.NULL) {
+							slot.addItem(GUIManager.draggedItem, GUIManager.draggedItemCount);
+							GUIManager.setDraggedItem(ItemDatabase.getItem(Item.NULL), 0);
+
+							checkActiveSlot();
+						}
 					}
 				}
 			}
-		}
-		
-		if(Display.isResized()) {
-			updatePositions();
 		}
 	}
 	
@@ -232,52 +201,35 @@ public class Inventory {
 		}
 	}
 	
-	public void render() {
-		if(open) {
-			GUIRenderer.render(inventoryFrame.getFrameTextures());
-			
-			for(Slot slot : inventorySlots) {
-				slot.render();
-			}
-		}
-		
+	public void renderHotbar() {
 		GUIRenderer.render(hotbarFrame.getFrameTextures());
 		
 		for(Slot slot : hotbarSlots) {
 			slot.render();
 		}
 	}
+	
+	public void render() {
+		GUIRenderer.render(inventoryFrame.getFrameTextures());
 
-	public void renderText() {
-		if(open) {
-			for(Slot slot : inventorySlots) {
-				slot.renderText();
-			}
+		for(Slot slot : inventorySlots) {
+			slot.render();
 		}
-		
+	}
+	
+	public void renderHotbarText() {
 		for(Slot slot : hotbarSlots) {
 			slot.renderText();
 		}
 	}
 
-	public void renderPopUp() {
-		if(draggedItem.id != Item.NULL) {
-			GUIRenderer.render(draggedItem.icon, Color.WHITE, 
-					Mouse.getX() - Slot.SIZE / 2, Mouse.getY() - Slot.SIZE / 2, 
-					0, Slot.SIZE, Slot.SIZE, false);
-		}
-	}
-
-	public void renderPopUpText() {
-		if(draggedItem.id != Item.NULL) {
-			draggedItemText.setPosition(
-					Mouse.getX() + Slot.SIZE / 2 - draggedItemText.getWidth(), 
-					Mouse.getY() + Slot.SIZE / 2 - (draggedItemText.getHeight() / 2));
-			FontRenderer.render(draggedItemText);
+	public void renderText() {
+		for(Slot slot : inventorySlots) {
+			slot.renderText();
 		}
 	}
 	
-	private void updatePositions() {
+	public void updatePositions() {
 		hotbarFrame.setPosition(Display.getWidth() / 2 - hotbarFrame.getWidth() / 2, 
 				Display.getHeight() - hotbarFrame.getHeight());
 		
@@ -302,15 +254,6 @@ public class Inventory {
 				countY++;
 			}
 		}
-	}
-	
-	private void setDraggedItem(Item item, int count) {
-		draggedItem = item;
-		draggedItemCount = count;
-		if(count > 1)
-			draggedItemText.setText("" + count);
-		else
-			draggedItemText.setText("");
 	}
 	
 	public int hasItem(Item item) {

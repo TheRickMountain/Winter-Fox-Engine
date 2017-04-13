@@ -8,7 +8,7 @@ import com.wfe.textures.Texture;
 import com.wfe.utils.Color;
 import com.wfe.utils.Rect;
 
-public class Slot implements GUIComponent {
+public class Slot {
 	
 	public Rect rect;
 	private static final Texture SELECTED = ResourceManager.getTexture("selected_slot_ui");
@@ -30,7 +30,6 @@ public class Slot implements GUIComponent {
 		addItem(ItemDatabase.getItem(Item.NULL), 0);
 	}
 	
-	@Override
 	public void render() {
 		if(selected) {
 			GUIRenderer.render(SELECTED, Color.WHITE, rect.x, rect.y, 0, rect.width, rect.height, false);
@@ -44,7 +43,6 @@ public class Slot implements GUIComponent {
 		}
 	}
 
-	@Override
 	public void renderText() {
 		if(item.id != Item.NULL) {
 			countText.setPosition(
