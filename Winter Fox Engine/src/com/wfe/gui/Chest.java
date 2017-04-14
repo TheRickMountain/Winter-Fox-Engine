@@ -42,7 +42,15 @@ public class Chest {
 				}
 			}
 		}
-
+		
+		for(Slot slot : slots) {
+			if(slot.rect.isMouseOvered()) {
+				if(slot.isHasItem()) {
+					GUIManager.showPopUp(slot.getItem());
+				}
+			}
+		}
+			
 		if(Mouse.isButtonDown(0)) {
 			for(Slot slot : slots) {
 				if(slot.rect.isMouseOvered()) {

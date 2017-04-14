@@ -37,6 +37,12 @@ public class Crafting {
 			updatePositions();
 		}
 		
+		for(Slot slot : slots) {
+			if(slot.rect.isMouseOvered()) {
+				GUIManager.showPopUp(slot.getItem());
+			}
+		}
+		
 		if(Mouse.isButtonDown(0)) {
 			for(Slot recipe : slots) {
 				if(recipe.rect.isMouseOvered()) {
