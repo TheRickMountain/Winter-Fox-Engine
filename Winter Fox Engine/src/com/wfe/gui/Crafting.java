@@ -42,7 +42,7 @@ public class Crafting {
 		if(background.rect.isMouseOvered()) {
 			for(Slot slot : slots) {
 				if(slot.rect.isMouseOvered()) {
-					GUIManager.showPopUp(slot.getItem());
+					GUIManager.showPopUpCraftInfo(slot.getItem());
 				}
 			}
 		}

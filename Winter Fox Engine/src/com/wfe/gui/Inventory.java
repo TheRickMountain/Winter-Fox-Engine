@@ -117,7 +117,7 @@ public class Inventory {
 			for(Slot slot : allSlots) {
 				if(slot.rect.isMouseOvered()) {
 					if(slot.isHasItem()) {
-						GUIManager.showPopUp(slot.getItem());
+						GUIManager.showPopUpInfo(slot.getItem());
 					}
 				}
 			}

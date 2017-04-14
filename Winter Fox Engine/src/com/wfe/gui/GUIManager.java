@@ -13,6 +13,7 @@ import com.wfe.input.Keyboard;
 import com.wfe.input.Mouse;
 import com.wfe.renderEngine.FontRenderer;
 import com.wfe.renderEngine.GUIRenderer;
+import com.wfe.textures.Texture;
 import com.wfe.utils.Color;
 import com.wfe.utils.Rect;
 
@@ -36,6 +37,8 @@ public class GUIManager  {
 	private static int iconSize;
 	private static List<GUITexture> icons = new ArrayList<GUITexture>();
 	private static List<GUIText> iconsText = new ArrayList<GUIText>();
+	private static float mouseOffsetX;
+	private static float mouseOffsetY;
 	
 	protected static Item draggedItem;
 	protected static GUIText draggedItemText;
@@ -57,6 +60,8 @@ public class GUIManager  {
 		popUpText = new GUIText("", FontRenderer.ARIAL);
 		popUpItem = ItemDatabase.getItem(Item.NULL);
 		iconSize = 20;
+		mouseOffsetX = 30;
+		mouseOffsetY = 15;
 		
 		draggedItem = ItemDatabase.getItem(Item.NULL);
 		draggedItemText = new GUIText("", FontRenderer.ARIAL);
@@ -111,7 +116,13 @@ public class GUIManager  {
 		}
 		
 		if(showPopUp) {
-			popUp.setPosition(Mouse.getX() + 30, Mouse.getY() + 15);
+			if(Mouse.getY() + mouseOffsetY + popUp.rect.height <= Display.getHeight()) {
+				popUp.setPosition(Mouse.getX() + mouseOffsetX, Mouse.getY() + mouseOffsetY);
+			} else {
+				popUp.setPosition(Mouse.getX() + mouseOffsetX, 
+						Display.getHeight() - popUp.rect.height);
+			}
+			
 			popUpText.setPosition(popUp.getX(), popUp.getY());
 			
 			for(int i = 0, n = icons.size(); i < n; i++) {
@@ -225,7 +236,17 @@ public class GUIManager  {
 		state = GUIState.CHEST;
 	}
 	
-	public static void showPopUp(Item item) {
+	private static boolean inv = false;
+	private static boolean crf = false;
+	
+	public static void showPopUpInfo(Item item) {
+		if(!inv) {
+			crf = false;
+			inv = true;
+			
+			popUpItem = ItemDatabase.getItem(Item.NULL);
+		}
+		
 		if(popUpItem.id != item.id) {
 			popUpItem = item;
 			
@@ -234,65 +255,115 @@ public class GUIManager  {
 			icons.clear();
 			iconsText.clear();
 			
-			int height = 0;
+			float height = 20 + popUpText.getHeight();
+			float width = 20 + popUpText.getWidth();
+			
+			int count = 0;
 			
 			if(item.health != 0) {
 				height += iconSize + 5;
-				icons.add(new GUITexture(ResourceManager.getTexture("health_icon_ui"),
-						new Rect(0, 0, iconSize, iconSize), false));
+				createInfoLine(ResourceManager.getTexture("health_icon_ui"), item.health, "Health", false);
 				
-				GUIText text = new GUIText(((item.health > 0) ? "+" : "") +
-						String.valueOf(item.health), FontRenderer.ARIAL);
-				text.setScale(0.8f);
-				iconsText.add(text);
-				
-				if(item.health > 0) {
-					text.getColor().set(0.1f, 1.0f, 0.1f);
-				} else {
-					text.getColor().set(1.0f, 0.1f, 0.1f);
+				float tmpWidth = 20 + iconSize + 5 + iconsText.get(count).getWidth();
+				if(tmpWidth > width) {
+					width = tmpWidth;
 				}
+				
+				count++;
 			}
 			
 			if(item.hunger != 0) {
 				height += iconSize + 5;
-				icons.add(new GUITexture(ResourceManager.getTexture("hunger_icon_ui"), 
-						new Rect(0, 0, iconSize, iconSize), false));
+				createInfoLine(ResourceManager.getTexture("hunger_icon_ui"), item.hunger, "Hunger", false);
 				
-				GUIText text = new GUIText(((item.hunger > 0) ? "+" : "") +
-						String.valueOf(item.hunger), FontRenderer.ARIAL);
-				text.setScale(0.8f);
-				iconsText.add(text);
-				
-				if(item.hunger > 0) {
-					text.getColor().set(0.1f, 1.0f, 0.1f);
-				} else {
-					text.getColor().set(1.0f, 0.1f, 0.1f);
+				float tmpWidth = 20 + iconSize + 5 + iconsText.get(count).getWidth();
+				if(tmpWidth > width) {
+					width = tmpWidth;
 				}
+				
+				count++;
 			}
 			
 			if(item.thirst != 0) {
 				height += iconSize + 5;
-				icons.add(new GUITexture(ResourceManager.getTexture("thirst_icon_ui"), 
-						new Rect(0, 0, iconSize, iconSize), false));
+				createInfoLine(ResourceManager.getTexture("thirst_icon_ui"), item.thirst, "Thirst", false);
 				
-				GUIText text = new GUIText(((item.thirst > 0) ? "+" : "") + 
-						String.valueOf(item.thirst), FontRenderer.ARIAL);
-				text.setScale(0.8f);
-				iconsText.add(text);
-				
-				if(item.thirst > 0) {
-					text.getColor().set(0.1f, 1.0f, 0.1f);
-				} else {
-					text.getColor().set(1.0f, 0.1f, 0.1f);
+				float tmpWidth = 20 + iconSize + 5 + iconsText.get(count).getWidth();
+				if(tmpWidth > width) {
+					width = tmpWidth;
 				}
 			}
 			
-			
-			
-			popUp.setSize(20 + popUpText.getWidth(), 20 + popUpText.getHeight() + height);
+			popUp.setSize(width, height);
 		}
 		
 		showPopUp = true;
+	}
+	
+	public static void showPopUpCraftInfo(Item item) {
+		if(!crf) {
+			crf = true;
+			inv = false;
+			
+			popUpItem = ItemDatabase.getItem(Item.NULL);
+		}
+		
+		if(popUpItem.id != item.id) {
+			popUpItem = item;
+			
+			popUpText.setText(item.name);
+			
+			icons.clear();
+			iconsText.clear();
+			
+			float height = 20 + popUpText.getHeight();
+			float width = 20 + popUpText.getWidth();
+			
+			
+			int[] ingredients = item.ingredients;
+			int count = 0;
+			for(int i = 0, n = ingredients.length; i < n; i += 2) {
+				Item tmp = ItemDatabase.getItem(ingredients[i]);
+				createInfoLine(tmp.icon, ingredients[i + 1], tmp.name, true);
+				height += iconSize + 5;
+				
+				float tmpWidth = 20 + iconSize + 5 + iconsText.get(count).getWidth();
+				if(tmpWidth > width) {
+					width = tmpWidth;
+				}
+				
+				count++;
+			}
+			
+			popUp.setSize(width, height);
+		}
+		
+		showPopUp = true;
+	}
+	
+	private static void createInfoLine(Texture texture, int value, String name, boolean craft) {
+		icons.add(new GUITexture(texture, new Rect(0, 0, iconSize, iconSize), false));
+		
+		GUIText text;
+		if(craft) {
+			text = new GUIText(String.valueOf(value) + " " + name, FontRenderer.ARIAL);
+			text.setScale(0.8f);
+			iconsText.add(text);
+			
+			text.getColor().set(1.0f, 1.0f, 1.0f);
+			
+		} else {
+			text = new GUIText(((value > 0) ? "+" : "") + 
+					String.valueOf(value) + " " + name, FontRenderer.ARIAL);
+			text.setScale(0.8f);
+			iconsText.add(text);
+		
+			if(value > 0) {
+				text.getColor().set(0.1f, 1.0f, 0.1f);
+			} else {
+				text.getColor().set(1.0f, 0.1f, 0.1f);
+			}
+		}
 	}
 	
 }
