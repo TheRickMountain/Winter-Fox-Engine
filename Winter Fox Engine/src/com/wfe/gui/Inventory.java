@@ -41,7 +41,7 @@ public class Inventory {
 		// Hotbar
 		hotbarFrame = new GUIFrame(new Rect(0, 0, 
 				20 + (columns - 1) * 5 + columns * Slot.SIZE, 
-				10 + Slot.SIZE));
+				10 + Slot.SIZE), false);
 		
 		for(int i = 0; i < columns; i++) {
 			hotbarSlots.add(new Slot(new Rect(0, 0, Slot.SIZE, Slot.SIZE)));
@@ -51,7 +51,7 @@ public class Inventory {
 		// Inventory
 		inventoryFrame = new GUIFrame(new Rect(0, 0, 
 				20 + (columns - 1) * 5 + columns * Slot.SIZE, 
-				20 + (rows - 1) * 5 + rows * Slot.SIZE));
+				20 + (rows - 1) * 5 + rows * Slot.SIZE), false);
 		
 		for(int i = 0; i < rows * columns; i++) {
 			inventorySlots.add(new Slot(new Rect(0, 0, Slot.SIZE, Slot.SIZE)));
@@ -113,6 +113,14 @@ public class Inventory {
 			}
 		}
 
+		for(Slot slot : allSlots) {
+			if(slot.rect.isMouseOvered()) {
+				if(slot.isHasItem()) {
+					GUIManager.showPopUp(slot.getItem());
+				}
+			}
+		}
+		
 		if(Mouse.isButtonDown(0)) {
 			for(Slot slot : allSlots) {
 				if(slot.rect.isMouseOvered()) {

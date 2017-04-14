@@ -26,6 +26,11 @@ public class GUIManager  {
 	public static Chest chest;
 	public static PlayerStats stats;
 	
+	private static boolean showPopUp;
+	private static GUIFrame popUp;
+	private static GUIText popUpText;
+	private static Item popUpItem;
+	
 	protected static Item draggedItem;
 	protected static GUIText draggedItemText;
 	protected static int draggedItemCount;
@@ -42,6 +47,10 @@ public class GUIManager  {
 		chest = new Chest();
 		stats = new PlayerStats();
 		
+		popUp = new GUIFrame(new Rect(0, 0, 256, 64), true);
+		popUpText = new GUIText("", FontRenderer.ARIAL);
+		popUpItem = ItemDatabase.getItem(Item.NULL);
+		
 		draggedItem = ItemDatabase.getItem(Item.NULL);
 		draggedItemText = new GUIText("", FontRenderer.ARIAL);
 		draggedItemText.setScale(0.8f);
@@ -52,7 +61,7 @@ public class GUIManager  {
 		updatePositions();
 	}
 	
-	public static void update() {	
+	public static void update() {			
 		if(Keyboard.isKeyDown(Key.KEY_F)) {
 			inventory.addItem(ItemDatabase.getItem(Item.BASKET), 1);
 			inventory.addItem(ItemDatabase.getItem(Item.PICKAXE), 1);
@@ -90,6 +99,11 @@ public class GUIManager  {
 			chest.update();
 			inventory.update();
 			break;
+		}
+		
+		if(showPopUp) {
+			popUp.setPosition(Mouse.getX() + 30, Mouse.getY() + 15);
+			popUpText.setPosition(popUp.getX(), popUp.getY());
 		}
 		
 		stats.update();
@@ -141,6 +155,10 @@ public class GUIManager  {
 					Mouse.getX() - Slot.SIZE / 2, Mouse.getY() - Slot.SIZE / 2, 
 					0, Slot.SIZE, Slot.SIZE, false);
 		}
+		
+		if(showPopUp) {
+			GUIRenderer.render(popUp.getFrameTextures());
+		}
 	}
 	
 	public static void renderPopUpText() {
@@ -150,6 +168,12 @@ public class GUIManager  {
 					Mouse.getY() - Slot.SIZE / 2 + 3f);
 			FontRenderer.render(draggedItemText);
 		}
+		
+		if(showPopUp) {
+			FontRenderer.render(popUpText);
+		}
+		
+		showPopUp = false;
 	}
 	
 	private static void updatePositions() {
@@ -173,6 +197,17 @@ public class GUIManager  {
 	public static void openChest(ChestComponent chestComponent) {
 		chest.open(chestComponent);
 		state = GUIState.CHEST;
+	}
+	
+	public static void showPopUp(Item item) {
+		if(popUpItem.id != item.id) {
+			popUpItem = item;
+			
+			popUpText.setText(item.name);
+			popUp.setSize(20 + popUpText.getWidth(), 20 + popUpText.getHeight());
+		}
+		
+		showPopUp = true;
 	}
 	
 }

@@ -20,7 +20,7 @@ public class Chest {
 	private int rows;
 	
 	public Chest() {
-		background = new GUIFrame(new Rect(0, 0, 0, 0));
+		background = new GUIFrame(new Rect(0, 0, 0, 0), false);
 	}
 	
 	public void update() {

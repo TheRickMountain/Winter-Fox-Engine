@@ -81,7 +81,7 @@ public class ItemDatabase {
 		
 		addItem(new ItemBuilder(Item.CROSS_WALL, "Cross wall", ResourceManager.getTexture("cross_wall_ui"), 
 				ItemType.BUILDING)
-				.setDescription("Common useful resource")
+				.setDescription("Common useful resource") 
 				.setEntity(new CrossWall())
 				.setIngredients(Item.LOG, 5)
 				.create());
@@ -101,7 +101,7 @@ public class ItemDatabase {
 		
 		addItem(new ItemBuilder(Item.ROPE, "Rope", ResourceManager.getTexture("rope_ui"), ItemType.RESOURCE)
 				.setDescription("Common useful resource")
-				.setIngredients(Item.FIBER, 5)
+				.setIngredients(Item.FIBER, 3)
 				.create());
 		
 		addItem(new ItemBuilder(Item.WELL, "Well", ResourceManager.getTexture("well_ui"), ItemType.BUILDING)
@@ -149,8 +149,9 @@ public class ItemDatabase {
 				.setDescription("Common useful resource")
 				.create());
 		
-		addItem(new ItemBuilder(Item.WHEAT_SEEDS, "Wheat seeds", ResourceManager.getTexture("wheat_seeds_ui"), ItemType.RESOURCE)
+		addItem(new ItemBuilder(Item.WHEAT_SEEDS, "Wheat seeds", ResourceManager.getTexture("wheat_seeds_ui"), ItemType.CONSUMABLE)
 				.setDescription("Common useful resource")
+				.setHunger(4)
 				.setIngredients(Item.WHEAT, 1)
 				.create());
 		

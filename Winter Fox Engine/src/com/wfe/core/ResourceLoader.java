@@ -59,6 +59,15 @@ public class ResourceLoader {
 		ResourceManager.loadTexture("v_edge_frame_ui", Texture.newTexture(new MyFile("gui/v_edge_frame.png"))
 				.normalMipMap().create());
 		
+		ResourceManager.loadTexture("popUp_background_frame_ui", Texture.newTexture(new MyFile("gui/popUp_background_frame.png"))
+				.normalMipMap().create());
+		ResourceManager.loadTexture("popUp_corner_frame_ui", Texture.newTexture(new MyFile("gui/popUp_corner_frame.png"))
+				.normalMipMap().create());
+		ResourceManager.loadTexture("popUp_h_edge_frame_ui", Texture.newTexture(new MyFile("gui/popUp_h_edge_frame.png"))
+				.normalMipMap().create());
+		ResourceManager.loadTexture("popUp_v_edge_frame_ui", Texture.newTexture(new MyFile("gui/popUp_v_edge_frame.png"))
+				.normalMipMap().create());
+		
 		/* Icons */
 		ResourceManager.loadTexture("apple_ui", Texture.newTexture(new MyFile("gui/items/apple.png"))
 				.normalMipMap().create());

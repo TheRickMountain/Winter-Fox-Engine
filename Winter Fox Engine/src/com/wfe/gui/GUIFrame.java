@@ -14,10 +14,10 @@ public class GUIFrame {
 	private static final int BACKGROUND = 8;
 	public static final int RIM_SIZE = 5;
 	
-	private static Texture cornerTexture = ResourceManager.getTexture("corner_frame_ui");
-	private static Texture hEdgeTexture = ResourceManager.getTexture("h_edge_frame_ui");
-	private static Texture vEdgeTexture = ResourceManager.getTexture("v_edge_frame_ui");
-	private static Texture backgroundTexture = ResourceManager.getTexture("background_frame_ui");
+	private static Texture cornerTexture;
+	private static Texture hEdgeTexture;
+	private static Texture vEdgeTexture;
+	private static Texture backgroundTexture;
 	
 	public final Rect rect;
 	
@@ -25,8 +25,21 @@ public class GUIFrame {
 	
 	private boolean active = true;
 	
-	public GUIFrame(Rect rect) {
+	public GUIFrame(Rect rect, boolean popUp) {
 		this.rect = rect;
+		
+		if(popUp) {
+			cornerTexture = ResourceManager.getTexture("popUp_corner_frame_ui");
+			hEdgeTexture = ResourceManager.getTexture("popUp_h_edge_frame_ui");
+			vEdgeTexture = ResourceManager.getTexture("popUp_v_edge_frame_ui");
+			backgroundTexture = ResourceManager.getTexture("popUp_background_frame_ui");
+		} else {
+			cornerTexture = ResourceManager.getTexture("corner_frame_ui");
+			hEdgeTexture = ResourceManager.getTexture("h_edge_frame_ui");
+			vEdgeTexture = ResourceManager.getTexture("v_edge_frame_ui");
+			backgroundTexture = ResourceManager.getTexture("background_frame_ui");
+		}
+		
 		createFrame();
 		setTexturePositions();
 		setTextureRotations();

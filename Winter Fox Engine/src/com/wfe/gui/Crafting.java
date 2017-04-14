@@ -20,7 +20,7 @@ public class Crafting {
 	public Crafting() {
 		background = new GUIFrame(new Rect(0, 0, 
 				20 + (columns - 1) * 5 + columns * Slot.SIZE, 
-				20 + (rows - 1) * 5 + rows * Slot.SIZE));
+				20 + (rows - 1) * 5 + rows * Slot.SIZE), false);
 		
 		for(Item item : ItemDatabase.getDatabase()) {
 			if(item.isHasCraft()) {
