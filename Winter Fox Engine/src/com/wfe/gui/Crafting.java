@@ -3,7 +3,9 @@ package com.wfe.gui;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.wfe.audio.AudioMaster;
 import com.wfe.core.Display;
+import com.wfe.core.ResourceManager;
 import com.wfe.input.Mouse;
 import com.wfe.renderEngine.GUIRenderer;
 import com.wfe.utils.Rect;
@@ -37,9 +39,11 @@ public class Crafting {
 			updatePositions();
 		}
 		
-		for(Slot slot : slots) {
-			if(slot.rect.isMouseOvered()) {
-				GUIManager.showPopUp(slot.getItem());
+		if(background.rect.isMouseOvered()) {
+			for(Slot slot : slots) {
+				if(slot.rect.isMouseOvered()) {
+					GUIManager.showPopUp(slot.getItem());
+				}
 			}
 		}
 		
@@ -66,6 +70,8 @@ public class Crafting {
 						}
 
 						updateRecipes();
+						
+						AudioMaster.defaultSource.play(ResourceManager.getSound("taking"));
 					}
 				} 
 			}

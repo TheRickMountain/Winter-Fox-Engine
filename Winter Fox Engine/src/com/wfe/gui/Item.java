@@ -40,6 +40,7 @@ public class Item {
 	public final Entity entity;
 	public final ItemType type;
 	public final int stackSize;
+	public final int health;
 	public final int hunger;
 	public final int thirst;
 	public final int volume;
@@ -47,13 +48,14 @@ public class Item {
 	private boolean isHasCraft;
 	
 	public Item(int id, String name, String description, Texture icon, Entity entity, 
-			ItemType type, int hunger, int thirst, int volume, int stackSize, int[] ingredients) {
+			ItemType type, int health, int hunger, int thirst, int volume, int stackSize, int[] ingredients) {
 		this.id = id;
 		this.name = name;
 		this.description = description;
 		this.icon = icon;
 		this.entity = entity;
 		this.type = type;
+		this.health = health;
 		this.hunger = hunger;
 		this.thirst = thirst;
 		this.volume = volume;

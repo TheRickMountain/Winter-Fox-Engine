@@ -13,6 +13,7 @@ public class ItemBuilder {
 	private String description;
 	private Entity entity;
 	private int stackSize;
+	private int health;
 	private int hunger;
 	private int thirst;
 	private int volume;
@@ -29,7 +30,7 @@ public class ItemBuilder {
 	}
 	
 	public Item create() {
-		return new Item(id, name, description, icon, entity, type, hunger, thirst, volume, stackSize, ingredients);
+		return new Item(id, name, description, icon, entity, type, health, hunger, thirst, volume, stackSize, ingredients);
 	}
 
 	public ItemBuilder setDescription(String description) {
@@ -44,6 +45,11 @@ public class ItemBuilder {
 
 	public ItemBuilder setStackSize(int stackSize) {
 		this.stackSize = stackSize;
+		return this;
+	}
+	
+	public ItemBuilder setHealth(int health) {
+		this.health = health;
 		return this;
 	}
 

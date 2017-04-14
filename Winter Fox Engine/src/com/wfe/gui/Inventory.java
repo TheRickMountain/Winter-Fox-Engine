@@ -113,10 +113,12 @@ public class Inventory {
 			}
 		}
 
-		for(Slot slot : allSlots) {
-			if(slot.rect.isMouseOvered()) {
-				if(slot.isHasItem()) {
-					GUIManager.showPopUp(slot.getItem());
+		if(inventoryFrame.rect.isMouseOvered() || hotbarFrame.rect.isMouseOvered()) {
+			for(Slot slot : allSlots) {
+				if(slot.rect.isMouseOvered()) {
+					if(slot.isHasItem()) {
+						GUIManager.showPopUp(slot.getItem());
+					}
 				}
 			}
 		}

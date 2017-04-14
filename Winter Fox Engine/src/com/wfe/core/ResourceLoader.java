@@ -41,13 +41,18 @@ public class ResourceLoader {
 				.normalMipMap().create());
 		/*** *** ***/
 		
-		/*** GUI Elements ***/							
-		ResourceManager.loadTexture("slot_ui", Texture.newTexture(new MyFile("gui/elements/slot.png"))
+		/*** GUI Elements ***/	
+		ResourceManager.loadTexture("hunger_icon_ui", Texture.newTexture(new MyFile("gui/hunger_icon.png"))
 				.normalMipMap().create());
+		ResourceManager.loadTexture("health_icon_ui", Texture.newTexture(new MyFile("gui/health_icon.png"))
+				.normalMipMap().create());
+		ResourceManager.loadTexture("thirst_icon_ui", Texture.newTexture(new MyFile("gui/thirst_icon.png"))
+				.normalMipMap().create());
+		
 		ResourceManager.loadTexture("selected_slot_ui", Texture.newTexture(new MyFile("gui/elements/selected_slot.png"))
 				.normalMipMap().create());
 		
-		ResourceManager.loadTexture("cross_ui", Texture.newTexture(new MyFile("gui/elements/cross.png"))
+		ResourceManager.loadTexture("selected_slot_ui", Texture.newTexture(new MyFile("gui/elements/selected_slot.png"))
 				.normalMipMap().create());
 		
 		ResourceManager.loadTexture("background_frame_ui", Texture.newTexture(new MyFile("gui/background_frame.png"))

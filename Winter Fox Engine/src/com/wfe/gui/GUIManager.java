@@ -1,5 +1,8 @@
 package com.wfe.gui;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.wfe.audio.AudioMaster;
 import com.wfe.components.ChestComponent;
 import com.wfe.core.Display;
@@ -30,6 +33,9 @@ public class GUIManager  {
 	private static GUIFrame popUp;
 	private static GUIText popUpText;
 	private static Item popUpItem;
+	private static int iconSize;
+	private static List<GUITexture> icons = new ArrayList<GUITexture>();
+	private static List<GUIText> iconsText = new ArrayList<GUIText>();
 	
 	protected static Item draggedItem;
 	protected static GUIText draggedItemText;
@@ -50,6 +56,7 @@ public class GUIManager  {
 		popUp = new GUIFrame(new Rect(0, 0, 256, 64), true);
 		popUpText = new GUIText("", FontRenderer.ARIAL);
 		popUpItem = ItemDatabase.getItem(Item.NULL);
+		iconSize = 20;
 		
 		draggedItem = ItemDatabase.getItem(Item.NULL);
 		draggedItemText = new GUIText("", FontRenderer.ARIAL);
@@ -68,6 +75,8 @@ public class GUIManager  {
 			inventory.addItem(ItemDatabase.getItem(Item.AXE), 1);
 			inventory.addItem(ItemDatabase.getItem(Item.CLUB), 1);
 			inventory.addItem(ItemDatabase.getItem(Item.HOE), 1);
+			inventory.addItem(ItemDatabase.getItem(Item.APPLE), 1);
+			inventory.addItem(ItemDatabase.getItem(Item.HONEY), 1);
 		}
 		
 		if(Keyboard.isKeyDown(Key.KEY_E)) {
@@ -104,6 +113,15 @@ public class GUIManager  {
 		if(showPopUp) {
 			popUp.setPosition(Mouse.getX() + 30, Mouse.getY() + 15);
 			popUpText.setPosition(popUp.getX(), popUp.getY());
+			
+			for(int i = 0, n = icons.size(); i < n; i++) {
+				GUITexture icon = icons.get(i);
+				icon.rect.setPosition(popUp.getX(), 
+						popUpText.getY() + popUpText.getHeight() + (i * (iconSize + 5)) + 5);
+				
+				GUIText text = iconsText.get(i);
+				text.setPosition(icon.rect.getX() + icon.rect.getWidth() + 5, icon.rect.getY());
+			}
 		}
 		
 		stats.update();
@@ -158,6 +176,10 @@ public class GUIManager  {
 		
 		if(showPopUp) {
 			GUIRenderer.render(popUp.getFrameTextures());
+			
+			for(GUITexture icon : icons) {
+				GUIRenderer.render(icon);
+			}
 		}
 	}
 	
@@ -171,6 +193,10 @@ public class GUIManager  {
 		
 		if(showPopUp) {
 			FontRenderer.render(popUpText);
+			
+			for(GUIText text : iconsText) {
+				FontRenderer.render(text);
+			}
 		}
 		
 		showPopUp = false;
@@ -204,7 +230,66 @@ public class GUIManager  {
 			popUpItem = item;
 			
 			popUpText.setText(item.name);
-			popUp.setSize(20 + popUpText.getWidth(), 20 + popUpText.getHeight());
+			
+			icons.clear();
+			iconsText.clear();
+			
+			int height = 0;
+			
+			if(item.health != 0) {
+				height += iconSize + 5;
+				icons.add(new GUITexture(ResourceManager.getTexture("health_icon_ui"),
+						new Rect(0, 0, iconSize, iconSize), false));
+				
+				GUIText text = new GUIText(((item.health > 0) ? "+" : "") +
+						String.valueOf(item.health), FontRenderer.ARIAL);
+				text.setScale(0.8f);
+				iconsText.add(text);
+				
+				if(item.health > 0) {
+					text.getColor().set(0.1f, 1.0f, 0.1f);
+				} else {
+					text.getColor().set(1.0f, 0.1f, 0.1f);
+				}
+			}
+			
+			if(item.hunger != 0) {
+				height += iconSize + 5;
+				icons.add(new GUITexture(ResourceManager.getTexture("hunger_icon_ui"), 
+						new Rect(0, 0, iconSize, iconSize), false));
+				
+				GUIText text = new GUIText(((item.hunger > 0) ? "+" : "") +
+						String.valueOf(item.hunger), FontRenderer.ARIAL);
+				text.setScale(0.8f);
+				iconsText.add(text);
+				
+				if(item.hunger > 0) {
+					text.getColor().set(0.1f, 1.0f, 0.1f);
+				} else {
+					text.getColor().set(1.0f, 0.1f, 0.1f);
+				}
+			}
+			
+			if(item.thirst != 0) {
+				height += iconSize + 5;
+				icons.add(new GUITexture(ResourceManager.getTexture("thirst_icon_ui"), 
+						new Rect(0, 0, iconSize, iconSize), false));
+				
+				GUIText text = new GUIText(((item.thirst > 0) ? "+" : "") + 
+						String.valueOf(item.thirst), FontRenderer.ARIAL);
+				text.setScale(0.8f);
+				iconsText.add(text);
+				
+				if(item.thirst > 0) {
+					text.getColor().set(0.1f, 1.0f, 0.1f);
+				} else {
+					text.getColor().set(1.0f, 0.1f, 0.1f);
+				}
+			}
+			
+			
+			
+			popUp.setSize(20 + popUpText.getWidth(), 20 + popUpText.getHeight() + height);
 		}
 		
 		showPopUp = true;

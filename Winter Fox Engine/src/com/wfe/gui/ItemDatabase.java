@@ -131,6 +131,7 @@ public class ItemDatabase {
 				.setDescription("Common useful resource")
 				.setHunger(20)
 				.setThirst(-5)
+				.setHealth(15)
 				.create());
 		
 		addItem(new ItemBuilder(Item.SHARP_FLINT, "Sharp flint", ResourceManager.getTexture("sharp_flint_ui"), ItemType.RESOURCE)
