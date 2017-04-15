@@ -58,9 +58,9 @@ public class Chunk {
 				}
 				
 				if(height > -0.1f)
-					tiles[x][y] = new Tile(posX + x, posY + y, currentTile);
+					tiles[x][y] = new Tile(this, posX + x, posY + y, currentTile);
 				else
-					tiles[x][y] = new Tile(posX + x, posY + y, currentTile);
+					tiles[x][y] = new Tile(this, posX + x, posY + y, currentTile);
 			}
 		}
 		
@@ -137,7 +137,7 @@ public class Chunk {
 		}
 	}
 	
-	private void rebuild() {
+	protected void rebuild() {
 		List<Float> vtList = new ArrayList<Float>();
 		// Texture Coords
 		for(int x = 0; x < SIZE; x++) {
@@ -185,9 +185,8 @@ public class Chunk {
 		GL30.glBindVertexArray(0);
 	}
 	
-	public void setTile(int x, int y, int id){
+	public void setTile(int x, int y, int id) {
 		tiles[x][y].setId(id);
-		rebuild = true;
 	}
 	
 	public Tile getTile(int x, int y) {

@@ -8,19 +8,24 @@ import com.wfe.ecs.Entity;
 
 public class Tile {
 	
+	private Chunk chunk;
 	private int x, y;
 	private int id;
 	private Entity entity;
 	private boolean hasEntity = false;
 	
-	public Tile(int x, int y, int id) {
+	public Tile(Chunk chunk, int x, int y, int id) {
+		this.chunk = chunk;
 		this.x = x;
 		this.y = y;
 		this.id = id;
 	}
 
 	protected void setId(int id) {
-		this.id = id;
+		if(this.id != id) {
+			this.id = id;
+			chunk.rebuild();
+		}
 	}
 
 	public Entity getEntity() {
