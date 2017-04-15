@@ -12,6 +12,7 @@ public class Well extends Entity {
 		super(ResourceManager.getMesh("well"),
 				new Material(ResourceManager.getTexture("well")), new Transformation());	
 		transform.setScale(0.75f);
+		setWalkable(false);
 		addComponent(new ColliderComponent(1f, 1f, 1f));
 	}
 	

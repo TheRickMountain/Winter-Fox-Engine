@@ -17,9 +17,8 @@ public class Clay extends Entity {
 				new Material(ResourceManager.getTexture("clay")), transform);
 		setTag("clay");
 		transform.setScale(0.5f);
-		
+		setWalkable(false);
 		addComponent(new ColliderComponent(0.5f, 1, 0.5f));
-		
 		addComponent(new MineableComponent(ItemDatabase.getItem(Item.CLAY), MyRandom.nextInt(1, 2), 
 				ResourceManager.getSound("mine"), ItemDatabase.getItem(Item.PICKAXE), 2));
 	}

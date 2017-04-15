@@ -1,4 +1,4 @@
-package com.wfe.game;
+package com.wfe.core;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -6,13 +6,14 @@ import java.util.List;
 import java.util.Map;
 
 import com.wfe.components.ColliderComponent;
-import com.wfe.core.Camera;
 import com.wfe.ecs.ComponentType;
 import com.wfe.ecs.Entity;
 import com.wfe.graph.Mesh;
 import com.wfe.gui.GUIManager;
+import com.wfe.pathfinding.PathTileGraph;
 import com.wfe.physics.AABB;
 import com.wfe.renderEngine.RenderEngine;
+import com.wfe.tileEngine.Chunk;
 import com.wfe.tileEngine.Terrain;
 import com.wfe.tileEngine.Tile;
 import com.wfe.utils.MousePicker;
@@ -21,6 +22,8 @@ import com.wfe.weather.Weather;
 public class World {
 	
 	private static World WORLD;
+	
+	private int width, height;
 	
 	private Camera camera;
 	private Terrain terrain;
@@ -34,6 +37,8 @@ public class World {
 	
 	private List<AABB> colliders = new ArrayList<AABB>();
 	
+	private PathTileGraph tileGraph;
+	
 	private float time = 12000;
 	private Weather weather;
 	
@@ -41,10 +46,13 @@ public class World {
 		this.camera = camera;
 	}
 	
-	public void init() throws Exception {
-		this.terrain = new Terrain(10, 10, camera);
-		this.renderEngine = RenderEngine.create(camera);
-		this.weather = new Weather();
+	public void init(int w, int h) throws Exception {
+		width = w * Chunk.SIZE;
+		height = h * Chunk.SIZE;
+		
+		terrain = new Terrain(w, h, camera);
+		renderEngine = RenderEngine.create(camera);
+		weather = new Weather();
 		MousePicker.setUpMousePicker(camera);
 		GUIManager.init();
 	}
@@ -156,6 +164,22 @@ public class World {
 		}
 		
 		weather.updateWeather(time, dt);
+	}
+	
+	public PathTileGraph getTileGraph() {
+		return tileGraph;
+	}
+	
+	public void setTileGraph(PathTileGraph tileGraph) {
+		this.tileGraph = tileGraph;
+	}
+	
+	public int getWidth() {
+		return width;
+	}
+	
+	public int getHeight() {
+		return height;
 	}
 	
 	public void cleanup() {

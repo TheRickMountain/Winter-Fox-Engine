@@ -3,7 +3,7 @@ package com.wfe.ecs;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.wfe.game.World;
+import com.wfe.core.World;
 import com.wfe.graph.Material;
 import com.wfe.graph.Mesh;
 
@@ -26,6 +26,8 @@ public class Entity {
 	private Material material;
 	
 	private int textureIndex = 0;
+	
+	private boolean walkable = true;
 	
 	public Entity(Mesh mesh, Material material, Transformation transform) {
 		this.transform = transform;
@@ -181,6 +183,14 @@ public class Entity {
 			entity.addComponent(c.getInstance());
 		}
 		return entity;
+	}
+	
+	public boolean isWalkable() {
+		return walkable;
+	}
+	
+	public void setWalkable(boolean value) {
+		this.walkable = value;
 	}
 
 	public void delete() {

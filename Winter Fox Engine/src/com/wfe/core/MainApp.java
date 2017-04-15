@@ -3,8 +3,6 @@ package com.wfe.core;
 import org.lwjgl.opengl.GL11;
 
 import com.wfe.audio.AudioMaster;
-import com.wfe.game.Game;
-import com.wfe.game.World;
 import com.wfe.input.Keyboard;
 import com.wfe.input.Mouse;
 import com.wfe.math.Vector3f;
@@ -22,7 +20,7 @@ public class MainApp {
 		Camera camera = new Camera(new Vector3f(16, 0, 16));
 		
 		World world = World.createWorld(camera);
-		world.init();
+		world.init(10, 10);
 		
 		Game game = new Game();
 		game.init(world, camera, display);

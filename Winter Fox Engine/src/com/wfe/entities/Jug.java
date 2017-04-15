@@ -13,6 +13,7 @@ public class Jug extends Entity {
 				new Material(ResourceManager.getTexture("jug")), new Transformation());	
 		transform.setScale(1.3f);
 		setTag("jug");
+		setWalkable(false);
 		addComponent(new ColliderComponent(0.5f, 1, 0.5f));
 	}
 	

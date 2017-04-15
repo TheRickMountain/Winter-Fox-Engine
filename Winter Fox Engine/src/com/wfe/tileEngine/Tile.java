@@ -1,20 +1,21 @@
 package com.wfe.tileEngine;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.wfe.core.World;
 import com.wfe.ecs.Entity;
 
 public class Tile {
 	
+	private int x, y;
 	private int id;
 	private Entity entity;
 	private boolean hasEntity = false;
-	public static final Tile GRASS = new Tile(0);
-	public static final Tile DRY_GRASS = new Tile(1);
-	public static final Tile DRY_GROUND = new Tile(2);
-	public static final Tile MOIST_GROUND = new Tile(3);
-	public static final Tile SAND = new Tile(5);
-	public static final Tile DESK = new Tile(6);
 	
-	public Tile(int id) {
+	public Tile(int x, int y, int id) {
+		this.x = x;
+		this.y = y;
 		this.id = id;
 	}
 
@@ -40,9 +41,43 @@ public class Tile {
 	public boolean isHasEntity() {
 		return hasEntity;
 	}
+	
+	public int getX() {
+		return x;
+	}
+	
+	public int getY() {
+		return y;
+	}
 
 	public int getId() {
 		return id;
+	}
+	
+	public int getMovementCost() {
+		if(hasEntity) 
+			return entity.isWalkable() ? 1 : 0;
+		
+		return 1;
+	}
+	
+	public List<Tile> getNeighbours(boolean diags) {
+		List<Tile> neighbours = new ArrayList<>();
+		World world = World.getWorld();
+		
+		neighbours.add(world.getTile(x, y + 1));
+		neighbours.add(world.getTile(x + 1, y));
+		neighbours.add(world.getTile(x, y - 1));
+		neighbours.add(world.getTile(x - 1, y));
+		
+		if(diags) {
+			neighbours.add(world.getTile(x + 1, y + 1));
+			neighbours.add(world.getTile(x + 1, y - 1));
+			neighbours.add(world.getTile(x - 1, y - 1));
+			neighbours.add(world.getTile(x - 1, y + 1));
+		}
+		
+		return neighbours;
 	}
 	
 }

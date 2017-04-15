@@ -3,9 +3,9 @@ package com.wfe.entities;
 import com.wfe.components.ColliderComponent;
 import com.wfe.components.MineableComponent;
 import com.wfe.core.ResourceManager;
+import com.wfe.core.World;
 import com.wfe.ecs.Entity;
 import com.wfe.ecs.Transformation;
-import com.wfe.game.World;
 import com.wfe.graph.Material;
 import com.wfe.gui.Item;
 import com.wfe.gui.ItemDatabase;
@@ -24,7 +24,7 @@ public class Pine extends Entity {
 		World.getWorld().addEntity(pineLeaves);
 		
 		transform.setScale(0.4f);
-		
+		setWalkable(false);
 		addComponent(new MineableComponent(ItemDatabase.getItem(Item.LOG), 20, 
 				ResourceManager.getSound("chop"), ItemDatabase.getItem(Item.AXE), 5));
 	}

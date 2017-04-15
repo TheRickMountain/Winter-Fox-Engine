@@ -11,7 +11,6 @@ import org.lwjgl.opengl.GL20;
 import org.lwjgl.opengl.GL30;
 
 import com.wfe.ecs.Entity;
-import com.wfe.math.Vector2f;
 
 public class Chunk {
 
@@ -59,9 +58,9 @@ public class Chunk {
 				}
 				
 				if(height > -0.1f)
-					tiles[x][y] = new Tile(currentTile);
+					tiles[x][y] = new Tile(posX + x, posY + y, currentTile);
 				else
-					tiles[x][y] = new Tile(currentTile);
+					tiles[x][y] = new Tile(posX + x, posY + y, currentTile);
 			}
 		}
 		

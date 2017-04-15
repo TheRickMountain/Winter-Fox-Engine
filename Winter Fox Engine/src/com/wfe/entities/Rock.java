@@ -17,9 +17,8 @@ public class Rock extends Entity {
 				new Material(ResourceManager.getTexture("rock")), transform);
 		setTag("stone");
 		transform.setScale(0.5f);
-		
+		setWalkable(false);
 		addComponent(new ColliderComponent(0.5f, 1, 0.5f));
-		
 		addComponent(new MineableComponent(ItemDatabase.getItem(Item.FLINT), MyRandom.nextInt(1, 2), 
 				ResourceManager.getSound("mine"), ItemDatabase.getItem(Item.PICKAXE), 2));
 	}

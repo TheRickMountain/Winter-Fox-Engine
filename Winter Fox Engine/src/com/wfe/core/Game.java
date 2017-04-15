@@ -1,14 +1,12 @@
-package com.wfe.game;
+package com.wfe.core;
 
 import com.wfe.audio.AudioMaster;
-import com.wfe.core.Camera;
-import com.wfe.core.Display;
-import com.wfe.core.ResourceManager;
 import com.wfe.ecs.Transformation;
 import com.wfe.entities.Bush;
 import com.wfe.entities.Clay;
 import com.wfe.entities.Fern;
 import com.wfe.entities.Flint;
+import com.wfe.entities.Goat;
 import com.wfe.entities.Grass;
 import com.wfe.entities.Mushroom;
 import com.wfe.entities.Pine;
@@ -25,6 +23,8 @@ public class Game {
 	public void init(World world, Camera camera, Display display) throws Exception {		
 		player = new Player(camera, new Transformation(80, 0.65f, 80));
 		world.addEntity(player);
+		
+		world.addEntity(new Goat(new Transformation(86, 0, 86)));
 		
 		world.addEntityToTile(new Wheat(new Transformation(83.5f, 0, 83.5f), 5));
 		world.addEntityToTile(new Wheat(new Transformation(90.5f, 0, 85.5f), 5));
