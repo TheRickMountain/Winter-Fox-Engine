@@ -21,7 +21,19 @@ public class Tile {
 		this.id = id;
 	}
 
-	protected void setId(int id) {
+	public int getX() {
+		return x;
+	}
+	
+	public int getY() {
+		return y;
+	}
+
+	public int getId() {
+		return id;
+	}
+	
+	public void setId(int id) {
 		if(this.id != id) {
 			this.id = id;
 			chunk.rebuild();
@@ -45,18 +57,6 @@ public class Tile {
 	
 	public boolean isHasEntity() {
 		return hasEntity;
-	}
-	
-	public int getX() {
-		return x;
-	}
-	
-	public int getY() {
-		return y;
-	}
-
-	public int getId() {
-		return id;
 	}
 	
 	public int getMovementCost() {

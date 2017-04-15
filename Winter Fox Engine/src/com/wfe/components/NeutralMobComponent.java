@@ -4,12 +4,11 @@ import com.wfe.core.World;
 import com.wfe.ecs.Component;
 import com.wfe.ecs.ComponentType;
 import com.wfe.ecs.Transformation;
-import com.wfe.input.Mouse;
-import com.wfe.math.Vector3f;
+import com.wfe.math.Vector2f;
 import com.wfe.pathfinding.PathAStar;
 import com.wfe.tileEngine.Tile;
 import com.wfe.utils.MathUtils;
-import com.wfe.utils.MousePicker;
+import com.wfe.utils.TimeUtil;
 
 public class NeutralMobComponent extends Component {
 
@@ -24,29 +23,36 @@ public class NeutralMobComponent extends Component {
 	private float movementPerc;	
 	private float speed = 2f;
 	
+	private int idleTime = 10;
+	private TimeUtil timer;
+	
 	@Override
 	public void init() {
 		Transformation transform = getParent().getTransform();
 		World world = World.getWorld();
 		currTile = world.getTile((int)transform.x, (int)transform.z);
 		destTile = nextTile = currTile;
+		
+		timer = new TimeUtil();
 	}
 
 	@Override
-	public void update(float dt) {
-		if(Mouse.isButtonDown(0)) {
-			Vector3f tp = MousePicker.getCurrentTerrainPoint();
-			World world = World.getWorld();
-			destTile = world.getTile((int)tp.x, (int)tp.z);
-			pathAStar = new PathAStar(world, currTile, destTile);
-			if(pathAStar.getLength() == -1) {
-				pathAStar = null;
-				destTile = currTile;
-			}
-		}
-		
+	public void update(float dt) {		
 		if(pathAStar != null) {
 			move(dt);
+		} else {
+			if(timer.getTime() >= idleTime) {
+				timer.reset();
+				
+				World world = World.getWorld();
+				Vector2f point = MathUtils.getPointOnCirce(16, currTile.getX(), currTile.getY());
+				destTile = world.getTile((int)point.x, (int)point.y);
+				pathAStar = new PathAStar(world, currTile, destTile);
+				if(pathAStar.getLength() == -1) {
+					pathAStar = null;
+					destTile = currTile;
+				}
+			}
 		}
 	}
 

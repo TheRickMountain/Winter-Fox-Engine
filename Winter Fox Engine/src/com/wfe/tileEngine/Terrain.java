@@ -5,7 +5,6 @@ import java.util.List;
 
 import com.wfe.core.Camera;
 import com.wfe.core.Display;
-import com.wfe.ecs.Entity;
 import com.wfe.textures.Texture;
 import com.wfe.utils.MathUtils;
 import com.wfe.utils.MyFile;
@@ -23,22 +22,22 @@ public class Terrain {
 	
 	private HeightGenerator heightGenerator;
 	
-	public Terrain(int sizeX, int sizeZ, Camera camera) throws Exception {
+	public Terrain(Tile[][] tiles, int sizeX, int sizeZ, Camera camera) throws Exception {
 		this.sizeX = sizeX;
 		this.sizeZ = sizeZ;
 		this.camera = camera;
 		shader = new TerrainShader();
 		heightGenerator = new HeightGenerator();
-		init();
+		init(tiles);
 	}
 	
-	public void init() throws Exception {
+	private void init(Tile[][] tiles) throws Exception {
 		spriteSheet = Texture.newTexture(new MyFile("textures/terrain.png"))
 				.normalMipMap(-0.4f).clampEdges().anisotropic().create();
 		
 		for(int x = 0; x < sizeX; x++) {
 			for(int y = 0; y < sizeZ; y++) {
-				chunks.add(new Chunk(x, y, heightGenerator));
+				chunks.add(new Chunk(tiles, x, y, heightGenerator));
 			}
 		}
 		
@@ -77,44 +76,6 @@ public class Terrain {
 				chunk.render();
 		}
 		shader.start();
-	}
-	
-	public void setTile(int x, int y, int id) {
-		int tX = (x / 16) * 16;
-		int tY = (y / 16) * 16;
-		
-		for(Chunk chunk : chunks) {
-			if(chunk.getPosX() == tX && chunk.getPosY() == tY) {
-				chunk.setTile(x - tX, y - tY, id);
-				return;
-			}
-		}
-	}
-	
-	public Tile getTile(int x, int y) {
-		int terrainX = x / 16;
-		int terrainY = y / 16;
-		
-		int tileX = x - terrainX * 16;
-		int tileY = y - terrainY * 16;
-		
-		return chunks.get(terrainX * sizeZ + terrainY).getTile(tileX, tileY);
-	}
-	
-	public void setTileEntity(int x, int y, Entity entity) {
-		getTile(x, y).setEntity(entity);
-	}
-	
-	public void removeTileEntity(int x, int y) {
-		int tX = (x / 16) * 16;
-		int tY = (y / 16) * 16;
-		
-		for(Chunk chunk : chunks) {
-			if(chunk.getPosX() == tX && chunk.getPosY() == tY) {
-				chunk.removeEntity(x - tX, y - tY);
-				return;
-			}
-		}
 	}
 	
 	public void cleanup() {

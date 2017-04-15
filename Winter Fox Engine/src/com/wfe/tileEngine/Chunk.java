@@ -10,8 +10,6 @@ import org.lwjgl.opengl.GL15;
 import org.lwjgl.opengl.GL20;
 import org.lwjgl.opengl.GL30;
 
-import com.wfe.ecs.Entity;
-
 public class Chunk {
 
 	public static final int SIZE = 16;
@@ -28,21 +26,21 @@ public class Chunk {
 	public static final float SPRITE_SHEET = 4;
 	private boolean rebuild = false;
 	
-	public Chunk(int x, int z, HeightGenerator heightGenerator) {
+	public Chunk(Tile[][] tiles, int x, int z, HeightGenerator heightGenerator) {
+		this.tiles = tiles;
 		posX = x * 16;
 		posY = z * 16;
 		
-		init(heightGenerator, posX, posY);
+		init(heightGenerator);
 		initGL();
 	}
 	
 	int currentTile = 6;
 	
-	public void init(HeightGenerator heightGenerator, int iterX, int iterY) {
-		tiles = new Tile[16][16];
+	public void init(HeightGenerator heightGenerator) {
 		for(int x = 0; x < 16; x++) {
 			for(int y = 0; y < 16; y++) {
-				float height = heightGenerator.generateHeight(x + iterX, y + iterY);
+				float height = heightGenerator.generateHeight(posX + x, posY + y);
 				if((y % 2 == 0)) {
 					if(x % 2 == 0) {
 						currentTile = 2;
@@ -58,9 +56,9 @@ public class Chunk {
 				}
 				
 				if(height > -0.1f)
-					tiles[x][y] = new Tile(this, posX + x, posY + y, currentTile);
+					tiles[posX + x][posY + y] = new Tile(this, posX + x, posY + y, currentTile);
 				else
-					tiles[x][y] = new Tile(this, posX + x, posY + y, currentTile);
+					tiles[posX + x][posY + y] = new Tile(this, posX + x, posY + y, currentTile);
 			}
 		}
 		
@@ -117,9 +115,9 @@ public class Chunk {
 		// Texture Coords
 		for(int x = 0; x < SIZE; x++) {
 			for(int y = 0; y < SIZE; y++) {
-				float u0 = ((tiles[x][y].getId() % (int)SPRITE_SHEET) / SPRITE_SHEET) + 0.005f;
+				float u0 = ((tiles[posX + x][posY + y].getId() % (int)SPRITE_SHEET) / SPRITE_SHEET) + 0.005f;
 		        float u1 = (u0 + (1.0f / SPRITE_SHEET)) - 0.01f;
-		        float v0 = ((tiles[x][y].getId() / (int)SPRITE_SHEET) / SPRITE_SHEET) + 0.005f;
+		        float v0 = ((tiles[posX + x][posY + y].getId() / (int)SPRITE_SHEET) / SPRITE_SHEET) + 0.005f;
 		        float v1 = (v0 + (1.0f / SPRITE_SHEET)) - 0.01f;
 		        
 				vtList.add(u0); vtList.add(v0);
@@ -142,9 +140,9 @@ public class Chunk {
 		// Texture Coords
 		for(int x = 0; x < SIZE; x++) {
 			for(int y = 0; y < SIZE; y++) {
-				float u0 = ((tiles[x][y].getId() % (int)SPRITE_SHEET) / SPRITE_SHEET) + 0.005f;
+				float u0 = ((tiles[posX + x][posY + y].getId() % (int)SPRITE_SHEET) / SPRITE_SHEET) + 0.005f;
 		        float u1 = (u0 + (1.0f / SPRITE_SHEET)) - 0.01f;
-		        float v0 = ((tiles[x][y].getId() / (int)SPRITE_SHEET) / SPRITE_SHEET) + 0.005f;
+		        float v0 = ((tiles[posX + x][posY + y].getId() / (int)SPRITE_SHEET) / SPRITE_SHEET) + 0.005f;
 		        float v1 = (v0 + (1.0f / SPRITE_SHEET)) - 0.01f;
 
 				vtList.add(u0); vtList.add(v0);
@@ -185,28 +183,6 @@ public class Chunk {
 		GL30.glBindVertexArray(0);
 	}
 	
-	public void setTile(int x, int y, int id) {
-		tiles[x][y].setId(id);
-	}
-	
-	public Tile getTile(int x, int y) {
-		return tiles[x][y];
-	}
-	
-	public boolean setEntity(int x, int y, Entity entity) {
-		if(!tiles[x][y].isHasEntity()){
-			tiles[x][y].setEntity(entity);
-			return true;
-		}
-		return false;
-	}
-	
-	public void removeEntity(int x, int y) {
-		if(tiles[x][y].isHasEntity()){
-			tiles[x][y].removeEntity();
-		}
-	}
-	
 	public void cleanup() {
 		GL15.glDeleteBuffers(vVBO);
 		GL15.glDeleteBuffers(vtVBO);
@@ -228,8 +204,8 @@ public class Chunk {
 	public void setVisible(boolean isVisible) {
 		for(int i = 0; i < SIZE; i++) {
 			for(int j = 0; j < SIZE; j++) {
-				if(tiles[i][j].isHasEntity()) {
-					tiles[i][j].getEntity().setVisible(isVisible);
+				if(tiles[posX + i][posY + j].isHasEntity()) {
+					tiles[posX + i][posY + j].getEntity().setVisible(isVisible);
 				}
 			}
 		}

@@ -168,4 +168,11 @@ public class MathUtils {
 		return p1 + alpha * (p2 - p1);
 	}
 	
+	public static Vector2f getPointOnCirce(int maxRadius, float xPos, float yPos) {
+		double angle = Math.random() * Math.PI * 2;
+		float x = (float) (Math.cos(angle) * maxRadius);
+		float y = (float) (Math.sin(angle) * maxRadius);
+		return new Vector2f(x + xPos, y + yPos);
+	}
+	
 }

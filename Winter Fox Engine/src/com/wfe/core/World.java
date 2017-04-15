@@ -29,6 +29,8 @@ public class World {
 	private Terrain terrain;
 	private RenderEngine renderEngine;
 	
+	private Tile[][] tiles;
+	
 	private List<Entity> entities = new ArrayList<Entity>();
 	private List<Entity> entitiesToRemove = new ArrayList<Entity>();
 	private List<Entity> entitiesToAdd = new ArrayList<Entity>();
@@ -50,7 +52,9 @@ public class World {
 		width = w * Chunk.SIZE;
 		height = h * Chunk.SIZE;
 		
-		terrain = new Terrain(w, h, camera);
+		tiles = new Tile[width][height];
+		
+		terrain = new Terrain(tiles, w, h, camera);
 		renderEngine = RenderEngine.create(camera);
 		weather = new Weather();
 		MousePicker.setUpMousePicker(camera);
@@ -134,27 +138,25 @@ public class World {
 	}
 	
 	public void setTile(int x, int y, int id) {
-		terrain.setTile(x, y, id);
+		tiles[x][y].setId(id);
 	}
 	
 	public Tile getTile(int x, int y) {
-		return terrain.getTile(x, y);
+		return tiles[x][y];
 	}
 	
 	public boolean addEntityToTile(Entity entity) {
-		if(!terrain.getTile((int)entity.getTransform().getX(), (int)entity.getTransform().getZ()).isHasEntity()) {
-			terrain.setTileEntity(
-					(int)entity.getTransform().getX(),
-					(int)entity.getTransform().getZ(), entity);
+		Tile tile = tiles[(int)entity.getTransform().getX()][(int)entity.getTransform().getZ()];
+		if(!tile.isHasEntity()) {
+			tile.setEntity(entity);
 			addEntity(entity);
 			return true;
 		}
-	
 		return false;
 	}
 	
 	public void removeEntityFromTile(int x, int y) {
-		terrain.removeTileEntity(x, y);
+		tiles[x][y].removeEntity();
 	}
 	
 	public void updateWeather(float dt) {
