@@ -138,15 +138,30 @@ public class World {
 	}
 	
 	public void setTile(int x, int y, int id) {
+		if(x < 0 || y < 0 || x >= width || y >= height) {
+			return;
+		}
+		
 		tiles[x][y].setId(id);
 	}
 	
 	public Tile getTile(int x, int y) {
+		if(x < 0 || y < 0 || x >= width || y >= height) {
+			return null;
+		}
+		
 		return tiles[x][y];
 	}
 	
 	public boolean addEntityToTile(Entity entity) {
-		Tile tile = tiles[(int)entity.getTransform().getX()][(int)entity.getTransform().getZ()];
+		int x = (int)entity.getTransform().getX();
+		int y = (int)entity.getTransform().getZ();
+		
+		if(x < 0 || y < 0 || x >= width || y >= height) {
+			return false;
+		}
+		
+		Tile tile = tiles[x][y];
 		if(!tile.isHasEntity()) {
 			tile.setEntity(entity);
 			addEntity(entity);
@@ -156,6 +171,10 @@ public class World {
 	}
 	
 	public void removeEntityFromTile(int x, int y) {
+		if(x < 0 || y < 0 || x >= width || y >= height) {
+			return;
+		}
+		
 		tiles[x][y].removeEntity();
 	}
 	
