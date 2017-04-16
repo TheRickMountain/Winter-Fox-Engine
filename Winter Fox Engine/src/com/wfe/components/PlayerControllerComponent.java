@@ -117,130 +117,132 @@ public class PlayerControllerComponent extends Component {
 		
 		Vector3f tp = MousePicker.getCurrentTerrainPoint();
 		if(tp != null) {
-			Tile tile = World.getWorld().getTile((int)tp.x, (int)tp.z);
-			
-			if(building != null) {
+				Tile tile = World.getWorld().getTile((int)tp.x, (int)tp.z);
+				
+				if(tile != null) {
+				if(building != null) {
+					if(tile.isHasEntity()) {
+						building.getMaterial().getColor().set(1.0f, 0.5f, 0.5f);
+					} else {
+						building.getMaterial().getColor().set(0.5f, 1.0f, 0.5f);
+					}
+					building.getTransform().setPosition(((int)tp.x) + 0.5f, 0, ((int)tp.z) + 0.5f);
+					building.getTransform().setRotY(buildingRotation);
+				}
+				
 				if(tile.isHasEntity()) {
-					building.getMaterial().getColor().set(1.0f, 0.5f, 0.5f);
-				} else {
-					building.getMaterial().getColor().set(0.5f, 1.0f, 0.5f);
-				}
-				building.getTransform().setPosition(((int)tp.x) + 0.5f, 0, ((int)tp.z) + 0.5f);
-				building.getTransform().setRotY(buildingRotation);
-			}
-			
-			if(tile.isHasEntity()) {
-				Entity entity = tile.getEntity();
-				if(entity.hasComponent(ComponentType.GATHERABLE)) {
-					if(checkDistance(tp.x, tp.z)) {
-						Display.setCursor(Display.takeCursor);
-						if(Mouse.isButtonDown(1)) {
-							turnTo((int)tp.x, (int)tp.z);
-							
-							GatherableComponent gc = (GatherableComponent)entity.getComponent(ComponentType.GATHERABLE);
-							
-							if(GUIManager.inventory.addItem(gc.getItem(), gc.getCount()) == 0) {
-								tile.removeEntity();
-								source.play(gc.getSound());
-							}
-						}
-					} else {
-						Display.setCursor(Display.takeNonactiveCursor);
-					}
-				}
-				
-				if(entity.hasComponent(ComponentType.CHEST)) {
-					if(Mouse.isButtonDown(1)) {
+					Entity entity = tile.getEntity();
+					if(entity.hasComponent(ComponentType.GATHERABLE)) {
 						if(checkDistance(tp.x, tp.z)) {
-							turnTo((int)tp.x, (int)tp.z);
-							GUIManager.openChest((ChestComponent) entity.getComponent(ComponentType.CHEST));
-							Mouse.setActiveInGUI(true);
-						}
-					}
-				}
-				
-				if(entity.hasComponent(ComponentType.MINEABLE)) {
-					if(Mouse.isButtonDown(0)) {
-						if(checkDistance(tp.x, tp.z)) {
-							animation.idleAnim();
-							turnTo((int)tp.x, (int)tp.z);
-							mc = (MineableComponent)entity.getComponent(ComponentType.MINEABLE);
-							if(GUIManager.inventory.getSelectedItem().equals(mc.getRequiredItem())) {
-								mining = true;	
+							Display.setCursor(Display.takeCursor);
+							if(Mouse.isButtonDown(1)) {
+								turnTo((int)tp.x, (int)tp.z);
+								
+								GatherableComponent gc = (GatherableComponent)entity.getComponent(ComponentType.GATHERABLE);
+								
+								if(GUIManager.inventory.addItem(gc.getItem(), gc.getCount()) == 0) {
+									tile.removeEntity();
+									source.play(gc.getSound());
+								}
 							}
+						} else {
+							Display.setCursor(Display.takeNonactiveCursor);
 						}
 					}
-				}
-				
-				if(mining) {
-					GUIManager.showProgressBar = true;
 					
-					float time = (float) timer.getTime();
-					if(time >= mc.getMiningTime()) {
-						GUIManager.inventory.addItem(mc.getItem(), mc.getCount());
-						mc.getParent().remove();
-						mc = null;
-						
-						resetMiningProgress();
-					} else {
-						if(animation.hitAnim(dt)) {
-							source.play(mc.getSound());
-						}
-						GUIManager.progressBar.setCurrentValue((int)((time * 100) / mc.getMiningTime()));
-					}
-				}
-				
-				if(Mouse.isButtonUp(0)) {
-					resetMiningProgress();
-				}
-				
-			} else {
-				if(Mouse.isButtonDown(0)) {
-			
-					switch(GUIManager.inventory.getSelectedItem().id) {
-					case Item.HOE:
-						if(checkDistance(tp.x, tp.z)) {
-							turnTo((int)tp.x, (int)tp.z);
-							if(tile.getId() != 10) {
-								world.setTile((int)tp.x, (int)tp.z, 10);
-								source.play(ResourceManager.getSound("hoe"));
+					if(entity.hasComponent(ComponentType.CHEST)) {
+						if(Mouse.isButtonDown(1)) {
+							if(checkDistance(tp.x, tp.z)) {
+								turnTo((int)tp.x, (int)tp.z);
+								GUIManager.openChest((ChestComponent) entity.getComponent(ComponentType.CHEST));
+								Mouse.setActiveInGUI(true);
 							}
 						}
-						break;
-					case Item.WHEAT_SEEDS:
-						if(checkDistance(tp.x, tp.z)) {
-							turnTo((int)tp.x, (int)tp.z);
-							if(tile.getId() == 10) {
-								if(world.addEntityToTile(new Wheat(new Transformation(
-										((int)tp.x) + 0.5f, 0, ((int)tp.z) + 0.5f), 0))) {
-									GUIManager.inventory.removeItem(ItemDatabase.getItem(Item.WHEAT_SEEDS), 1);
+					}
+					
+					if(entity.hasComponent(ComponentType.MINEABLE)) {
+						if(Mouse.isButtonDown(0)) {
+							if(checkDistance(tp.x, tp.z)) {
+								animation.idleAnim();
+								turnTo((int)tp.x, (int)tp.z);
+								mc = (MineableComponent)entity.getComponent(ComponentType.MINEABLE);
+								if(GUIManager.inventory.getSelectedItem().equals(mc.getRequiredItem())) {
+									mining = true;	
+								}
+							}
+						}
+					}
+					
+					if(mining) {
+						GUIManager.showProgressBar = true;
+						
+						float time = (float) timer.getTime();
+						if(time >= mc.getMiningTime()) {
+							GUIManager.inventory.addItem(mc.getItem(), mc.getCount());
+							mc.getParent().remove();
+							mc = null;
+							
+							resetMiningProgress();
+						} else {
+							if(animation.hitAnim(dt)) {
+								source.play(mc.getSound());
+							}
+							GUIManager.progressBar.setCurrentValue((int)((time * 100) / mc.getMiningTime()));
+						}
+					}
+					
+					if(Mouse.isButtonUp(0)) {
+						resetMiningProgress();
+					}
+					
+				} else {
+					if(Mouse.isButtonDown(0)) {
+				
+						switch(GUIManager.inventory.getSelectedItem().id) {
+						case Item.HOE:
+							if(checkDistance(tp.x, tp.z)) {
+								turnTo((int)tp.x, (int)tp.z);
+								if(tile.getId() != 10) {
+									world.setTile((int)tp.x, (int)tp.z, 10);
 									source.play(ResourceManager.getSound("hoe"));
 								}
 							}
+							break;
+						case Item.WHEAT_SEEDS:
+							if(checkDistance(tp.x, tp.z)) {
+								turnTo((int)tp.x, (int)tp.z);
+								if(tile.getId() == 10) {
+									if(world.addEntityToTile(new Wheat(new Transformation(
+											((int)tp.x) + 0.5f, 0, ((int)tp.z) + 0.5f), 0))) {
+										GUIManager.inventory.removeItem(ItemDatabase.getItem(Item.WHEAT_SEEDS), 1);
+										source.play(ResourceManager.getSound("hoe"));
+									}
+								}
+							}
+							break;
 						}
-						break;
-					}
-					
-					if(GUIManager.inventory.getSelectedItem().type.equals(ItemType.BUILDING)) {
-						if(checkDistance(tp.x, tp.z)) {
-							turnTo((int)tp.x, (int)tp.z);
-							if(!tile.isHasEntity()) {
-								tile.setEntity(GUIManager.inventory.getSelectedItem().entity.getInstance());
-								tile.getEntity().getTransform().setPosition(((int)tp.x) + 0.5f, 0, ((int)tp.z) + 0.5f);
-								tile.getEntity().getTransform().setRotY(buildingRotation);
-								world.addEntity(tile.getEntity());
-								GUIManager.inventory.removeItem(GUIManager.inventory.getSelectedItem(), 1);
-								AudioMaster.defaultSource.play(ResourceManager.getSound("taking"));
-								
-								if(GUIManager.inventory.hasItem(GUIManager.inventory.getSelectedItem()) == 0) {
-									removeBuilding();
+						
+						if(GUIManager.inventory.getSelectedItem().type.equals(ItemType.BUILDING)) {
+							if(checkDistance(tp.x, tp.z)) {
+								turnTo((int)tp.x, (int)tp.z);
+								if(!tile.isHasEntity()) {
+									tile.setEntity(GUIManager.inventory.getSelectedItem().entity.getInstance());
+									tile.getEntity().getTransform().setPosition(((int)tp.x) + 0.5f, 0, ((int)tp.z) + 0.5f);
+									tile.getEntity().getTransform().setRotY(buildingRotation);
+									world.addEntity(tile.getEntity());
+									GUIManager.inventory.removeItem(GUIManager.inventory.getSelectedItem(), 1);
+									AudioMaster.defaultSource.play(ResourceManager.getSound("taking"));
+									
+									if(GUIManager.inventory.hasItem(GUIManager.inventory.getSelectedItem()) == 0) {
+										removeBuilding();
+									}
 								}
 							}
 						}
+						
 					}
-					
+					Display.setCursor(Display.defaultCursor);
 				}
-				Display.setCursor(Display.defaultCursor);
 			}
 		}
 	}

@@ -123,25 +123,38 @@ public class ResourceLoader {
 		/*** *** ***/
 		
 		/*** Walls ***/
-		ResourceManager.loadTexture("walls", Texture.newTexture(new MyFile("entity/walls/diffuse.png"))
+		ResourceManager.loadTexture("clay_wall", Texture.newTexture(new MyFile("entity/clay_wall/diffuse.png"))
 				.normalMipMap(-0.4f)
 				.create());
 		
-		ResourceManager.loadTexture("cross_wall_ui", Texture.newTexture(new MyFile("entity/walls/cross_wall.png"))
+		ResourceManager.loadTexture("clay_corner_wall_ui", Texture.newTexture(new MyFile("entity/clay_wall/corner_wall.png"))
 				.normalMipMap().create());
-		ResourceManager.loadMesh("cross_wall", OBJLoader.loadMesh("/entity/walls/cross_wall.obj"));
+		ResourceManager.loadMesh("clay_corner_wall", OBJLoader.loadMesh("/entity/clay_wall/corner_wall.obj"));
 		
-		ResourceManager.loadTexture("door_wall_ui", Texture.newTexture(new MyFile("entity/walls/door_wall.png"))
+		ResourceManager.loadTexture("clay_wall_ui", Texture.newTexture(new MyFile("entity/clay_wall/wall.png"))
 				.normalMipMap().create());
-		ResourceManager.loadMesh("door_wall", OBJLoader.loadMesh("/entity/walls/door_wall.obj"));
+		ResourceManager.loadMesh("clay_wall", OBJLoader.loadMesh("/entity/clay_wall/wall.obj"));
 		
-		ResourceManager.loadTexture("window_wall_ui", Texture.newTexture(new MyFile("entity/walls/window_wall.png"))
-				.normalMipMap().create());
-		ResourceManager.loadMesh("window_wall", OBJLoader.loadMesh("/entity/walls/window_wall.obj"));
 		
-		ResourceManager.loadTexture("wall_ui", Texture.newTexture(new MyFile("entity/walls/wall.png"))
+		ResourceManager.loadTexture("walls", Texture.newTexture(new MyFile("entity/log_wall/diffuse.png"))
+				.normalMipMap(-0.4f)
+				.create());
+		
+		ResourceManager.loadTexture("cross_wall_ui", Texture.newTexture(new MyFile("entity/log_wall/cross_wall.png"))
 				.normalMipMap().create());
-		ResourceManager.loadMesh("wall", OBJLoader.loadMesh("/entity/walls/wall.obj"));
+		ResourceManager.loadMesh("cross_wall", OBJLoader.loadMesh("/entity/log_wall/cross_wall.obj"));
+		
+		ResourceManager.loadTexture("door_wall_ui", Texture.newTexture(new MyFile("entity/log_wall/door_wall.png"))
+				.normalMipMap().create());
+		ResourceManager.loadMesh("door_wall", OBJLoader.loadMesh("/entity/log_wall/door_wall.obj"));
+		
+		ResourceManager.loadTexture("window_wall_ui", Texture.newTexture(new MyFile("entity/log_wall/window_wall.png"))
+				.normalMipMap().create());
+		ResourceManager.loadMesh("window_wall", OBJLoader.loadMesh("/entity/log_wall/window_wall.obj"));
+		
+		ResourceManager.loadTexture("wall_ui", Texture.newTexture(new MyFile("entity/log_wall/wall.png"))
+				.normalMipMap().create());
+		ResourceManager.loadMesh("wall", OBJLoader.loadMesh("/entity/log_wall/wall.obj"));
 		/*** *** ***/
 		
 		/*** Rock ***/
@@ -347,6 +360,17 @@ public class ResourceLoader {
 				.create());
 		
 		ResourceManager.loadMesh("basket", OBJLoader.loadMesh("/entity/basket/model.obj"));
+		/*** *** ***/
+		
+		/*** Furnace ***/
+		ResourceManager.loadTexture("furnace_ui", Texture.newTexture(new MyFile("entity/furnace/icon.png"))
+				.normalMipMap()
+				.create());
+		ResourceManager.loadTexture("furnace", Texture.newTexture(new MyFile("entity/furnace/diffuse.png"))
+				.normalMipMap(-0.4f)
+				.create());
+		
+		ResourceManager.loadMesh("furnace", OBJLoader.loadMesh("/entity/furnace/model.obj"));
 		/*** *** ***/
 		
 		loaded = true;

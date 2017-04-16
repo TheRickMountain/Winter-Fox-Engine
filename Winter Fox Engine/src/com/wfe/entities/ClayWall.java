@@ -6,15 +6,15 @@ import com.wfe.ecs.Entity;
 import com.wfe.ecs.Transformation;
 import com.wfe.graph.Material;
 
-public class Furnace extends Entity {
-	
-	public Furnace() {
-		super(ResourceManager.getMesh("furnace"),
-				new Material(ResourceManager.getTexture("furnace")), new Transformation());	
+public class ClayWall extends Entity {
+
+	public ClayWall() {
+		super(ResourceManager.getMesh("clay_wall"),
+				new Material(ResourceManager.getTexture("clay_wall")), new Transformation());	
+		setTag("clay_wall");
 		transform.setScale(0.5f);
-		setTag("furnace");
 		setWalkable(false);
 		addComponent(new ColliderComponent(1, 1, 1));
 	}
-
+	
 }

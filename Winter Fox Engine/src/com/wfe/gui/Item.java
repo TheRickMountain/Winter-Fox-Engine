@@ -32,6 +32,9 @@ public class Item {
 	public static final int CLAY = 24;
 	public static final int JUG = 25;
 	public static final int BASKET = 26;
+	public static final int FURNACE = 27;
+	public static final int CLAY_WALL = 28;
+	public static final int CLAY_CORNER_WALL = 29;
 	
 	public final int id;
 	public final String name;

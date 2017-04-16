@@ -6,9 +6,12 @@ import java.util.List;
 import com.wfe.core.ResourceManager;
 import com.wfe.entities.Axe;
 import com.wfe.entities.Basket;
+import com.wfe.entities.ClayCornerWall;
+import com.wfe.entities.ClayWall;
 import com.wfe.entities.Club;
 import com.wfe.entities.CrossWall;
 import com.wfe.entities.DoorWall;
+import com.wfe.entities.Furnace;
 import com.wfe.entities.Hoe;
 import com.wfe.entities.Jug;
 import com.wfe.entities.Pickaxe;
@@ -172,6 +175,27 @@ public class ItemDatabase {
 				.setDescription("Storage")
 				.setStackSize(1)
 				.setIngredients(Item.ROPE, 5)
+				.create());
+		
+		addItem(new ItemBuilder(Item.FURNACE, "Furnace", ResourceManager.getTexture("furnace_ui"), ItemType.BUILDING)
+				.setEntity(new Furnace())
+				.setDescription("Hot thing")
+				.setStackSize(1)
+				.setIngredients(Item.FLINT, 8)
+				.create());
+		
+		addItem(new ItemBuilder(Item.CLAY_WALL, "Clay wall", ResourceManager.getTexture("clay_wall_ui"), ItemType.BUILDING)
+				.setEntity(new ClayWall())
+				.setDescription("Wall")
+				.setStackSize(40)
+				.setIngredients(Item.CLAY, 3, Item.FLINT, 2)
+				.create());
+		
+		addItem(new ItemBuilder(Item.CLAY_CORNER_WALL, "Clay corner wall", ResourceManager.getTexture("clay_corner_wall_ui"), ItemType.BUILDING)
+				.setEntity(new ClayCornerWall())
+				.setDescription("Wall")
+				.setStackSize(40)
+				.setIngredients(Item.CLAY, 3, Item.FLINT, 2)
 				.create());
 	}
 	
