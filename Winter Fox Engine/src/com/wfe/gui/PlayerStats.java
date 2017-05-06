@@ -1,5 +1,9 @@
 package com.wfe.gui;
 
+import com.wfe.core.ResourceManager;
+import com.wfe.font.GUIText;
+import com.wfe.renderEngine.FontRenderer;
+import com.wfe.renderEngine.GUIRenderer;
 import com.wfe.utils.Color;
 import com.wfe.utils.Rect;
 import com.wfe.utils.TimeUtil;
@@ -17,7 +21,11 @@ public class PlayerStats {
 	private int healthSpeed = 1;
 	private int hungerSpeed = 8;
 	private int thirstSpeed = 6;
-
+	
+	private GUITexture cowryTexture;
+	private GUIText cowryText;
+	private int cowry = 0;
+	
 	public PlayerStats() {
 		healthBar = new ProgressBar(new Rect(10, 20, 100, 15), new Color(251, 53, 54, 255).convert());
 		healthBar.setCurrentValue(100);
@@ -29,6 +37,11 @@ public class PlayerStats {
 		healthTimer = new TimeUtil();
 		hungerTimer = new TimeUtil();
 		thirstTimer = new TimeUtil();
+		
+		cowryTexture = new GUITexture(ResourceManager.getTexture("cowry_ui"), new Rect(10, 105, 20, 20), false);
+		cowryText = new GUIText("0", FontRenderer.ARIAL);
+		cowryText.setScale(0.8f);
+		cowryText.setPosition(cowryTexture.rect.width + 10, 105);
 	}
 	
 	public void update() {
@@ -41,14 +54,14 @@ public class PlayerStats {
 		
 		if(getHunger() > 0) {
 			if(hungerTimer.getTime() >= hungerSpeed) {
-				setHunger(getHunger() - 1);
+				addHunger(-1);
 				hungerTimer.reset();
 			}
 		}
 		
 		if(getThirst() > 0) {
 			if(thirstTimer.getTime() >= thirstSpeed) {
-				setThirst(getThirst() - 1);
+				addThirst(-1);
 				thirstTimer.reset();
 			}
 		}
@@ -58,36 +71,42 @@ public class PlayerStats {
 		healthBar.render();
 		hungerBar.render();
 		thirstBar.render();
+		
+		GUIRenderer.render(cowryTexture);
 	}
 	
 	public void renderText() {
 		healthBar.renderText();
 		hungerBar.renderText();
 		thirstBar.renderText();
-	}
-	
-	private void setHealth(int value) {
-		healthBar.setCurrentValue(value);
+		
+		FontRenderer.render(cowryText);
 	}
 	
 	public int getHealth() {
 		return healthBar.getCurrentVaule();
 	}
 	
-	private void setHunger(int value) {
-		hungerBar.setCurrentValue(value);
+	private void setHealth(int value) {
+		healthBar.setCurrentValue(value);
+	}
+
+	public int getCowry() {
+		return cowry;
+	}
+	
+	public boolean addCowry(int value) {
+		if(cowry + value < 0) {
+			return false;
+		}
+		
+		cowry += value;
+		cowryText.setText(String.valueOf(cowry));
+		return true;
 	}
 	
 	public int getHunger() {
 		return hungerBar.getCurrentVaule();
-	}
-	
-	private void setThirst(int value) {
-		thirstBar.setCurrentValue(value);
-	}
-	
-	public int getThirst() {
-		return thirstBar.getCurrentVaule();
 	}
 	
 	public void addHunger(int value) {
@@ -98,7 +117,11 @@ public class PlayerStats {
 			totalHunger = 0;
 		}
 		
-		setHunger(totalHunger);
+		hungerBar.setCurrentValue(totalHunger);
+	}
+	
+	public int getThirst() {
+		return thirstBar.getCurrentVaule();
 	}
 	
 	public void addThirst(int value) {
@@ -109,7 +132,7 @@ public class PlayerStats {
 			totalThirst = 0;
 		}
 		
-		setThirst(totalThirst);
+		thirstBar.setCurrentValue(totalThirst);
 	}
 	
 }

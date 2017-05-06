@@ -48,6 +48,8 @@ public class ResourceLoader {
 				.normalMipMap().create());
 		ResourceManager.loadTexture("thirst_icon_ui", Texture.newTexture(new MyFile("gui/thirst_icon.png"))
 				.normalMipMap().create());
+		ResourceManager.loadTexture("cowry_ui", Texture.newTexture(new MyFile("gui/cowry.png"))
+				.normalMipMap().create());
 		
 		ResourceManager.loadTexture("selected_slot_ui", Texture.newTexture(new MyFile("gui/elements/selected_slot.png"))
 				.normalMipMap().create());

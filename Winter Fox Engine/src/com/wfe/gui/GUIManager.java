@@ -87,6 +87,8 @@ public class GUIManager  {
 			inventory.addItem(ItemDatabase.getItem(Item.BASKET), 1);
 			inventory.addItem(ItemDatabase.getItem(Item.FURNACE), 1);
 			inventory.addItem(ItemDatabase.getItem(Item.JUG), 1);
+			
+			stats.addCowry(2000);
 		}
 		
 		if(Keyboard.isKeyDown(Key.KEY_E)) {
