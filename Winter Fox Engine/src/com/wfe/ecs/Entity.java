@@ -7,7 +7,7 @@ import com.wfe.core.World;
 import com.wfe.graph.Material;
 import com.wfe.graph.Mesh;
 
-public class Entity {
+public class Entity{
 	
 	protected Transformation transform;
 	

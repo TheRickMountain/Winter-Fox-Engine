@@ -24,8 +24,6 @@ public class Game {
 		player = new Player(camera, new Transformation(80, 0.65f, 80));
 		world.addEntity(player);
 		
-		world.addEntity(new Goat(new Transformation(86.5f, 0, 86.5f)));
-		
 		world.addEntityToTile(new Wheat(new Transformation(83.5f, 0, 83.5f), 5));
 		world.addEntityToTile(new Wheat(new Transformation(90.5f, 0, 85.5f), 5));
 		world.addEntityToTile(new Wheat(new Transformation(72.5f, 0, 94.5f), 5));
@@ -70,6 +68,11 @@ public class Game {
 		}
 		
 		AudioMaster.ambientSource.play(ResourceManager.getSound("hills"));
+		
+		System.out.println("Save loading...");
+		world.loadPlayer("saves/player.dat");
+		//world.loadWorld("saves/world.dat");
+		System.out.println("Save loaded");
 	}
 
 

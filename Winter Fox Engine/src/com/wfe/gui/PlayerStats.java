@@ -87,7 +87,7 @@ public class PlayerStats {
 		return healthBar.getCurrentVaule();
 	}
 	
-	private void setHealth(int value) {
+	public void setHealth(int value) {
 		healthBar.setCurrentValue(value);
 	}
 
@@ -95,18 +95,26 @@ public class PlayerStats {
 		return cowry;
 	}
 	
+	public void setCowry(int value) {
+		cowry = value;
+		cowryText.setText(String.valueOf(cowry));
+	}
+	
 	public boolean addCowry(int value) {
 		if(cowry + value < 0) {
 			return false;
 		}
 		
-		cowry += value;
-		cowryText.setText(String.valueOf(cowry));
+		setCowry(cowry += value);
 		return true;
 	}
 	
 	public int getHunger() {
 		return hungerBar.getCurrentVaule();
+	}
+	
+	public void setHunger(int value) {
+		hungerBar.setCurrentValue(value);
 	}
 	
 	public void addHunger(int value) {
@@ -122,6 +130,10 @@ public class PlayerStats {
 	
 	public int getThirst() {
 		return thirstBar.getCurrentVaule();
+	}
+	
+	public void setThirst(int value) {
+		thirstBar.setCurrentValue(value);
 	}
 	
 	public void addThirst(int value) {

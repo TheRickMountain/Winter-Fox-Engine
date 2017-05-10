@@ -29,7 +29,7 @@ public class Inventory {
 	public GUIFrame inventoryFrame;
 	private List<Slot> inventorySlots = new ArrayList<>();
 	
-	private List<Slot> allSlots = new ArrayList<>();
+	public List<Slot> slots = new ArrayList<>();
 	
 	private Item selectedItem;
 	private int selected = 0;
@@ -45,7 +45,7 @@ public class Inventory {
 		
 		for(int i = 0; i < columns; i++) {
 			hotbarSlots.add(new Slot(new Rect(0, 0, Slot.SIZE, Slot.SIZE)));
-			allSlots.add(hotbarSlots.get(i));
+			slots.add(hotbarSlots.get(i));
 		}
 		
 		// Inventory
@@ -55,7 +55,7 @@ public class Inventory {
 		
 		for(int i = 0; i < rows * columns; i++) {
 			inventorySlots.add(new Slot(new Rect(0, 0, Slot.SIZE, Slot.SIZE)));
-			allSlots.add(inventorySlots.get(i));
+			slots.add(inventorySlots.get(i));
 		}
 		
 		hotbarSlots.get(selected).setSelected(true);
@@ -95,7 +95,7 @@ public class Inventory {
 	
 	public void update() {
 		if(Mouse.isButtonDown(1)) {
-			for(Slot slot : allSlots) {
+			for(Slot slot : slots) {
 				if(slot.rect.isMouseOvered()) {
 					if(slot.isHasItem()) {
 						Item item = slot.getItem();
@@ -114,7 +114,7 @@ public class Inventory {
 		}
 
 		if(inventoryFrame.rect.isMouseOvered() || hotbarFrame.rect.isMouseOvered()) {
-			for(Slot slot : allSlots) {
+			for(Slot slot : slots) {
 				if(slot.rect.isMouseOvered()) {
 					if(slot.isHasItem()) {
 						GUIManager.showPopUpInfo(slot.getItem());
@@ -124,7 +124,7 @@ public class Inventory {
 		}
 		
 		if(Mouse.isButtonDown(0)) {
-			for(Slot slot : allSlots) {
+			for(Slot slot : slots) {
 				if(slot.rect.isMouseOvered()) {
 					if(slot.isHasItem()) {
 						if(GUIManager.draggedItem.id == Item.NULL) {
@@ -268,7 +268,7 @@ public class Inventory {
 	
 	public int hasItem(Item item) {
 		int count = 0;
-		for(Slot slot : allSlots) {
+		for(Slot slot : slots) {
 			if(slot.isHasItem()) {
 				if(slot.getItem() == item) {
 					count += slot.getCount();
@@ -280,7 +280,7 @@ public class Inventory {
 
 	public int addItem(Item item, int count) {
 		List<Slot> slotsWithSimilarItem = new ArrayList<Slot>();
-		for(Slot slot : allSlots) {
+		for(Slot slot : slots) {
 			if(slot.isHasItem()) {
 				if(slot.getItem().id == item.id) {
 					if(slot.getCount() < item.stackSize) {
@@ -303,7 +303,7 @@ public class Inventory {
 		}
 		
 		if(count > 0) {
-			for(Slot slot : allSlots) {
+			for(Slot slot : slots) {
 				if(!slot.isHasItem()) {
 					if(count > item.stackSize) {
 						slot.addItem(item, item.stackSize);
@@ -323,7 +323,7 @@ public class Inventory {
 	}
 	
 	public void removeItem(Item item, int count) {
-		for(Slot slot : allSlots) {
+		for(Slot slot : slots) {
 			if(slot.isHasItem()) {
 				if(slot.getItem() == item) {
 					if(slot.getCount() > count) {
