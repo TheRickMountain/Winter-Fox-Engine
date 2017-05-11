@@ -1,9 +1,11 @@
 package com.wfe.audio;
 
+import java.io.Serializable;
+
 import org.lwjgl.openal.AL10;
 
-public class Source
-{
+public class Source {
+
 	private int sourceId;
 
 	public Source()

@@ -1,7 +1,7 @@
 package com.wfe.ecs;
 
 public abstract class Component {
-
+	
 	private Entity parent;
 	
 	public abstract void init();

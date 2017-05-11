@@ -4,7 +4,7 @@ import com.wfe.ecs.Entity;
 import com.wfe.textures.Texture;
 
 public class Item {
-
+	
 	public static final int NULL = 0;
 	public static final int APPLE = 1;
 	public static final int FLINT = 2;

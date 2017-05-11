@@ -3,7 +3,7 @@ package com.wfe.utils;
 import com.wfe.input.Mouse;
 
 public class Rect {
-
+	
 	public float x, y;
 	public float width, height;
 	public float rotation;

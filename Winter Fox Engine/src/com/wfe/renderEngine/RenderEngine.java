@@ -12,7 +12,7 @@ import com.wfe.gui.GUIManager;
 import com.wfe.utils.OpenglUtils;
 
 public class RenderEngine {
-	
+
 	private static RenderEngine renderer;
 	
 	private StaticRenderer staticEntityRenderer;

@@ -7,14 +7,14 @@ import com.wfe.core.World;
 import com.wfe.graph.Material;
 import com.wfe.graph.Mesh;
 
-public class Entity{
-	
+public class Entity {
+
 	protected Transformation transform;
 	
 	protected List<Component> components = new ArrayList<Component>();
-	protected List<Entity> childs = new ArrayList<Entity>();
+	public List<Entity> childs = new ArrayList<Entity>();
 	protected boolean hasParent;
-	protected String tag;
+	protected String tag = "empty";
 	
 	private Entity parent;
 

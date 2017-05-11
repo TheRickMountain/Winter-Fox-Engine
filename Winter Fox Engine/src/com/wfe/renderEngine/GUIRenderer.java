@@ -14,7 +14,7 @@ import com.wfe.utils.MathUtils;
 import com.wfe.utils.OpenglUtils;
 
 public class GUIRenderer {
-	
+
 	private static GUIShader shader;
 	
 	private Mesh quadMesh;

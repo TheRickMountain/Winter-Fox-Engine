@@ -3,7 +3,7 @@ package com.wfe.shaders;
 import org.lwjgl.opengl.GL20;
 
 public abstract class Uniform {
-	
+
 	private static final int NOT_FOUND = -1;
 	
 	private String name;

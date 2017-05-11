@@ -3,7 +3,7 @@ package com.wfe.weather;
 import com.wfe.math.Vector3f;
 
 public class Weather {
-
+	
 	private WeatherFrame[] weatherFrames = {
 		new WeatherFrame(0, new Vector3f(0, 0, 0.1f)),
 		new WeatherFrame(500, new Vector3f(0, 0, 0.1f)),

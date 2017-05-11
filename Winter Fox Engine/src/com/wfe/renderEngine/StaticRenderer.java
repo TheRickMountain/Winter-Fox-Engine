@@ -18,7 +18,7 @@ import com.wfe.utils.OpenglUtils;
 import com.wfe.weather.DirectionalLight;
 
 public class StaticRenderer {
-	
+
 	private Camera camera;
 	
 	private StaticShader shader;

@@ -2,7 +2,7 @@ package com.wfe.physics;
 
 public class AABB {
 	
-	 private float epsilon = 0.0f;
+	private float epsilon = 0.0f;
 	 public float x0;
 	 public float y0;
 	 public float z0;

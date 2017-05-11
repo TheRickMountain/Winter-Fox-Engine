@@ -3,7 +3,7 @@ package com.wfe.utils;
 import org.lwjgl.glfw.GLFW;
 
 public class TimeUtil {
-
+	
 	private double previousTime;
 	private boolean ptReceived;
 	

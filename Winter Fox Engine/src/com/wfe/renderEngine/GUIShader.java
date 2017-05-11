@@ -1,7 +1,6 @@
 package com.wfe.renderEngine;
 
 import com.wfe.shaders.ShaderProgram;
-import com.wfe.shaders.UniformBoolean;
 import com.wfe.shaders.UniformColor;
 import com.wfe.shaders.UniformInt;
 import com.wfe.shaders.UniformMatrix;

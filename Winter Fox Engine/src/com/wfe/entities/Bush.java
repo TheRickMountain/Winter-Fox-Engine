@@ -10,6 +10,7 @@ public class Bush extends Entity {
 	public Bush(Transformation transform) {
 		super(ResourceManager.getMesh("bush"), new Material(ResourceManager.getTexture("bush"))
 				.setHasTransparency(true).setHasFakeLighting(true), transform);
+		setTag("bush");
 		transform.setScale(0.5f);
 	}
 	

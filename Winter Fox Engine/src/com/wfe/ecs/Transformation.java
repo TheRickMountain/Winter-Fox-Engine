@@ -5,7 +5,7 @@ import com.wfe.math.Vector4f;
 import com.wfe.utils.MathUtils;
 
 public class Transformation {
-
+	
 	private Entity parent;
 	private Vector4f temp;
 	private Matrix4f tempMatrix;

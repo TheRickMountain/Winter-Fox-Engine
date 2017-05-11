@@ -3,7 +3,7 @@ package com.wfe.weather;
 import com.wfe.math.Vector3f;
 
 public class WeatherFrame {
-
+	
 	private float time;
 	private Vector3f sunLightColor;
 	

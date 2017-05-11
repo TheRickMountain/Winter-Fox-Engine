@@ -1,5 +1,7 @@
 	package com.wfe.core;
 
+import java.io.Serializable;
+
 import com.wfe.input.Mouse;
 import com.wfe.math.Matrix4f;
 import com.wfe.math.Vector3f;
@@ -8,9 +10,11 @@ import com.wfe.utils.MathUtils;
 /**
  * Created by Rick on 07.10.2016.
  */
-public class Camera {
+public class Camera implements Serializable {
 
-    public static final float FOV = 60.0f;
+	private static final long serialVersionUID = 1L;
+	
+	public static final float FOV = 60.0f;
     public static final float Z_NEAR = 0.1f;
     public static final float Z_FAR = 1000.f;
 

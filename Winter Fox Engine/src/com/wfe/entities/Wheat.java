@@ -15,6 +15,7 @@ public class Wheat extends Entity {
 				new Material(ResourceManager.getTexture("wheat_stage_" + stage))
 				.setHasTransparency(true)
 				.setHasFakeLighting(true), transform);
+		setTag("wheat");
 		getTransform().setScale(0.5f);
 		addComponent(new GatherableComponent(ItemDatabase.getItem(Item.WHEAT), 1, ResourceManager.getSound("taking")));
 	}

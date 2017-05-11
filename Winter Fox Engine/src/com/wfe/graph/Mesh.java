@@ -12,7 +12,7 @@ import org.lwjgl.system.MemoryUtil;
 import com.wfe.utils.OpenglUtils;
 
 public class Mesh {
-	
+
 	private static final int BYTES_PER_FLOAT = 4;
 	
 	private int VAO, VBO, EBO;

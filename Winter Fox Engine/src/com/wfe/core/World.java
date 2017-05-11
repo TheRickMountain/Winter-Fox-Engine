@@ -2,12 +2,9 @@ package com.wfe.core;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -32,7 +29,7 @@ import com.wfe.utils.MousePicker;
 import com.wfe.weather.Weather;
 
 public class World {
-	
+
 	private static World WORLD;
 	
 	private int width, height;
@@ -132,6 +129,10 @@ public class World {
 	            entitiesToRender.put(entity.getMesh(), batch);
 			} 
 			batch.add(entity);
+		}
+		
+		for(Entity child : entity.childs) {
+			addEntity(child);
 		}
 	}
 	
@@ -244,7 +245,7 @@ public class World {
 			}
 			
 			out.close();
-		} catch (IOException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
@@ -287,20 +288,6 @@ public class World {
 			}
 			
 		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-	
-	public void loadWorld(String saveName) {
-		BufferedReader reader;
-		try {
-			reader = new BufferedReader(new FileReader(saveName));
-			String line = "";
-			while((line = reader.readLine()) != null) {
-				
-			}
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

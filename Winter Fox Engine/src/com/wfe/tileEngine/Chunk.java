@@ -11,7 +11,7 @@ import org.lwjgl.opengl.GL20;
 import org.lwjgl.opengl.GL30;
 
 public class Chunk {
-
+	
 	public static final int SIZE = 16;
 	private int posX, posY;
 	private int VAO, vVBO, vtVBO;
