@@ -11,6 +11,7 @@ public class Wall extends Entity {
 	public Wall() {
 		super(ResourceManager.getMesh("wall"),
 				new Material(ResourceManager.getTexture("walls")), new Transformation());	
+		setId(26);
 		setTag("wall");
 		transform.setScale(0.5f);
 		setWalkable(false);

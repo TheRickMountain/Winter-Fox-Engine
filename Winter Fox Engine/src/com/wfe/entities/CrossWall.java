@@ -11,6 +11,7 @@ public class CrossWall extends Entity {
 	public CrossWall() {
 		super(ResourceManager.getMesh("cross_wall"),
 				new Material(ResourceManager.getTexture("walls")), new Transformation());
+		setId(11);
 		setTag("cross wall");
 		transform.setScale(0.5f);
 		setWalkable(false);

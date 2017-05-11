@@ -14,6 +14,7 @@ public class Stick extends Entity {
 	public Stick(Transformation transform) {
 		super(ResourceManager.getMesh("stick"), 
 				new Material(ResourceManager.getTexture("stick")), transform);
+		setId(25);
 		setTag("stick");
 		transform.setRotY(MyRandom.nextInt(360));
 		transform.setScale(0.2f);

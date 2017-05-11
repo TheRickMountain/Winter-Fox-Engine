@@ -11,6 +11,7 @@ public class Jug extends Entity {
 	public Jug() {
 		super(ResourceManager.getMesh("jug"),
 				new Material(ResourceManager.getTexture("jug")), new Transformation());	
+		setId(19);
 		transform.setScale(1.3f);
 		setTag("jug");
 		setWalkable(false);

@@ -10,6 +10,7 @@ public class Fern extends Entity {
 	public Fern(Transformation transform) {
 		super(ResourceManager.getMesh("fern"), new Material(ResourceManager.getTexture("fern"))
 				.setNumberOfRows(2).setHasTransparency(true), transform);
+		setId(13);
 		setTag("Fern");
 		getTransform().setScale(0.6f);
 	}

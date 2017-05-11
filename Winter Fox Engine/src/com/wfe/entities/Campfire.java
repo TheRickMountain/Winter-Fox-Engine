@@ -11,6 +11,7 @@ public class Campfire extends Entity {
 	public Campfire(Transformation transform) {
 		super(ResourceManager.getMesh("campfire"),
 				new Material(ResourceManager.getTexture("campfire")), transform);	
+		setId(6);
 		transform.setScale(0.4f);
 		setWalkable(false);
 		addComponent(new ColliderComponent(0.5f, 0.5f, 0.5f));

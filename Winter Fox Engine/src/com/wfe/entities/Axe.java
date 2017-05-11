@@ -11,6 +11,7 @@ public class Axe extends Entity {
 		super(ResourceManager.getMesh("axe"), new Material(ResourceManager.getTexture("axe")), 
 				new Transformation());	
 		setTag("axe");
+		setId(0);
 		transform.setScale(0.5f);
 		transform.localScaleX = transform.localScaleY = transform.localScaleZ = 2;
 		transform.localY = -0.5f;

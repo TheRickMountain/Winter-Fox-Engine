@@ -15,6 +15,7 @@ public class Clay extends Entity {
 	public Clay(Transformation transform) {
 		super(ResourceManager.getMesh("rock"), 
 				new Material(ResourceManager.getTexture("clay")), transform);
+		setId(7);
 		setTag("clay");
 		transform.setScale(0.5f);
 		setWalkable(false);

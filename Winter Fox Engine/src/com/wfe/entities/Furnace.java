@@ -11,6 +11,7 @@ public class Furnace extends Entity {
 	public Furnace() {
 		super(ResourceManager.getMesh("furnace"),
 				new Material(ResourceManager.getTexture("furnace")), new Transformation());	
+		setId(15);
 		transform.setScale(0.5f);
 		setTag("furnace");
 		setWalkable(false);

@@ -11,6 +11,7 @@ public class Well extends Entity {
 	public Well() {
 		super(ResourceManager.getMesh("well"),
 				new Material(ResourceManager.getTexture("well")), new Transformation());	
+		setId(27);
 		transform.setScale(0.75f);
 		setTag("well");
 		setWalkable(false);

@@ -11,6 +11,7 @@ public class Barrel extends Entity {
 	public Barrel(Transformation transform) {
 		super(ResourceManager.getMesh("barrel"),
 				new Material(ResourceManager.getTexture("barrel")), transform);	
+		setId(3);
 		transform.setScale(0.4f);
 		setWalkable(false);
 		addComponent(new ColliderComponent(0.75f, 1, 0.75f));

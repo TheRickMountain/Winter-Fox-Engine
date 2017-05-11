@@ -10,6 +10,7 @@ public class Amanita extends Entity {
 	public Amanita(Transformation transform) {
 		super(ResourceManager.getMesh("amanita"), 
 				new Material(ResourceManager.getTexture("amanita")), transform);
+		setId(1);
 		transform.setScale(0.5f);
 	}
 

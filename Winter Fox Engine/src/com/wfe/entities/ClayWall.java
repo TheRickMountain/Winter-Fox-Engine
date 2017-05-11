@@ -11,6 +11,7 @@ public class ClayWall extends Entity {
 	public ClayWall() {
 		super(ResourceManager.getMesh("clay_wall"),
 				new Material(ResourceManager.getTexture("clay_wall")), new Transformation());	
+		setId(9);
 		setTag("clay_wall");
 		transform.setScale(0.5f);
 		setWalkable(false);

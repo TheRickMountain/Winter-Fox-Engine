@@ -103,6 +103,27 @@ public class ResourceLoader {
 		
 		/*** *** ***/
 		
+		/*** Amanita ***/
+		ResourceManager.loadTexture("amanita", Texture.newTexture(new MyFile("entity/amanita/diffuse.png"))
+				.normalMipMap(-0.4f)
+				.create());
+		ResourceManager.loadMesh("amanita", OBJLoader.loadMesh("/entity/amanita/model.obj"));
+		/*** *** ***/
+		
+		/*** Campfire ***/
+		ResourceManager.loadTexture("campfire", Texture.newTexture(new MyFile("entity/campfire/diffuse.png"))
+				.normalMipMap(-0.4f)
+				.create());
+		ResourceManager.loadMesh("campfire", OBJLoader.loadMesh("/entity/campfire/model.obj"));
+		/*** *** ***/
+		
+		/*** Barrel ***/
+		ResourceManager.loadTexture("barrel", Texture.newTexture(new MyFile("entity/barrel/diffuse.png"))
+				.normalMipMap(-0.4f)
+				.create());
+		ResourceManager.loadMesh("barrel", OBJLoader.loadMesh("/entity/barrel/model.obj"));
+		/*** *** ***/
+		
 		/*** Hive ***/
 		ResourceManager.loadTexture("hive", Texture.newTexture(new MyFile("entity/hive/diffuse.png"))
 				.normalMipMap(-0.4f)

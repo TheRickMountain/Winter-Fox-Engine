@@ -11,6 +11,7 @@ public class ClayCornerWall extends Entity {
 	public ClayCornerWall() {
 		super(ResourceManager.getMesh("clay_corner_wall"),
 				new Material(ResourceManager.getTexture("clay_wall")), new Transformation());	
+		setId(8);
 		setTag("corner_clay_wall");
 		transform.setScale(0.5f);
 		setWalkable(false);

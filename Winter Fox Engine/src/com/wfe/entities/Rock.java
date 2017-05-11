@@ -15,6 +15,7 @@ public class Rock extends Entity {
 	public Rock(Transformation transform) {
 		super(ResourceManager.getMesh("rock"), 
 				new Material(ResourceManager.getTexture("rock")), transform);
+		setId(24);
 		setTag("stone");
 		transform.setScale(0.5f);
 		setWalkable(false);

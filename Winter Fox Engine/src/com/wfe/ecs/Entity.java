@@ -12,8 +12,9 @@ public class Entity {
 	protected Transformation transform;
 	
 	protected List<Component> components = new ArrayList<Component>();
-	public List<Entity> childs = new ArrayList<Entity>();
+	public List<Entity> children = new ArrayList<Entity>();
 	protected boolean hasParent;
+	private int id;
 	protected String tag = "empty";
 	
 	private Entity parent;
@@ -42,15 +43,15 @@ public class Entity {
 			component.init();
 		}
 		
-		for(Entity entity : childs) {
+		for(Entity entity : children) {
 			entity.init();
 		}
 	}
 	
 	public void update(float dt) {		
 		if(remove) {
-			if(!childs.isEmpty()) {
-				for(Entity child : childs)
+			if(!children.isEmpty()) {
+				for(Entity child : children)
 					child.remove();
 			}
 			
@@ -91,11 +92,11 @@ public class Entity {
 	
 	public void addChild(Entity entity) {
 		entity.setParent(this);
-		this.childs.add(entity);
+		this.children.add(entity);
 	}
 	
 	public void removeChild(Entity entity) {
-		this.childs.remove(entity);
+		this.children.remove(entity);
 	}
 	
 	public Transformation getTransform() {
@@ -129,6 +130,14 @@ public class Entity {
 
 	public String getTag() {
 		return tag;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public void setTag(String tag) {
@@ -172,16 +181,30 @@ public class Entity {
 	
 	public Entity getInstanceNoComponents() {
 		Entity entity = new Entity(mesh, material.getInstance(), new Transformation(transform));
+		entity.setId(getId());
 		entity.setTag(getTag());
 		entity.setTextureIndex(getTextureIndex());
+		
+		for(Entity child : children) {
+			entity.addChild(child.getInstanceNoComponents());
+		}
+		
 		return entity;
 	}
 	
 	public Entity getInstance() {
-		Entity entity = getInstanceNoComponents();
+		Entity entity = new Entity(mesh, material.getInstance(), new Transformation(transform));
+		entity.setId(getId());
+		entity.setTag(getTag());
+		entity.setTextureIndex(getTextureIndex());
 		for(Component c : components) {
 			entity.addComponent(c.getInstance());
 		}
+		
+		for(Entity child : children) {
+			entity.addChild(child.getInstance());
+		}
+		
 		return entity;
 	}
 	

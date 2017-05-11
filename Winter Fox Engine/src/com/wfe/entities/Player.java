@@ -27,6 +27,7 @@ public class Player extends Entity {
 	
 	public Player(Camera camera, Transformation transform) {
 		super(null, null, transform);
+		setId(0);
 		setTag("player");
 		transform.setScale(0.3f);
 		

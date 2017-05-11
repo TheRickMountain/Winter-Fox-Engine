@@ -13,6 +13,8 @@ import java.util.Map;
 import com.wfe.components.ColliderComponent;
 import com.wfe.ecs.ComponentType;
 import com.wfe.ecs.Entity;
+import com.wfe.ecs.EntityCache;
+import com.wfe.ecs.Transformation;
 import com.wfe.graph.Mesh;
 import com.wfe.gui.GUIManager;
 import com.wfe.gui.ItemDatabase;
@@ -131,7 +133,7 @@ public class World {
 			batch.add(entity);
 		}
 		
-		for(Entity child : entity.childs) {
+		for(Entity child : entity.children) {
 			addEntity(child);
 		}
 	}
@@ -245,6 +247,29 @@ public class World {
 			}
 			
 			out.close();
+			
+			fstream = new FileWriter("saves/world.dat");
+			out = new BufferedWriter(fstream);
+			
+			for(Entity entity : entities) {
+				if(entity.getId() != 0) {
+					Transformation transform = entity.getTransform();
+					out.write(entity.getId() + "," + 
+					transform.getX() + "," + 
+					transform.getY() + "," + 
+					transform.getZ() + "," +
+					transform.getRotX() + "," + 
+					transform.getRotY() + "," + 
+					transform.getRotZ() + "," +
+					transform.getScaleX() + "," +
+					transform.getScaleY() + "," +
+					transform.getScaleZ() + "," +
+					entity.getTextureIndex() + "\n");
+				}
+			}
+			
+			out.close();
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -265,16 +290,16 @@ public class World {
 				
 				switch(stats[0]) {
 				case "health":
-					GUIManager.stats.setHealth(Integer.valueOf(stats[1]));
+					GUIManager.stats.setHealth(Integer.parseInt(stats[1]));
 					break;
 				case "hunger":
-					GUIManager.stats.setHunger(Integer.valueOf(stats[1]));
+					GUIManager.stats.setHunger(Integer.parseInt(stats[1]));
 					break;
 				case "thirst":
-					GUIManager.stats.setThirst(Integer.valueOf(stats[1]));
+					GUIManager.stats.setThirst(Integer.parseInt(stats[1]));
 					break;
 				case "cowry":
-					GUIManager.stats.setCowry(Integer.valueOf(stats[1]));
+					GUIManager.stats.setCowry(Integer.parseInt(stats[1]));
 					break;
 				}
 			}
@@ -282,12 +307,37 @@ public class World {
 			while((line = reader.readLine()) != null) {
 				String[] item = line.split(":");
 				if(item[1] != "") {
-					GUIManager.inventory.slots.get(Integer.valueOf(item[0])).addItem(
-							ItemDatabase.getItem(Integer.valueOf(item[1])), Integer.valueOf(item[2]));
+					GUIManager.inventory.slots.get(Integer.parseInt(item[0])).addItem(
+							ItemDatabase.getItem(Integer.parseInt(item[1])), Integer.parseInt(item[2]));
 				}
 			}
 			
+			reader.close();
+			
 		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void loadWorld(String saveName) {
+		try {
+			BufferedReader reader = new BufferedReader(new FileReader(saveName));
+			String line = "";
+			while((line = reader.readLine()) != null) {
+				String[] values = line.split(",");
+				Entity entity = EntityCache.getEntityById(Integer.parseInt(values[0]));
+				Transformation transform = entity.getTransform();
+				transform.setPosition(
+						Float.parseFloat(values[1]), Float.parseFloat(values[2]), Float.parseFloat(values[3]));
+				transform.setRotation(
+						Float.parseFloat(values[4]), Float.parseFloat(values[5]), Float.parseFloat(values[6]));
+				transform.setScale(
+						Float.parseFloat(values[7]), Float.parseFloat(values[8]), Float.parseFloat(values[9]));
+				entity.setTextureIndex(Integer.parseInt(values[10]));
+				addEntityToTile(entity);
+			}
+			reader.close();
+		} catch(Exception e) {
 			e.printStackTrace();
 		}
 	}

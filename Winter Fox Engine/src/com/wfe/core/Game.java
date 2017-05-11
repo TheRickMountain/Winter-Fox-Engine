@@ -1,6 +1,7 @@
 package com.wfe.core;
 
 import com.wfe.audio.AudioMaster;
+import com.wfe.ecs.EntityCache;
 import com.wfe.ecs.Transformation;
 import com.wfe.entities.Bush;
 import com.wfe.entities.Clay;
@@ -19,11 +20,13 @@ public class Game {
 	
 	public static Player player;
 
-	public void init(World world, Camera camera, Display display) throws Exception {		
+	public void init(World world, Camera camera, Display display) throws Exception {
+		EntityCache.init();
+		
 		player = new Player(camera, new Transformation(80, 0.65f, 80));
 		world.addEntity(player);
 		
-		world.addEntityToTile(new Wheat(new Transformation(83.5f, 0, 83.5f), 5));
+		/*world.addEntityToTile(new Wheat(new Transformation(83.5f, 0, 83.5f), 5));
 		world.addEntityToTile(new Wheat(new Transformation(90.5f, 0, 85.5f), 5));
 		world.addEntityToTile(new Wheat(new Transformation(72.5f, 0, 94.5f), 5));
 		world.addEntityToTile(new Wheat(new Transformation(80.5f, 0, 75.5f), 5));
@@ -64,13 +67,13 @@ public class Game {
 					world.addEntityToTile(grass);
 				}
 			}
-		}
+		}*/
 		
 		AudioMaster.ambientSource.play(ResourceManager.getSound("hills"));
 		
 		System.out.println("Save loading...");
 		world.loadPlayer("saves/player.dat");
-		//world.loadWorld("saves/world.dat");
+		world.loadWorld("saves/world.dat");
 		System.out.println("Save loaded");
 	}
 

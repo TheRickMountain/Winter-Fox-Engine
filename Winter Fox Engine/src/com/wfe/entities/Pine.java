@@ -15,13 +15,14 @@ public class Pine extends Entity {
 	public Pine(Transformation transform) {
 		super(ResourceManager.getMesh("pine_bark"),
 				new Material(ResourceManager.getTexture("pine_bark")), transform);
+		setId(22);
 		setTag("tree");
 		addComponent(new ColliderComponent(0.5f, 1, 0.5f));
 		
-		Entity pineLeaves = new Entity(ResourceManager.getMesh("pine_leaves"),
+		Entity leaves = new Entity(ResourceManager.getMesh("pine_leaves"),
 				new Material(ResourceManager.getTexture("pine_leaves")).setHasTransparency(true), transform);
-		pineLeaves.setTag("leaves");
-		addChild(pineLeaves);
+		leaves.setTag("leaves");
+		addChild(leaves);
 		
 		transform.setScale(0.4f);
 		setWalkable(false);

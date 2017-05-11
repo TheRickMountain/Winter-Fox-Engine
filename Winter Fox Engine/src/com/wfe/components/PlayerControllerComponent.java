@@ -179,7 +179,9 @@ public class PlayerControllerComponent extends Component {
 						float time = (float) timer.getTime();
 						if(time >= mc.getMiningTime()) {
 							GUIManager.inventory.addItem(mc.getItem(), mc.getCount());
-							mc.getParent().remove();
+							world.removeEntityFromTile(
+									(int)mc.getParent().getTransform().x, 
+									(int)mc.getParent().getTransform().z);
 							mc = null;
 							
 							resetMiningProgress();

@@ -12,6 +12,7 @@ public class Basket extends Entity {
 	public Basket() {
 		super(ResourceManager.getMesh("basket"),
 				new Material(ResourceManager.getTexture("basket")), new Transformation());	
+		setId(4);
 		setTag("basket");
 		getTransform().setScale(0.75f);
 		setWalkable(false);
