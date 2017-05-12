@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.wfe.graph.Mesh;
+import com.wfe.input.Mouse;
 import com.wfe.textures.Texture;
 import com.wfe.utils.Color;
 import com.wfe.utils.Utils;
@@ -178,6 +179,11 @@ public class GUIText {
 	
 	public Texture getTexture() {
 		return fontTexture.getTexture();
+	}
+	
+	public boolean isMouseOvered() {
+		return Mouse.getX() > x && Mouse.getX() < x + getWidth() &&
+				Mouse.getY() > y && Mouse.getY() < y + getHeight();
 	}
     
 }

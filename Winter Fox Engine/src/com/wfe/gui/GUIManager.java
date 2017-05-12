@@ -22,6 +22,7 @@ public class GUIManager  {
 	public enum GUIState {
 		CRAFTING,
 		CHEST,
+		DIALOGUE,
 		GAME
 	}
 	
@@ -47,6 +48,8 @@ public class GUIManager  {
 	public static boolean showProgressBar;
 	public static ProgressBar progressBar;
 	
+	private static DialogueSystem dialogueSystem;
+	
 	public static GUIState state = GUIState.GAME;
 	
 	public static void init() {
@@ -70,10 +73,25 @@ public class GUIManager  {
 		
 		progressBar = new ProgressBar(new Rect(0, 0, 385, 10), new Color(255, 140, 0, 255).convert());
 		
+		/*** Test ***/
+		DialogueNode[] dialogueNode = new DialogueNode[]{
+				new DialogueNode("Hello traveler.",
+						new Answer("1. Do you have a job for me?", 1, false),
+						new Answer("2. Do you have something to buy?", 2, false),
+						new Answer("3. Bye!", 0, true)),
+				new DialogueNode("Of course, look at the letter.",
+						new Answer("1. [Back]", 0, false)),
+				new DialogueNode("I'm not trader.",
+						new Answer("1. [Back]", 0, false))
+		};
+		/*** *** ***/				
+		
+		dialogueSystem = new DialogueSystem(dialogueNode, 0);
+		
 		updatePositions();
 	}
 	
-	public static void update() {			
+	public static void update() {	
 		if(Keyboard.isKeyDown(Key.KEY_F)) {
 			inventory.addItem(ItemDatabase.getItem(Item.PICKAXE), 1);
 			inventory.addItem(ItemDatabase.getItem(Item.AXE), 1);
@@ -144,6 +162,8 @@ public class GUIManager  {
 		
 		stats.update();
 		
+		dialogueSystem.update();
+		
 		if(Display.isResized()) {
 			updatePositions();
 		}
@@ -167,6 +187,8 @@ public class GUIManager  {
 		
 		if(showProgressBar)
 			progressBar.render();
+		
+		dialogueSystem.render();
 	}
 	
 	public static void renderText() {
@@ -183,6 +205,8 @@ public class GUIManager  {
 		}
 		
 		stats.renderText();
+		
+		dialogueSystem.renderText();
 	}
 	
 	public static void renderPopUp() {
