@@ -42,6 +42,17 @@ public class ResourceLoader {
 		/*** *** ***/
 		
 		/*** GUI Elements ***/	
+		ResourceManager.loadTexture("mancala_ui", Texture.newTexture(new MyFile("gui/mancala.png"))
+				.normalMipMap().create());
+		ResourceManager.loadTexture("gem_0_ui", Texture.newTexture(new MyFile("gui/gem_0.png"))
+				.normalMipMap().create());
+		ResourceManager.loadTexture("gem_1_ui", Texture.newTexture(new MyFile("gui/gem_1.png"))
+				.normalMipMap().create());
+		ResourceManager.loadTexture("gem_2_ui", Texture.newTexture(new MyFile("gui/gem_2.png"))
+				.normalMipMap().create());
+		ResourceManager.loadTexture("gem_3_ui", Texture.newTexture(new MyFile("gui/gem_3.png"))
+				.normalMipMap().create());
+	
 		ResourceManager.loadTexture("hunger_icon_ui", Texture.newTexture(new MyFile("gui/hunger_icon.png"))
 				.normalMipMap().create());
 		ResourceManager.loadTexture("health_icon_ui", Texture.newTexture(new MyFile("gui/health_icon.png"))

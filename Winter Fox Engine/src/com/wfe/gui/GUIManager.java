@@ -50,6 +50,8 @@ public class GUIManager  {
 	
 	public static DialogueSystem dialogueSystem;
 	
+	public static Mancala mancala;
+	
 	public static GUIState state = GUIState.GAME;
 	
 	public static void init() {
@@ -74,6 +76,8 @@ public class GUIManager  {
 		progressBar = new ProgressBar(new Rect(0, 0, 385, 10), new Color(255, 140, 0, 255).convert());
 		
 		dialogueSystem = new DialogueSystem();
+		
+		mancala = new Mancala();
 		
 		updatePositions();
 	}
@@ -154,6 +158,8 @@ public class GUIManager  {
 		
 		stats.update();
 		
+		mancala.update();
+		
 		if(Display.isResized()) {
 			updatePositions();
 		}
@@ -178,6 +184,8 @@ public class GUIManager  {
 		
 		stats.render();
 		
+		mancala.render();
+		
 		if(showProgressBar)
 			progressBar.render();
 	}
@@ -199,6 +207,8 @@ public class GUIManager  {
 		}
 		
 		stats.renderText();
+		
+		mancala.renderText();
 	}
 	
 	public static void renderPopUp() {

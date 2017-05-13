@@ -104,11 +104,11 @@ public class Settler extends Entity {
 		DialogueNode[] dialogueNode = new DialogueNode[]{
 				new DialogueNode("Hello traveler.",
 						new Answer("1. Do you have a job for me?", 1, false),
-						new Answer("2. Do you have something to buy?", 2, false),
+						new Answer("2. Do you want to play Mancala?", 2, false),
 						new Answer("3. Bye!", 0, true)),
 				new DialogueNode("Of course, look at the letter.",
 						new Answer("1. [Back]", 0, false)),
-				new DialogueNode("I'm not trader.",
+				new DialogueNode("Yes, I do.",
 						new Answer("1. [Back]", 0, false))
 		};
 		/*** *** ***/	
