@@ -99,6 +99,14 @@ public class PlayerControllerComponent extends Component {
 						mc.hurt(getParent(), 10);
 					}*/
 				}
+				
+				for(Entity entity : world.npc) {
+					BoundingBoxComponent bb = (BoundingBoxComponent) entity.getComponent(ComponentType.BOUNDING_BOX);
+					if(bb.intersects()) {
+						NpcComponent npc = (NpcComponent) entity.getComponent(ComponentType.NPC);
+						GUIManager.dialogueSystem.open(npc.node, npc.currentNode);
+					}
+				}
 			}
 		} else {
 			if(animation.fightAnim(dt)) {

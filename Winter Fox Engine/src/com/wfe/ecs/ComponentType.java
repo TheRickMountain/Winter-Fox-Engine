@@ -11,6 +11,8 @@ public enum ComponentType {
 	MINEABLE,
 	HIVE,
 	MOB,
+	NPC,
+	BOUNDING_BOX,
 	NONE
 	
 }

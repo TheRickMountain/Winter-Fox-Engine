@@ -48,7 +48,7 @@ public class GUIManager  {
 	public static boolean showProgressBar;
 	public static ProgressBar progressBar;
 	
-	private static DialogueSystem dialogueSystem;
+	public static DialogueSystem dialogueSystem;
 	
 	public static GUIState state = GUIState.GAME;
 	
@@ -73,20 +73,7 @@ public class GUIManager  {
 		
 		progressBar = new ProgressBar(new Rect(0, 0, 385, 10), new Color(255, 140, 0, 255).convert());
 		
-		/*** Test ***/
-		DialogueNode[] dialogueNode = new DialogueNode[]{
-				new DialogueNode("Hello traveler.",
-						new Answer("1. Do you have a job for me?", 1, false),
-						new Answer("2. Do you have something to buy?", 2, false),
-						new Answer("3. Bye!", 0, true)),
-				new DialogueNode("Of course, look at the letter.",
-						new Answer("1. [Back]", 0, false)),
-				new DialogueNode("I'm not trader.",
-						new Answer("1. [Back]", 0, false))
-		};
-		/*** *** ***/				
-		
-		dialogueSystem = new DialogueSystem(dialogueNode, 0);
+		dialogueSystem = new DialogueSystem();
 		
 		updatePositions();
 	}
@@ -116,15 +103,17 @@ public class GUIManager  {
 				crafting.updateRecipes();
 				Mouse.setActiveInGUI(true);
 				Display.setCursor(Display.defaultCursor);
+				
+				AudioMaster.defaultSource.play(ResourceManager.getSound("inventory"));
 				break;
 			case CRAFTING:
 			case CHEST:
 				state = GUIState.GAME;
 				Mouse.setActiveInGUI(false);
+				
+				AudioMaster.defaultSource.play(ResourceManager.getSound("inventory"));
 				break;
 			}
-			
-			AudioMaster.defaultSource.play(ResourceManager.getSound("inventory"));
 		}
 		
 		inventory.updateHotbar();
@@ -137,6 +126,9 @@ public class GUIManager  {
 		case CHEST:
 			chest.update();
 			inventory.update();
+			break;
+		case DIALOGUE:
+			dialogueSystem.update();
 			break;
 		}
 		
@@ -162,8 +154,6 @@ public class GUIManager  {
 		
 		stats.update();
 		
-		dialogueSystem.update();
-		
 		if(Display.isResized()) {
 			updatePositions();
 		}
@@ -181,14 +171,15 @@ public class GUIManager  {
 			inventory.render();
 			chest.render();
 			break;
+		case DIALOGUE:
+			dialogueSystem.render();
+			break;
 		}
 		
 		stats.render();
 		
 		if(showProgressBar)
 			progressBar.render();
-		
-		dialogueSystem.render();
 	}
 	
 	public static void renderText() {
@@ -202,11 +193,12 @@ public class GUIManager  {
 			inventory.renderText();
 			chest.renderText();
 			break;
+		case DIALOGUE:
+			dialogueSystem.renderText();
+			break;
 		}
 		
 		stats.renderText();
-		
-		dialogueSystem.renderText();
 	}
 	
 	public static void renderPopUp() {

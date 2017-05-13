@@ -20,36 +20,28 @@ public class DialogueSystem {
 	private GUIText npcText;	
 	private List<GUIText> answersText = new ArrayList<>();
 	
-	private boolean showDialogue = true;
-	
-	public DialogueSystem(DialogueNode[] node, int currentNode) {
-		this.node = node;
-		this.currentNode = currentNode;
-		
+	public DialogueSystem() {
 		background = new GUIFrame(new Rect(0, 0, 500, 200), false);
-		
 		npcText = new GUIText("", FontRenderer.ARIAL);
-		
-		updateText();
-		
-		updatePositions();
 	}
 	
-	public void update() {
-		if(showDialogue) {
-			if(Mouse.isButtonDown(0)) {				
-				for(int i = 0; i < node[currentNode].playerAnswer.length; i++) {
-					GUIText text = answersText.get(i);
-					if(text.isMouseOvered()) {
-						if(node[currentNode].playerAnswer[i].speakEnd) {
-							showDialogue = false;
-						} else {
-							currentNode = node[currentNode].playerAnswer[i].toNode;
-							updateText();
-							updatePositions();
-						}
+	public void update() {			
+		for(int i = 0; i < node[currentNode].playerAnswer.length; i++) {
+			GUIText text = answersText.get(i);
+			if(text.isMouseOvered()) {
+				text.getColor().set(1.0f, 1.0f, 0.0f);
+				
+				if(Mouse.isButtonDown(0)) {	
+					if(node[currentNode].playerAnswer[i].speakEnd) {
+						GUIManager.state = GUIManager.GUIState.GAME;
+					} else {
+						currentNode = node[currentNode].playerAnswer[i].toNode;
+						updateText();
+						updatePositions();
 					}
 				}
+			} else {
+				text.getColor().set(1.0f, 1.0f, 1.0f);
 			}
 		}
 		
@@ -59,19 +51,25 @@ public class DialogueSystem {
 	}
 	
 	public void render() {
-		if(showDialogue) {
-			GUIRenderer.render(background.getFrameTextures());
-		}
+		GUIRenderer.render(background.getFrameTextures());
 	}
 	
 	public void renderText() {
-		if(showDialogue) {
-			FontRenderer.render(npcText);
-			
-			for(GUIText text : answersText) {
-				FontRenderer.render(text);
-			}
+		FontRenderer.render(npcText);
+		
+		for(GUIText text : answersText) {
+			FontRenderer.render(text);
 		}
+	}
+	
+	public void open(DialogueNode[] node, int currentNode) {
+		this.node = node;
+		this.currentNode = currentNode;
+		
+		updateText();
+		updatePositions();
+		
+		GUIManager.state = GUIManager.GUIState.DIALOGUE;
 	}
 	
 	private void updateText() {

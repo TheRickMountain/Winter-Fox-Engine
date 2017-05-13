@@ -42,6 +42,8 @@ public class World {
 	
 	private Tile[][] tiles;
 	
+	public List<Entity> npc = new ArrayList<Entity>();
+	
 	private List<Entity> entities = new ArrayList<Entity>();
 	private List<Entity> entitiesToRemove = new ArrayList<Entity>();
 	private List<Entity> entitiesToAdd = new ArrayList<Entity>();
@@ -118,6 +120,10 @@ public class World {
 	
 	public void addEntity(Entity entity) {
 		entity.init();
+		
+		if(entity.hasComponent(ComponentType.NPC)) {
+			npc.add(entity);
+		}
 		
 		if(entity.hasComponent(ComponentType.COLLIDER)) {
 			colliders.add(((ColliderComponent)entity.getComponent(ComponentType.COLLIDER)).getAABB());
