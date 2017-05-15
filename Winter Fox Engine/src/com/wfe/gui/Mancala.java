@@ -19,6 +19,7 @@ public class Mancala {
 	
 	private enum State {
 		GAME,
+		DEAD_HEAT,
 		WIN,
 		LOSE
 	}
@@ -173,9 +174,21 @@ public class Mancala {
 			addToCup(i % 14);
 		}
 		
-		i = cup + amount;
+		i = (cup + amount) % 14;
+		System.out.println(i);
 		
 		if(player == 0) {
+			if(i >= 0 && i <= 5) {
+				if(cups[i] == 1) {
+					int temp = Math.abs(i - 12);
+					if(cups[temp] > 0) {
+						cups[6] += (cups[temp] + 1);
+						cups[temp] = 0;
+						cups[i] = 0;
+					}
+				}
+			}
+			
 			if(i == 6) {
 				turn = Turn.PLAYER;
 				System.out.println("Player turn");
@@ -184,6 +197,17 @@ public class Mancala {
 				turn = Turn.AI;
 			}
 		} else {
+			if(i >= 7 && i <= 12) {
+				if(cups[i] == 1) {
+					int temp = Math.abs(i - 12);
+					if(cups[temp] > 0) {
+						cups[13] += (cups[temp] + 1);
+						cups[temp] = 0;
+						cups[i] = 0;
+					}
+				}
+			}
+			
 			if(i == 13) {
 				turn = Turn.AI;
 				System.out.println("AI turn");
@@ -218,6 +242,8 @@ public class Mancala {
 		if(player || ai) {
 			if(cups[6] > cups[13]) {
 				state = State.WIN;
+			} else if(cups[6] == cups[13]) {
+				state = State.DEAD_HEAT;
 			} else {
 				state = State.LOSE;
 			}
