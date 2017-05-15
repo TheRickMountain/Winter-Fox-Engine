@@ -98,10 +98,10 @@ public class Mancala {
 			}
 			break;
 		case WIN:
-			System.out.println("You win!");
+			//System.out.println("You win!");
 			break;
 		case LOSE:
-			System.out.println("You lose!");
+			//System.out.println("You lose!");
 			break;
 		}
 		
@@ -175,7 +175,6 @@ public class Mancala {
 		}
 		
 		i = (cup + amount) % 14;
-		System.out.println(i);
 		
 		if(player == 0) {
 			if(i >= 0 && i <= 5) {
@@ -240,6 +239,22 @@ public class Mancala {
 		}
 		
 		if(player || ai) {
+			if(ai) {
+				for(int i = 0; i < 6; i++) {
+					
+					cups[13] += cups[i];
+					cups[i] = 0;
+				}
+			} else {
+				for(int i = 7; i < 13; i++) {
+					
+					cups[6] += cups[i];
+					cups[i] = 0;
+				}
+			}
+			
+			updateSlots();
+			
 			if(cups[6] > cups[13]) {
 				state = State.WIN;
 			} else if(cups[6] == cups[13]) {
@@ -262,7 +277,7 @@ public class Mancala {
 		return cups[index];
 	}
 	
-	private void updateSlots() {
+	private void updateSlots() {		
 		for(int i = 0; i < cups.length; i++) {
 			
 			slots.get(i).clear();
