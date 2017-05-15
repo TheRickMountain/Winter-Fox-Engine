@@ -82,7 +82,7 @@ public class GUIManager  {
 		updatePositions();
 	}
 	
-	public static void update() {	
+	public static void update(float dt) {	
 		if(Keyboard.isKeyDown(Key.KEY_F)) {
 			inventory.addItem(ItemDatabase.getItem(Item.PICKAXE), 1);
 			inventory.addItem(ItemDatabase.getItem(Item.AXE), 1);
@@ -158,7 +158,7 @@ public class GUIManager  {
 		
 		stats.update();
 		
-		mancala.update();
+		mancala.update(dt);
 		
 		if(Display.isResized()) {
 			updatePositions();
