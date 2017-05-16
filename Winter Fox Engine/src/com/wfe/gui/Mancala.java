@@ -17,7 +17,7 @@ import com.wfe.utils.TimeUtil;
 
 public class Mancala {
 	
-	private enum State {
+	public enum State {
 		GAME,
 		DEAD_HEAT,
 		WIN,
@@ -43,7 +43,7 @@ public class Mancala {
 	private List<Slot> slots = new ArrayList<>();
 	
 	private Turn turn = Turn.PLAYER;
-	private State state = State.GAME;
+	public State state = State.GAME;
 	private int[] cups;
 	
 	private TimeUtil timer;
@@ -53,22 +53,14 @@ public class Mancala {
 		texture = ResourceManager.getTexture("mancala_ui");
 		
 		cups = new int[7 * 2];
-		for(int i = 0; i < cups.length; i++) {
-			cups[i] = 4;
-		}
-		cups[6] = cups[13] = 0;
 		
 		for(int i = 0; i < cups.length; i++) {
 			slots.add(new Slot());
-			
-			for(int j = 0; j < cups[i]; j++) {
-				slots.get(i).addGem(new GUITexture(ResourceManager.getTexture("gem_0_ui")));
-			}
 		}
 		
 		timer = new TimeUtil();
 		
-		updatePositions();
+		startNewGame();
 	}
 	
 	public void update(float dt) {
@@ -98,15 +90,11 @@ public class Mancala {
 			}
 			break;
 		case WIN:
-			//System.out.println("You win!");
 			break;
 		case LOSE:
-			//System.out.println("You lose!");
 			break;
-		}
-		
-		if(Display.isResized()) {
-			updatePositions();
+		case DEAD_HEAT:
+			break;
 		}
 	}
 	
@@ -133,8 +121,19 @@ public class Mancala {
 			slot.renderText();
 		}
 	}
+	
+	public void startNewGame() {
+		state = State.GAME;
+		
+		for(int i = 0; i < cups.length; i++) {
+			cups[i] = 4;
+		}
+		cups[6] = cups[13] = 0;
+		
+		updateSlots();
+	}
 
-	private void updatePositions() {
+	public void updatePositions() {
 		rect.setPosition(Display.getWidth() / 2 - rect.width / 2, 
 				Display.getHeight() / 2 - rect.height / 2);
 		

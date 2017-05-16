@@ -32,8 +32,10 @@ public class DialogueSystem {
 				text.getColor().set(1.0f, 1.0f, 0.0f);
 				
 				if(Mouse.isButtonDown(0)) {	
-					if(node[currentNode].playerAnswer[i].speakEnd) {
+					if(node[currentNode].playerAnswer[i].isSpeakEnd()) {
 						GUIManager.state = GUIManager.GUIState.GAME;
+					} else if(node[currentNode].playerAnswer[i].isPlayMancala())  {
+						GUIManager.state = GUIManager.GUIState.MANCALA;
 					} else {
 						currentNode = node[currentNode].playerAnswer[i].toNode;
 						updateText();
@@ -43,10 +45,6 @@ public class DialogueSystem {
 			} else {
 				text.getColor().set(1.0f, 1.0f, 1.0f);
 			}
-		}
-		
-		if(Display.isResized()) {
-			updatePositions();
 		}
 	}
 	
@@ -81,7 +79,7 @@ public class DialogueSystem {
 		}
 	}
 	
-	private void updatePositions() {
+	public void updatePositions() {
 		background.setPosition(Display.getWidth() / 2 - background.rect.width / 2, 
 				Display.getHeight() - background.rect.height - Slot.SIZE - 15);
 		

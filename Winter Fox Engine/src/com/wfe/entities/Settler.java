@@ -103,13 +103,13 @@ public class Settler extends Entity {
 		/*** Test ***/
 		DialogueNode[] dialogueNode = new DialogueNode[]{
 				new DialogueNode("Hello traveler.",
-						new Answer("1. Do you have a job for me?", 1, false),
-						new Answer("2. Do you want to play Mancala?", 2, false),
-						new Answer("3. Bye!", 0, true)),
+						new Answer("1. Do you have a job for me?", 1),
+						new Answer("2. Let's play Mancala.", 2).setPlayMancala(true),
+						new Answer("3. Bye!", 0).setSpeakEnd(true)),
 				new DialogueNode("Of course, look at the letter.",
-						new Answer("1. [Back]", 0, false)),
-				new DialogueNode("Yes, I do.",
-						new Answer("1. [Back]", 0, false))
+						new Answer("1. [Back]", 0)),
+				new DialogueNode("Ok.",
+						new Answer("1. [Back]", 0))
 		};
 		/*** *** ***/	
 		

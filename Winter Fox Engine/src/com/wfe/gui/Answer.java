@@ -4,12 +4,38 @@ public class Answer {
 	
 	public String text;
 	public int toNode;
-	public boolean speakEnd;
+	private boolean speakEnd;
+	private boolean playMancala;
 	
-	public Answer(String text, int toNode, boolean speakEnd) {
+	public Answer(String text, int toNode) {
 		this.text = text;
 		this.toNode = toNode;
-		this.speakEnd = speakEnd;
+	}
+
+	public boolean isSpeakEnd() {
+		return speakEnd;
+	}
+
+	public Answer setSpeakEnd(boolean value) {
+		if(value) {
+			playMancala = false;
+		}
+		
+		this.speakEnd = value;
+		return this;
+	}
+	
+	public boolean isPlayMancala() {
+		return playMancala;
+	}
+	
+	public Answer setPlayMancala(boolean value) {
+		if(value) {
+			speakEnd = false;
+		}
+		
+		this.playMancala = value;
+		return this;
 	}
 
 }

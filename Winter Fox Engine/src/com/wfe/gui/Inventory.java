@@ -60,8 +60,6 @@ public class Inventory {
 		
 		hotbarSlots.get(selected).setSelected(true);
 		selectedItem = ItemDatabase.getItem(Item.NULL);
-		
-		updatePositions();
 	}
 	
 	public void updateHotbar() {

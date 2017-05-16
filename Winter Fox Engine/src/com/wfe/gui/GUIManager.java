@@ -23,7 +23,8 @@ public class GUIManager  {
 		CRAFTING,
 		CHEST,
 		DIALOGUE,
-		GAME
+		GAME,
+		MANCALA
 	}
 	
 	public static Inventory inventory;
@@ -134,6 +135,17 @@ public class GUIManager  {
 		case DIALOGUE:
 			dialogueSystem.update();
 			break;
+		case MANCALA:		
+			mancala.update(dt);
+			
+			if(mancala.state.equals(Mancala.State.WIN)) {
+				stats.addCowry(100);
+				state = GUIState.DIALOGUE;
+				
+				mancala.startNewGame();
+			}
+			
+			break;
 		}
 		
 		if(showPopUp) {
@@ -158,8 +170,6 @@ public class GUIManager  {
 		
 		stats.update();
 		
-		mancala.update(dt);
-		
 		if(Display.isResized()) {
 			updatePositions();
 		}
@@ -180,11 +190,12 @@ public class GUIManager  {
 		case DIALOGUE:
 			dialogueSystem.render();
 			break;
+		case MANCALA:
+			mancala.render();
+			break;
 		}
 		
 		stats.render();
-		
-		mancala.render();
 		
 		if(showProgressBar)
 			progressBar.render();
@@ -204,11 +215,12 @@ public class GUIManager  {
 		case DIALOGUE:
 			dialogueSystem.renderText();
 			break;
+		case MANCALA:
+			mancala.renderText();
+			break;
 		}
 		
 		stats.renderText();
-		
-		mancala.renderText();
 	}
 	
 	public static void renderPopUp() {
@@ -250,6 +262,8 @@ public class GUIManager  {
 		inventory.updatePositions();
 		crafting.updatePositions();
 		chest.updatePositions();
+		dialogueSystem.updatePositions();
+		mancala.updatePositions();
 		
 		progressBar.rect.setPosition(Display.getWidth() / 2 - progressBar.rect.width / 2, 
 				inventory.hotbarFrame.rect.y - progressBar.rect.height - 5);
@@ -397,6 +411,11 @@ public class GUIManager  {
 				text.getColor().set(1.0f, 0.1f, 0.1f);
 			}
 		}
+	}
+	
+	public void playMancala() {
+		state = GUIState.MANCALA;
+		mancala.startNewGame();
 	}
 	
 }

@@ -90,10 +90,6 @@ public class Chest {
 				}
 			}
 		}
-		
-		if(Display.isResized()) {
-			updatePositions();
-		}
 	}
 	
 	public void render() {

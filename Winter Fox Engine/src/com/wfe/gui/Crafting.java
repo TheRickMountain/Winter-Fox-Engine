@@ -31,14 +31,9 @@ public class Crafting {
 				slots.add(slot);
 			}
 		}
-		updatePositions();
 	}
 	
-	public void update() {
-		if(Display.isResized()) {
-			updatePositions();
-		}
-		
+	public void update() {		
 		if(background.rect.isMouseOvered()) {
 			for(Slot slot : slots) {
 				if(slot.rect.isMouseOvered()) {
