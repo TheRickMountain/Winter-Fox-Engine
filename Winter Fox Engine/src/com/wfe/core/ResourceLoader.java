@@ -156,6 +156,16 @@ public class ResourceLoader {
 		ResourceManager.loadMesh("fern", OBJLoader.loadMesh("/entity/fern/model.obj"));
 		/*** *** ***/
 		
+		/*** Bed ***/
+		ResourceManager.loadTexture("bed_ui", Texture.newTexture(new MyFile("entity/bed/icon.png"))
+				.normalMipMap().create());
+		ResourceManager.loadTexture("bed", Texture.newTexture(new MyFile("entity/bed/diffuse.png"))
+				.normalMipMap(-0.4f)
+				.create());
+		
+		ResourceManager.loadMesh("bed", OBJLoader.loadMesh("/entity/bed/model.obj"));
+		/*** *** ***/
+		
 		/*** Walls ***/
 		ResourceManager.loadTexture("clay_wall", Texture.newTexture(new MyFile("entity/clay_wall/diffuse.png"))
 				.normalMipMap(-0.4f)

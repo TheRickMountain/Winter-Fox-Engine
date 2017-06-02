@@ -125,7 +125,7 @@ public class PlayerControllerComponent extends Component {
 		
 		Vector3f tp = MousePicker.getCurrentTerrainPoint();
 		if(tp != null) {
-				Tile tile = World.getWorld().getTile((int)tp.x, (int)tp.z);
+				Tile tile = world.getTile((int)tp.x, (int)tp.z);
 				
 				if(tile != null) {
 				if(building != null) {
@@ -213,7 +213,7 @@ public class PlayerControllerComponent extends Component {
 							if(checkDistance(tp.x, tp.z)) {
 								turnTo((int)tp.x, (int)tp.z);
 								if(tile.getId() != 10) {
-									world.setTile((int)tp.x, (int)tp.z, 10);
+									world.setTile((int)tp.x, (int)tp.z, 0);
 									source.play(ResourceManager.getSound("hoe"));
 								}
 							}

@@ -85,18 +85,8 @@ public class GUIManager  {
 	
 	public static void update(float dt) {	
 		if(Keyboard.isKeyDown(Key.KEY_F)) {
-			inventory.addItem(ItemDatabase.getItem(Item.PICKAXE), 1);
-			inventory.addItem(ItemDatabase.getItem(Item.AXE), 1);
-			inventory.addItem(ItemDatabase.getItem(Item.CLUB), 1);
-			inventory.addItem(ItemDatabase.getItem(Item.HOE), 1);
-			inventory.addItem(ItemDatabase.getItem(Item.APPLE), 1);
-			inventory.addItem(ItemDatabase.getItem(Item.HONEY), 1);
-			inventory.addItem(ItemDatabase.getItem(Item.FLINT), 40);
-			inventory.addItem(ItemDatabase.getItem(Item.LOG), 120);
-			inventory.addItem(ItemDatabase.getItem(Item.CLAY), 40);
-			inventory.addItem(ItemDatabase.getItem(Item.BASKET), 1);
-			inventory.addItem(ItemDatabase.getItem(Item.FURNACE), 1);
-			inventory.addItem(ItemDatabase.getItem(Item.JUG), 1);
+			inventory.addItem(ItemDatabase.getItem(Item.LEATHER), 2);
+			inventory.addItem(ItemDatabase.getItem(Item.WHEAT), 4);
 			
 			stats.addCowry(2000);
 		}

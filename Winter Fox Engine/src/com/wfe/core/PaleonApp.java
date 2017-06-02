@@ -7,7 +7,7 @@ import com.wfe.input.Keyboard;
 import com.wfe.input.Mouse;
 import com.wfe.math.Vector3f;
 
-public class MainApp {
+public class PaleonApp {
 	
 	public static void main(String[] args) throws Exception {
 		Display display = new Display("Paleon", 1152, 648, false);

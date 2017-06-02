@@ -6,6 +6,7 @@ import java.util.List;
 import com.wfe.core.ResourceManager;
 import com.wfe.entities.Axe;
 import com.wfe.entities.Basket;
+import com.wfe.entities.Bed;
 import com.wfe.entities.ClayCornerWall;
 import com.wfe.entities.ClayWall;
 import com.wfe.entities.Club;
@@ -196,6 +197,13 @@ public class ItemDatabase {
 				.setDescription("Wall")
 				.setStackSize(40)
 				.setIngredients(Item.CLAY, 3, Item.FLINT, 2)
+				.create());
+		
+		addItem(new ItemBuilder(Item.BED, "Bed to sleep", ResourceManager.getTexture("bed_ui"), ItemType.BUILDING)
+				.setEntity(new Bed())
+				.setDescription("Wall")
+				.setStackSize(1)
+				.setIngredients(Item.WHEAT, 4, Item.LEATHER, 2)
 				.create());
 	}
 	
