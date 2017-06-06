@@ -1,14 +1,14 @@
 [stats]
 health:100
-hunger:76
-thirst:48
+hunger:67
+thirst:36
 cowry:4000
 [inventory]
 0:7:1
 1:3:1
 2:21:1
 3:8:1
-4:0:0
+4:9:1
 5:0:0
 6:0:0
 7:0:0

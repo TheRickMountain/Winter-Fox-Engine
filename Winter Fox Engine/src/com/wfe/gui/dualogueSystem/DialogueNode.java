@@ -1,4 +1,4 @@
-package com.wfe.gui;
+package com.wfe.gui.dualogueSystem;
 
 public class DialogueNode {
 

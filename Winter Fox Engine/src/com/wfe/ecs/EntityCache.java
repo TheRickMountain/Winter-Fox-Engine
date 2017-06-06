@@ -6,6 +6,7 @@ import java.util.Map;
 import com.wfe.entities.Amanita;
 import com.wfe.entities.Barrel;
 import com.wfe.entities.Basket;
+import com.wfe.entities.Bed;
 import com.wfe.entities.Bush;
 import com.wfe.entities.Campfire;
 import com.wfe.entities.Clay;
@@ -16,7 +17,6 @@ import com.wfe.entities.DoorWall;
 import com.wfe.entities.Fern;
 import com.wfe.entities.Flint;
 import com.wfe.entities.Furnace;
-import com.wfe.entities.Goat;
 import com.wfe.entities.Grass;
 import com.wfe.entities.Jug;
 import com.wfe.entities.Mushroom;
@@ -62,6 +62,7 @@ public class EntityCache {
 		entities.put(27, new Well());
 		entities.put(28, new Wheat(new Transformation(), 5));
 		entities.put(29, new WindowWall());
+		entities.put(30, new Bed());
 	}
 	
 	public static Entity getEntityById(int id) {

@@ -42,6 +42,8 @@ public class ResourceLoader {
 		/*** *** ***/
 		
 		/*** GUI Elements ***/	
+		ResourceManager.loadTexture("quest_ui", Texture.newTexture(new MyFile("gui/quest.png"))
+				.normalMipMap().create());
 		ResourceManager.loadTexture("mancala_ui", Texture.newTexture(new MyFile("gui/mancala.png"))
 				.normalMipMap().create());
 		ResourceManager.loadTexture("gem_0_ui", Texture.newTexture(new MyFile("gui/gem_0.png"))

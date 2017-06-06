@@ -2,7 +2,7 @@ package com.wfe.components;
 
 import com.wfe.ecs.Component;
 import com.wfe.ecs.ComponentType;
-import com.wfe.gui.DialogueNode;
+import com.wfe.gui.dualogueSystem.DialogueNode;
 
 public class NpcComponent extends Component {
 

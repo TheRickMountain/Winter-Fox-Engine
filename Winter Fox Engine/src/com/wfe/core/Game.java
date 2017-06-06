@@ -5,6 +5,10 @@ import com.wfe.ecs.EntityCache;
 import com.wfe.ecs.Transformation;
 import com.wfe.entities.Player;
 import com.wfe.entities.Settler;
+import com.wfe.gui.Item;
+import com.wfe.gui.ItemDatabase;
+import com.wfe.gui.questSystem.CollectionObjective;
+import com.wfe.gui.questSystem.IQuestObjective;
 
 public class Game {
 	

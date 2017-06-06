@@ -1,10 +1,14 @@
-package com.wfe.gui;
+package com.wfe.gui.dualogueSystem;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import com.wfe.core.Display;
 import com.wfe.font.GUIText;
+import com.wfe.gui.GUIFrame;
+import com.wfe.gui.GUIManager;
+import com.wfe.gui.Slot;
+import com.wfe.gui.GUIManager.GUIState;
 import com.wfe.input.Mouse;
 import com.wfe.renderEngine.FontRenderer;
 import com.wfe.renderEngine.GUIRenderer;
@@ -36,6 +40,8 @@ public class DialogueSystem {
 						GUIManager.state = GUIManager.GUIState.GAME;
 					} else if(node[currentNode].playerAnswer[i].isPlayMancala())  {
 						GUIManager.state = GUIManager.GUIState.MANCALA;
+					} else if(node[currentNode].playerAnswer[i].isHasQuest()) {
+						GUIManager.questSystem.addQuest(node[currentNode].playerAnswer[i].getQuest());
 					} else {
 						currentNode = node[currentNode].playerAnswer[i].toNode;
 						updateText();

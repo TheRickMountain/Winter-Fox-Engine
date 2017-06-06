@@ -8,6 +8,7 @@ import com.wfe.components.ChestComponent;
 import com.wfe.core.Display;
 import com.wfe.core.ResourceManager;
 import com.wfe.font.GUIText;
+import com.wfe.gui.dualogueSystem.DialogueSystem;
 import com.wfe.input.Key;
 import com.wfe.input.Keyboard;
 import com.wfe.input.Mouse;
@@ -24,7 +25,8 @@ public class GUIManager  {
 		CHEST,
 		DIALOGUE,
 		GAME,
-		MANCALA
+		MANCALA,
+		QUEST,
 	}
 	
 	public static Inventory inventory;
@@ -50,6 +52,9 @@ public class GUIManager  {
 	public static ProgressBar progressBar;
 	
 	public static DialogueSystem dialogueSystem;
+	
+	public static QuestSystem questSystem;
+	private static GUITexture questButton;
 	
 	public static Mancala mancala;
 	
@@ -78,6 +83,10 @@ public class GUIManager  {
 		
 		dialogueSystem = new DialogueSystem();
 		
+		questSystem = new QuestSystem();
+		questButton = new GUITexture(ResourceManager.getTexture("quest_ui"));
+		questButton.rect.setSize(60, 60);
+		
 		mancala = new Mancala();
 		
 		updatePositions();
@@ -87,8 +96,6 @@ public class GUIManager  {
 		if(Keyboard.isKeyDown(Key.KEY_F)) {
 			inventory.addItem(ItemDatabase.getItem(Item.LEATHER), 2);
 			inventory.addItem(ItemDatabase.getItem(Item.WHEAT), 4);
-			
-			stats.addCowry(2000);
 		}
 		
 		if(Keyboard.isKeyDown(Key.KEY_E)) {
@@ -103,11 +110,24 @@ public class GUIManager  {
 				break;
 			case CRAFTING:
 			case CHEST:
+			case QUEST:
 				state = GUIState.GAME;
 				Mouse.setActiveInGUI(false);
 				
 				AudioMaster.defaultSource.play(ResourceManager.getSound("inventory"));
 				break;
+			}
+		}
+		
+		if(Mouse.isButtonDown(0)) {
+			if(questButton.rect.isMouseOvered()) {
+				if(state.equals(GUIState.QUEST)) {
+					state = GUIState.GAME;
+				} else {
+					state = GUIState.QUEST;
+					Mouse.setActiveInGUI(true);
+					Display.setCursor(Display.defaultCursor);
+				}
 			}
 		}
 		
@@ -135,6 +155,9 @@ public class GUIManager  {
 				mancala.startNewGame();
 			}
 			
+			break;
+		case QUEST:
+			questSystem.update();
 			break;
 		}
 		
@@ -183,12 +206,17 @@ public class GUIManager  {
 		case MANCALA:
 			mancala.render();
 			break;
+		case QUEST:
+			questSystem.render();
+			break;
 		}
 		
 		stats.render();
 		
 		if(showProgressBar)
 			progressBar.render();
+		
+		GUIRenderer.render(questButton);
 	}
 	
 	public static void renderText() {
@@ -207,6 +235,9 @@ public class GUIManager  {
 			break;
 		case MANCALA:
 			mancala.renderText();
+			break;
+		case QUEST:
+			questSystem.renderText();
 			break;
 		}
 		
@@ -254,6 +285,11 @@ public class GUIManager  {
 		chest.updatePositions();
 		dialogueSystem.updatePositions();
 		mancala.updatePositions();
+		questSystem.updatePositions();
+		
+		questButton.rect.setPosition(
+				Display.getWidth() - questButton.rect.width, 
+				Display.getHeight() / 2 - questButton.rect.height / 2);
 		
 		progressBar.rect.setPosition(Display.getWidth() / 2 - progressBar.rect.width / 2, 
 				inventory.hotbarFrame.rect.y - progressBar.rect.height - 5);
