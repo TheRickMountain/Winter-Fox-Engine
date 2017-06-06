@@ -168,6 +168,15 @@ public class PlayerControllerComponent extends Component {
 						}
 					}
 					
+					if(Mouse.isButtonDown(1)) {
+						if(entity.getTag().equals("bed")) {
+							if(checkDistance(tp.x, tp.z)) {
+								turnTo((int)tp.x, (int)tp.z);
+								world.addTime(8, 0);
+							}
+						}
+					}
+					
 					if(entity.hasComponent(ComponentType.MINEABLE)) {
 						if(Mouse.isButtonDown(0)) {
 							if(checkDistance(tp.x, tp.z)) {

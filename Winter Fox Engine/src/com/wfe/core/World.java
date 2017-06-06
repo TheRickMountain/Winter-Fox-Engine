@@ -203,6 +203,15 @@ public class World {
 		tiles[x][y].removeEntity();
 	}
 	
+	public void setTime(int h, int m) {
+		time = h * 1000 + ((m * 1000) / 60);
+	}
+	
+	public void addTime(int h, int m) {
+		time += h * 1000 + ((m * 1000) / 60);
+		time %= 24000;
+	}
+	
 	public void updateWeather(float dt) {
 		time += 15 * dt;
 		if(time >= 24000) {
@@ -276,6 +285,17 @@ public class World {
 			
 			out.close();
 			
+			fstream = new FileWriter("saves/terrain.dat");
+			out = new BufferedWriter(fstream);
+			
+			for(int i = 0; i < tiles.length; i++) {
+				for(int j = 0; j < tiles.length; j++) {
+					out.write(tiles[i][j].getId() + ",");
+				}
+				
+				out.write("\n");
+			}
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -341,6 +361,26 @@ public class World {
 						Float.parseFloat(values[7]), Float.parseFloat(values[8]), Float.parseFloat(values[9]));
 				entity.setTextureIndex(Integer.parseInt(values[10]));
 				addEntityToTile(entity);
+			}
+			reader.close();
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void loadTerrain(String saveName) {
+		try {
+			BufferedReader reader = new BufferedReader(new FileReader(saveName));
+			String line = "";
+			int count = 0;
+			while((line = reader.readLine()) != null) {
+				String[] values = line.split(",");
+				
+				for(int i = 0; i < values.length; i++) {
+					tiles[count][i].setId(Integer.valueOf(values[i]));
+				}
+				
+				count++;
 			}
 			reader.close();
 		} catch(Exception e) {

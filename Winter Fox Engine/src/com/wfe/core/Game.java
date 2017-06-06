@@ -24,6 +24,7 @@ public class Game {
 		System.out.println("Save loading...");
 		world.loadPlayer("saves/player.dat");
 		world.loadWorld("saves/world.dat");
+		world.loadTerrain("saves/terrain.dat");
 		System.out.println("Save loaded");
 	}
 
