@@ -12,7 +12,11 @@ import com.wfe.utils.Utils;
 
 public class GUIText {
 
+	protected static final int SPACE_ASCII = 32;
+	
 	private float width;
+	private int numberOfLines;
+	private int maxLineLength = 200;
 	
 	private float x, y;
 	private float rotation;
@@ -28,63 +32,113 @@ public class GUIText {
     
     private String text;
 
-    public GUIText(String text, FontTexture fontTexture) {
+    public GUIText(String text, FontTexture fontTexture, int maxLineLength) {
         this.text = text;
         this.fontTexture = fontTexture;
         color = new Color(1.0f, 1.0f, 1.0f);
         mesh = buildMesh();
-        scaleX = scaleY = 1;
+        this.maxLineLength = maxLineLength;
+        setScale(1, 1);
+    }
+    
+    private List<Line> createStructure() {
+    	char[] chars = text.toCharArray();
+    	List<Line> lines = new ArrayList<>();
+    	Line currentLine = new Line(40, maxLineLength);
+    	Word currentWord = new Word();
+    	for(char c : chars) {
+    		int ascii = (int)c;
+    		if(ascii == SPACE_ASCII) {
+    			boolean added = currentLine.attemptToAddWord(currentWord);
+    			if(!added) {
+    				lines.add(currentLine);
+    				currentLine = new Line(40, maxLineLength);
+    				currentLine.attemptToAddWord(currentWord);
+    			}
+    			CharInfo character = fontTexture.getCharInfo((char)ascii);
+        		currentWord.addCharInfo(character);
+    			
+    			currentWord = new Word();
+    			continue;
+    		}
+    		CharInfo character = fontTexture.getCharInfo((char)ascii);
+    		currentWord.addCharInfo(character);
+    	}
+    	completeStructure(lines, currentLine, currentWord);    	
+    	return lines;
+    }
+    
+    private void completeStructure(List<Line> lines, Line currentLine, Word currentWord) {
+    	boolean added = currentLine.attemptToAddWord(currentWord);
+    	if(!added) {
+    		lines.add(currentLine);
+    		currentLine = new Line(40, maxLineLength);
+    		currentLine.attemptToAddWord(currentWord);
+    	}
+    	lines.add(currentLine);
     }
     
     private Mesh buildMesh() {
+    	List<Line> lines = createStructure();
+    	numberOfLines = lines.size();
+    	
     	width = 0;
     	
         List<Float> positions = new ArrayList<>();
         List<Float> textCoords = new ArrayList<>();
         List<Integer> indices   = new ArrayList<>();
-        char[] characters = text.toCharArray();
-        int numChars = characters.length;
 
         float startx = 0;
-        for(int i=0; i<numChars; i++) {
-            FontTexture.CharInfo charInfo = fontTexture.getCharInfo(characters[i]);
-            width += charInfo.getWidth();
-            
-            // Build a character tile composed by two triangles
-            
-            // Left Top vertex
-            positions.add(startx); // x
-            positions.add(0.0f); //y
-            textCoords.add( (float)charInfo.getStartX() / (float)fontTexture.getWidth());
-            textCoords.add(0.0f);
-            indices.add(i*VERTICES_PER_QUAD);
-                        
-            // Left Bottom vertex
-            positions.add(startx); // x
-            positions.add((float)fontTexture.getHeight()); //y
-            textCoords.add((float)charInfo.getStartX() / (float)fontTexture.getWidth());
-            textCoords.add(1.0f);
-            indices.add(i*VERTICES_PER_QUAD + 1);
+        float starty = 0;
+        int count = 0;
+        
+        for(Line line : lines) {
+        	for(Word word : line.getWords()) {
+        		for(CharInfo charInfo : word.getCharactes()) {
+        			if(starty == 0) {
+        				width += charInfo.getWidth();
+        			}
+                    
+                    // Build a character tile composed by two triangles
+                    
+                    // Left Top vertex
+                    positions.add(startx); // x
+                    positions.add(starty); // y
+                    textCoords.add((float)charInfo.getStartX() / (float)fontTexture.getWidth());
+                    textCoords.add(0.0f);
+                    indices.add(count * VERTICES_PER_QUAD);
+                                
+                    // Left Bottom vertex
+                    positions.add(startx); // x
+                    positions.add(starty + (float)fontTexture.getHeight()); // y
+                    textCoords.add((float)charInfo.getStartX() / (float)fontTexture.getWidth());
+                    textCoords.add(1.0f);
+                    indices.add(count * VERTICES_PER_QUAD + 1);
 
-            // Right Bottom vertex
-            positions.add(startx + charInfo.getWidth()); // x
-            positions.add((float)fontTexture.getHeight()); //y
-            textCoords.add((float)(charInfo.getStartX() + charInfo.getWidth() )/ (float)fontTexture.getWidth());
-            textCoords.add(1.0f);
-            indices.add(i*VERTICES_PER_QUAD + 2);
+                    // Right Bottom vertex
+                    positions.add((float) (startx + charInfo.getWidth())); // x
+                    positions.add(starty + (float)fontTexture.getHeight()); // y
+                    textCoords.add((float)(charInfo.getStartX() + charInfo.getWidth() )/ (float)fontTexture.getWidth());
+                    textCoords.add(1.0f);
+                    indices.add(count * VERTICES_PER_QUAD + 2);
 
-            // Right Top vertex
-            positions.add(startx + charInfo.getWidth()); // x
-            positions.add(0.0f); //y
-            textCoords.add((float)(charInfo.getStartX() + charInfo.getWidth() )/ (float)fontTexture.getWidth());
-            textCoords.add(0.0f);
-            indices.add(i*VERTICES_PER_QUAD + 3);
-            
-            // Add indices por left top and bottom right vertices
-            indices.add(i*VERTICES_PER_QUAD);
-            indices.add(i*VERTICES_PER_QUAD + 2);
-            
-            startx += charInfo.getWidth();
+                    // Right Top vertex
+                    positions.add((float) (startx + charInfo.getWidth())); // x
+                    positions.add(starty); // y
+                    textCoords.add((float)(charInfo.getStartX() + charInfo.getWidth() )/ (float)fontTexture.getWidth());
+                    textCoords.add(0.0f);
+                    indices.add(count * VERTICES_PER_QUAD + 3);
+                    
+                    // Add indices por left top and bottom right vertices
+                    indices.add(count * VERTICES_PER_QUAD);
+                    indices.add(count * VERTICES_PER_QUAD + 2);
+                    
+                    startx += charInfo.getWidth();
+                    count++;
+        		}
+        	}
+        	startx = 0;
+        	starty += fontTexture.getHeight();
         }
 
         float[] posArr = Utils.listToArray(positions);
@@ -98,7 +152,7 @@ public class GUIText {
         return text;
     }
     
-    public void setText(String text) {
+    public void setText(String text) {  	
     	if(!this.text.equals(text)) {
     		this.text = text;
         	this.mesh.delete();
@@ -111,7 +165,7 @@ public class GUIText {
     }
     
     public float getHeight() {
-    	return fontTexture.getHeight() * scaleY;
+    	return (numberOfLines * fontTexture.getHeight()) * scaleY;
     }
 
 	public float getX() {
@@ -149,6 +203,7 @@ public class GUIText {
 
 	public void setScaleX(float scaleX) {
 		this.scaleX = scaleX;
+		this.maxLineLength *= scaleX;
 	}
 
 	public float getScaleY() {
@@ -162,11 +217,15 @@ public class GUIText {
 	public void setScale(float scaleX, float scaleY) {
 		this.scaleX = scaleX;
 		this.scaleY = scaleY;
+		
+		this.maxLineLength *= scaleX;
 	}
 	
 	public void setScale(float scale) {
 		this.scaleX = scale;
 		this.scaleY = scale;
+		
+		this.maxLineLength *= scaleX;
 	}
 	
 	public Mesh getMesh() {

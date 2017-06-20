@@ -8,7 +8,6 @@ import com.wfe.font.GUIText;
 import com.wfe.gui.GUIFrame;
 import com.wfe.gui.GUIManager;
 import com.wfe.gui.Slot;
-import com.wfe.gui.GUIManager.GUIState;
 import com.wfe.input.Mouse;
 import com.wfe.renderEngine.FontRenderer;
 import com.wfe.renderEngine.GUIRenderer;
@@ -26,7 +25,7 @@ public class DialogueSystem {
 	
 	public DialogueSystem() {
 		background = new GUIFrame(new Rect(0, 0, 500, 200), false);
-		npcText = new GUIText("", FontRenderer.ARIAL);
+		npcText = new GUIText("", FontRenderer.ARIAL, (int)background.getWidth());
 	}
 	
 	public void update() {			
@@ -81,7 +80,7 @@ public class DialogueSystem {
 		
 		answersText.clear();
 		for(int i = 0; i < node[currentNode].playerAnswer.length; i++) {
-			answersText.add(new GUIText(node[currentNode].playerAnswer[i].text, FontRenderer.ARIAL));
+			answersText.add(new GUIText(node[currentNode].playerAnswer[i].text, FontRenderer.ARIAL, (int)background.getWidth()));
 		}
 	}
 	

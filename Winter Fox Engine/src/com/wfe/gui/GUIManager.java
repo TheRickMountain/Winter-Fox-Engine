@@ -9,6 +9,7 @@ import com.wfe.core.Display;
 import com.wfe.core.ResourceManager;
 import com.wfe.font.GUIText;
 import com.wfe.gui.dualogueSystem.DialogueSystem;
+import com.wfe.gui.questSystem.QuestSystem;
 import com.wfe.input.Key;
 import com.wfe.input.Keyboard;
 import com.wfe.input.Mouse;
@@ -68,14 +69,14 @@ public class GUIManager  {
 		stats = new PlayerStats();
 		
 		popUp = new GUIFrame(new Rect(0, 0, 256, 64), true);
-		popUpText = new GUIText("", FontRenderer.ARIAL);
+		popUpText = new GUIText("", FontRenderer.ARIAL, 256);
 		popUpItem = ItemDatabase.getItem(Item.NULL);
 		iconSize = 20;
 		mouseOffsetX = 30;
 		mouseOffsetY = 15;
 		
 		draggedItem = ItemDatabase.getItem(Item.NULL);
-		draggedItemText = new GUIText("", FontRenderer.ARIAL);
+		draggedItemText = new GUIText("", FontRenderer.ARIAL, 256);
 		draggedItemText.setScale(0.8f);
 		draggedItemCount = 0;
 		
@@ -419,7 +420,7 @@ public class GUIManager  {
 		
 		GUIText text;
 		if(craft) {
-			text = new GUIText(String.valueOf(value) + " " + name, FontRenderer.ARIAL);
+			text = new GUIText(String.valueOf(value) + " " + name, FontRenderer.ARIAL, 256);
 			text.setScale(0.8f);
 			iconsText.add(text);
 			
@@ -427,7 +428,7 @@ public class GUIManager  {
 			
 		} else {
 			text = new GUIText(((value > 0) ? "+" : "") + 
-					String.valueOf(value) + " " + name, FontRenderer.ARIAL);
+					String.valueOf(value) + " " + name, FontRenderer.ARIAL, 256);
 			text.setScale(0.8f);
 			iconsText.add(text);
 		

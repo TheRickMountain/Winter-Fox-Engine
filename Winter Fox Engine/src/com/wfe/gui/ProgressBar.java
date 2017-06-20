@@ -23,7 +23,7 @@ public class ProgressBar {
 		this.rect = rect;
 		this.frontColor = color;
 		this.backColor = new Color(0.0f, 0.0f, 0.0f, 1.0f);
-		this.text = new GUIText("", FontRenderer.ARIAL);
+		this.text = new GUIText("", FontRenderer.ARIAL, 256);
 		this.text.setScale(0.7f);
 		
 		setMaxValue(100);

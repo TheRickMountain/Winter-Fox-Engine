@@ -39,7 +39,7 @@ public class PlayerStats {
 		thirstTimer = new TimeUtil();
 		
 		cowryTexture = new GUITexture(ResourceManager.getTexture("cowry_ui"), new Rect(10, 105, 20, 20), false);
-		cowryText = new GUIText("0", FontRenderer.ARIAL);
+		cowryText = new GUIText("0", FontRenderer.ARIAL, 256);
 		cowryText.setScale(0.8f);
 		cowryText.setPosition(cowryTexture.rect.width + 10, 105);
 	}

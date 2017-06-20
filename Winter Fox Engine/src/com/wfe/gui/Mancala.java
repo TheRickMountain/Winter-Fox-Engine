@@ -300,7 +300,7 @@ public class Mancala {
 		
 		public Slot() {
 			rect = new Rect(0, 0, SIZE, SIZE);
-			text = new GUIText("", FontRenderer.ARIAL);
+			text = new GUIText("", FontRenderer.ARIAL, 256);
 			amount = 0;
 		}
 		

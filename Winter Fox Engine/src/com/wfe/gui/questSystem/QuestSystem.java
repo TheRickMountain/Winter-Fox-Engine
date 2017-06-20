@@ -1,10 +1,12 @@
-package com.wfe.gui;
+package com.wfe.gui.questSystem;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import com.wfe.core.Display;
-import com.wfe.gui.questSystem.Quest;
+import com.wfe.font.GUIText;
+import com.wfe.gui.GUIFrame;
+import com.wfe.renderEngine.FontRenderer;
 import com.wfe.renderEngine.GUIRenderer;
 import com.wfe.utils.Rect;
 
@@ -13,6 +15,8 @@ public class QuestSystem {
 	private GUIFrame background;
 	
 	private List<Quest> currentQuests = new ArrayList<>();
+	
+	private List<GUIText> questNames = new ArrayList<>();
 	
 	public QuestSystem() {
 		background = new GUIFrame(new Rect(0, 0, 600, 350), false);
@@ -27,18 +31,28 @@ public class QuestSystem {
 	}
 	
 	public void renderText() {
-		
+		for(GUIText text : questNames) {
+			FontRenderer.render(text);
+		}
 	}
 	
 	public void updatePositions() {
 		background.setPosition(
 				Display.getWidth() / 2 - background.getWidth() / 2, 
 				Display.getHeight() / 2 - background.getHeight() / 2);
+		
+		for(int i = 0; i < questNames.size(); i++) {
+			GUIText text = questNames.get(i);
+			text.setPosition(background.getX(), background.getY() + (i * (text.getHeight() + 5)));
+		}
 	}
 	
 	public void addQuest(Quest quest) {
-		System.out.println(quest.getInfo().getTitle());
 		currentQuests.add(quest);
+		
+		questNames.add(new GUIText(quest.getInfo().getTitle(), FontRenderer.ARIAL, (int)background.getWidth()));
+		
+		updatePositions();
 	}
 
 }

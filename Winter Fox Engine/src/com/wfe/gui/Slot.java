@@ -25,7 +25,7 @@ public class Slot {
 	
 	public Slot(Rect rect) {
 		this.rect = rect;
-		this.countText = new GUIText("", FontRenderer.ARIAL);
+		this.countText = new GUIText("", FontRenderer.ARIAL, 256);
 		this.countText.setScale(0.8f);
 		addItem(ItemDatabase.getItem(Item.NULL), 0);
 	}

@@ -199,7 +199,7 @@ public class ItemDatabase {
 				.setIngredients(Item.CLAY, 3, Item.FLINT, 2)
 				.create());
 		
-		addItem(new ItemBuilder(Item.BED, "Bed to sleep", ResourceManager.getTexture("bed_ui"), ItemType.BUILDING)
+		addItem(new ItemBuilder(Item.BED, "Bed", ResourceManager.getTexture("bed_ui"), ItemType.BUILDING)
 				.setEntity(new Bed())
 				.setDescription("Wall")
 				.setStackSize(1)

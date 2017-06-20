@@ -16,17 +16,18 @@ import java.util.Map;
 
 import javax.imageio.ImageIO;
 
+import com.wfe.core.ResourceManager;
 import com.wfe.textures.Texture;
 
 public class FontTexture {
 
     private static final String IMAGE_FORMAT = "png";
-
+    
     private final Font font;
 
     private final String charSetName;
 
-    private final Map<Character, CharInfo> charMap;
+    private Map<Character, CharInfo> charMap = new HashMap<>();
 
     private Texture texture;
 
@@ -37,8 +38,7 @@ public class FontTexture {
     public FontTexture(Font font, String charSetName) {
         this.font = font;
         this.charSetName = charSetName;
-        charMap = new HashMap<>();
-
+        
         try {
 			buildTexture();
 		} catch (Exception e) {
@@ -66,7 +66,7 @@ public class FontTexture {
     private String getAllAvailableChars(String charsetName) {
         CharsetEncoder ce = Charset.forName(charsetName).newEncoder();
         StringBuilder result = new StringBuilder();
-        for (char c = 0; c < Character.MAX_VALUE; c++) {
+        for (char c = 0; c < java.lang.Character.MAX_VALUE; c++) {
             if (ce.canEncode(c)) {
                 result.append(c);
             }
@@ -86,7 +86,7 @@ public class FontTexture {
         this.height = 0;
         for (char c : allChars.toCharArray()) {
             // Get the size for each character and update global image size
-            CharInfo charInfo = new CharInfo(width, fontMetrics.charWidth(c));
+        	CharInfo charInfo = new CharInfo(c, width, fontMetrics.charWidth(c));
             charMap.put(c, charInfo);
             width += charInfo.getWidth();
             height = Math.max(height, fontMetrics.getHeight());
@@ -113,25 +113,6 @@ public class FontTexture {
         }
 
         texture = new Texture(is);
-    }
-
-    public static class CharInfo {
-
-        private final int startX;
-
-        private final int width;
-
-        public CharInfo(int startX, int width) {
-            this.startX = startX;
-            this.width = width;
-        }
-
-        public int getStartX() {
-            return startX;
-        }
-
-        public int getWidth() {
-            return width;
-        }
+        ResourceManager.loadTexture("ARIAL", texture);
     }
 }

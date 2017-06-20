@@ -34,7 +34,7 @@ public class FontRenderer {
     private static FontShader shader;
     
     public static final FontTexture ARIAL = new FontTexture(new Font("Arial", Font.PLAIN, 20), CHARSET);
-
+    
     public FontRenderer() {
     	shader = new FontShader();
     	
