@@ -9,6 +9,7 @@ import com.wfe.core.Camera;
 import com.wfe.ecs.Entity;
 import com.wfe.graph.Mesh;
 import com.wfe.gui.GUIManager;
+import com.wfe.newFont.TextRenderer;
 import com.wfe.utils.OpenglUtils;
 
 public class RenderEngine {
@@ -17,12 +18,12 @@ public class RenderEngine {
 	
 	private StaticRenderer staticEntityRenderer;
 	private GUIRenderer guiRenderer;
-	private FontRenderer fontRenderer;
+	private TextRenderer textRenderer;
 	
 	private RenderEngine(Camera camera) throws Exception {
 		this.staticEntityRenderer = new StaticRenderer(camera);
 		this.guiRenderer = new GUIRenderer();
-		this.fontRenderer = new FontRenderer();
+		this.textRenderer = new TextRenderer();
 		
 		OpenglUtils.cullBackFaces(true);
 		OpenglUtils.depthTest(true);
@@ -33,6 +34,10 @@ public class RenderEngine {
 		GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
 	}
 	
+	public void update() {
+		textRenderer.update();
+	}
+	
 	public void render(Map<Mesh, List<Entity>> entities) {
 		staticEntityRenderer.render(entities);
 		
@@ -40,17 +45,17 @@ public class RenderEngine {
 		GUIManager.render();
 		guiRenderer.finish();
 		
-		fontRenderer.prebare();
+		textRenderer.prepare();
 		GUIManager.renderText();
-		fontRenderer.finish();
+		textRenderer.finish();
 		
 		guiRenderer.prepare();
 		GUIManager.renderPopUp();
 		guiRenderer.finish();
 		
-		fontRenderer.prebare();
+		textRenderer.prepare();
 		GUIManager.renderPopUpText();
-		fontRenderer.finish();
+		textRenderer.finish();
 	}
 
 	public static RenderEngine create(Camera camera) throws Exception {

@@ -1,7 +1,7 @@
 package com.wfe.gui;
 
-import com.wfe.font.GUIText;
-import com.wfe.renderEngine.FontRenderer;
+import com.wfe.newFont.GUIText;
+import com.wfe.newFont.TextRenderer;
 import com.wfe.renderEngine.GUIRenderer;
 import com.wfe.utils.Color;
 import com.wfe.utils.Rect;
@@ -23,8 +23,7 @@ public class ProgressBar {
 		this.rect = rect;
 		this.frontColor = color;
 		this.backColor = new Color(0.0f, 0.0f, 0.0f, 1.0f);
-		this.text = new GUIText("", FontRenderer.ARIAL, 256);
-		this.text.setScale(0.7f);
+		this.text = new GUIText("", 96);
 		
 		setMaxValue(100);
 	}
@@ -36,7 +35,7 @@ public class ProgressBar {
 	
 	public void renderText() {
 		text.setPosition(rect.x + 5, rect.y);
-		FontRenderer.render(text);
+		TextRenderer.render(text);
 	}
 	
 	public int getCurrentVaule() {

@@ -109,6 +109,8 @@ public class World {
 			entitiesToRemove.clear();
 		}
 		
+		renderEngine.update();
+		
 		GUIManager.update(dt);
 	}
 	

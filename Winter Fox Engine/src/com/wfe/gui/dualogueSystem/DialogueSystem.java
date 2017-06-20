@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.wfe.core.Display;
-import com.wfe.font.GUIText;
 import com.wfe.gui.GUIFrame;
 import com.wfe.gui.GUIManager;
 import com.wfe.gui.Slot;
 import com.wfe.input.Mouse;
-import com.wfe.renderEngine.FontRenderer;
+import com.wfe.newFont.GUIText;
+import com.wfe.newFont.TextRenderer;
 import com.wfe.renderEngine.GUIRenderer;
 import com.wfe.utils.Rect;
 
@@ -25,7 +25,7 @@ public class DialogueSystem {
 	
 	public DialogueSystem() {
 		background = new GUIFrame(new Rect(0, 0, 500, 200), false);
-		npcText = new GUIText("", FontRenderer.ARIAL, (int)background.getWidth());
+		npcText = new GUIText("", 96);
 	}
 	
 	public void update() {			
@@ -58,10 +58,10 @@ public class DialogueSystem {
 	}
 	
 	public void renderText() {
-		FontRenderer.render(npcText);
+		TextRenderer.render(npcText);
 		
 		for(GUIText text : answersText) {
-			FontRenderer.render(text);
+			TextRenderer.render(text);
 		}
 	}
 	
@@ -80,7 +80,7 @@ public class DialogueSystem {
 		
 		answersText.clear();
 		for(int i = 0; i < node[currentNode].playerAnswer.length; i++) {
-			answersText.add(new GUIText(node[currentNode].playerAnswer[i].text, FontRenderer.ARIAL, (int)background.getWidth()));
+			answersText.add(new GUIText(node[currentNode].playerAnswer[i].text, 96));
 		}
 	}
 	

@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.wfe.core.Display;
-import com.wfe.font.GUIText;
 import com.wfe.gui.GUIFrame;
-import com.wfe.renderEngine.FontRenderer;
+import com.wfe.newFont.GUIText;
+import com.wfe.newFont.TextRenderer;
 import com.wfe.renderEngine.GUIRenderer;
 import com.wfe.utils.Rect;
 
@@ -32,7 +32,7 @@ public class QuestSystem {
 	
 	public void renderText() {
 		for(GUIText text : questNames) {
-			FontRenderer.render(text);
+			TextRenderer.render(text);
 		}
 	}
 	
@@ -50,7 +50,7 @@ public class QuestSystem {
 	public void addQuest(Quest quest) {
 		currentQuests.add(quest);
 		
-		questNames.add(new GUIText(quest.getInfo().getTitle(), FontRenderer.ARIAL, (int)background.getWidth()));
+		questNames.add(new GUIText(quest.getInfo().getTitle(), 96));
 		
 		updatePositions();
 	}

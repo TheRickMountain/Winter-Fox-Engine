@@ -1,8 +1,8 @@
 package com.wfe.gui;
 
 import com.wfe.core.ResourceManager;
-import com.wfe.font.GUIText;
-import com.wfe.renderEngine.FontRenderer;
+import com.wfe.newFont.GUIText;
+import com.wfe.newFont.TextRenderer;
 import com.wfe.renderEngine.GUIRenderer;
 import com.wfe.textures.Texture;
 import com.wfe.utils.Color;
@@ -25,8 +25,7 @@ public class Slot {
 	
 	public Slot(Rect rect) {
 		this.rect = rect;
-		this.countText = new GUIText("", FontRenderer.ARIAL, 256);
-		this.countText.setScale(0.8f);
+		this.countText = new GUIText("", 96);
 		addItem(ItemDatabase.getItem(Item.NULL), 0);
 	}
 	
@@ -48,7 +47,7 @@ public class Slot {
 			countText.setPosition(
 					rect.x + 4f, 
 					rect.y + 3f);
-			FontRenderer.render(countText);
+			TextRenderer.render(countText);
 		}
 	}
 	

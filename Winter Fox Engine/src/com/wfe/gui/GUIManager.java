@@ -7,13 +7,13 @@ import com.wfe.audio.AudioMaster;
 import com.wfe.components.ChestComponent;
 import com.wfe.core.Display;
 import com.wfe.core.ResourceManager;
-import com.wfe.font.GUIText;
 import com.wfe.gui.dualogueSystem.DialogueSystem;
 import com.wfe.gui.questSystem.QuestSystem;
 import com.wfe.input.Key;
 import com.wfe.input.Keyboard;
 import com.wfe.input.Mouse;
-import com.wfe.renderEngine.FontRenderer;
+import com.wfe.newFont.GUIText;
+import com.wfe.newFont.TextRenderer;
 import com.wfe.renderEngine.GUIRenderer;
 import com.wfe.textures.Texture;
 import com.wfe.utils.Color;
@@ -61,6 +61,8 @@ public class GUIManager  {
 	
 	public static GUIState state = GUIState.GAME;
 	
+	public static GUIText newText;
+	
 	public static void init() {
 		ItemDatabase.create();
 		inventory = new Inventory();
@@ -69,15 +71,14 @@ public class GUIManager  {
 		stats = new PlayerStats();
 		
 		popUp = new GUIFrame(new Rect(0, 0, 256, 64), true);
-		popUpText = new GUIText("", FontRenderer.ARIAL, 256);
+		popUpText = new GUIText("", 96);
 		popUpItem = ItemDatabase.getItem(Item.NULL);
 		iconSize = 20;
 		mouseOffsetX = 30;
 		mouseOffsetY = 15;
 		
 		draggedItem = ItemDatabase.getItem(Item.NULL);
-		draggedItemText = new GUIText("", FontRenderer.ARIAL, 256);
-		draggedItemText.setScale(0.8f);
+		draggedItemText = new GUIText("", 96);
 		draggedItemCount = 0;
 		
 		progressBar = new ProgressBar(new Rect(0, 0, 385, 10), new Color(255, 140, 0, 255).convert());
@@ -89,6 +90,10 @@ public class GUIManager  {
 		questButton.rect.setSize(60, 60);
 		
 		mancala = new Mancala();
+		
+		newText = new GUIText("Winter Fox Engine", 96);
+		newText.setPosition(0, 0);
+		System.out.println(newText.getWidth() + " " + newText.getHeight());
 		
 		updatePositions();
 	}
@@ -243,6 +248,8 @@ public class GUIManager  {
 		}
 		
 		stats.renderText();
+		
+		TextRenderer.render(newText);
 	}
 	
 	public static void renderPopUp() {
@@ -266,14 +273,14 @@ public class GUIManager  {
 			draggedItemText.setPosition(
 					Mouse.getX() - Slot.SIZE / 2 + 4f, 
 					Mouse.getY() - Slot.SIZE / 2 + 3f);
-			FontRenderer.render(draggedItemText);
+			TextRenderer.render(draggedItemText);
 		}
 		
 		if(showPopUp) {
-			FontRenderer.render(popUpText);
+			TextRenderer.render(popUpText);
 			
 			for(GUIText text : iconsText) {
-				FontRenderer.render(text);
+				TextRenderer.render(text);
 			}
 		}
 		
@@ -420,16 +427,14 @@ public class GUIManager  {
 		
 		GUIText text;
 		if(craft) {
-			text = new GUIText(String.valueOf(value) + " " + name, FontRenderer.ARIAL, 256);
-			text.setScale(0.8f);
+			text = new GUIText(String.valueOf(value) + " " + name, 96);
 			iconsText.add(text);
 			
 			text.getColor().set(1.0f, 1.0f, 1.0f);
 			
 		} else {
 			text = new GUIText(((value > 0) ? "+" : "") + 
-					String.valueOf(value) + " " + name, FontRenderer.ARIAL, 256);
-			text.setScale(0.8f);
+					String.valueOf(value) + " " + name, 96);
 			iconsText.add(text);
 		
 			if(value > 0) {

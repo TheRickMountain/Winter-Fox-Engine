@@ -5,9 +5,9 @@ import java.util.List;
 
 import com.wfe.core.Display;
 import com.wfe.core.ResourceManager;
-import com.wfe.font.GUIText;
 import com.wfe.input.Mouse;
-import com.wfe.renderEngine.FontRenderer;
+import com.wfe.newFont.GUIText;
+import com.wfe.newFont.TextRenderer;
 import com.wfe.renderEngine.GUIRenderer;
 import com.wfe.textures.Texture;
 import com.wfe.utils.Color;
@@ -300,7 +300,7 @@ public class Mancala {
 		
 		public Slot() {
 			rect = new Rect(0, 0, SIZE, SIZE);
-			text = new GUIText("", FontRenderer.ARIAL, 256);
+			text = new GUIText("", 96);
 			amount = 0;
 		}
 		
@@ -309,7 +309,7 @@ public class Mancala {
 		}
 
 		public void renderText() {
-			FontRenderer.render(text);
+			TextRenderer.render(text);
 		}
 		
 		public void setPosition(float x, float y) {
