@@ -1,7 +1,7 @@
 package com.wfe.gui;
 
-import com.wfe.newFont.GUIText;
-import com.wfe.newFont.TextRenderer;
+import com.wfe.font.GUIText;
+import com.wfe.font.TextRenderer;
 import com.wfe.renderEngine.GUIRenderer;
 import com.wfe.utils.Color;
 import com.wfe.utils.Rect;

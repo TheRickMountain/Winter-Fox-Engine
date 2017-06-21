@@ -1,4 +1,4 @@
-package com.wfe.newFont;
+package com.wfe.font;
 
 import com.wfe.shaders.ShaderProgram;
 import com.wfe.shaders.UniformColor;

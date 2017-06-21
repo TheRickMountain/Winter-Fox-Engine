@@ -1,10 +1,11 @@
-package com.wfe.newFont;
+package com.wfe.font;
 
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL20;
 import org.lwjgl.opengl.GL30;
 
 import com.wfe.core.Display;
+import com.wfe.graph.Mesh;
 import com.wfe.math.Matrix4f;
 import com.wfe.utils.MathUtils;
 import com.wfe.utils.OpenglUtils;
@@ -48,10 +49,12 @@ public class TextRenderer {
 		
 		shader.color.loadColor(text.getColor());
 		
-		GL30.glBindVertexArray(text.getVAO());
+		Mesh mesh = text.getMesh();
+		
+		GL30.glBindVertexArray(mesh.getVAO());
 		GL20.glEnableVertexAttribArray(0);
 		
-		GL11.glDrawArrays(GL11.GL_TRIANGLES, 0, text.getVertexCount());
+		GL11.glDrawArrays(GL11.GL_TRIANGLES, 0, mesh.getVertexCount());
 		
 		GL20.glDisableVertexAttribArray(0);
 		GL30.glBindVertexArray(0);

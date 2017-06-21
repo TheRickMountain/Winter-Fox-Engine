@@ -7,13 +7,13 @@ import com.wfe.audio.AudioMaster;
 import com.wfe.components.ChestComponent;
 import com.wfe.core.Display;
 import com.wfe.core.ResourceManager;
+import com.wfe.font.GUIText;
+import com.wfe.font.TextRenderer;
 import com.wfe.gui.dualogueSystem.DialogueSystem;
 import com.wfe.gui.questSystem.QuestSystem;
 import com.wfe.input.Key;
 import com.wfe.input.Keyboard;
 import com.wfe.input.Mouse;
-import com.wfe.newFont.GUIText;
-import com.wfe.newFont.TextRenderer;
 import com.wfe.renderEngine.GUIRenderer;
 import com.wfe.textures.Texture;
 import com.wfe.utils.Color;
@@ -61,8 +61,6 @@ public class GUIManager  {
 	
 	public static GUIState state = GUIState.GAME;
 	
-	public static GUIText newText;
-	
 	public static void init() {
 		ItemDatabase.create();
 		inventory = new Inventory();
@@ -90,10 +88,6 @@ public class GUIManager  {
 		questButton.rect.setSize(60, 60);
 		
 		mancala = new Mancala();
-		
-		newText = new GUIText("Winter Fox Engine", 96);
-		newText.setPosition(0, 0);
-		System.out.println(newText.getWidth() + " " + newText.getHeight());
 		
 		updatePositions();
 	}
@@ -248,8 +242,6 @@ public class GUIManager  {
 		}
 		
 		stats.renderText();
-		
-		TextRenderer.render(newText);
 	}
 	
 	public static void renderPopUp() {

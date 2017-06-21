@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.wfe.core.Display;
+import com.wfe.font.GUIText;
+import com.wfe.font.TextRenderer;
 import com.wfe.gui.GUIFrame;
 import com.wfe.gui.GUIManager;
 import com.wfe.gui.Slot;
 import com.wfe.input.Mouse;
-import com.wfe.newFont.GUIText;
-import com.wfe.newFont.TextRenderer;
 import com.wfe.renderEngine.GUIRenderer;
 import com.wfe.utils.Rect;
 

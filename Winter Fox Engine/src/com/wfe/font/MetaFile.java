@@ -1,4 +1,4 @@
-package com.wfe.newFont;
+package com.wfe.font;
 
 import java.io.BufferedReader;
 import java.io.IOException;

@@ -1,7 +1,7 @@
 package com.wfe.gui;
 
 import com.wfe.core.ResourceManager;
-import com.wfe.newFont.TextRenderer;
+import com.wfe.font.TextRenderer;
 import com.wfe.renderEngine.GUIRenderer;
 import com.wfe.utils.Color;
 import com.wfe.utils.Rect;
@@ -22,7 +22,7 @@ public class PlayerStats {
 	private int thirstSpeed = 6;
 	
 	private GUITexture cowryTexture;
-	private com.wfe.newFont.GUIText cowryText;
+	private com.wfe.font.GUIText cowryText;
 	private int cowry = 0;
 	
 	public PlayerStats() {
@@ -38,7 +38,7 @@ public class PlayerStats {
 		thirstTimer = new TimeUtil();
 		
 		cowryTexture = new GUITexture(ResourceManager.getTexture("cowry_ui"), new Rect(10, 105, 20, 20), false);
-		cowryText = new com.wfe.newFont.GUIText("0", 96);
+		cowryText = new com.wfe.font.GUIText("0", 96);
 		cowryText.setPosition(cowryTexture.rect.width + 10, 105);
 	}
 	

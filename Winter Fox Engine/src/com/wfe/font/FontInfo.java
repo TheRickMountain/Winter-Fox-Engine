@@ -1,4 +1,4 @@
-package com.wfe.newFont;
+package com.wfe.font;
 
 import com.wfe.textures.Texture;
 import com.wfe.utils.MyFile;

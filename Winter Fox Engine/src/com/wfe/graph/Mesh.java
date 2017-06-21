@@ -136,9 +136,9 @@ public class Mesh {
 	}
 	
 	public void delete() {
-		GL30.glDeleteVertexArrays(VAO);
 		GL15.glDeleteBuffers(VBO);
 		GL15.glDeleteBuffers(EBO);
+		GL30.glDeleteVertexArrays(VAO);
 	}
 
 }

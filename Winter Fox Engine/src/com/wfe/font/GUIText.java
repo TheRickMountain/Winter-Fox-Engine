@@ -1,20 +1,15 @@
-package com.wfe.newFont;
+package com.wfe.font;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL15;
-import org.lwjgl.opengl.GL20;
-import org.lwjgl.opengl.GL30;
-
+import com.wfe.graph.Mesh;
 import com.wfe.input.Mouse;
 import com.wfe.utils.Color;
 
 public class GUIText {
 
-	private int VAO;
-	private int vertexCount;
+	private Mesh mesh;
 	
 	private String text;
 	private float x, y;
@@ -32,6 +27,10 @@ public class GUIText {
 	}
 	
 	private void buildMesh() {
+		mesh = new Mesh(buildVertices(), 4);
+	}
+	
+	private float[] buildVertices() {
 		List<Float> data = new ArrayList<>();
 		
 		char[] letters = text.toCharArray();
@@ -79,23 +78,7 @@ public class GUIText {
 			}
 		}
 		
-		float[] vertices = listToArray(data);
-		
-		vertexCount = vertices.length / 4;
-		
-		VAO = GL30.glGenVertexArrays();
-		int VBO = GL15.glGenBuffers();
-		
-		GL30.glBindVertexArray(VAO);
-		
-		GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, VBO);
-		GL15.glBufferData(GL15.GL_ARRAY_BUFFER, vertices, GL15.GL_STATIC_DRAW);
-		
-		GL20.glVertexAttribPointer(0, 4, GL11.GL_FLOAT, false, 0, 0);
-		GL20.glEnableVertexAttribArray(0);
-		
-		GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, 0);
-		GL30.glBindVertexArray(0);
+		return listToArray(data);
 	}
 	
 	public void setPosition(float f, float y) {
@@ -143,29 +126,26 @@ public class GUIText {
 	public void setText(String text) {
 		if(!this.text.equals(text)) {
 			this.text = text;
+			mesh.delete();
 			buildMesh();
 		}
 	}
 	
-	public int getVAO() {
-		return VAO;
+	public Mesh getMesh() {
+		return mesh;
 	}
 	
-	public int getVertexCount() {
-		return vertexCount;
-	}
-	
-	 private static float[] listToArray(List<Float> listOfFloats) {
+	private static float[] listToArray(List<Float> listOfFloats) {
 		 float[] array = new float[listOfFloats.size()];
 		 for (int i = 0; i < array.length; i++) {
 			 array[i] = listOfFloats.get(i);
 		 }
 		 return array;
-	 }
+	}
 	 
-	 public boolean isMouseOvered() {
-			return Mouse.getX() > x && Mouse.getX() < x + getWidth() &&
-					Mouse.getY() > y && Mouse.getY() < y + getHeight();
-		}
+	public boolean isMouseOvered() {
+		 return Mouse.getX() > x && Mouse.getX() < x + getWidth() &&
+				 Mouse.getY() > y && Mouse.getY() < y + getHeight();
+	}
 	
 }

@@ -7,9 +7,9 @@ import org.lwjgl.opengl.GL11;
 
 import com.wfe.core.Camera;
 import com.wfe.ecs.Entity;
+import com.wfe.font.TextRenderer;
 import com.wfe.graph.Mesh;
 import com.wfe.gui.GUIManager;
-import com.wfe.newFont.TextRenderer;
 import com.wfe.utils.OpenglUtils;
 
 public class RenderEngine {
