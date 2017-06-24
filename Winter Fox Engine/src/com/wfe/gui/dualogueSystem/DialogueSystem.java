@@ -25,7 +25,7 @@ public class DialogueSystem {
 	
 	public DialogueSystem() {
 		background = new GUIFrame(new Rect(0, 0, 500, 200), false);
-		npcText = new GUIText("", 96);
+		npcText = new GUIText("", 96, 450);
 	}
 	
 	public void update() {			
@@ -80,7 +80,7 @@ public class DialogueSystem {
 		
 		answersText.clear();
 		for(int i = 0; i < node[currentNode].playerAnswer.length; i++) {
-			answersText.add(new GUIText(node[currentNode].playerAnswer[i].text, 96));
+			answersText.add(new GUIText(node[currentNode].playerAnswer[i].text, 96, 450));
 		}
 	}
 	

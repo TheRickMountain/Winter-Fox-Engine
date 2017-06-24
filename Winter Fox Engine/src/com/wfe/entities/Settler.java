@@ -119,7 +119,7 @@ public class Settler extends Entity {
 						new Answer("1. Do you have a job for me?", 1),
 						new Answer("2. Let's play Mancala.", 2).setPlayMancala(true),
 						new Answer("3. Bye!", 0).setSpeakEnd(true)),
-				new DialogueNode("Find 4 fiber and bring it to me. fhgf fh fgfhgf fhf rrr qqwew qwewq eee eq ee",
+				new DialogueNode("Find 4 fiber and bring it to me. Let's talk about my life my darling.",
 						new Answer("1. Yes.", 0).setQuest(
 								new Quest(
 										new QuestInfo(

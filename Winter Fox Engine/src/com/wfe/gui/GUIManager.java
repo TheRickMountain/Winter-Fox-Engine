@@ -392,7 +392,6 @@ public class GUIManager  {
 			float height = 20 + popUpText.getHeight();
 			float width = 20 + popUpText.getWidth();
 			
-			
 			int[] ingredients = item.ingredients;
 			int count = 0;
 			for(int i = 0, n = ingredients.length; i < n; i += 2) {
