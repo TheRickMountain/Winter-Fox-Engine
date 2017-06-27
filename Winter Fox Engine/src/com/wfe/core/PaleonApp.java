@@ -1,7 +1,5 @@
 package com.wfe.core;
 
-import org.lwjgl.opengl.GL11;
-
 import com.wfe.audio.AudioMaster;
 import com.wfe.input.Keyboard;
 import com.wfe.input.Mouse;
@@ -39,7 +37,6 @@ public class PaleonApp {
 			display.swapBuffers();
 			
 			if(Display.isResized()) {
-				GL11.glViewport(0, 0, Display.getWidth(), Display.getHeight());
 				display.setResized(false);
 			}
 		}

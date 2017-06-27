@@ -7,9 +7,11 @@ import com.wfe.physics.AABB;
 
 public class ColliderComponent extends Component {
 
-	private float sizeX, sizeY, sizeZ;
+	public float sizeX, sizeY, sizeZ;
 	
 	private AABB aabb;
+	
+	private Transformation transform;
 	
 	public ColliderComponent(float sizeX, float sizeY, float sizeZ) {
 		this.sizeX = sizeX;
@@ -19,8 +21,8 @@ public class ColliderComponent extends Component {
 	
 	@Override
 	public void init() {
-		Transformation transform = getParent().getTransform();
-		this.aabb = new AABB(transform.x - sizeX / 2, transform.y, transform.z - sizeZ / 2, 
+		transform = getParent().getTransform();
+		aabb = new AABB(transform.x - sizeX / 2, transform.y, transform.z - sizeZ / 2, 
 				transform.x + sizeX / 2, transform.y + sizeY, transform.z + sizeZ / 2);
 	}
 

@@ -13,6 +13,7 @@ public enum ComponentType {
 	MOB,
 	NPC,
 	BOUNDING_BOX,
+	ENEMY,
 	NONE
 	
 }

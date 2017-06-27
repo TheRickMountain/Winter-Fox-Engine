@@ -159,7 +159,7 @@ public class Camera implements Serializable {
         return (float) (distanceFromPlayer * Math.sin(Math.toRadians(pitch)));
     }
 
-   /* private void calculateZoom(float dt){
+   /*private void calculateZoom(float dt){
         float zoomLevel = Mouse.getScroll() * dt * zoomSpeed;
         float temp = distanceFromPlayer;
         temp -= zoomLevel;

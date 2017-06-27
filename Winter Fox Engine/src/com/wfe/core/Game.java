@@ -3,12 +3,9 @@ package com.wfe.core;
 import com.wfe.audio.AudioMaster;
 import com.wfe.ecs.EntityCache;
 import com.wfe.ecs.Transformation;
+import com.wfe.entities.Enemy;
 import com.wfe.entities.Player;
 import com.wfe.entities.Settler;
-import com.wfe.gui.Item;
-import com.wfe.gui.ItemDatabase;
-import com.wfe.gui.questSystem.CollectionObjective;
-import com.wfe.gui.questSystem.IQuestObjective;
 
 public class Game {
 	
@@ -22,6 +19,8 @@ public class Game {
 		
 		Settler settler = new Settler(new Transformation(70, 0.65f, 70));
 		world.addEntity(settler);
+		
+		world.addEntity(new Enemy(new Transformation(75, 0, 75)));
 		
 		AudioMaster.ambientSource.play(ResourceManager.getSound("hills"));
 		

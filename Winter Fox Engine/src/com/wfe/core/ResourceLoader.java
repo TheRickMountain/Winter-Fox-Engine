@@ -123,6 +123,13 @@ public class ResourceLoader {
 		ResourceManager.loadMesh("amanita", OBJLoader.loadMesh("/entity/amanita/model.obj"));
 		/*** *** ***/
 		
+		/*** Enemy ***/
+		ResourceManager.loadTexture("enemy", Texture.newTexture(new MyFile("entity/enemy/diffuse.png"))
+				.normalMipMap(-0.4f)
+				.create());
+		ResourceManager.loadMesh("enemy", OBJLoader.loadMesh("/entity/enemy/model.obj"));
+		/*** *** ***/
+		
 		/*** Campfire ***/
 		ResourceManager.loadTexture("campfire", Texture.newTexture(new MyFile("entity/campfire/diffuse.png"))
 				.normalMipMap(-0.4f)
